@@ -6,25 +6,34 @@ import {
   View,
   Image,
   NativeModules,
+  ActivityIndicator,
 } from 'react-native';
+
+import Practice from './src/components/Practice';
 
 /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
  * LTI update could not be added via codemod */
-import { requestReadMMSPermission } from './src/utils/getPermission';
+// import { requestReadMMSPermission } from './src/utils/getPermission';
 
-import { convertImageUri } from './src/utils/mmsFunc';
+// import { convertImageUri } from './src/utils/mmsFunc';
 const App = () => {
   const { MMSReadModule } = NativeModules;
   const [imgTmp, setImgTmp] = useState(null);
-  useEffect(() => {
-    (async () => {
-      console.log(await requestReadMMSPermission());
+  const [loading, setLoading] = useState(true);
+  // useEffect(() => {
+  //   (async () => {
+  //     console.log(await requestReadMMSPermission());
 
-      const uri = await convertImageUri();
-      console.log('uri: ', uri);
-      setImgTmp(uri);
-    })();
-  }, []);
+  //     const uri = await convertImageUri();
+  //     console.log('uri: ', uri);
+  //     setImgTmp(uri);
+  //   })();
+  // }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //   }, 2000) 
+  // })
 
   return (
     <View style={{ alignItems: 'center', justifyContent: 'center' }}>
@@ -33,6 +42,7 @@ const App = () => {
         <Image source={{ uri: imgTmp }} style={{ width: 300, height: 300 }} />
       )}
       <Text>이미지</Text>
+      <Practice />
     </View>
   );
 };
