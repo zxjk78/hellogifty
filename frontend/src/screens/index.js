@@ -1,4 +1,4 @@
 import MyTicketScreen from './MyTicketScreen';
 import SearchScreen from './SearchScreen';
-
-export { MyTicketScreen, SearchScreen };
+import LoginScreen from './LoginScreen';
+export { MyTicketScreen, SearchScreen, LoginScreen };

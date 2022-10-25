@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image } from 'react-native';
-
+import { GlobalStyles } from '../../constants/style';
 // external module
 import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
 
@@ -35,5 +35,9 @@ const TicketListItem = () => {
 export default TicketListItem;
 
 const styles = StyleSheet.create({
-  container: { backgroundColor: 'red', padding: 8, alignItems: 'center' },
+  container: {
+    backgroundColor: GlobalStyles.colors.backgroundComponent,
+    padding: 10,
+    alignItems: 'center',
+  },
 });

@@ -1,8 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-
-import TicketListItem from '../components/TicketListItem';
-
+import { TicketListItem } from '../components/ticket';
 const MyTicketScreen = () => {
   // useEffect(() => {
   //   (async () => {
@@ -15,7 +13,6 @@ const MyTicketScreen = () => {
   return (
     <View>
       <Text>MyTicketScreen</Text>
-
       <TicketListItem />
     </View>
   );

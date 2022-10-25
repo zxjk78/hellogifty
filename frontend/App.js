@@ -14,7 +14,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // external components
 import Ionicons from 'react-native-vector-icons/Ionicons';
 // custom components
-import { MyTicketScreen, SearchScreen } from './src/screens';
+import { MyTicketScreen, SearchScreen, LoginScreen } from './src/screens';
 
 /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
  * LTI update could not be added via codemod */
@@ -28,6 +28,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator
+        initialRouteName="login"
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
@@ -75,6 +76,13 @@ const App = () => {
           component={SearchScreen}
           options={{
             title: '프로필',
+          }}
+        />
+        <Tab.Screen
+          name="login"
+          component={LoginScreen}
+          options={{
+            title: '임시로그인',
           }}
         />
       </Tab.Navigator>
