@@ -6,6 +6,7 @@ import {
   View,
   Image,
   NativeModules,
+  ActivityIndicator,
 } from 'react-native';
 // navigator
 import { NavigationContainer } from '@react-navigation/native';
@@ -15,6 +16,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 // custom components
 import { MyTicketScreen, SearchScreen } from './src/screens';
+
+import Practice from './src/components/Practice';
 
 /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
  * LTI update could not be added via codemod */
