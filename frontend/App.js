@@ -15,7 +15,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // external components
 import Ionicons from 'react-native-vector-icons/Ionicons';
 // custom components
-import { MyTicketScreen, SearchScreen, LoginScreen } from './src/screens';
+import {
+  MyTicketScreen,
+  SearchScreen,
+  LoginScreen,
+  TestScreen,
+} from './src/screens';
 
 import Practice from './src/components/Practice';
 
@@ -31,7 +36,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        initialRouteName="login"
+        initialRouteName="test"
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
@@ -82,10 +87,10 @@ const App = () => {
           }}
         />
         <Tab.Screen
-          name="login"
-          component={LoginScreen}
+          name="test"
+          component={TestScreen}
           options={{
-            title: '임시로그인',
+            title: '테스트용',
           }}
         />
       </Tab.Navigator>

@@ -20,10 +20,16 @@ export async function convertImageUri(imgId = 2404) {
 // 프론트에서 가장 최근의 mms id db에 다시 집어넣어야 함
 // 해당 모듈 자바 코드 분석해서, 접속했을 때 이후의 MMS 이미지 기록을 검토하고, base64 bytecode를 json에 넣어서 반환하고, 이미지 들만 추려서 긁어오는 함수 만들기 - 작성중
 
-export function getAllMMSAfterAccess(id) {
+export function getAllMMSAfterAccess(id = 1000) {
   const mmsModule = NativeModules.MMSReadModule;
 
   const results = [];
+
+  mmsModule.getMMSImageArr(id + '', (b64StringArr) => {
+    console.log('이미지 MMS 바이트어레이 목록의 길이: ' + b64StringArr.length);
+    const parsed = JSON.parse(b64StringArr);
+    console.log(parsed.length);
+  });
 
   try {
     return results;

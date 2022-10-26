@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -198,6 +200,8 @@ public class MMSReadModule extends ReactContextBaseJavaModule {
     }
 
     private Bitmap getMMSImage(String id) {
+//        Log.i("이미지 얻어오는 함수", id+"");
+
         Uri partURI = Uri.parse("content://mms/part/" + id);
         InputStream is = null;
         Bitmap bitmap = null;
@@ -215,6 +219,75 @@ public class MMSReadModule extends ReactContextBaseJavaModule {
         }
         return bitmap;
     }
+
+    @ReactMethod
+    public void getMMSImageArr(String id, Callback callback) {
+        Log.i("getMMSImageArr 함수 시작", "getMMSImageArr 시작");
+
+        ArrayList<String> resultArr = new ArrayList<>();
+
+        int prevSearchId = Integer.parseInt(id);
+
+        try {
+            String[] selection = {"*"};
+
+            InputStream is = null;
+//            part에는 text 도 있는 것 같다.
+
+            Cursor cursor = context.getContentResolver().query(Uri.parse("content://mms/part"), null, null, null, "_id DESC");
+
+            JSONArray jsons = new JSONArray();
+//
+//            if(cursor != null && cursor.moveToFirst()) {
+//                do {
+//                    int cursorId = cursor.getColumnIndex("_id");
+//                    if (cursorId <= prevSearchId) break;
+//                    JSONObject json;
+//                    json = getJsonFromCursor(cursor);
+//                    JSONArray attachments = getMMSWithId(cursor.getString(cursor.getColumnIndex("_id")));
+//                    json.put("attachments", attachments);
+//                    jsons.put(json);
+//                } while (cursor.moveToNext());
+//
+//                cursor.close();
+//            }
+            if(cursor != null && cursor.moveToFirst()) {
+                do {
+
+                    int idIdx = cursor.getColumnIndex("_id");
+                    int typeIdx = cursor.getColumnIndex("ct");
+                    Log.i("typeIdx", typeIdx+"");
+
+                    int cursorId = cursor.getInt(idIdx);
+                    if (cursorId <= prevSearchId){
+                        break;
+                    }
+
+                    String itemType = cursor.getString(typeIdx);
+                    if (itemType.equals("image/jpeg")) {
+                        Log.i("사진아이디", cursorId+"");
+                        Bitmap bitmap = this.getMMSImage(cursorId+"");
+                        Log.i("비트맵", bitmap.toString());
+                        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
+                        JSONObject json = new JSONObject();
+
+                        json.put("byteArray", Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT));
+
+                        jsons.put(json);
+
+                    }
+
+
+                } while (cursor.moveToNext());
+                cursor.close();
+                callback.invoke(jsons.toString());
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+  }
 
     private JSONObject getJsonFromCursor(Cursor cur) {
         JSONObject json = new JSONObject();
