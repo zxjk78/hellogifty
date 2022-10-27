@@ -237,26 +237,14 @@ public class MMSReadModule extends ReactContextBaseJavaModule {
             Cursor cursor = context.getContentResolver().query(Uri.parse("content://mms/part"), null, null, null, "_id DESC");
 
             JSONArray jsons = new JSONArray();
-//
-//            if(cursor != null && cursor.moveToFirst()) {
-//                do {
-//                    int cursorId = cursor.getColumnIndex("_id");
-//                    if (cursorId <= prevSearchId) break;
-//                    JSONObject json;
-//                    json = getJsonFromCursor(cursor);
-//                    JSONArray attachments = getMMSWithId(cursor.getString(cursor.getColumnIndex("_id")));
-//                    json.put("attachments", attachments);
-//                    jsons.put(json);
-//                } while (cursor.moveToNext());
-//
-//                cursor.close();
-//            }
+
+
             if(cursor != null && cursor.moveToFirst()) {
                 do {
 
                     int idIdx = cursor.getColumnIndex("_id");
                     int typeIdx = cursor.getColumnIndex("ct");
-                    Log.i("typeIdx", typeIdx+"");
+                    // Log.i("typeIdx", typeIdx+"");
 
                     int cursorId = cursor.getInt(idIdx);
                     if (cursorId <= prevSearchId){
@@ -265,9 +253,9 @@ public class MMSReadModule extends ReactContextBaseJavaModule {
 
                     String itemType = cursor.getString(typeIdx);
                     if (itemType.equals("image/jpeg")) {
-                        Log.i("사진아이디", cursorId+"");
+                        // Log.i("사진아이디", cursorId+"");
                         Bitmap bitmap = this.getMMSImage(cursorId+"");
-                        Log.i("비트맵", bitmap.toString());
+                        // Log.i("비트맵", bitmap.toString());
                         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
                         JSONObject json = new JSONObject();
