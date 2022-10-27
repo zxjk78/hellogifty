@@ -12,7 +12,7 @@ const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
 // 을 보면 style은 viewStyle을 따른다고 하고 이는  을 말한다.
 
 const TicketListItem = (item) => {
-  console.log(item.item, '---------');
+  // console.log(item.item, '---------');
   return (
     // <Card style={styles.container}>
     //   {/* <Card.Title
@@ -32,14 +32,16 @@ const TicketListItem = (item) => {
     //   </Card.Actions> */}
     // </Card>
     <View style={styles.container}>
-      <Image 
+      <Image
         style={styles.img}
         source={require('../../assets/starbucks.jpg')}
       />
       <View style={styles.text}>
         <Text style={styles.brandName}>{item.item.brandName}</Text>
         <Text style={styles.itemName}>{item.item.name}</Text>
-        <Text style={styles.expiration}>유효기간: {item.item.expirationDate} 까지</Text>
+        <Text style={styles.expiration}>
+          유효기간: {item.item.expirationDate} 까지
+        </Text>
       </View>
       {/* <Image /> */}
       <Text>{item.item.categoryId}</Text>
@@ -66,7 +68,7 @@ const styles = StyleSheet.create({
     marginRight: 40,
     height: 100,
     width: 100,
-    resizeMode: "cover",
+    resizeMode: 'cover',
   },
   text: {
     flex: 4,
@@ -79,5 +81,5 @@ const styles = StyleSheet.create({
   },
   expiration: {
     fontSize: 12,
-  }
+  },
 });
