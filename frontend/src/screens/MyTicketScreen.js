@@ -237,9 +237,6 @@ export default MyTicketScreen;
 const styles = StyleSheet.create({
   container: {
     flex:1,
-    // backgroundColor: 'white',
-    backgroundColor: 'aqua',
-    // overflow: 'scroll' => flatList로 
   },
-  listItem: {backgroundColor:'red', height:50},
+  // listItem: {backgroundColor:'red', height:50},
 });
