@@ -13,7 +13,7 @@ import com.a705.hellogifty.api.dto.user.UserLoginRequestDto;
 import com.a705.hellogifty.api.dto.user.UserSignupRequestDto;
 import com.a705.hellogifty.api.service.ResponseService;
 import com.a705.hellogifty.api.service.SignService;
-import com.a705.hellogifty.api.service.domain.entity.User;
+import com.a705.hellogifty.api.domain.entity.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

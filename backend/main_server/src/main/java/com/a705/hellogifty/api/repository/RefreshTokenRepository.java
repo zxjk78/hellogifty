@@ -1,7 +1,7 @@
 package com.a705.hellogifty.api.repository;
 
 
-import com.a705.hellogifty.api.service.domain.entity.RefreshToken;
+import com.a705.hellogifty.api.domain.entity.RefreshToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

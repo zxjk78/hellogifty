@@ -1,4 +1,4 @@
-package com.a705.hellogifty.api.service.domain.entity;
+package com.a705.hellogifty.api.domain.entity;
 
 import lombok.Builder;
 import lombok.Getter;
