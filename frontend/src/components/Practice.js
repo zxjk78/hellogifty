@@ -6,7 +6,8 @@ import {
   ActivityIndicator,
 } from 'react-native';
 
-const Practice = () => {
+const Practice = () => {33
+  
 
   const [loading, setLoading] = useState(true);
 
