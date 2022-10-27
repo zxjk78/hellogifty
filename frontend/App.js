@@ -36,7 +36,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        initialRouteName="test"
+        initialRouteName="MyCoupon"
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
