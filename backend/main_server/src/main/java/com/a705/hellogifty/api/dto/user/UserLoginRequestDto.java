@@ -1,7 +1,7 @@
 package com.a705.hellogifty.api.dto.user;
 
 
-import com.a705.hellogifty.api.service.domain.entity.User;
+import com.a705.hellogifty.api.domain.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
