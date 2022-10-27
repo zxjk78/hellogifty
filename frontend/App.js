@@ -94,6 +94,13 @@ const MainTab = () => {
           title: '테스트용',
         }}
       />
+      <Tab.Screen
+        name="login"
+        component={LoginScreen}
+        options={{
+          title: '로그인',
+        }}
+      />
     </Tab.Navigator>
   );
 };

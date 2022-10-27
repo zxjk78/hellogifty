@@ -9,14 +9,11 @@ import { TicketListItem } from '../components/ticket';
 // );
 
 const MyTicketScreen = () => {
-
   // {item.map((item) => {
   //   return <TicketListItem item={item} key={item.id}/>
   // })}
 
-  const renderItem = ({ item }) => (
-    <TicketListItem item={item} />
-  );
+  const renderItem = ({ item }) => <TicketListItem item={item} />;
 
   const data = [
     {
@@ -27,7 +24,7 @@ const MyTicketScreen = () => {
       isUsed: 0,
       isOnTrade: 1,
       brandName: '스타벅스',
-      brandImage: 'https://picsum.photos/700'
+      brandImage: 'https://picsum.photos/700',
     },
     {
       id: 2,
@@ -37,7 +34,7 @@ const MyTicketScreen = () => {
       isUsed: 1,
       isOnTrade: 0,
       brandName: '이디야',
-      brandImage: 'https://picsum.photos/700'
+      brandImage: 'https://picsum.photos/700',
     },
     {
       id: 3,
@@ -47,7 +44,7 @@ const MyTicketScreen = () => {
       isUsed: 1,
       isOnTrade: 1,
       brandName: 'banatag',
-      brandImage: 'https://picsum.photos/700'
+      brandImage: 'https://picsum.photos/700',
     },
     {
       id: 4,
@@ -57,7 +54,7 @@ const MyTicketScreen = () => {
       isUsed: 0,
       isOnTrade: 1,
       brandName: 'mammoth',
-      brandImage: 'https://picsum.photos/700'
+      brandImage: 'https://picsum.photos/700',
     },
     {
       id: 5,
@@ -67,7 +64,7 @@ const MyTicketScreen = () => {
       isUsed: 0,
       isOnTrade: 1,
       brandName: 'T&T',
-      brandImage: 'https://picsum.photos/700'
+      brandImage: 'https://picsum.photos/700',
     },
     {
       id: 523,
@@ -77,7 +74,7 @@ const MyTicketScreen = () => {
       isUsed: 0,
       isOnTrade: 1,
       brandName: 'T&T',
-      brandImage: 'https://picsum.photos/700'
+      brandImage: 'https://picsum.photos/700',
     },
     {
       id: 51,
@@ -87,7 +84,7 @@ const MyTicketScreen = () => {
       isUsed: 0,
       isOnTrade: 1,
       brandName: 'T&T',
-      brandImage: 'https://picsum.photos/700'
+      brandImage: 'https://picsum.photos/700',
     },
     {
       id: 15,
@@ -97,7 +94,7 @@ const MyTicketScreen = () => {
       isUsed: 0,
       isOnTrade: 1,
       brandName: 'T&T',
-      brandImage: 'https://picsum.photos/700'
+      brandImage: 'https://picsum.photos/700',
     },
     {
       id: 160,
@@ -107,7 +104,7 @@ const MyTicketScreen = () => {
       isUsed: 0,
       isOnTrade: 1,
       brandName: 'T&T',
-      brandImage: 'https://picsum.photos/700'
+      brandImage: 'https://picsum.photos/700',
     },
     {
       id: 161,
@@ -117,7 +114,7 @@ const MyTicketScreen = () => {
       isUsed: 0,
       isOnTrade: 1,
       brandName: 'T&T',
-      brandImage: 'https://picsum.photos/700'
+      brandImage: 'https://picsum.photos/700',
     },
     {
       id: 162,
@@ -127,7 +124,7 @@ const MyTicketScreen = () => {
       isUsed: 0,
       isOnTrade: 1,
       brandName: 'T&T',
-      brandImage: 'https://picsum.photos/700'
+      brandImage: 'https://picsum.photos/700',
     },
     {
       id: 1603,
@@ -137,7 +134,7 @@ const MyTicketScreen = () => {
       isUsed: 0,
       isOnTrade: 1,
       brandName: 'T&T',
-      brandImage: 'https://picsum.photos/700'
+      brandImage: 'https://picsum.photos/700',
     },
     {
       id: 1604,
@@ -147,7 +144,7 @@ const MyTicketScreen = () => {
       isUsed: 0,
       isOnTrade: 1,
       brandName: 'T&T',
-      brandImage: 'https://picsum.photos/700'
+      brandImage: 'https://picsum.photos/700',
     },
     {
       id: 1605,
@@ -157,7 +154,7 @@ const MyTicketScreen = () => {
       isUsed: 0,
       isOnTrade: 1,
       brandName: 'T&T',
-      brandImage: 'https://picsum.photos/700'
+      brandImage: 'https://picsum.photos/700',
     },
     {
       id: 1606,
@@ -167,7 +164,7 @@ const MyTicketScreen = () => {
       isUsed: 0,
       isOnTrade: 1,
       brandName: 'T&T',
-      brandImage: 'https://picsum.photos/700'
+      brandImage: 'https://picsum.photos/700',
     },
     {
       id: 1607,
@@ -177,7 +174,7 @@ const MyTicketScreen = () => {
       isUsed: 0,
       isOnTrade: 1,
       brandName: 'T&T',
-      brandImage: 'https://picsum.photos/700'
+      brandImage: 'https://picsum.photos/700',
     },
     {
       id: 1608,
@@ -187,7 +184,7 @@ const MyTicketScreen = () => {
       isUsed: 0,
       isOnTrade: 1,
       brandName: 'T&T',
-      brandImage: 'https://picsum.photos/700'
+      brandImage: 'https://picsum.photos/700',
     },
     {
       id: 1690,
@@ -197,7 +194,7 @@ const MyTicketScreen = () => {
       isUsed: 0,
       isOnTrade: 1,
       brandName: 'T&T',
-      brandImage: 'https://picsum.photos/700'
+      brandImage: 'https://picsum.photos/700',
     },
     {
       id: 1680,
@@ -207,9 +204,9 @@ const MyTicketScreen = () => {
       isUsed: 0,
       isOnTrade: 1,
       brandName: 'T&T',
-      brandImage: 'https://picsum.photos/700'
+      brandImage: 'https://picsum.photos/700',
     },
-  ]
+  ];
   // useEffect(() => {
   //   (async () => {
   //     console.log(await requestReadMMSPermission());
@@ -220,12 +217,12 @@ const MyTicketScreen = () => {
   // }, []);
 
   return (
-    <SafeAreaView  style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {/* <Text>MyTicketScreen</Text> */}
       <FlatList
         data={data}
         renderItem={renderItem}
-        keyExtractor={item => item.id}
+        keyExtractor={(item) => item.id}
         style={styles.listItem}
       />
     </SafeAreaView>
@@ -236,7 +233,7 @@ export default MyTicketScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
+    flex: 1,
   },
   // listItem: {backgroundColor:'red', height:50},
 });
