@@ -3,4 +3,12 @@ import SearchScreen from './SearchScreen';
 import LoginScreen from './LoginScreen';
 import TestScreen from './TestScreen';
 import DetailScreen from './DetailScreen';
-export { MyTicketScreen, SearchScreen, LoginScreen, TestScreen, DetailScreen };
+import ShoppingScreen from './ShoppingScreen';
+export {
+  MyTicketScreen,
+  SearchScreen,
+  LoginScreen,
+  TestScreen,
+  DetailScreen,
+  ShoppingScreen,
+};
