@@ -1,12 +1,18 @@
 package com.a705.hellogifty.api.domain.entity;
 
+import com.a705.hellogifty.api.dto.gifticon.GifticonEditRequestDto;
+import com.a705.hellogifty.api.repository.SmallCategoryRepository;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import net.bytebuddy.asm.Advice;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Getter
+@RequiredArgsConstructor
 public class Gifticon extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -29,4 +35,11 @@ public class Gifticon extends BaseEntity {
 
     @Column(length = 300)
     private String img;
+
+    public void update(GifticonEditRequestDto gifticonEditRequestDto) {
+        this.name = gifticonEditRequestDto.getName();
+        this.number = gifticonEditRequestDto.getNumber();
+        this.expirationDate = gifticonEditRequestDto.getExpirationDate();
+        this.smallCategory = gifticonEditRequestDto.getSmallCategory();
+    }
 }

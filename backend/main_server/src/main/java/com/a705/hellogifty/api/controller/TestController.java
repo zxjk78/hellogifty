@@ -14,11 +14,11 @@ import springfox.documentation.annotations.ApiIgnore;
 @RequiredArgsConstructor
 @RestController
 public class TestController {
-    private final ResponseService responseService;
-
-    @ApiOperation(value = "테스트", notes = "테스트 수행")
-    @GetMapping("/test")
-    public OneResult<String> test (@ApiIgnore @LoginUser User loginUser) {
-        return responseService.getOneResult("Test");
-    }
+//    private final ResponseService responseService;
+//
+//    @ApiOperation(value = "테스트", notes = "테스트 수행")
+//    @GetMapping("/test")
+//    public OneResult<String> test (@ApiIgnore @LoginUser User loginUser) {
+//        return responseService.getOneResult("Test");
+//    }
 }

@@ -1,7 +1,8 @@
 package com.a705.hellogifty.aop;
 
 
-import com.a501.recipe.api.domain.entity.User;
+
+import com.a705.hellogifty.api.domain.entity.User;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.SoftException;
 import org.aspectj.lang.annotation.Around;
@@ -19,7 +20,7 @@ import java.lang.annotation.Annotation;
 public class LoginUserAspect {
 
 
-    @Around("execution(* *(.., @com.a501.recipe.aop.LoginUser (*), ..))")
+    @Around("execution(* *(.., @com.a705.hellogifty.aop.LoginUser (*), ..))")
     public Object passLoginUser(ProceedingJoinPoint pjp) throws Throwable {
 
         Object[] args = pjp.getArgs();

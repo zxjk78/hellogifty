@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class GifticonListResponseDto {
+public class GifticonDetailResponseDto {
 
     private Long id;
 
@@ -18,25 +18,25 @@ public class GifticonListResponseDto {
 
     private String name;
 
+    private String number;
+
     private String expirationDate;
 
     private Boolean isUsed;
 
     private Boolean isOnTrade;
 
-    private String brandName;
-
     private String img;
 
-    public GifticonListResponseDto(Gifticon gifticon) {
+    public GifticonDetailResponseDto(Gifticon gifticon) {
         id = gifticon.getId();
         categoryId = gifticon.getSmallCategory().getId();
         name = gifticon.getName();
+        number = gifticon.getNumber();
         expirationDate = gifticon.getExpirationDate().toString();
         isUsed = gifticon.getIsUsed();
 //        isOnTrade = gifticon.getIsOnTrade();
-        brandName = gifticon.getSmallCategory().getName();
         img = gifticon.getImg();
-
     }
+
 }
