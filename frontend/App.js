@@ -70,7 +70,7 @@ const MainTab = () => {
         name="Shopping"
         component={SearchScreen}
         options={{
-          title: '내 쿠폰',
+          title: '쇼핑',
         }}
       />
       <Tab.Screen
@@ -92,13 +92,6 @@ const MainTab = () => {
         component={TestScreen}
         options={{
           title: '테스트용',
-        }}
-      />
-      <Tab.Screen
-        name="login"
-        component={LoginScreen}
-        options={{
-          title: '로그인',
         }}
       />
     </Tab.Navigator>
