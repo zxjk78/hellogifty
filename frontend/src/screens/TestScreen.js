@@ -1,21 +1,16 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
+
 import { getAllMMSAfterAccess } from '../utils/mmsFunc';
 import { requestReadMMSPermission } from '../utils/getPermission';
+import { ReadMMSStatusBar } from '../components/readmms';
 const TestScreen = () => {
   const [imgList, setImgList] = useState([]);
-  useEffect(() => {
-    requestReadMMSPermission();
-    (async () => {
-      const tmp = await getAllMMSAfterAccess(2440, (imgArr) => {
-        setImgList(imgArr);
-      });
-    })();
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <View>
+      <ReadMMSStatusBar />
       <Text>TestScreen123</Text>
       {imgList.map((item, index) => (
         <Image

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,14 +7,14 @@ import {
   Image,
   NativeModules,
   ActivityIndicator,
-} from "react-native";
+} from 'react-native';
 // navigator
-import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import 'react-native-gesture-handler';
 // external components
-import Ionicons from "react-native-vector-icons/Ionicons";
+import Ionicons from 'react-native-vector-icons/Ionicons';
 // custom components
 import {
   MyTicketScreen,
@@ -22,9 +22,9 @@ import {
   LoginScreen,
   TestScreen,
   DetailScreen,
-} from "./src/screens";
+} from './src/screens';
 
-import Practice from "./src/components/Practice";
+import Practice from './src/components/Practice';
 // import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
@@ -39,20 +39,20 @@ const Stack = createStackNavigator();
 const MainTab = () => {
   return (
     <Tab.Navigator
-    initialRouteName="MyCoupon"
-    screenOptions={({ route }) => ({
-      tabBarIcon: ({ focused, color, size }) => {
-        let iconName;
+      initialRouteName="MyCoupon"
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
 
-        if (route.name === "MyCoupon") {
-          iconName = focused ? "home" : "home-outline";
-        } else if (route.name === "Shopping") {
-          iconName = focused ? "cart" : "cart-outline";
-        } else if (route.name === "Chat") {
-          iconName = focused ? "chatbubble-sharp" : "chatbubble-outline";
-        } else if (route.name === "Profile") {
-          iconName = focused ? "person-circle" : "person-circle-outline";
-        }
+          if (route.name === 'MyCoupon') {
+            iconName = focused ? 'home' : 'home-outline';
+          } else if (route.name === 'Shopping') {
+            iconName = focused ? 'cart' : 'cart-outline';
+          } else if (route.name === 'Chat') {
+            iconName = focused ? 'chatbubble-sharp' : 'chatbubble-outline';
+          } else if (route.name === 'Profile') {
+            iconName = focused ? 'person-circle' : 'person-circle-outline';
+          }
 
         // You can return any component that you like here!
         return <Ionicons name={iconName} size={size} color={color} />;
@@ -125,6 +125,7 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown:false}}>
         <Stack.Screen name="MainTab" component={MainTab} />
+        <Stack.Screen name="DetailScreen" component={DetailScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
