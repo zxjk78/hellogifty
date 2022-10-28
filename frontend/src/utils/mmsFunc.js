@@ -33,3 +33,25 @@ export async function getAllMMSAfterAccess(id = 1000, callback) {
     console.log(error);
   }
 }
+
+// export function base64toFile(base_data, filename) {
+//   let arr = base_data.split(','),
+//     mime = arr[0].match(/:(.*?);/)[1],
+//     bstr = atob(arr[1]),
+//     n = bstr.length,
+//     u8arr = new Uint8Array(n);
+
+//   while (n--) {
+//     u8arr[n] = bstr.charCodeAt(n);
+//   }
+
+//   return new File([u8arr], filename, { type: mime });
+// }
+export function base64toFile(base_data, filename) {
+  let n = base_data.length;
+  let u8arr = new Uint8Array(n);
+  while (n--) {
+    u8arr[n] = base_data.charCodeAt(n);
+  }
+  return new File([u8arr], filename, { type: 'image/jpeg' });
+}
