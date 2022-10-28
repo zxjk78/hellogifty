@@ -30,14 +30,13 @@ const sendMMSImage = async (imageStringArr) => {
 
 // 아래 함수의 테스트 함수
 const dummySendMMSImage = async (imageStringArr) => {
-  console.log(imageStringArr.length);
+  // console.log(imageStringArr.length);
   const imageFileArr = imageStringArr.map((item, index) =>
     base64toFile(item, index + '.jpg')
   );
-
+  // console.log(imageFileArr);
   const formdata = new FormData();
   formdata.append('images', imageFileArr);
-  // console.log(formdata.get('images'));
 
   return [
     {

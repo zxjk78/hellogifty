@@ -7,7 +7,6 @@ import { TicketListItem } from '../components/ticket';
 //     <Text style={styles.title}>{title}</Text>
 //   </View>
 // );
-
 const MyTicketScreen = () => {
   // {item.map((item) => {
   //   return <TicketListItem item={item} key={item.id}/>
