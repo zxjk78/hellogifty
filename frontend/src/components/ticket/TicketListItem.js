@@ -14,7 +14,7 @@ const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
 // 을 보면 style은 viewStyle을 따른다고 하고 이는  을 말한다.
 
 const TicketListItem = (item) => {
-  console.log(navigation);
+
   const navigation = useNavigation();
 
   return (
