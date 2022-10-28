@@ -22,9 +22,11 @@ import {
   LoginScreen,
   TestScreen,
   DetailScreen,
+  MyCouponScreen
 } from './src/screens';
 
 import Practice from './src/components/Practice';
+import { GlobalStyles } from './src/constants/style';
 // import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
@@ -34,6 +36,7 @@ import Practice from './src/components/Practice';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+// const TopTab = createMaterialTopTabNavigator();
 
 // tab
 const MainTab = () => {
@@ -80,6 +83,12 @@ const MainTab = () => {
       component={SearchScreen}
       options={{
         title: "채팅창",
+        tabBarBadge: 5,
+        tabBarBadgeStyle: {
+          color: 'white',
+          backgroundColor: "#77abbd"
+          
+        }
       }}
     />
     <Tab.Screen
@@ -104,14 +113,15 @@ const MainTab = () => {
 const MyCoupon = () => {
   return (
     <Stack.Navigator
-      initialRouteName="MyTicketScreen"
+      initialRouteName="MyCouponScreen"
       screenOptions={{headerShown: false}}
     >
-      <Stack.Screen name="MyTicketScreen" component={MyTicketScreen}/>
+      <Stack.Screen name="MyCouponScreen" component={MyCouponScreen}/>
       <Stack.Screen name="DetailScreen" component={DetailScreen}/>
     </Stack.Navigator>
   )
 }
+
 
 // backButton
 // const navigation = useNavigation();
