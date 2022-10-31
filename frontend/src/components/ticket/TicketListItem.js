@@ -1,10 +1,21 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, Pressable, Alert, Modal } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  Pressable,
+  Alert,
+  Modal,
+} from "react-native";
 import { GlobalStyles } from "../../constants/style";
 // external module
 import { Avatar, Button, Card, Title, Paragraph } from "react-native-paper";
 
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import ModifiedTicket from "./ModifiedTicket";
+import SellingTicket from "./SellingTicket";
 
 const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
 
@@ -15,6 +26,27 @@ const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
 const TicketListItem = (item) => {
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
+  const [modifiedModal, setModifiedModal] = useState(false);
+  const [sellModal, setSellModal] = useState(false);
+
+  const goSell = () => {
+    setModalVisible(false);
+    setSellModal(true);
+  }
+
+  const closeSell = () => {
+    setSellModal(false);
+  }
+
+  const modified = () => {
+    setModalVisible(false);
+    setModifiedModal(true);
+  }
+
+  const closeModified = () => {
+    setModifiedModal(false);
+  }
+
 
   return (
     <TouchableOpacity
@@ -22,15 +54,15 @@ const TicketListItem = (item) => {
       onPress={() => {
         navigation.navigate("DetailScreen", { item: item });
       }}
-      delayLongPress={600}
+      delayLongPress={0}
       onLongPress={() => {
         setModalVisible(true);
       }}
     >
       {/* Modal */}
-      <View style={styles.centeredView}>
+      <View style={styles.modalContainer}>
         <Modal
-          animationType="slide"
+          animationType="fade"
           transparent={true}
           visible={modalVisible}
           onRequestClose={() => {
@@ -40,17 +72,30 @@ const TicketListItem = (item) => {
         >
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalText}>Hello World!</Text>
+              <Pressable
+                style={[styles.buttonClass]}
+                onPress={() => goSell()}
+              >
+                <Text style={styles.buttonText}>판매하기</Text>
+              </Pressable>
+              <Pressable
+                style={[styles.buttonClass]}
+                onPress={() => modified()}
+              >
+                <Text style={styles.buttonText}>정보 수정</Text>
+              </Pressable>
               <Pressable
                 style={[styles.button, styles.buttonClose]}
                 onPress={() => setModalVisible(!modalVisible)}
               >
-                <Text style={styles.textStyle}>Hide Modal</Text>
+                <Text style={styles.textStyle}>닫기</Text>
               </Pressable>
             </View>
           </View>
         </Modal>
       </View>
+      {modifiedModal ? <ModifiedTicket onClose={closeModified} item={item.item} /> : null}
+      {sellModal ? <SellingTicket onClose={closeSell} item={item.item} /> : null}
       {/* Main */}
       <Image
         style={styles.img}
@@ -82,6 +127,7 @@ const styles = StyleSheet.create({
     // borderColor: 'grey',
     justifyContent: "space-between",
     // marginBottom: -30,
+    // position: 'relative',
   },
   img: {
     // flex: 2,
@@ -102,18 +148,27 @@ const styles = StyleSheet.create({
   expiration: {
     fontSize: 12,
   },
+  modalContainer: {
+    
+  },
   centeredView: {
+    // position: 'absolute',
+    // right: 50,
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: 'flex-end',
     marginTop: 22,
+    marginLeft: 22,
   },
   modalView: {
-    margin: 20,
+    // alignSelf: 'flex-end',
+    margin: 10,
     backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: 'red',
+    padding: 15,
+    // alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -121,26 +176,33 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5,
+    // elevation: 5,
   },
   button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
+    margin: 2,
+    borderRadius: 10,
+    color: 'black',
+    padding: 7,
   },
   buttonOpen: {
     backgroundColor: "#F194FF",
   },
   buttonClose: {
+    width: '30%',
     backgroundColor: "#2196F3",
+  },
+  buttonClass: {
+
+  },
+  buttonText: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    margin: 2,
   },
   textStyle: {
     color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
   },
   modalText: {
     marginBottom: 15,
-    textAlign: "center",
   },
 });
