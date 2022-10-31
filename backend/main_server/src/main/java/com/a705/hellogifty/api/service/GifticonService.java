@@ -2,10 +2,10 @@ package com.a705.hellogifty.api.service;
 
 import com.a705.hellogifty.api.domain.entity.Gifticon;
 import com.a705.hellogifty.api.domain.entity.User;
-import com.a705.hellogifty.advice.dto.gifticon.GifticonDetailResponseDto;
-import com.a705.hellogifty.advice.dto.gifticon.GifticonEditRequestDto;
-import com.a705.hellogifty.advice.dto.gifticon.GifticonListResponseDto;
-import com.a705.hellogifty.advice.dto.gifticon.GifticonRegisterRequestDto;
+import com.a705.hellogifty.api.dto.gifticon.GifticonDetailResponseDto;
+import com.a705.hellogifty.api.dto.gifticon.GifticonEditRequestDto;
+import com.a705.hellogifty.api.dto.gifticon.GifticonListResponseDto;
+import com.a705.hellogifty.api.dto.gifticon.GifticonRegisterRequestDto;
 import com.a705.hellogifty.api.repository.GifticonRepository;
 import com.a705.hellogifty.api.repository.SmallCategoryRepository;
 import lombok.RequiredArgsConstructor;

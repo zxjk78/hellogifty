@@ -2,10 +2,10 @@ package com.a705.hellogifty.api.service;
 
 
 import com.a705.hellogifty.advice.exception.*;
-import com.a705.hellogifty.advice.dto.token.TokenRequestDto;
-import com.a705.hellogifty.advice.dto.token.TokenResponseDto;
-import com.a705.hellogifty.advice.dto.user.UserLoginRequestDto;
-import com.a705.hellogifty.advice.dto.user.UserSignupRequestDto;
+import com.a705.hellogifty.api.dto.token.TokenRequestDto;
+import com.a705.hellogifty.api.dto.token.TokenResponseDto;
+import com.a705.hellogifty.api.dto.user.UserLoginRequestDto;
+import com.a705.hellogifty.api.dto.user.UserSignupRequestDto;
 import com.a705.hellogifty.api.repository.RefreshTokenRepository;
 import com.a705.hellogifty.api.repository.UserRepository;
 import com.a705.hellogifty.api.domain.entity.RefreshToken;

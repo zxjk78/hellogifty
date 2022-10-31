@@ -3,7 +3,7 @@ package com.a705.hellogifty.config.security;
 
 import com.a705.hellogifty.advice.ErrorCode;
 import com.a705.hellogifty.advice.exception.AuthenticationEntryPointException;
-import com.a705.hellogifty.advice.dto.token.TokenResponseDto;
+import com.a705.hellogifty.api.dto.token.TokenResponseDto;
 import com.a705.hellogifty.api.service.WebUserDetailsService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.impl.Base64UrlCodec;

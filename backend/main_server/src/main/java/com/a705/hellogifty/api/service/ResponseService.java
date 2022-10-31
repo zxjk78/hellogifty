@@ -1,9 +1,9 @@
 package com.a705.hellogifty.api.service;
 
 
-import com.a705.hellogifty.advice.dto.basic_response.CommonResult;
-import com.a705.hellogifty.advice.dto.basic_response.ManyResult;
-import com.a705.hellogifty.advice.dto.basic_response.OneResult;
+import com.a705.hellogifty.api.dto.basic_response.CommonResult;
+import com.a705.hellogifty.api.dto.basic_response.ManyResult;
+import com.a705.hellogifty.api.dto.basic_response.OneResult;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

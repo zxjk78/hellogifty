@@ -3,7 +3,7 @@ package com.a705.hellogifty.api.controller;
 import com.a705.hellogifty.advice.exception.AccessDeniedException;
 import com.a705.hellogifty.advice.exception.AccessTokenExpiredException;
 import com.a705.hellogifty.advice.exception.AuthenticationEntryPointException;
-import com.a705.hellogifty.advice.dto.basic_response.CommonResult;
+import com.a705.hellogifty.api.dto.basic_response.CommonResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;

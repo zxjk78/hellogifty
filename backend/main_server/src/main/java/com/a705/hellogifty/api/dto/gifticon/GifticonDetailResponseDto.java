@@ -1,4 +1,4 @@
-package com.a705.hellogifty.advice.dto.gifticon;
+package com.a705.hellogifty.api.dto.gifticon;
 
 import com.a705.hellogifty.api.domain.entity.Gifticon;
 import lombok.AllArgsConstructor;

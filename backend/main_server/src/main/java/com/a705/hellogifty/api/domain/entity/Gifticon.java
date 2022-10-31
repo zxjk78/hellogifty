@@ -1,6 +1,6 @@
 package com.a705.hellogifty.api.domain.entity;
 
-import com.a705.hellogifty.advice.dto.gifticon.GifticonEditRequestDto;
+import com.a705.hellogifty.api.dto.gifticon.GifticonEditRequestDto;
 import lombok.*;
 
 import javax.persistence.*;
