@@ -22,16 +22,21 @@ import {
   LoginScreen,
   TestScreen,
   DetailScreen,
+  MyCouponScreen
 } from './src/screens';
 
 import Practice from './src/components/Practice';
+import { GlobalStyles } from './src/constants/style';
 // import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
  * LTI update could not be added via codemod */
 
+
+
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+// const TopTab = createMaterialTopTabNavigator();
 
 // tab
 const MainTab = () => {
@@ -78,6 +83,12 @@ const MainTab = () => {
       component={SearchScreen}
       options={{
         title: "채팅창",
+        tabBarBadge: 5,
+        tabBarBadgeStyle: {
+          color: 'white',
+          backgroundColor: "#77abbd"
+          
+        }
       }}
     />
     <Tab.Screen
@@ -97,17 +108,24 @@ const MainTab = () => {
   </Tab.Navigator>
   );
 }
+
+// Home
 const MyCoupon = () => {
   return (
     <Stack.Navigator
-      initialRouteName="MyTicketScreen"
+      initialRouteName="MyCouponScreen"
       screenOptions={{headerShown: false}}
     >
-      <Stack.Screen name="MyTicketScreen" component={MyTicketScreen}/>
+      <Stack.Screen name="MyCouponScreen" component={MyCouponScreen}/>
       <Stack.Screen name="DetailScreen" component={DetailScreen}/>
     </Stack.Navigator>
   )
 }
+
+
+// backButton
+// const navigation = useNavigation();
+
 
 const App = () => {
   const { MMSReadModule } = NativeModules;
@@ -120,68 +138,7 @@ const App = () => {
         <Stack.Screen name="DetailScreen" component={DetailScreen} />
       </Stack.Navigator>
     </NavigationContainer>
-    // </View>
   );
 };
-
-{/* <Tab.Navigator
-initialRouteName="MyCoupon"
-screenOptions={({ route }) => ({
-  tabBarIcon: ({ focused, color, size }) => {
-    let iconName;
-
-    if (route.name === "MyCoupon") {
-      iconName = focused ? "home" : "home-outline";
-    } else if (route.name === "Shopping") {
-      iconName = focused ? "cart" : "cart-outline";
-    } else if (route.name === "Chat") {
-      iconName = focused ? "chatbubble-sharp" : "chatbubble-outline";
-    } else if (route.name === "Profile") {
-      iconName = focused ? "person-circle" : "person-circle-outline";
-    }
-
-    // You can return any component that you like here!
-    return <Ionicons name={iconName} size={size} color={color} />;
-  },
-  tabBarActiveTintColor: "tomato",
-  tabBarInactiveTintColor: "black",
-})}
->
-<Tab.Screen
-  name="MyCoupon"
-  component={MyTicketScreen}
-  options={{
-    title: "내 쿠폰",
-  }}
-/>
-<Tab.Screen
-  name="Shopping"
-  component={SearchScreen}
-  options={{
-    title: "쇼핑",
-  }}
-/>
-<Tab.Screen
-  name="Chat"
-  component={SearchScreen}
-  options={{
-    title: "채팅창",
-  }}
-/>
-<Tab.Screen
-  name="Profile"
-  component={SearchScreen}
-  options={{
-    title: "프로필",
-  }}
-/>
-<Tab.Screen
-  name="test"
-  component={TestScreen}
-  options={{
-    title: "테스트용",
-  }}
-/>
-</Tab.Navigator> */}
 
 export default App;
