@@ -4,19 +4,20 @@ import { requestReadMMSPermission } from '../../utils/getPermission';
 import { GlobalStyles } from '../../constants/style';
 import { getAllMMSAfterAccess } from '../../utils/mmsFunc';
 import { dummySendMMSImage } from '../../api/mms';
-const gColor = GlobalStyles.colors;
+import { TransparentButton } from '../UI';
 
-const ReadMMSStatusBar = () => {
+const ReadMMSStatusBar = ({ onPress }) => {
   const [isReading, setIsReading] = useState(false);
   const n = 0;
   const [byteArr, setByteArr] = useState(null);
   const [imgArr, setImgArr] = useState(0);
+
   useEffect(() => {
     requestReadMMSPermission();
     setIsReading(true);
     setTimeout(() => {
       (async () => {
-        const tmp = await getAllMMSAfterAccess(0, (imgArr) => {
+        const tmp = await getAllMMSAfterAccess(1000, (imgArr) => {
           console.log(imgArr.length);
           setByteArr(imgArr);
         });
@@ -35,12 +36,18 @@ const ReadMMSStatusBar = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.container}>
+      <View style={styles.content}>
         <Text>
           {isReading
             ? '메세지함에서 기프티콘을 찾고 있어요'
-            : `총 ${imgArr.length}건의 기프티콘을 찾았어요! 등록하러 가기`}
+            : `총 ${imgArr.length}건의 기프티콘을 찾았어요!`}
         </Text>
+        {!isReading && (
+          <TransparentButton
+            onPress={onPress.bind(this, imgArr)}
+            text={`  등록하기`}
+          />
+        )}
       </View>
     </View>
   );
@@ -48,11 +55,14 @@ const ReadMMSStatusBar = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: gColor.backgroundComponent,
+    backgroundColor: GlobalStyles.colors.backgroundComponent,
     // backgroundColor: 'red',
     height: '35%',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  content: {
+    flexDirection: 'row',
   },
 });
 

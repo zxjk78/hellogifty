@@ -22,17 +22,18 @@ import {
   LoginScreen,
   TestScreen,
   DetailScreen,
-  MyCouponScreen
+  ShoppingScreen,
+  SellingItemDetailScreen,
+  ProfileScreen,
+  ChatRoomScreen,
+  MyCouponScreen,
 } from './src/screens';
-
 import Practice from './src/components/Practice';
 import { GlobalStyles } from './src/constants/style';
 // import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
  * LTI update could not be added via codemod */
-
-
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -57,75 +58,65 @@ const MainTab = () => {
             iconName = focused ? 'person-circle' : 'person-circle-outline';
           }
 
-        // You can return any component that you like here!
-        return <Ionicons name={iconName} size={size} color={color} />;
-      },
-      tabBarActiveTintColor: "tomato",
-      tabBarInactiveTintColor: "black",
-    })}
-  >
-    <Tab.Screen
-      name="MyCoupon"
-      component={MyCoupon}
-      options={{
-        title: "내 쿠폰",
-      }}
-    />
-    <Tab.Screen
-      name="Shopping"
-      component={SearchScreen}
-      options={{
-        title: "쇼핑",
-      }}
-    />
-    <Tab.Screen
-      name="Chat"
-      component={SearchScreen}
-      options={{
-        title: "채팅창",
-        tabBarBadge: 5,
-        tabBarBadgeStyle: {
-          color: 'white',
-          backgroundColor: "#77abbd"
-          
-        }
-      }}
-    />
-    <Tab.Screen
-      name="Profile"
-      component={SearchScreen}
-      options={{
-        title: "프로필",
-      }}
-    />
-    <Tab.Screen
-      name="test"
-      component={TestScreen}
-      options={{
-        title: "테스트용",
-      }}
-    />
-  </Tab.Navigator>
+          // You can return any component that you like here!
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: 'tomato',
+        tabBarInactiveTintColor: 'black',
+      })}
+    >
+      <Tab.Screen
+        name="MyCoupon"
+        component={MyCoupon}
+        options={{
+          title: '내 쿠폰',
+        }}
+      />
+      <Tab.Screen
+        name="Shopping"
+        component={SearchScreen}
+        options={{
+          title: '쇼핑',
+        }}
+      />
+      <Tab.Screen
+        name="Chat"
+        component={SearchScreen}
+        options={{
+          title: '채팅창',
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={SearchScreen}
+        options={{
+          title: '프로필',
+        }}
+      />
+      <Tab.Screen
+        name="test"
+        component={TestScreen}
+        options={{
+          title: '테스트용',
+        }}
+      />
+    </Tab.Navigator>
   );
-}
-
-// Home
+};
 const MyCoupon = () => {
   return (
     <Stack.Navigator
-      initialRouteName="MyCouponScreen"
-      screenOptions={{headerShown: false}}
+      initialRouteName="MyTicketScreen"
+      screenOptions={{ headerShown: false }}
     >
-      <Stack.Screen name="MyCouponScreen" component={MyCouponScreen}/>
-      <Stack.Screen name="DetailScreen" component={DetailScreen}/>
+      <Stack.Screen name="MyTicketScreen" component={MyTicketScreen} />
+      <Stack.Screen name="DetailScreen" component={DetailScreen} />
     </Stack.Navigator>
-  )
-}
-
+  );
+};
 
 // backButton
 // const navigation = useNavigation();
-
 
 const App = () => {
   const { MMSReadModule } = NativeModules;
@@ -133,11 +124,12 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown:false}}>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="MainTab" component={MainTab} />
         <Stack.Screen name="DetailScreen" component={DetailScreen} />
       </Stack.Navigator>
     </NavigationContainer>
+    // </View>
   );
 };
 
