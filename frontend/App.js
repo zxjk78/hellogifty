@@ -23,8 +23,8 @@ import {
   TestScreen,
   DetailScreen,
   ShoppingScreen,
+  SellingItemDetailScreen,
 } from './src/screens';
-
 import Practice from './src/components/Practice';
 // import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -90,7 +90,7 @@ const MainTab = () => {
       />
       <Tab.Screen
         name="test"
-        component={ShoppingScreen}
+        component={SellingItemDetailScreen}
         // component={TestScreen}
         options={{
           title: '테스트용',

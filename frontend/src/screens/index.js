@@ -4,6 +4,7 @@ import LoginScreen from './LoginScreen';
 import TestScreen from './TestScreen';
 import DetailScreen from './DetailScreen';
 import ShoppingScreen from './ShoppingScreen';
+import SellingItemDetailScreen from './SellingItemDetailScreen';
 export {
   MyTicketScreen,
   SearchScreen,
@@ -11,4 +12,5 @@ export {
   TestScreen,
   DetailScreen,
   ShoppingScreen,
+  SellingItemDetailScreen,
 };

@@ -1,13 +1,15 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import { SearchResultList, SearchKeywordInput } from '../components/shopping';
-
+import {
+  SearchResultList,
+  SearchKeywordInput,
+} from '../components/shopping/search';
 const ShoppingScreen = () => {
   return (
     <View>
+      <Text>ShoppingScreen</Text>
       <SearchKeywordInput />
       <SearchResultList />
-      <Text>ShoppingScreen</Text>
     </View>
   );
 };
