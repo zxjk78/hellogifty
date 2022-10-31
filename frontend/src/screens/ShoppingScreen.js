@@ -7,8 +7,8 @@ import {
 const ShoppingScreen = () => {
   return (
     <View>
-      <Text>ShoppingScreen</Text>
       <SearchKeywordInput />
+      <View style={{ marginTop: '5%' }}></View>
       <SearchResultList />
     </View>
   );

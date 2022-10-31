@@ -24,6 +24,8 @@ import {
   DetailScreen,
   ShoppingScreen,
   SellingItemDetailScreen,
+  ProfileScreen,
+  ChatRoomScreen,
 } from './src/screens';
 import Practice from './src/components/Practice';
 // import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -69,28 +71,28 @@ const MainTab = () => {
       />
       <Tab.Screen
         name="Shopping"
-        component={SearchScreen}
+        component={ShoppingScreen}
         options={{
           title: '쇼핑',
         }}
       />
       <Tab.Screen
         name="Chat"
-        component={SearchScreen}
+        component={ChatRoomScreen}
         options={{
           title: '채팅창',
         }}
       />
       <Tab.Screen
         name="Profile"
-        component={SearchScreen}
+        component={ProfileScreen}
         options={{
           title: '프로필',
         }}
       />
       <Tab.Screen
         name="test"
-        component={SellingItemDetailScreen}
+        component={ProfileScreen}
         // component={TestScreen}
         options={{
           title: '테스트용',

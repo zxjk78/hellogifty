@@ -5,6 +5,8 @@ import TestScreen from './TestScreen';
 import DetailScreen from './DetailScreen';
 import ShoppingScreen from './ShoppingScreen';
 import SellingItemDetailScreen from './SellingItemDetailScreen';
+import ProfileScreen from './ProfileScreen';
+import ChatRoomScreen from './ChatRoomScreen';
 export {
   MyTicketScreen,
   SearchScreen,
@@ -13,4 +15,6 @@ export {
   DetailScreen,
   ShoppingScreen,
   SellingItemDetailScreen,
+  ProfileScreen,
+  ChatRoomScreen,
 };
