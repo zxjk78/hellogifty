@@ -26,8 +26,10 @@ import {
   SellingItemDetailScreen,
   ProfileScreen,
   ChatRoomScreen,
+  MyCouponScreen,
 } from './src/screens';
 import Practice from './src/components/Practice';
+import { GlobalStyles } from './src/constants/style';
 // import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
@@ -35,6 +37,7 @@ import Practice from './src/components/Practice';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+// const TopTab = createMaterialTopTabNavigator();
 
 // tab
 const MainTab = () => {
@@ -71,29 +74,28 @@ const MainTab = () => {
       />
       <Tab.Screen
         name="Shopping"
-        component={ShoppingScreen}
+        component={SearchScreen}
         options={{
           title: '쇼핑',
         }}
       />
       <Tab.Screen
         name="Chat"
-        component={ChatRoomScreen}
+        component={SearchScreen}
         options={{
           title: '채팅창',
         }}
       />
       <Tab.Screen
         name="Profile"
-        component={ProfileScreen}
+        component={SearchScreen}
         options={{
           title: '프로필',
         }}
       />
       <Tab.Screen
         name="test"
-        component={ProfileScreen}
-        // component={TestScreen}
+        component={TestScreen}
         options={{
           title: '테스트용',
         }}
@@ -112,6 +114,9 @@ const MyCoupon = () => {
     </Stack.Navigator>
   );
 };
+
+// backButton
+// const navigation = useNavigation();
 
 const App = () => {
   const { MMSReadModule } = NativeModules;

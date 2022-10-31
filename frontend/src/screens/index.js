@@ -7,12 +7,14 @@ import ShoppingScreen from './ShoppingScreen';
 import SellingItemDetailScreen from './SellingItemDetailScreen';
 import ProfileScreen from './ProfileScreen';
 import ChatRoomScreen from './ChatRoomScreen';
+import MyCouponScreen from './MyCouponScreen';
 export {
   MyTicketScreen,
   SearchScreen,
   LoginScreen,
   TestScreen,
   DetailScreen,
+  MyCouponScreen,
   ShoppingScreen,
   SellingItemDetailScreen,
   ProfileScreen,
