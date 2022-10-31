@@ -3,14 +3,14 @@ package com.a705.hellogifty.api.controller;
 
 
 import com.a705.hellogifty.advice.exception.RefreshTokenExpiredException;
-import com.a705.hellogifty.api.dto.basic_response.CommonResult;
-import com.a705.hellogifty.api.dto.basic_response.OneResult;
-import com.a705.hellogifty.api.dto.token.AccessTokenRequestDto;
-import com.a705.hellogifty.api.dto.token.AccessTokenResponseDto;
-import com.a705.hellogifty.api.dto.token.TokenRequestDto;
-import com.a705.hellogifty.api.dto.token.TokenResponseDto;
-import com.a705.hellogifty.api.dto.user.UserLoginRequestDto;
-import com.a705.hellogifty.api.dto.user.UserSignupRequestDto;
+import com.a705.hellogifty.advice.dto.basic_response.CommonResult;
+import com.a705.hellogifty.advice.dto.basic_response.OneResult;
+import com.a705.hellogifty.advice.dto.token.AccessTokenRequestDto;
+import com.a705.hellogifty.advice.dto.token.AccessTokenResponseDto;
+import com.a705.hellogifty.advice.dto.token.TokenRequestDto;
+import com.a705.hellogifty.advice.dto.token.TokenResponseDto;
+import com.a705.hellogifty.advice.dto.user.UserLoginRequestDto;
+import com.a705.hellogifty.advice.dto.user.UserSignupRequestDto;
 import com.a705.hellogifty.api.service.ResponseService;
 import com.a705.hellogifty.api.service.SignService;
 import com.a705.hellogifty.api.domain.entity.User;

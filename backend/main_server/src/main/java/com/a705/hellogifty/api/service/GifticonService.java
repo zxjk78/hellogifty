@@ -2,28 +2,27 @@ package com.a705.hellogifty.api.service;
 
 import com.a705.hellogifty.api.domain.entity.Gifticon;
 import com.a705.hellogifty.api.domain.entity.User;
-import com.a705.hellogifty.api.dto.gifticon.GifticonDetailResponseDto;
-import com.a705.hellogifty.api.dto.gifticon.GifticonEditRequestDto;
-import com.a705.hellogifty.api.dto.gifticon.GifticonListResponseDto;
+import com.a705.hellogifty.advice.dto.gifticon.GifticonDetailResponseDto;
+import com.a705.hellogifty.advice.dto.gifticon.GifticonEditRequestDto;
+import com.a705.hellogifty.advice.dto.gifticon.GifticonListResponseDto;
+import com.a705.hellogifty.advice.dto.gifticon.GifticonRegisterRequestDto;
 import com.a705.hellogifty.api.repository.GifticonRepository;
-import com.a705.hellogifty.api.repository.RefreshTokenRepository;
-import com.a705.hellogifty.api.repository.UserRepository;
+import com.a705.hellogifty.api.repository.SmallCategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class GifticonService {
 
     private final GifticonRepository gifticonRepository;
-    private final UserRepository userRepository;
-
-    private final RefreshTokenRepository refreshTokenRepository;
+    private final SmallCategoryRepository smallCategoryRepository;
 
     @Transactional
     public List<GifticonListResponseDto> myAllGifticon(User user) {
@@ -52,7 +51,21 @@ public class GifticonService {
     }
 
     @Transactional
-    public void myGifticonDelete(User uesr, Long gifticonId) {
+    public void myGifticonDelete(User user, Long gifticonId) {
         gifticonRepository.deleteById(gifticonId);
     }
+
+    @Transactional
+    public void myGifticonRegister(User user, GifticonRegisterRequestDto gifticonRegisterRequestDto) {
+        Gifticon gifticon = Gifticon.builder().user(user)
+                .smallCategory(null)
+                .name(gifticonRegisterRequestDto.getName())
+                .number("나중에연결")
+                .expirationDate(LocalDate.parse(gifticonRegisterRequestDto.getExpirationDate(), DateTimeFormatter.ISO_DATE))
+                .isUsed(false)
+                .img("이미지경로나중에").build();
+
+        gifticonRepository.save(gifticon);
+    }
+
 }

@@ -1,18 +1,16 @@
 package com.a705.hellogifty.api.domain.entity;
 
-import com.a705.hellogifty.api.dto.gifticon.GifticonEditRequestDto;
-import com.a705.hellogifty.api.repository.SmallCategoryRepository;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import net.bytebuddy.asm.Advice;
+import com.a705.hellogifty.advice.dto.gifticon.GifticonEditRequestDto;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 @Entity
 @Getter
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Gifticon extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -40,6 +38,6 @@ public class Gifticon extends BaseEntity {
         this.name = gifticonEditRequestDto.getName();
         this.number = gifticonEditRequestDto.getNumber();
         this.expirationDate = gifticonEditRequestDto.getExpirationDate();
-        this.smallCategory = gifticonEditRequestDto.getSmallCategory();
+//        this.smallCategory = gifticonEditRequestDto.getSmallCategory();
     }
 }

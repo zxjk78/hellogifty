@@ -1,4 +1,4 @@
-package com.a705.hellogifty.api.dto.trade_post;
+package com.a705.hellogifty.advice.dto.trade_post;
 
 import com.a705.hellogifty.api.domain.entity.Gifticon;
 import com.a705.hellogifty.api.domain.entity.TradePost;

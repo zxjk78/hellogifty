@@ -2,7 +2,7 @@ package com.a705.hellogifty.advice;
 
 
 import com.a705.hellogifty.advice.exception.*;
-import com.a705.hellogifty.api.dto.basic_response.CommonResult;
+import com.a705.hellogifty.advice.dto.basic_response.CommonResult;
 import com.a705.hellogifty.api.service.ResponseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

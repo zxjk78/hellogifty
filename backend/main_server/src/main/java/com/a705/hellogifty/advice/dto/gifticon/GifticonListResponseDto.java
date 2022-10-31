@@ -1,4 +1,4 @@
-package com.a705.hellogifty.api.dto.gifticon;
+package com.a705.hellogifty.advice.dto.gifticon;
 
 import com.a705.hellogifty.api.domain.entity.Gifticon;
 import lombok.AllArgsConstructor;
@@ -30,12 +30,12 @@ public class GifticonListResponseDto {
 
     public GifticonListResponseDto(Gifticon gifticon) {
         id = gifticon.getId();
-        categoryId = gifticon.getSmallCategory().getId();
+//        categoryId = gifticon.getSmallCategory().getId();
         name = gifticon.getName();
         expirationDate = gifticon.getExpirationDate().toString();
         isUsed = gifticon.getIsUsed();
 //        isOnTrade = gifticon.getIsOnTrade();
-        brandName = gifticon.getSmallCategory().getName();
+//        brandName = gifticon.getSmallCategory().getName();
         img = gifticon.getImg();
 
     }

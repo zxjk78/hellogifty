@@ -1,4 +1,4 @@
-package com.a705.hellogifty.api.dto.basic_response;
+package com.a705.hellogifty.advice.dto.basic_response;
 
 import lombok.Getter;
 import lombok.Setter;

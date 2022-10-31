@@ -1,4 +1,4 @@
-package com.a705.hellogifty.api.dto.user;
+package com.a705.hellogifty.advice.dto.user;
 
 
 import com.a705.hellogifty.api.domain.entity.User;

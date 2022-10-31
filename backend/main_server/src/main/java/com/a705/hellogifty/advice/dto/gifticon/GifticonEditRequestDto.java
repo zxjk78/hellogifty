@@ -1,4 +1,4 @@
-package com.a705.hellogifty.api.dto.gifticon;
+package com.a705.hellogifty.advice.dto.gifticon;
 
 import com.a705.hellogifty.api.domain.entity.Gifticon;
 import com.a705.hellogifty.api.domain.entity.SmallCategory;
@@ -17,6 +17,6 @@ public class GifticonEditRequestDto {
 
     private LocalDate expirationDate;
 
-    private SmallCategory smallCategory;
+//    private SmallCategory smallCategory;
 
 }

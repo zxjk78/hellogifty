@@ -1,14 +1,14 @@
 package com.a705.hellogifty.api.controller;
 
 import com.a705.hellogifty.aop.LoginUser;
-import com.a705.hellogifty.api.domain.entity.Gifticon;
 import com.a705.hellogifty.api.domain.entity.User;
-import com.a705.hellogifty.api.dto.basic_response.CommonResult;
-import com.a705.hellogifty.api.dto.basic_response.ManyResult;
-import com.a705.hellogifty.api.dto.basic_response.OneResult;
-import com.a705.hellogifty.api.dto.gifticon.GifticonDetailResponseDto;
-import com.a705.hellogifty.api.dto.gifticon.GifticonEditRequestDto;
-import com.a705.hellogifty.api.dto.gifticon.GifticonListResponseDto;
+import com.a705.hellogifty.advice.dto.basic_response.CommonResult;
+import com.a705.hellogifty.advice.dto.basic_response.ManyResult;
+import com.a705.hellogifty.advice.dto.basic_response.OneResult;
+import com.a705.hellogifty.advice.dto.gifticon.GifticonDetailResponseDto;
+import com.a705.hellogifty.advice.dto.gifticon.GifticonEditRequestDto;
+import com.a705.hellogifty.advice.dto.gifticon.GifticonListResponseDto;
+import com.a705.hellogifty.advice.dto.gifticon.GifticonRegisterRequestDto;
 import com.a705.hellogifty.api.service.GifticonService;
 import com.a705.hellogifty.api.service.ResponseService;
 import io.swagger.annotations.Api;
@@ -16,8 +16,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
-
-import java.util.List;
 
 @Api(tags = "")
 @RequiredArgsConstructor
@@ -41,6 +39,13 @@ public class GifticonController {
     public OneResult<GifticonDetailResponseDto> myGifticonDetail (@ApiIgnore @LoginUser User loginUser, @PathVariable Long gifticonId) {
         GifticonDetailResponseDto gifticonDetail = gifticonService.myGifticonDetail(loginUser, gifticonId);
         return responseService.getOneResult(gifticonDetail);
+    }
+
+    @ApiOperation(value = "기프티콘 등록" , notes = "기프티콘 등록")
+    @PostMapping("/")
+    public CommonResult myGifticonRegister(@ApiIgnore @LoginUser User loginUser, @RequestBody GifticonRegisterRequestDto gifticonRegisterRequestDto) {
+        gifticonService.myGifticonRegister(loginUser, gifticonRegisterRequestDto);
+        return responseService.getSuccessResult();
     }
 
     @ApiOperation(value = "내 소유 기프티콘 수정", notes = "기프티콘 정보 수정")

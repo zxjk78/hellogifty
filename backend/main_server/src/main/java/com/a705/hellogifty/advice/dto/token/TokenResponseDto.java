@@ -1,4 +1,4 @@
-package com.a705.hellogifty.api.dto.token;
+package com.a705.hellogifty.advice.dto.token;
 
 import lombok.*;
 
