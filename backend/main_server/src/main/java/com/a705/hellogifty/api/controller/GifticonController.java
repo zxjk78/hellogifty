@@ -20,6 +20,9 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @Api(tags = "")
@@ -48,13 +51,12 @@ public class GifticonController {
 
     @ApiOperation(value = "기프티콘 등록" , notes = "기프티콘 등록")
     @PostMapping("/")
-    public CommonResult myGifticonRegister(@ApiIgnore @LoginUser User loginUser, @RequestParam MultipartFile multipartFile, @RequestParam GifticonRegisterRequestDto gifticonRegisterRequestDto) throws IOException {
-        String uuid = UUID.randomUUID().toString();
-
-        File img = new File(uuid + "_" + multipartFile.getOriginalFilename());
+    public CommonResult myGifticonRegister(@ApiIgnore @LoginUser User loginUser, @RequestParam Short categoryId, @RequestParam String name, @RequestParam String expirationDate, @RequestPart MultipartFile multipartFile) throws IOException {
+        String fileUploadNow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+        File img = new File(loginUser.getEmail()+fileUploadNow);
         multipartFile.transferTo(img);
 
-        gifticonService.myGifticonRegister(loginUser, multipartFile, gifticonRegisterRequestDto);
+        gifticonService.myGifticonRegister(loginUser, categoryId, name, expirationDate, img.getPath());
         return responseService.getSuccessResult();
     }
 
