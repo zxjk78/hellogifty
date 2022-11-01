@@ -9,7 +9,7 @@ export const axiosCommonInstance = axios.create({
   headers: { 'Content-Type': 'application/json; charset=utf-8' },
 });
 
-// 사용자 기능 필요할때: 헤더에 X-AUTH-TOKEN ㅞ사용하는 axios instance
+// 사용자 기능 필요할때: 헤더에 X-AUTH-TOKEN 사용하는 axios instance
 export const axiosAuthInstance = axios.create({
   baseURL: API_URL,
   headers: {

@@ -54,7 +54,7 @@ const TicketListItem = (item) => {
       onPress={() => {
         navigation.navigate("DetailScreen", { item: item });
       }}
-      delayLongPress={0}
+      delayLongPress={500}
       onLongPress={() => {
         setModalVisible(true);
       }}

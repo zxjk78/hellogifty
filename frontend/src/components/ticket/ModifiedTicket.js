@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 const ModifiedTicket = ({ onClose, item }) => {
   const [modalVisible, setModalVisible] = useState(true)
-  console.log(item);
+  // console.log(item);
   
   return (
     <View style={styles.centeredView}>
