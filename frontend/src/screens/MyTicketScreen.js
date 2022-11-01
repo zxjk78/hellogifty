@@ -5,6 +5,11 @@ import { TicketListItem } from '../components/ticket';
 const MyTicketScreen = ({ route, extraData }) => {
   const data = extraData
   const renderItem = ({ item }) => <TicketListItem item={item} />;
+
+  // map 돌려서 데이터 가공하고 카테고리로 나구기
+  // data.map((v) => {
+  //   console.log(v.categoryId)
+  // })
   
   // useEffect(() => {
   //   console.log('데이터 받아요~~')
@@ -15,13 +20,14 @@ const MyTicketScreen = ({ route, extraData }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* <Text>MyTicketScreen</Text> */}
+      <Text>편의점</Text>
       <FlatList
         data={data}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         style={styles.listItem}
       />
+      <Text>카페</Text>
     </SafeAreaView>
   );
 };

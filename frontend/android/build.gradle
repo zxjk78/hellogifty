@@ -55,5 +55,11 @@ allprojects {
             }
         }
         maven { url 'https://www.jitpack.io' }
+        
+        // ADD THIS
+        // maven { url 'https://maven.google.com' }
+
+        // ADD THIS
+        // maven { url "https://www.jitpack.io" }
     }
 }
