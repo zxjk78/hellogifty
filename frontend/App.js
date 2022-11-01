@@ -106,10 +106,10 @@ const MainTab = () => {
 const MyCoupon = () => {
   return (
     <Stack.Navigator
-      initialRouteName="MyTicketScreen"
+      initialRouteName="MyCouponScreen"
       screenOptions={{ headerShown: false }}
     >
-      <Stack.Screen name="MyTicketScreen" component={MyTicketScreen} />
+      <Stack.Screen name="MyCouponScreen" component={MyCouponScreen} />
       <Stack.Screen name="DetailScreen" component={DetailScreen} />
     </Stack.Navigator>
   );
