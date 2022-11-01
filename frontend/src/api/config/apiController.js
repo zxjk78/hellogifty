@@ -1,6 +1,8 @@
 import axios from 'axios';
-import { getCookie, setCookie, removeCookie } from './cookie';
+// import { getCookie, setCookie, removeCookie } from './cookie';
 import { API_URL } from './http-config';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // 사용자 인증 필요없는 기능 사용할때 쓰는 axios instance
 export const axiosCommonInstance = axios.create({
@@ -23,8 +25,8 @@ export const axiosAuthInstance = axios.create({
 });
 
 axiosAuthInstance.interceptors.request.use(
-  (config) => {
-    config.headers['X-AUTH-TOKEN'] = getCookie('accessToken');
+  async (config) => {
+    config.headers['X-AUTH-TOKEN'] = await AsyncStorage.getItem('accessToken');
     return config;
   },
   (error) => {
@@ -78,14 +80,14 @@ axiosAuthInstance.interceptors.response.use(
       originalRequest._retry = true;
       isTokenRefreshing = true;
 
-      return new Promise((resolve, reject) => {
+      return new Promise(async (resolve, reject) => {
         // console.log('accessToken 재발급 요청');
-
+        const accessToken = await AsyncStorage.getItem('accessToken');
         axios
           .post(
             API_URL + 'reissue',
             {
-              accessToken: getCookie('accessToken'),
+              accessToken: accessToken,
             },
             { withCredentials: true }
           )
@@ -95,8 +97,7 @@ axiosAuthInstance.interceptors.response.use(
             const { accessToken: newToken, accessTokenExpireDate: newDate } =
               data.data;
             // 발급받으면 저장
-            setCookie('accessToken', newToken);
-            setCookie('accessTokenExpireDate', newDate);
+            AsyncStorage.setItem('accessToken', newToken);
             // axiosAuthInstance.defaults는 사실 해줄필요 없긴할듯? request Interceptor에서 처리해주니까
             axiosAuthInstance.defaults.headers.common['X-AUTH-TOKEN'] =
               newToken;
@@ -120,10 +121,9 @@ axiosAuthInstance.interceptors.response.use(
     } else if (response.data.code === 1006) {
       // console.log('refresh token 만료, 로그아웃');
 
-      removeCookie('accessToken');
-      removeCookie('accessTokenExpireDate');
+      AsyncStorage.removeItem('accessToken');
       failedQueue = [];
-      window.location.reload();
+      // window.location.reload();
     }
 
     return Promise.reject(error);

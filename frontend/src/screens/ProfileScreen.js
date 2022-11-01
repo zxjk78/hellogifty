@@ -3,6 +3,7 @@ import React from 'react';
 
 import { gifticonDummy } from '../constants/data/dummyData';
 import { TicketListItem } from '../components/ticket';
+import { GlobalStyles } from '../constants/style';
 // import SearchResultItem from '../components/shopping/search/SearchResultItem';
 
 const renderItem = ({ item }) => <TicketListItem item={item} />;
@@ -30,8 +31,7 @@ const ProfileScreen = () => {
         </View>
       </View>
       <View style={styles.ticketBrief}>
-        <Text>판매상품</Text>
-        <Text>{gifticonDummy.length}개</Text>
+        <Text>판매상품 {gifticonDummy.length}개</Text>
       </View>
       <View style={styles.ticketContainer}>
         <FlatList
@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '90%',
     marginLeft: '5%',
+    backgroundColor: GlobalStyles.colors.backgroundPrimary,
   },
   profileContainer: {
     flex: 2,

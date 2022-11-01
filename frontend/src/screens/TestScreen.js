@@ -1,35 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, Modal } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
-import { getAllMMSAfterAccess } from '../utils/mmsFunc';
-import { requestReadMMSPermission } from '../utils/getPermission';
-import { ReadMMSStatusBar } from '../components/readmms';
-
-import { AddTicketModal } from '../components/ticket';
+import React, { useEffect, useState } from 'react';
+import { TicketList } from '../components/ticket';
+import { fetchMyGifticon } from '../api/gifticon';
 const TestScreen = () => {
-  const [imgList, setImgList] = useState([]);
-  const [gifticonData, setGifticonData] = useState(null);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  // useEffect(() => {}, []);
+  const [myCouponList, setMyCouponList] = useState(null);
+  useEffect(() => {
+    console.log('테스트화면');
+    (async () => {
+      const data = await fetchMyGifticon();
+      console.log(data);
+      setMyCouponList(data);
+    })();
+  }, []);
 
-  const handlePress = (data) => {
-    setGifticonData(() => data);
-    setIsModalVisible(() => true);
-  };
-  const handleClose = () => {
-    console.log('close');
-  };
   return (
     <View>
-      <AddTicketModal
-        gifticonList={gifticonData}
-        visible={isModalVisible}
-        handleClose={() => {
-          setIsModalVisible(() => false);
-        }}
-      />
-      <ReadMMSStatusBar onPress={handlePress} />
-      <Text></Text>
+      <Text>TestScreen</Text>
+      {myCouponList && <TicketList ticketList={myCouponList} />}
     </View>
   );
 };

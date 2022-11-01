@@ -8,6 +8,8 @@ import SellingItemDetailScreen from './SellingItemDetailScreen';
 import ProfileScreen from './ProfileScreen';
 import ChatRoomScreen from './ChatRoomScreen';
 import MyCouponScreen from './MyCouponScreen';
+import LoginScreen2 from './LoginScreen2';
+import SignupScreen from './SignupScreen';
 export {
   MyTicketScreen,
   SearchScreen,
@@ -19,4 +21,6 @@ export {
   SellingItemDetailScreen,
   ProfileScreen,
   ChatRoomScreen,
+  LoginScreen2,
+  SignupScreen,
 };
