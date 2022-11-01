@@ -66,7 +66,7 @@ const MyCouponScreen = () => {
       {
         id: 523,
         categoryId: 3,
-        name: '코코아',
+        name: '옛날 커피',
         expirationDate: '2022-11-15',
         isUsed: 0,
         isOnTrade: 1,
@@ -76,7 +76,7 @@ const MyCouponScreen = () => {
       {
         id: 51,
         categoryId: 3,
-        name: '코코아',
+        name: '오늘의 커피',
         expirationDate: '2022-11-15',
         isUsed: 0,
         isOnTrade: 0,
@@ -96,7 +96,7 @@ const MyCouponScreen = () => {
       {
         id: 160,
         categoryId: 3,
-        name: '코코아',
+        name: '핫초코',
         expirationDate: '2022-11-15',
         isUsed: 0,
         isOnTrade: 1,
@@ -106,7 +106,7 @@ const MyCouponScreen = () => {
       {
         id: 161,
         categoryId: 3,
-        name: '코코아',
+        name: '콜드',
         expirationDate: '2022-11-15',
         isUsed: 0,
         isOnTrade: 0,
@@ -126,7 +126,7 @@ const MyCouponScreen = () => {
       {
         id: 1603,
         categoryId: 3,
-        name: '코코아',
+        name: '밀크',
         expirationDate: '2022-11-15',
         isUsed: 0,
         isOnTrade: 1,
@@ -146,7 +146,7 @@ const MyCouponScreen = () => {
       {
         id: 1605,
         categoryId: 3,
-        name: '코코아',
+        name: '라떼',
         expirationDate: '2022-11-15',
         isUsed: 0,
         isOnTrade: 1,
@@ -156,7 +156,7 @@ const MyCouponScreen = () => {
       {
         id: 1606,
         categoryId: 3,
-        name: '코코아',
+        name: '아이스라떼',
         expirationDate: '2022-11-15',
         isUsed: 0,
         isOnTrade: 1,
@@ -176,7 +176,7 @@ const MyCouponScreen = () => {
       {
         id: 1608,
         categoryId: 3,
-        name: '코코아',
+        name: '드랍커피',
         expirationDate: '2022-11-15',
         isUsed: 0,
         isOnTrade: 1,
