@@ -15,7 +15,12 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
 
 @Api(tags = "")
 @RequiredArgsConstructor
@@ -43,8 +48,13 @@ public class GifticonController {
 
     @ApiOperation(value = "기프티콘 등록" , notes = "기프티콘 등록")
     @PostMapping("/")
-    public CommonResult myGifticonRegister(@ApiIgnore @LoginUser User loginUser, @RequestBody GifticonRegisterRequestDto gifticonRegisterRequestDto) {
-        gifticonService.myGifticonRegister(loginUser, gifticonRegisterRequestDto);
+    public CommonResult myGifticonRegister(@ApiIgnore @LoginUser User loginUser, @RequestParam MultipartFile multipartFile, @RequestParam GifticonRegisterRequestDto gifticonRegisterRequestDto) throws IOException {
+        String uuid = UUID.randomUUID().toString();
+
+        File img = new File(uuid + "_" + multipartFile.getOriginalFilename());
+        multipartFile.transferTo(img);
+
+        gifticonService.myGifticonRegister(loginUser, multipartFile, gifticonRegisterRequestDto);
         return responseService.getSuccessResult();
     }
 
