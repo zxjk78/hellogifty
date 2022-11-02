@@ -27,6 +27,7 @@ import {
   ProfileScreen,
   ChatRoomScreen,
   MyCouponScreen,
+  LoginScreen2,
 } from './src/screens';
 import Practice from './src/components/Practice';
 import { GlobalStyles } from './src/constants/style';
@@ -94,10 +95,17 @@ const MainTab = () => {
         }}
       />
       <Tab.Screen
+        name="login"
+        component={LoginScreen2}
+        options={{
+          title: '로그인',
+        }}
+      />
+      <Tab.Screen
         name="test"
         component={TestScreen}
         options={{
-          title: '테스트용',
+          title: '테스트',
         }}
       />
     </Tab.Navigator>
