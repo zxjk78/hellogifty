@@ -8,7 +8,6 @@ import com.a705.hellogifty.api.dto.basic_response.OneResult;
 import com.a705.hellogifty.api.dto.gifticon.GifticonDetailResponseDto;
 import com.a705.hellogifty.api.dto.gifticon.GifticonEditRequestDto;
 import com.a705.hellogifty.api.dto.gifticon.GifticonListResponseDto;
-import com.a705.hellogifty.api.dto.gifticon.GifticonRegisterRequestDto;
 import com.a705.hellogifty.api.service.GifticonService;
 import com.a705.hellogifty.api.service.ResponseService;
 import io.swagger.annotations.Api;
@@ -20,10 +19,8 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.UUID;
 
 @Api(tags = "")
 @RequiredArgsConstructor

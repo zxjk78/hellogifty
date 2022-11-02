@@ -5,20 +5,16 @@ import com.a705.hellogifty.api.domain.entity.User;
 import com.a705.hellogifty.api.dto.gifticon.GifticonDetailResponseDto;
 import com.a705.hellogifty.api.dto.gifticon.GifticonEditRequestDto;
 import com.a705.hellogifty.api.dto.gifticon.GifticonListResponseDto;
-import com.a705.hellogifty.api.dto.gifticon.GifticonRegisterRequestDto;
 import com.a705.hellogifty.api.repository.GifticonRepository;
 import com.a705.hellogifty.api.repository.SmallCategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
-import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -36,7 +32,7 @@ public class GifticonService {
         for (Gifticon gifticon : gifticonRepository.findByUserId(user.getId()).get()) {
             list.add(new GifticonListResponseDto(gifticon));
         }
-        System.out.println(list);
+
         return list;
     }
 
