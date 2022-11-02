@@ -10,12 +10,15 @@ import com.a705.hellogifty.api.repository.GifticonRepository;
 import com.a705.hellogifty.api.repository.SmallCategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -56,16 +59,19 @@ public class GifticonService {
     }
 
     @Transactional
-    public void myGifticonRegister(User user, GifticonRegisterRequestDto gifticonRegisterRequestDto) {
+    public void myGifticonRegister(User user, Short categoryId, String name, String expirationDate, String imgPath) {
+
+
         Gifticon gifticon = Gifticon.builder().user(user)
                 .smallCategory(null)
-                .name(gifticonRegisterRequestDto.getName())
+                .name(name)
                 .number("나중에연결")
-                .expirationDate(LocalDate.parse(gifticonRegisterRequestDto.getExpirationDate(), DateTimeFormatter.ISO_DATE))
+                .expirationDate(LocalDate.parse(expirationDate, DateTimeFormatter.ISO_DATE))
                 .isUsed(false)
-                .img("이미지경로나중에").build();
+                .img(imgPath).build();
 
         gifticonRepository.save(gifticon);
     }
+
 
 }

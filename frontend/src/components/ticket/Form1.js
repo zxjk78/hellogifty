@@ -1,11 +1,11 @@
-import { View, Text, Image, TextInput, Pressable } from "react-native";
+import { View, Text, Image, TextInput, Pressable, StyleSheet } from "react-native";
 import React, { useState } from "react";
-import { StyleSheet } from "react-native-web";
 import { GlobalStyles } from "../../constants/style";
 
 
 const Form1 = ({ info, next }) => {
   const [price, setPrice] = useState(info.price);
+  const [title, setTitle] = useState(info.title)
   const [description, setDescription] = useState(info.description);
 
   return (
@@ -36,7 +36,20 @@ const Form1 = ({ info, next }) => {
           <Text style={{ fontWeight: "bold", fontSize: 20 }}> 원</Text>
         </View>
       </View>
-      <Text style={{ fontWeight: "bold", fontSize: 20, marginTop: 20 }}>
+      <Text style={{ fontWeight: "bold", fontSize: 20, marginTop: 10 }}>
+        제목
+      </Text>
+      <TextInput
+        style={styles.titleInput}
+        multiline
+        onChangeText={setTitle}
+        // value={description}
+        defaultValue={info.title}
+        placeholder="제목을 입력해 주세요"
+        maxLength={23}
+        keyboardType="string"
+      />
+      <Text style={{ fontWeight: "bold", fontSize: 20, marginTop: 10 }}>
         상품 설명
       </Text>
       <TextInput
@@ -45,10 +58,14 @@ const Form1 = ({ info, next }) => {
         onChangeText={setDescription}
         // value={description}
         defaultValue={info.description}
-        placeholder="상품 설명"
+        placeholder="상품 설명을 입력해 주세요"
         keyboardType="string"
       />
-      <Pressable style={styles.nextButton} onPress={()=>{next({price, description})}}>
+      <Pressable 
+        style={styles.nextButton} 
+        onPress={()=>{next({price, title, description})}}
+        android_ripple={{color: 'red'}}  
+      >
         <Text style={styles.buttonText}>다음</Text>
       </Pressable>
     </View>
@@ -85,15 +102,25 @@ const styles = StyleSheet.create({
     textAlign: "right",
   },
   inputText: {
-    height: 150,
+    height: 100,
     width: 270,
-    marginTop: 12,
+    marginTop: 8,
     borderRadius: 10,
     borderWidth: 2,
     borderColor: "red",
     padding: 5,
     textAlignVertical: "top",
     // textAlign: "left",
+  },
+  titleInput: {
+    height: 30,
+    width: 270,
+    marginTop: 8,
+    borderRadius: 7,
+    borderWidth: 2,
+    borderColor: "red",
+    padding: 5,
+    textAlignVertical: "top",
   },
   nextButton: {
     width: 120,

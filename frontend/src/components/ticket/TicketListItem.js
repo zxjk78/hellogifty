@@ -28,25 +28,25 @@ const TicketListItem = (item) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modifiedModal, setModifiedModal] = useState(false);
   const [sellModal, setSellModal] = useState(false);
+  const [position, setPosition] = useState({x: 100, y: 100})
 
   const goSell = () => {
     setModalVisible(false);
     setSellModal(true);
-  }
+  };
 
   const closeSell = () => {
     setSellModal(false);
-  }
+  };
 
   const modified = () => {
     setModalVisible(false);
     setModifiedModal(true);
-  }
+  };
 
   const closeModified = () => {
     setModifiedModal(false);
-  }
-
+  };
 
   return (
     <TouchableOpacity
@@ -55,7 +55,20 @@ const TicketListItem = (item) => {
         navigation.navigate("DetailScreen", { item: item });
       }}
       delayLongPress={500}
-      onLongPress={() => {
+      onLongPress={(e) => {
+        // console.log(e.nativeEvent.touches[0].pageX, 'X')
+        // console.log(e.nativeEvent.touches[0].pageY, 'Y')
+        let x = e.nativeEvent.touches[0].pageX
+        const y = ( e.nativeEvent.touches[0].pageY - 80 )
+
+        if (x >= 250) {
+          x -= 170
+        } else { x += 25}
+
+        setPosition({
+          x: x,
+          y: y
+        })
         setModalVisible(true);
       }}
     >
@@ -70,32 +83,38 @@ const TicketListItem = (item) => {
             setModalVisible(!modalVisible);
           }}
         >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Pressable
-                style={[styles.buttonClass]}
-                onPress={() => goSell()}
+          <Pressable
+            style={styles.modalBack}
+            onPress={() => {
+              setModalVisible(false);
+            }}
+          >
+            <View style={{...styles.modalView, left: position.x, top: position.y}}>
+              <Pressable 
+                style={[styles.buttonClass]} 
+                onPress={() => goSell()} 
+                android_ripple={{color: 'red'}}
               >
                 <Text style={styles.buttonText}>판매하기</Text>
               </Pressable>
               <Pressable
                 style={[styles.buttonClass]}
                 onPress={() => modified()}
+                android_ripple={{color: 'red'}}
               >
                 <Text style={styles.buttonText}>정보 수정</Text>
               </Pressable>
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => setModalVisible(!modalVisible)}
-              >
-                <Text style={styles.textStyle}>닫기</Text>
-              </Pressable>
             </View>
-          </View>
+          </Pressable>
         </Modal>
       </View>
-      {modifiedModal ? <ModifiedTicket onClose={closeModified} item={item.item} /> : null}
-      {sellModal ? <SellingTicket onClose={closeSell} item={item.item} /> : null}
+      {modifiedModal ? (
+        <ModifiedTicket onClose={closeModified} item={item.item} />
+      ) : null}
+      {sellModal ? (
+        <SellingTicket onClose={closeSell} item={item.item} />
+      ) : null}
+
       {/* Main */}
       <Image
         style={styles.img}
@@ -124,13 +143,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderBottomColor: "grey",
     borderBottomWidth: 1,
-    // borderColor: 'grey',
     justifyContent: "space-between",
-    // marginBottom: -30,
-    // position: 'relative',
   },
   img: {
-    // flex: 2,
     marginRight: 40,
     height: 100,
     width: 100,
@@ -149,25 +164,30 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   modalContainer: {
-    
+    // backgroundColor: 'blue',
+    // height:200
+  },
+  modalBack: {
+    // backgroundColor: "blue",
+    height: "100%",
   },
   centeredView: {
-    // position: 'absolute',
-    // right: 50,
-    flex: 1,
-    justifyContent: "center",
-    alignItems: 'flex-end',
-    marginTop: 22,
-    marginLeft: 22,
+    // flex: 1,
+    // justifyContent: 'center',
+    // alignItems: 'flex-end',
+    // width: 170,
+    // marginTop: 22,
+    // marginLeft: 22,
+    // backgroundColor: "black",
   },
   modalView: {
-    // alignSelf: 'flex-end',
+    position: "absolute",
     margin: 10,
-    backgroundColor: "white",
+    backgroundColor: "#EEEEEE",
     borderRadius: 10,
     borderWidth: 2,
-    borderColor: 'red',
-    padding: 15,
+    borderColor: "#829460",
+    padding: 10,
     // alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -176,27 +196,30 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    // elevation: 5,
+    elevation: 5,
   },
   button: {
-    margin: 2,
+    // margin: 2,
     borderRadius: 10,
-    color: 'black',
-    padding: 7,
+    color: "#EEEEEE",
+    // padding: 7,
   },
   buttonOpen: {
     backgroundColor: "#F194FF",
   },
   buttonClose: {
-    width: '30%',
+    width: "30%",
     backgroundColor: "#2196F3",
   },
   buttonClass: {
-
+    backgroundColor: '#FFE1E1',
+    borderRadius: 5,
+    borderWidth: 2,
+    marginBottom: 3
   },
   buttonText: {
     fontSize: 22,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     margin: 2,
   },
   textStyle: {
