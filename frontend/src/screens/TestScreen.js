@@ -1,23 +1,35 @@
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, Image, Modal } from 'react-native';
 
-import React, { useEffect, useState } from 'react';
-import { TicketList } from '../components/ticket';
-import { fetchMyGifticon } from '../api/gifticon';
+import { getAllMMSAfterAccess } from '../utils/mmsFunc';
+import { requestReadMMSPermission } from '../utils/getPermission';
+import { ReadMMSStatusBar } from '../components/readmms';
+
+import { AddTicketModal } from '../components/ticket';
 const TestScreen = () => {
-  const [myCouponList, setMyCouponList] = useState(null);
-  useEffect(() => {
-    console.log('테스트화면');
-    (async () => {
-      const data = await fetchMyGifticon();
-      console.log(data);
-      setMyCouponList(data);
-    })();
-  }, []);
+  const [imgList, setImgList] = useState([]);
+  const [gifticonData, setGifticonData] = useState(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  // useEffect(() => {}, []);
 
+  const handlePress = (data) => {
+    setGifticonData(() => data);
+    setIsModalVisible(() => true);
+  };
+  const handleClose = () => {
+    console.log('close');
+  };
   return (
     <View>
-      <Text>TestScreen</Text>
-      {myCouponList && <TicketList ticketList={myCouponList} />}
+      <AddTicketModal
+        gifticonList={gifticonData}
+        visible={isModalVisible}
+        handleClose={() => {
+          setIsModalVisible(() => false);
+        }}
+      />
+      <ReadMMSStatusBar onPress={handlePress} />
+      <Text></Text>
     </View>
   );
 };

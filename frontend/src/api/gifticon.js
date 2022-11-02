@@ -12,4 +12,20 @@ const fetchMyGifticon = async () => {
   }
 };
 
-export { fetchMyGifticon };
+const AddGifticon = async (gifticonArr) => {
+  console.log('내 기프티콘 등록');
+  try {
+    const res = await axiosAuthInstance.post('mygifticon/', gifticonArr[0], {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    console.log('기프티콘 등록 응답', res.data.data);
+    return res.data.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { fetchMyGifticon, AddGifticon };

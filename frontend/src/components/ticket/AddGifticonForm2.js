@@ -5,11 +5,12 @@ import SelectList from 'react-native-dropdown-select-list';
 
 import { GlobalStyles } from '../../constants/style';
 import { largeCategoryDict } from '../../constants/data/idDictionary';
-const AddGifticonForm = ({ idx, gifticon, isEnd, handleNext, handlePrev }) => {
+const AddGifticonForm2 = ({ gifticon, idx, isEnd, onPrev, onNext }) => {
   const [name, setName] = useState(null);
   const [expireDate, setExpireDate] = useState(null);
 
-  const [selected, setSelected] = useState('');
+  const [selected, setSelected] = useState();
+  const [selected2, setSelected2] = useState(+gifticon.category);
   const data = [
     {
       key: 0,
@@ -84,20 +85,13 @@ const AddGifticonForm = ({ idx, gifticon, isEnd, handleNext, handlePrev }) => {
       ),
     },
   ];
-
   const nextHandler = () => {
-    handleNext(idx, {
+    onNext(idx, {
       name: name || gifticon.name,
       expirationDate: expireDate || gifticon.expirationDate,
-      categoryId: selected,
+      categoryId: selected2,
     });
   };
-  useLayoutEffect(() => {
-    if (gifticon.categoryId) {
-      console.log('카테고리: ', gifticon.categoryId);
-      setSelected(gifticon.categoryId);
-    }
-  }, [idx]);
 
   return (
     <View style={styles.container}>
@@ -105,7 +99,7 @@ const AddGifticonForm = ({ idx, gifticon, isEnd, handleNext, handlePrev }) => {
         <View>
           <Text style={styles.title}>이름</Text>
           <TextInput
-            defaultValue={gifticon.name}
+            defaultValue={gifticon.text}
             style={styles.input}
             onChangeText={setName}
           />
@@ -114,7 +108,7 @@ const AddGifticonForm = ({ idx, gifticon, isEnd, handleNext, handlePrev }) => {
           <View style={{ flex: 2.5 }}>
             <Text style={styles.title}>유효기간</Text>
             <TextInput
-              defaultValue={gifticon.expirationDate}
+              defaultValue={gifticon.expireDate}
               style={styles.input}
               onChangeText={setExpireDate}
             />
@@ -126,7 +120,9 @@ const AddGifticonForm = ({ idx, gifticon, isEnd, handleNext, handlePrev }) => {
             <SelectList
               setSelected={setSelected}
               data={data}
-              // onSelect={() => alert(selected)}
+              onSelect={() => {
+                setSelected2(selected);
+              }}
               dropdownStyles={{
                 backgroundColor: '#fff',
                 position: 'absolute',
@@ -137,7 +133,7 @@ const AddGifticonForm = ({ idx, gifticon, isEnd, handleNext, handlePrev }) => {
               boxStyles={{
                 borderColor: 'red',
               }}
-              defaultOption={data[selected]}
+              defaultOption={data[+gifticon.category] || false}
             />
           </View>
         </View>
@@ -150,7 +146,7 @@ const AddGifticonForm = ({ idx, gifticon, isEnd, handleNext, handlePrev }) => {
         />
       </View>
       <View style={styles.buttonContainer}>
-        <Button mode="outlined" onPress={handlePrev}>
+        <Button mode="outlined" onPress={onPrev}>
           이전
         </Button>
         <Button mode="contained" onPress={nextHandler}>
@@ -161,7 +157,7 @@ const AddGifticonForm = ({ idx, gifticon, isEnd, handleNext, handlePrev }) => {
   );
 };
 
-export default AddGifticonForm;
+export default AddGifticonForm2;
 
 const styles = StyleSheet.create({
   container: {

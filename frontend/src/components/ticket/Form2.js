@@ -1,13 +1,12 @@
-import { View, Text, Image, TextInput, Pressable } from "react-native";
-import React, { useRef, useState } from "react";
-import { StyleSheet } from "react-native-web";
-import { GlobalStyles } from "../../constants/style";
+import { View, Text, Image, TextInput, Pressable } from 'react-native';
+import React, { useRef, useState } from 'react';
+import { StyleSheet } from 'react-native-web';
+import { GlobalStyles } from '../../constants/style';
 import ImagePicker from 'react-native-image-crop-picker';
-import { CropView } from "react-native-image-crop-tools";
 
-const Form2 = ({ info,originalImgPath, next, back }) => {
-  const [imagePath, setImagePath] = useState(info.imagePath)
-  const [picture, setPicture] = useState()
+const Form2 = ({ info, originalImgPath, next, back }) => {
+  const [imagePath, setImagePath] = useState(info.imagePath);
+  const [picture, setPicture] = useState();
 
   // const cropViewRef = useRef();
 
@@ -16,11 +15,10 @@ const Form2 = ({ info,originalImgPath, next, back }) => {
       path: originalImgPath,
       width: 280,
       height: 320,
-      freeStyleCropEnabled: true
-
-    }).then(image => {
-      console.log(image)
-      setImagePath(image.path)
+      freeStyleCropEnabled: true,
+    }).then((image) => {
+      console.log(image);
+      setImagePath(image.path);
     });
   };
 
@@ -30,18 +28,28 @@ const Form2 = ({ info,originalImgPath, next, back }) => {
   return (
     <View>
       <Text style={{ marginVertical: 5 }}>
-        {" "}
+        {' '}
         사진에 바코드와 일련번호가 나오지 않도록, 확인하시고 잘라 주세요. (2/3)
       </Text>
       <Pressable onPress={imgPress}>
         <Image style={styles.img} source={{ uri: imagePath }} />
       </Pressable>
       {/* 버튼 */}
-      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-        <Pressable style={styles.nextButton} onPress={()=>{back({imagePath})}}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <Pressable
+          style={styles.nextButton}
+          onPress={() => {
+            back({ imagePath });
+          }}
+        >
           <Text style={styles.buttonText}>이전</Text>
         </Pressable>
-        <Pressable style={styles.nextButton} onPress={()=>{next({imagePath})}}>
+        <Pressable
+          style={styles.nextButton}
+          onPress={() => {
+            next({ imagePath });
+          }}
+        >
           <Text style={styles.buttonText}>다음</Text>
         </Pressable>
       </View>
@@ -63,20 +71,20 @@ const styles = StyleSheet.create({
     // resizeMode: "center",
   },
   ticket: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignContent: "center",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignContent: 'center',
+    alignItems: 'center',
     borderWidth: 2,
     borderRadius: 5,
-    borderColor: "pink",
+    borderColor: 'pink',
     padding: 3,
     marginTop: 5,
   },
   price: {
     marginTop: 20,
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   input: {
     height: 30,
@@ -84,9 +92,9 @@ const styles = StyleSheet.create({
     // margin: 12,
     borderRadius: 10,
     borderWidth: 2,
-    borderColor: "red",
+    borderColor: 'red',
     paddingRight: 10,
-    textAlign: "right",
+    textAlign: 'right',
   },
   inputText: {
     height: 150,
@@ -94,16 +102,16 @@ const styles = StyleSheet.create({
     marginTop: 12,
     borderRadius: 10,
     borderWidth: 2,
-    borderColor: "red",
+    borderColor: 'red',
     padding: 5,
-    textAlignVertical: "top",
+    textAlignVertical: 'top',
     // textAlign: "left",
   },
   nextButton: {
     width: 120,
-    alignSelf: "center",
-    alignItems: "center",
-    justifyContent: "center",
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 20,
     paddingVertical: 12,
     paddingHorizontal: 32,
@@ -114,8 +122,8 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 20,
     lineHeight: 21,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     letterSpacing: 0.25,
-    color: "white",
+    color: 'white',
   },
 });

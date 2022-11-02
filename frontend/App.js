@@ -99,6 +99,7 @@ const MainTab = () => {
         component={LoginScreen2}
         options={{
           title: '로그인',
+          unmountOnBlur: true,
         }}
       />
       <Tab.Screen
@@ -106,6 +107,7 @@ const MainTab = () => {
         component={TestScreen}
         options={{
           title: '테스트',
+          unmountOnBlur: true,
         }}
       />
     </Tab.Navigator>

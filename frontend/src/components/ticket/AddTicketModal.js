@@ -2,27 +2,62 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Modal } from 'react-native';
 
 import AddGifticonForm from './AddGifticonForm';
+import AddGifticonForm2 from './AddGifticonForm2';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
+import { AddGifticon } from '../../api/gifticon';
+
 import { GlobalStyles } from '../../constants/style';
 
 const AddTicketModal = ({ gifticonList, visible, handleClose }) => {
   const [current, setCurrent] = useState(0);
   const [gifticonCopy, setGifticonCopy] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    setIsLoading(true);
-    setGifticonCopy(() => JSON.parse(JSON.stringify(gifticonList)));
-    setIsLoading(false);
-  }, [gifticonList]);
-  const handleSubmit = () => {
-    console.log('제출하려고합니다.');
-  };
-  const nextHandler = (idx, data) => {
-    if (current === gifticonList.length - 1) {
+  const [submitingGifticons, setSubmitingGifticons] = useState([]);
+  const [fetchedData, setFetchedData] = useState(null);
+
+  const handleNext = (idx, data) => {
+    console.log('인덱스: ', idx, '넘어온 데이터 ', data);
+
+    setFetchedData({ idx, data });
+
+    if (idx === gifticonList.length - 1) {
       handleSubmit();
     } else {
       setCurrent((prev) => prev + 1);
     }
+  };
+  const handlePrev = () => {
+    if (current > 0) {
+      setCurrent((prev) => prev - 1);
+    }
+  };
+  useEffect(() => {
+    if (!fetchedData) return;
+    const { data, idx } = fetchedData;
+    submitingGifticons[idx]
+      ? setSubmitingGifticons(() => {
+          const tmp = submitingGifticons.slice();
+          tmp[idx] = data;
+          return tmp;
+        })
+      : setSubmitingGifticons((prev) => [...prev, data]);
+    console.log(submitingGifticons);
+  }, [fetchedData]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    if (gifticonList) {
+      setGifticonCopy(() => gifticonList.map((item, index) => item));
+    }
+    setIsLoading(false);
+  }, [gifticonList]);
+
+  const handleSubmit = () => {
+    console.log('제출하려고합니다.');
+
+    (async () => {
+      const res = await AddGifticon(submitingGifticons);
+    })();
   };
 
   return (
@@ -43,18 +78,12 @@ const AddTicketModal = ({ gifticonList, visible, handleClose }) => {
         </View>
         <View style={styles.main}>
           {!isLoading && gifticonCopy && (
-            <AddGifticonForm
-              gifticon={gifticonCopy?.[current]}
+            <AddGifticonForm2
+              gifticon={submitingGifticons[current] || gifticonCopy[current]}
               idx={current}
-              isEnd={current == gifticonList.length - 1}
-              handleNext={nextHandler}
-              handlePrev={() => {
-                if (current === 0) {
-                  return;
-                } else {
-                  setCurrent((prev) => prev - 1);
-                }
-              }}
+              isEnd={current === gifticonCopy.length - 1}
+              onNext={handleNext}
+              onPrev={handlePrev}
             />
           )}
         </View>

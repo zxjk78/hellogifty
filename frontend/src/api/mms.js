@@ -44,8 +44,8 @@ const dummySendMMSImage = async (imageStringArr) => {
       brandName: 'Starbucks',
       brandImage:
         'https://mcdonough.com/wp-content/uploads/2020/09/starbucks-logo-png-transparent.png',
-      text: '[스타벅스] 아메리카노 1잔',
-      expireDate: '2022-12-12',
+      name: '[스타벅스] 아메리카노 1잔',
+      expirationDate: '2022-12-12',
       couponImg: imageStringArr[0],
     },
     {
@@ -53,8 +53,8 @@ const dummySendMMSImage = async (imageStringArr) => {
       brandName: 'Ediya',
       brandImage:
         'https://mblogthumb-phinf.pstatic.net/20160604_62/ppanppane_1465006723421ByIAd_PNG/%C0%CC%B5%F0%BE%DF%B7%CE%B0%ED_%282%29.png?type=w800',
-      text: '이디야 카페라떼 tall',
-      expireDate: '2022-12-22',
+      name: '이디야 카페라떼 tall',
+      expirationDate: '2022-12-22',
       couponImg: imageStringArr[12],
     },
   ];

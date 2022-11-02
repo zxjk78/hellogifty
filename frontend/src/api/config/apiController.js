@@ -81,49 +81,52 @@ axiosAuthInstance.interceptors.response.use(
       isTokenRefreshing = true;
 
       return new Promise(async (resolve, reject) => {
-        // console.log('accessToken 재발급 요청');
-        const accessToken = await AsyncStorage.getItem('accessToken');
-        axios
-          .post(
-            API_URL + 'reissue',
-            {
-              accessToken: accessToken,
-            },
-            { withCredentials: true }
-          )
-          .then(({ data }) => {
-            console.log('새 토큰 발급 완료');
+        console.log('accessToken 재발급 요청');
+        AsyncStorage.getItem('accessToken').then((token) => {
+          axios
+            .post(
+              API_URL + 'reissue',
+              {
+                accessToken: token,
+              },
+              { withCredentials: true }
+            )
+            .then(({ data }) => {
+              console.log('새 토큰 발급 완료');
 
-            const { accessToken: newToken, accessTokenExpireDate: newDate } =
-              data.data;
-            // 발급받으면 저장
-            AsyncStorage.setItem('accessToken', newToken);
-            // axiosAuthInstance.defaults는 사실 해줄필요 없긴할듯? request Interceptor에서 처리해주니까
-            axiosAuthInstance.defaults.headers.common['X-AUTH-TOKEN'] =
-              newToken;
-            // 원래 요청의 header를 새 토큰으로 변경한다
-            originalRequest.headers['X-AUTH-TOKEN'] = newToken;
-            // originalRequest.headers['Access-Control-Allow-Origin'] = API_URL;
-            originalRequest.withCredentials = true;
-            // 큐에 담긴 요청을 전부 다시 쏴주고, 지금 요청을 마지막으로 마무리한다.
-            processQueue(null, newToken);
-            resolve(axiosAuthInstance(originalRequest));
-          })
-          .catch((error) => {
-            processQueue(error, null);
-            reject(error);
-          })
-          .finally(() => {
-            //무조건 마지막 작업으로 플래그 내림
-            isTokenRefreshing = false;
-          });
+              const { accessToken: newToken, accessTokenExpireDate: newDate } =
+                data.data;
+              // 발급받으면 저장
+              AsyncStorage.setItem('accessToken', newToken);
+              // axiosAuthInstance.defaults는 사실 해줄필요 없긴할듯? request Interceptor에서 처리해주니까
+              axiosAuthInstance.defaults.headers.common['X-AUTH-TOKEN'] =
+                newToken;
+              // 원래 요청의 header를 새 토큰으로 변경한다
+              originalRequest.headers['X-AUTH-TOKEN'] = newToken;
+              // originalRequest.headers['Access-Control-Allow-Origin'] = API_URL;
+              originalRequest.withCredentials = true;
+              // 큐에 담긴 요청을 전부 다시 쏴주고, 지금 요청을 마지막으로 마무리한다.
+              processQueue(null, newToken);
+              resolve(axiosAuthInstance(originalRequest));
+            })
+            .catch((error) => {
+              console.log('토큰 발급과정에서 에러: ', error.response.data);
+              if (error.response.data.code === 1006) {
+                console.log('refresh token 만료, 로그아웃');
+                AsyncStorage.removeItem('accessToken');
+
+                failedQueue = [];
+                // window.location.reload();
+              }
+              processQueue(error, null);
+              reject(error);
+            })
+            .finally(() => {
+              //무조건 마지막 작업으로 플래그 내림
+              isTokenRefreshing = false;
+            });
+        });
       });
-    } else if (response.data.code === 1006) {
-      // console.log('refresh token 만료, 로그아웃');
-
-      AsyncStorage.removeItem('accessToken');
-      failedQueue = [];
-      // window.location.reload();
     }
 
     return Promise.reject(error);
