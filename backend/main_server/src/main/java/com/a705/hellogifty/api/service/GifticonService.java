@@ -5,7 +5,6 @@ import com.a705.hellogifty.api.domain.entity.User;
 import com.a705.hellogifty.api.dto.gifticon.GifticonDetailResponseDto;
 import com.a705.hellogifty.api.dto.gifticon.GifticonEditRequestDto;
 import com.a705.hellogifty.api.dto.gifticon.GifticonListResponseDto;
-import com.a705.hellogifty.api.dto.gifticon.GifticonRegisterRequestDto;
 import com.a705.hellogifty.api.repository.GifticonRepository;
 import com.a705.hellogifty.api.repository.SmallCategoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +32,7 @@ public class GifticonService {
         for (Gifticon gifticon : gifticonRepository.findByUserId(user.getId()).get()) {
             list.add(new GifticonListResponseDto(gifticon));
         }
-        System.out.println(list);
+
         return list;
     }
 
@@ -56,16 +55,19 @@ public class GifticonService {
     }
 
     @Transactional
-    public void myGifticonRegister(User user, GifticonRegisterRequestDto gifticonRegisterRequestDto) {
+    public void myGifticonRegister(User user, Short categoryId, String name, String expirationDate, String imgPath) {
+
+
         Gifticon gifticon = Gifticon.builder().user(user)
                 .smallCategory(null)
-                .name(gifticonRegisterRequestDto.getName())
+                .name(name)
                 .number("나중에연결")
-                .expirationDate(LocalDate.parse(gifticonRegisterRequestDto.getExpirationDate(), DateTimeFormatter.ISO_DATE))
+                .expirationDate(LocalDate.parse(expirationDate, DateTimeFormatter.ISO_DATE))
                 .isUsed(false)
-                .img("이미지경로나중에").build();
+                .img(imgPath).build();
 
         gifticonRepository.save(gifticon);
     }
+
 
 }

@@ -3,24 +3,23 @@ package com.a705.hellogifty.api.dto.trade_post;
 import com.a705.hellogifty.api.domain.entity.Gifticon;
 import com.a705.hellogifty.api.domain.entity.TradePost;
 import com.a705.hellogifty.api.domain.entity.User;
+import com.a705.hellogifty.api.domain.enums.TradeState;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TradePostListResponseDto {
+public class TradePostDetailResponseDto {
 
     private Long id;
 
-    private String userEamil;
-
-    private String gifticonName;
-
-    private String expirationDate;
+    private Long gifticonId;
 
     private String title;
 
@@ -28,17 +27,23 @@ public class TradePostListResponseDto {
 
     private Integer price;
 
-    private String img;
+    private User sellerInfo;
 
-    public TradePostListResponseDto(TradePost tradePost) {
+    private TradeState tradeState;
+
+    private LocalDate createdAt;
+
+    private LocalDate modifiedAt;
+
+    public TradePostDetailResponseDto(TradePost tradePost) {
         id = tradePost.getId();
-        userEamil = tradePost.getUser().getEmail();
-        gifticonName = tradePost.getGifticon().getName();
-        expirationDate = tradePost.getGifticon().getExpirationDate().toString();
+        gifticonId = tradePost.getGifticon().getId();
         title = tradePost.getTitle();
         content = tradePost.getContent();
         price = tradePost.getPrice();
-//        img = tradePost.getImg();
-
+        sellerInfo = tradePost.getUser();
+        tradeState = tradePost.getTradeState();
+        createdAt = tradePost.getCreatedAt();
+        modifiedAt = tradePost.getModifiedAt();
     }
 }
