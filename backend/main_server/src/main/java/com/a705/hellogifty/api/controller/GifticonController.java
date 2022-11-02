@@ -53,7 +53,7 @@ public class GifticonController {
     @PostMapping("/")
     public CommonResult myGifticonRegister(@ApiIgnore @LoginUser User loginUser, @RequestParam Short categoryId, @RequestParam String name, @RequestParam String expirationDate, @RequestPart MultipartFile multipartFile) throws IOException {
         String fileUploadNow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
-        String defaultPath = System.getProperty("user.dir")+File.separator;
+        String defaultPath = System.getProperty("user.dir")+File.separator+"static"+File.separator+"img"+File.separator+"gifticon"+File.separator;
         String originalImgName = multipartFile.getOriginalFilename();
         File img = new File(defaultPath+loginUser.getEmail()+"_"+fileUploadNow+"_"+originalImgName);
         multipartFile.transferTo(img);
