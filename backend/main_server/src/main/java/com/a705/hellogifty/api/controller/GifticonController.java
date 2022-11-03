@@ -8,6 +8,7 @@ import com.a705.hellogifty.api.dto.basic_response.OneResult;
 import com.a705.hellogifty.api.dto.gifticon.GifticonDetailResponseDto;
 import com.a705.hellogifty.api.dto.gifticon.GifticonEditRequestDto;
 import com.a705.hellogifty.api.dto.gifticon.GifticonListResponseDto;
+import com.a705.hellogifty.api.dto.gifticon.GifticonRegisterRequestDto;
 import com.a705.hellogifty.api.service.GifticonService;
 import com.a705.hellogifty.api.service.ResponseService;
 import io.swagger.annotations.Api;
@@ -48,14 +49,15 @@ public class GifticonController {
 
     @ApiOperation(value = "기프티콘 등록" , notes = "기프티콘 등록")
     @PostMapping("/")
-    public CommonResult myGifticonRegister(@ApiIgnore @LoginUser User loginUser, @RequestParam Short categoryId, @RequestParam String name, @RequestParam String expirationDate, @RequestPart MultipartFile multipartFile) throws IOException {
-        String fileUploadNow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+    public CommonResult myGifticonRegister(@ApiIgnore @LoginUser User loginUser, @ModelAttribute GifticonRegisterRequestDto gifticonRegisterRequestDto) throws IOException {
+        String fileUploadNow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
         String defaultPath = System.getProperty("user.dir")+File.separator+"static"+File.separator+"img"+File.separator+"gifticon"+File.separator;
-        String originalImgName = multipartFile.getOriginalFilename();
+        MultipartFile originalImg = gifticonRegisterRequestDto.getImg();
+        String originalImgName = originalImg.getOriginalFilename();
         File img = new File(defaultPath+loginUser.getEmail()+"_"+fileUploadNow+"_"+originalImgName);
-        multipartFile.transferTo(img);
+        originalImg.transferTo(img);
 
-        gifticonService.myGifticonRegister(loginUser, categoryId, name, expirationDate, img.getPath());
+        gifticonService.myGifticonRegister(loginUser, gifticonRegisterRequestDto, img);
         return responseService.getSuccessResult();
     }
 
