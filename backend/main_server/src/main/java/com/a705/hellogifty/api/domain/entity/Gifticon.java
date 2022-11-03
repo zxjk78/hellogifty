@@ -38,6 +38,6 @@ public class Gifticon extends BaseEntity {
         this.name = gifticonEditRequestDto.getName();
         this.number = gifticonEditRequestDto.getNumber();
         this.expirationDate = gifticonEditRequestDto.getExpirationDate();
-//        this.smallCategory = gifticonEditRequestDto.getSmallCategory();
+        this.smallCategory = gifticonEditRequestDto.getSmallCategory();
     }
 }

@@ -17,6 +17,6 @@ public class GifticonEditRequestDto {
 
     private LocalDate expirationDate;
 
-//    private SmallCategory smallCategory;
+    private SmallCategory smallCategory;
 
 }
