@@ -1,3 +1,4 @@
+import { Blob } from 'buffer';
 import { NativeModules } from 'react-native';
 // 이미지 코드 받아오는 함수
 export async function convertImageUri(imgId = 2404) {
@@ -34,11 +35,36 @@ export async function getAllMMSAfterAccess(id = 1000, callback) {
   }
 }
 
+// export function base64toFile(base_data, filename) {
+//   let n = base_data.length;
+//   const u8arr = new Uint8Array(n);
+//   while (n--) {
+//     u8arr[n] = base_data.charCodeAt(n);
+//   }
+//   return new File([u8arr], filename, { type: 'image/jpeg' });
+// }
+
+// base64 -> blob -> file 되는지
 export function base64toFile(base_data, filename) {
-  let n = base_data.length;
-  const u8arr = new Uint8Array(n);
+  const byteArray = Uint8Array(base_data);
+  const blob = new Blob([byteArray]);
+
+  console.log('blob: ', blob);
+  const file = new File(blob, filename, { type: 'image/jpeg' });
+}
+
+// 안됨
+function dataURLtoFile(dataurl, filename) {
+  const dataurl2 = 'data:image/jpeg;base64,' + dataurl;
+  const arr = dataurl2.split(','),
+    mime = arr[0].match(/:(.*?);/)[1],
+    bstr = atob(arr[1]),
+    n = bstr.length,
+    u8arr = new Uint8Array(n);
+
   while (n--) {
-    u8arr[n] = base_data.charCodeAt(n);
+    u8arr[n] = bstr.charCodeAt(n);
   }
-  return new File([u8arr], filename, { type: 'image/jpeg' });
+
+  return new File([u8arr], filename, { type: mime });
 }

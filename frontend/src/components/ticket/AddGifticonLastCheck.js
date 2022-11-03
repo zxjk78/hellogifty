@@ -46,7 +46,7 @@ const AddGifticonLastCheck = ({ gifticonArr }) => {
     <View style={{}}>
       <Text>마지막으로 확인하시고 저장 버튼을 눌러 주세요.</Text>
       {gifticonArr.map((item, index) => (
-        <LastCheckItem item={item} idx={index} />
+        <LastCheckItem item={item} idx={index} key={item.id} />
       ))}
       <Button title="제출" onPress={handleSubmit} />
     </View>

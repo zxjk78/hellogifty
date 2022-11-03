@@ -261,7 +261,6 @@ public class MMSReadModule extends ReactContextBaseJavaModule {
                         JSONObject json = new JSONObject();
 
                         json.put("byteArray", Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT));
-
                         jsons.put(json);
 
                     }

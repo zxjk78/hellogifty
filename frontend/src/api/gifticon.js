@@ -21,6 +21,8 @@ const AddGifticon = async (gifticonArr) => {
     formData.append('categoryId', 1);
     formData.append('name', item.name);
     formData.append('expirationDate', item.expirationDate);
+
+    // base64를 file로 변환
     const tmpImage = base64toFile(item.couponImg, index + '.jpg');
     console.log(tmpImage);
     formData.append('img', tmpImage);
@@ -28,18 +30,6 @@ const AddGifticon = async (gifticonArr) => {
     return formData;
   });
   console.log('변형된 배열', gifticonArr2[0]);
-  try {
-    const res = await axiosAuthInstance.post('mygifticon/', gifticonArr2[0], {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-
-    console.log('기프티콘 등록 응답', res.data.data);
-    return res.data.data;
-  } catch (error) {
-    console.log(error);
-  }
 };
 
 export { fetchMyGifticon, AddGifticon };
