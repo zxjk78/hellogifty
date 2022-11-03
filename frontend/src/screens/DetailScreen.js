@@ -8,11 +8,12 @@ const DetailScreen = ({ route }) => {
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
+  const [imgVisible, setImgVisible] = useState(false);
 
   const showToast = () => {
     Toast.show({
       type: 'success',
-      text1: `😊 ${item.name} 사용을 완료되었습니다.✔️`,
+      text1: `😊 ${item.name} 사용이 완료되었습니다.✔️`,
       position: 'top',
       visibilityTime: 4000,
       topOffset: 10,
@@ -33,6 +34,9 @@ const DetailScreen = ({ route }) => {
     });
   };
 
+  const handleImg = () => {
+    setImgVisible(!imgVisible)
+  }
 
   const uesd = () => {
     showToast();
@@ -124,13 +128,35 @@ const DetailScreen = ({ route }) => {
         </View>
       </Modal>
 
+      {/* Image */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={imgVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setImgVisible(!imgVisible);
+        }}
+      >
+        <Pressable onPress={handleImg} style={styles.imgModal}>
+          <Image style={styles.bigImg} source={require("../assets/starbucks.jpg")} />
+        </Pressable>
+      </Modal>
+
       {/* Main */}
       <View style={{ flex: 8 }}>
-        <Text>DetailScreen</Text>
-        <Image style={styles.img} source={require("../assets/starbucks.jpg")} />
-        <Text>{item.id}</Text>
-        <Text>{item.name}</Text>
-        <Text>{item.expirationDate}</Text>
+        <Pressable onPress={handleImg}>
+          <Image style={styles.img} source={require("../assets/starbucks.jpg")} />
+          <Text style={{alignSelf: 'center', color: 'grey', fontSize: 15}}>이미지를 클릭해 확대할 수 있습니다.</Text>
+        </Pressable>
+        <View style={{marginTop: 30, alignItems: 'center'}}>
+          <Text style={{fontSize: 15}}>{item.brandName}</Text>
+          <Text style={{fontSize: 20}}>{item.name}</Text>
+          <Text>유효기간 <Text style={{fontWeight: 'bold'}}>{item.expirationDate}</Text> 까지</Text>
+        </View>
+      </View>
+      <View style={{flex: 1}}>
+        <Text style={{fontSize: 18}}>사용 후 <Text style={{color: '#84dcc6'}}>사용 완료</Text> 버튼을 눌러주세요.</Text>
       </View>
       <View style={{ flex: 1 }}>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
@@ -139,7 +165,7 @@ const DetailScreen = ({ route }) => {
             onPress={() => setModalVisible2(true)}
             android_ripple={{ color: "#ff686b" }}
           >
-            <Text>삭제</Text>
+            <Text style={{color: "#ff686b"}}>삭제</Text>
           </Pressable>
           <Pressable
             style={styles.usedButton}
@@ -162,14 +188,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   img: {
-    height: 100,
-    width: 100,
-    marginHorizontal: "auto",
+    width: 320,
+    height: 350,
+    padding: 10,
+    margin: 10,
+    resizeMode: 'contain',
   },
   deleteButton: {
-    // position: 'absolute',
-    // bottom: 0,
-    // left: 0,
     width: 80,
     height: 50,
     margin: 5,
@@ -181,9 +206,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   usedButton: {
-    // position: 'absolute',
-    // bottom: 0,
-    // right: 0,
     width: 280,
     height: 50,
     margin: 5,
@@ -238,4 +260,18 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: "center",
   },
+  // imgModal
+  imgModal: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'black'
+  },
+  bigImg: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain',
+  }
 });
