@@ -57,8 +57,8 @@ const MyCouponScreen = () => {
     {
       id: 5,
       categoryId: 3,
-      name: '코코아',
-      expirationDate: '2022-11-15',
+      name: '코코코아',
+      expirationDate: '2022-11-18',
       isUsed: 0,
       isOnTrade: 0,
       brandName: 'T&T',

@@ -1,6 +1,12 @@
-import { View, Text, Image, TextInput, Pressable } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  TextInput,
+  Pressable,
+  StyleSheet,
+} from 'react-native';
 import React, { useRef, useState } from 'react';
-import { StyleSheet } from 'react-native-web';
 import { GlobalStyles } from '../../constants/style';
 import ImagePicker from 'react-native-image-crop-picker';
 
@@ -14,10 +20,9 @@ const Form2 = ({ info, originalImgPath, next, back }) => {
     ImagePicker.openCropper({
       path: originalImgPath,
       width: 280,
-      height: 320,
+      height: 351,
       freeStyleCropEnabled: true,
     }).then((image) => {
-      console.log(image);
       setImagePath(image.path);
     });
   };
@@ -29,7 +34,10 @@ const Form2 = ({ info, originalImgPath, next, back }) => {
     <View>
       <Text style={{ marginVertical: 5 }}>
         {' '}
-        사진에 바코드와 일련번호가 나오지 않도록, 확인하시고 잘라 주세요. (2/3)
+        <Text>사진에 </Text>
+        <Text style={{ fontSize: 15, fontWeight: 'bold' }}>바코드</Text>와{' '}
+        <Text style={{ fontSize: 15, fontWeight: 'bold' }}>일련번호</Text>가
+        나오지 않도록, 확인하시고 잘라 주세요. (2/3)
       </Text>
       <Pressable onPress={imgPress}>
         <Image style={styles.img} source={{ uri: imagePath }} />
@@ -60,14 +68,9 @@ const Form2 = ({ info, originalImgPath, next, back }) => {
 export default Form2;
 
 const styles = StyleSheet.create({
-  // cropView: {
-  //   width: 500,
-  //   height: 500,
-  //   backgroundColor: "red",
-  // },
   img: {
     width: 280,
-    height: 320,
+    height: 351,
     // resizeMode: "center",
   },
   ticket: {

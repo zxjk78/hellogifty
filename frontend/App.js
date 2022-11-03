@@ -31,6 +31,7 @@ import {
 } from './src/screens';
 import Practice from './src/components/Practice';
 import { GlobalStyles } from './src/constants/style';
+import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message';
 // import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
@@ -39,6 +40,48 @@ import { GlobalStyles } from './src/constants/style';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 // const TopTab = createMaterialTopTabNavigator();
+
+// Toast Message
+const toastConfig = {
+  success: (props) => (
+    <BaseToast
+      {...props}
+      style={{
+        borderLeftColor: '#9ED5C5',
+        backgroundColor: '#cef2e7',
+        width: '100%',
+      }}
+      contentContainerStyle={{ paddingHorizontal: 15 }}
+      text1Style={{
+        fontSize: 18,
+        fontWeight: '400',
+        color: 'black',
+      }}
+    />
+  ),
+  error: (props) => (
+    <ErrorToast
+      {...props}
+      style={{
+        borderLeftColor: '#ff686b',
+        backgroundColor: '#ffa69e',
+        width: '100%',
+      }}
+      contentContainerStyle={{ paddingHorizontal: 15 }}
+      text1Style={{
+        fontSize: 18,
+        fontWeight: '400',
+        color: 'black',
+      }}
+    />
+  ),
+  tomatoToast: ({ text1, props }) => (
+    <View style={{ height: 60, width: '100%', backgroundColor: 'tomato' }}>
+      <Text>{text1}</Text>
+      <Text>{props.uuid}</Text>
+    </View>
+  ),
+};
 
 // tab
 const MainTab = () => {
@@ -107,7 +150,6 @@ const MainTab = () => {
         component={TestScreen}
         options={{
           title: '테스트',
-          unmountOnBlur: true,
         }}
       />
     </Tab.Navigator>
@@ -115,13 +157,16 @@ const MainTab = () => {
 };
 const MyCoupon = () => {
   return (
-    <Stack.Navigator
-      initialRouteName="MyCouponScreen"
-      screenOptions={{ headerShown: false }}
-    >
-      <Stack.Screen name="MyCouponScreen" component={MyCouponScreen} />
-      <Stack.Screen name="DetailScreen" component={DetailScreen} />
-    </Stack.Navigator>
+    <>
+      <Stack.Navigator
+        initialRouteName="MyCouponScreen"
+        screenOptions={{ headerShown: false }}
+      >
+        <Stack.Screen name="MyCouponScreen" component={MyCouponScreen} />
+        <Stack.Screen name="DetailScreen" component={DetailScreen} />
+      </Stack.Navigator>
+      <Toast config={toastConfig} />
+    </>
   );
 };
 
@@ -139,7 +184,6 @@ const App = () => {
         <Stack.Screen name="DetailScreen" component={DetailScreen} />
       </Stack.Navigator>
     </NavigationContainer>
-    // </View>
   );
 };
 

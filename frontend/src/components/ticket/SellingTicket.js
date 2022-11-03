@@ -10,45 +10,68 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
+import Toast from "react-native-toast-message";
 import { GlobalStyles } from "../../constants/style";
 import Form1 from "./Form1";
 import Form2 from "./Form2";
+import Form3 from "./Form3";
 
 const SellingTicket = ({ onClose, item }) => {
   const [modalVisible, setModalVisible] = useState(true);
   const [formIdx, setFormIdx] = useState(0);
 
   // 임시
-  const uri = "https://mblogthumb-phinf.pstatic.net/MjAxODA5MjhfMjI3/MDAxNTM4MTQwNjMzNzI5.c7ZF7CxdxBkwou-yz5d4JnsF1mUGeNyBKd6cM28I4Ikg.sxZ2LGLrc9sC3NBGqpAE4XqHRyFVAZJks-MRwUOShP8g.JPEG.zoqgns7549/KakaoTalk_20180928_220601336.jpg?type=w800"
-  const [sellingInfo , setSellingInfo] = useState({
-    price:0, 
-    description:"",
+  const uri =
+    "https://mblogthumb-phinf.pstatic.net/MjAxODA5MjhfMjI3/MDAxNTM4MTQwNjMzNzI5.c7ZF7CxdxBkwou-yz5d4JnsF1mUGeNyBKd6cM28I4Ikg.sxZ2LGLrc9sC3NBGqpAE4XqHRyFVAZJks-MRwUOShP8g.JPEG.zoqgns7549/KakaoTalk_20180928_220601336.jpg?type=w800";
+
+  const showToast = () => {
+    Toast.show({
+      type: 'success',
+      text1: `😊 ${item.name} 판매 등록이 완료되었습니다.✔️`,
+      position: 'top',
+      visibilityTime: 4000,
+      topOffset: 10,
+      // onShow: () => {},
+      // onHide: () => {},
+    });
+  };
+
+  const [sellingInfo, setSellingInfo] = useState({
+    price: 0,
+    title: "",
+    description: "",
     imagePath: uri,
-    item: item
-  })
+    item: item,
+  });
 
   const next = (data) => {
     setSellingInfo((prev) => {
-      return {...prev, ...data}
-    })
-    setFormIdx((prev) => prev + 1)
+      return { ...prev, ...data };
+    });
+    setFormIdx((prev) => prev + 1);
   };
 
   const back = (data) => {
     setSellingInfo((prev) => {
-      return {...prev, ...data}
-    })
-    setFormIdx((prev) => prev - 1)
+      return { ...prev, ...data };
+    });
+    setFormIdx((prev) => prev - 1);
   };
 
-  const check = () => {
-    console.log(sellingInfo)
-  }
+  // 서버로 데이터 보내기
+  const finish = () => {
+    showToast();
+    setModalVisible(false);
+  };
 
-  const formArray = [<Form1 next={next} info={sellingInfo}/>, <Form2 next={next} back={back} originalImgPath={uri} info={sellingInfo}/>]
+  const formArray = [
+    <Form1 next={next} info={sellingInfo} />,
+    <Form2 next={next} back={back} originalImgPath={uri} info={sellingInfo} />,
+    <Form3 back={back} finish={finish} info={sellingInfo} />,
+  ];
 
   return (
-    <View style={{ backgroundColor: "blue" }}>
+    <View>
       <Modal
         animationType="slide"
         transparent={true}
@@ -79,12 +102,6 @@ const SellingTicket = ({ onClose, item }) => {
           </View>
         </View>
       </Modal>
-      <Pressable
-        style={[styles.button, styles.buttonOpen]}
-        // onPress={() => setModalVisible(true)}
-      >
-        {/* <Text style={styles.textStyle}>Modal</Text> */}
-      </Pressable>
     </View>
   );
 };
@@ -101,6 +118,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 40,
+    // backgroundColor: 'green'
   },
   modalView: {
     height: 550,
