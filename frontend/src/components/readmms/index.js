@@ -1,3 +1,3 @@
-import ReadMMSStatusBar from './ReadMMSStatusBar';
-
-export { ReadMMSStatusBar };
+// import ReadMMSStatusBar from './ReadMMSStatusBar';
+import ReadMMSComponent from './ReadMMSComponent';
+export { ReadMMSComponent };

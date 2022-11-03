@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Modal } from 'react-native';
 
-import AddGifticonForm from './AddGifticonForm';
 import AddGifticonForm2 from './AddGifticonForm2';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import { AddGifticon } from '../../api/gifticon';
