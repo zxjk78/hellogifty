@@ -15,7 +15,7 @@ public class SmallCategory {
     @Column(length = 40)
     private String name;
 
-    private String brandImgPath;
+    private String brandImgName;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "large_category_id")

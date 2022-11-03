@@ -28,11 +28,11 @@ public class GifticonService {
     @Transactional
     public List<GifticonListResponseDto> myAllGifticon(User user) {
 
-
+        String defaultPath = System.getProperty("user.dir")+File.separator+"static"+File.separator+"img"+File.separator+"brandImg"+File.separator;
         List<GifticonListResponseDto> list = new ArrayList<>();
 
         for (Gifticon gifticon : gifticonRepository.findByUserId(user.getId()).get()) {
-            list.add(new GifticonListResponseDto(gifticon));
+            list.add(new GifticonListResponseDto(gifticon, defaultPath));
         }
 
         return list;
@@ -61,7 +61,7 @@ public class GifticonService {
 
 
         Gifticon gifticon = Gifticon.builder().user(user)
-                .smallCategory(null)
+                .smallCategory(smallCategoryRepository.findById(gifticonRegisterRequestDto.getCategoryId()).get())
                 .name(gifticonRegisterRequestDto.getName())
                 .number("나중에연결")
                 .expirationDate(LocalDate.parse(gifticonRegisterRequestDto.getExpirationDate(), DateTimeFormatter.ISO_DATE))
