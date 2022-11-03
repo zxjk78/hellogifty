@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,14 +7,14 @@ import {
   Image,
   NativeModules,
   ActivityIndicator,
-} from 'react-native';
+} from "react-native";
 // navigator
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
-import 'react-native-gesture-handler';
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
+import "react-native-gesture-handler";
 // external components
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import Ionicons from "react-native-vector-icons/Ionicons";
 // custom components
 import {
   MyTicketScreen,
@@ -28,9 +28,10 @@ import {
   ChatRoomScreen,
   MyCouponScreen,
   LoginScreen2,
-} from './src/screens';
-import Practice from './src/components/Practice';
-import { GlobalStyles } from './src/constants/style';
+} from "./src/screens";
+import Practice from "./src/components/Practice";
+import { GlobalStyles } from "./src/constants/style";
+import Toast, {BaseToast, ErrorToast} from 'react-native-toast-message';
 // import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
@@ -39,6 +40,40 @@ import { GlobalStyles } from './src/constants/style';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 // const TopTab = createMaterialTopTabNavigator();
+
+// Toast Message
+const toastConfig = {
+  success: (props) => (
+    <BaseToast
+      {...props}
+      style={{ borderLeftColor: '#9ED5C5', backgroundColor: '#cef2e7', width: '100%' }}
+      contentContainerStyle={{ paddingHorizontal: 15 }}
+      text1Style={{
+        fontSize: 18,
+        fontWeight: '400',
+        color: 'black'
+      }}
+    />
+  ),
+  error: (props) => (
+    <ErrorToast
+      {...props}
+      style={{ borderLeftColor: '#ff686b', backgroundColor: '#ffa69e', width: '100%' }}
+      contentContainerStyle={{ paddingHorizontal: 15 }}
+      text1Style={{
+        fontSize: 18,
+        fontWeight: '400',
+        color: 'black'
+      }}
+    />
+  ),
+  tomatoToast: ({ text1, props }) => (
+    <View style={{ height: 60, width: '100%', backgroundColor: 'tomato' }}>
+      <Text>{text1}</Text>
+      <Text>{props.uuid}</Text>
+    </View>
+  )
+};
 
 // tab
 const MainTab = () => {
@@ -49,63 +84,63 @@ const MainTab = () => {
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
-          if (route.name === 'MyCoupon') {
-            iconName = focused ? 'home' : 'home-outline';
-          } else if (route.name === 'Shopping') {
-            iconName = focused ? 'cart' : 'cart-outline';
-          } else if (route.name === 'Chat') {
-            iconName = focused ? 'chatbubble-sharp' : 'chatbubble-outline';
-          } else if (route.name === 'Profile') {
-            iconName = focused ? 'person-circle' : 'person-circle-outline';
+          if (route.name === "MyCoupon") {
+            iconName = focused ? "home" : "home-outline";
+          } else if (route.name === "Shopping") {
+            iconName = focused ? "cart" : "cart-outline";
+          } else if (route.name === "Chat") {
+            iconName = focused ? "chatbubble-sharp" : "chatbubble-outline";
+          } else if (route.name === "Profile") {
+            iconName = focused ? "person-circle" : "person-circle-outline";
           }
 
           // You can return any component that you like here!
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: 'tomato',
-        tabBarInactiveTintColor: 'black',
+        tabBarActiveTintColor: "tomato",
+        tabBarInactiveTintColor: "black",
       })}
     >
       <Tab.Screen
         name="MyCoupon"
         component={MyCoupon}
         options={{
-          title: '내 쿠폰',
+          title: "내 쿠폰",
         }}
       />
       <Tab.Screen
         name="Shopping"
         component={SearchScreen}
         options={{
-          title: '쇼핑',
+          title: "쇼핑",
         }}
       />
       <Tab.Screen
         name="Chat"
         component={SearchScreen}
         options={{
-          title: '채팅창',
+          title: "채팅창",
         }}
       />
       <Tab.Screen
         name="Profile"
         component={SearchScreen}
         options={{
-          title: '프로필',
+          title: "프로필",
         }}
       />
       <Tab.Screen
         name="login"
         component={LoginScreen2}
         options={{
-          title: '로그인',
+          title: "로그인",
         }}
       />
       <Tab.Screen
         name="test"
         component={TestScreen}
         options={{
-          title: '테스트',
+          title: "테스트",
         }}
       />
     </Tab.Navigator>
@@ -113,13 +148,16 @@ const MainTab = () => {
 };
 const MyCoupon = () => {
   return (
-    <Stack.Navigator
-      initialRouteName="MyCouponScreen"
-      screenOptions={{ headerShown: false }}
-    >
-      <Stack.Screen name="MyCouponScreen" component={MyCouponScreen} />
-      <Stack.Screen name="DetailScreen" component={DetailScreen} />
-    </Stack.Navigator>
+    <>
+      <Stack.Navigator
+        initialRouteName="MyCouponScreen"
+        screenOptions={{ headerShown: false }}
+      >
+        <Stack.Screen name="MyCouponScreen" component={MyCouponScreen} />
+        <Stack.Screen name="DetailScreen" component={DetailScreen} />
+      </Stack.Navigator>
+      <Toast config={toastConfig}/>
+    </>
   );
 };
 
@@ -137,7 +175,6 @@ const App = () => {
         <Stack.Screen name="DetailScreen" component={DetailScreen} />
       </Stack.Navigator>
     </NavigationContainer>
-    // </View>
   );
 };
 

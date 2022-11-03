@@ -30,6 +30,8 @@ const TicketListItem = (item) => {
   const [sellModal, setSellModal] = useState(false);
   const [position, setPosition] = useState({x: 100, y: 100})
 
+
+
   const goSell = () => {
     setModalVisible(false);
     setSellModal(true);
