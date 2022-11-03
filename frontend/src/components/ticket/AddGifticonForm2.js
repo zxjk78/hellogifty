@@ -7,7 +7,7 @@ import { GlobalStyles } from '../../constants/style';
 import { largeCategoryDict } from '../../constants/data/idDictionary';
 const AddGifticonForm2 = ({ gifticon, idx, isEnd, onPrev, onNext }) => {
   const [name, setName] = useState(null);
-  const [expireDate, setExpireDate] = useState(null);
+  const [expirationDate, setExpirationDate] = useState(null);
 
   const [selected, setSelected] = useState();
   const [selected2, setSelected2] = useState(+gifticon.category);
@@ -88,8 +88,9 @@ const AddGifticonForm2 = ({ gifticon, idx, isEnd, onPrev, onNext }) => {
   const nextHandler = () => {
     onNext(idx, {
       name: name || gifticon.name,
-      expirationDate: expireDate || gifticon.expirationDate,
+      expirationDate: expirationDate || gifticon.expirationDate,
       categoryId: selected2,
+      couponImg: gifticon.couponImg,
     });
   };
 
@@ -99,7 +100,7 @@ const AddGifticonForm2 = ({ gifticon, idx, isEnd, onPrev, onNext }) => {
         <View>
           <Text style={styles.title}>이름</Text>
           <TextInput
-            defaultValue={gifticon.text}
+            defaultValue={gifticon.name}
             style={styles.input}
             onChangeText={setName}
           />
@@ -108,9 +109,9 @@ const AddGifticonForm2 = ({ gifticon, idx, isEnd, onPrev, onNext }) => {
           <View style={{ flex: 2.5 }}>
             <Text style={styles.title}>유효기간</Text>
             <TextInput
-              defaultValue={gifticon.expireDate}
+              defaultValue={gifticon.expirationDate}
               style={styles.input}
-              onChangeText={setExpireDate}
+              onChangeText={setExpirationDate}
             />
           </View>
 

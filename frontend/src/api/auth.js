@@ -5,9 +5,9 @@ const login = async (email, password) => {
   try {
     const res = await axiosCommonInstance.post('login', { email, password });
     console.log('로그인 응답: ', res.data.data);
-    const { accessToken } = res.data.data;
+    const { accessToken, refreshToken } = res.data.data;
 
-    return accessToken;
+    return { accessToken, refreshToken };
   } catch (error) {
     console.error(error);
   }

@@ -28,8 +28,9 @@ const LoginScreen2 = () => {
   };
   const handleLogin = () => {
     (async () => {
-      const accessToken = await login(id, password);
+      const { accessToken, refreshToken } = await login(id, password);
       await AsyncStorage.setItem('accessToken', accessToken);
+      await AsyncStorage.setItem('refreshToken', refreshToken);
       console.log('엑세스토큰: ', await AsyncStorage.getItem('accessToken'));
     })();
   };

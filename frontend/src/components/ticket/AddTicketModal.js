@@ -5,7 +5,7 @@ import AddGifticonForm from './AddGifticonForm';
 import AddGifticonForm2 from './AddGifticonForm2';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import { AddGifticon } from '../../api/gifticon';
-
+import AddGifticonLastCheck from './AddGifticonLastCheck';
 import { GlobalStyles } from '../../constants/style';
 
 const AddTicketModal = ({ gifticonList, visible, handleClose }) => {
@@ -16,12 +16,13 @@ const AddTicketModal = ({ gifticonList, visible, handleClose }) => {
   const [fetchedData, setFetchedData] = useState(null);
 
   const handleNext = (idx, data) => {
-    console.log('인덱스: ', idx, '넘어온 데이터 ', data);
+    // console.log('인덱스: ', idx, '넘어온 데이터 ', data);
 
     setFetchedData({ idx, data });
 
     if (idx === gifticonList.length - 1) {
-      handleSubmit();
+      setCurrent((prev) => prev + 1);
+      // handleSubmit();
     } else {
       setCurrent((prev) => prev + 1);
     }
@@ -41,7 +42,7 @@ const AddTicketModal = ({ gifticonList, visible, handleClose }) => {
           return tmp;
         })
       : setSubmitingGifticons((prev) => [...prev, data]);
-    console.log(submitingGifticons);
+    // console.log(submitingGifticons);
   }, [fetchedData]);
 
   useEffect(() => {
@@ -51,6 +52,10 @@ const AddTicketModal = ({ gifticonList, visible, handleClose }) => {
     }
     setIsLoading(false);
   }, [gifticonList]);
+
+  const lastCheck = () => {
+    console.log('마지막으로 확인합니다.');
+  };
 
   const handleSubmit = () => {
     console.log('제출하려고합니다.');
@@ -65,9 +70,13 @@ const AddTicketModal = ({ gifticonList, visible, handleClose }) => {
       <View style={styles.container}>
         <View style={styles.headerContainer}>
           <View style={styles.header}>
-            <Text style={styles.title}>
-              {`기프티콘 등록 (${current + 1} / ${gifticonList?.length})`}
-            </Text>
+            {gifticonCopy && (
+              <Text style={styles.title}>
+                {current < gifticonCopy.length
+                  ? `기프티콘 등록 (${current + 1} / ${gifticonCopy?.length})`
+                  : '마지막 점검'}
+              </Text>
+            )}
             <AntDesignIcon
               name={'close'}
               size={30}
@@ -77,15 +86,19 @@ const AddTicketModal = ({ gifticonList, visible, handleClose }) => {
           </View>
         </View>
         <View style={styles.main}>
-          {!isLoading && gifticonCopy && (
-            <AddGifticonForm2
-              gifticon={submitingGifticons[current] || gifticonCopy[current]}
-              idx={current}
-              isEnd={current === gifticonCopy.length - 1}
-              onNext={handleNext}
-              onPrev={handlePrev}
-            />
-          )}
+          {!isLoading &&
+            gifticonCopy &&
+            (current === gifticonCopy.length ? (
+              <AddGifticonLastCheck gifticonArr={submitingGifticons} />
+            ) : (
+              <AddGifticonForm2
+                gifticon={submitingGifticons[current] || gifticonCopy[current]}
+                idx={current}
+                isEnd={current === gifticonCopy.length - 1}
+                onNext={handleNext}
+                onPrev={handlePrev}
+              />
+            ))}
         </View>
       </View>
     </Modal>

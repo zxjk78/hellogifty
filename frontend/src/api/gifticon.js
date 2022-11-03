@@ -14,6 +14,8 @@ const fetchMyGifticon = async () => {
 
 const AddGifticon = async (gifticonArr) => {
   console.log('내 기프티콘 등록');
+  // 이미지 url을 이미지 file로 변환시켜야 함
+
   try {
     const res = await axiosAuthInstance.post('mygifticon/', gifticonArr[0], {
       headers: {
