@@ -1,11 +1,9 @@
 package com.a705.hellogifty.api.service;
 
 import com.a705.hellogifty.api.domain.entity.Gifticon;
+import com.a705.hellogifty.api.domain.entity.SmallCategory;
 import com.a705.hellogifty.api.domain.entity.User;
-import com.a705.hellogifty.api.dto.gifticon.GifticonDetailResponseDto;
-import com.a705.hellogifty.api.dto.gifticon.GifticonEditRequestDto;
-import com.a705.hellogifty.api.dto.gifticon.GifticonListResponseDto;
-import com.a705.hellogifty.api.dto.gifticon.GifticonRegisterRequestDto;
+import com.a705.hellogifty.api.dto.gifticon.*;
 import com.a705.hellogifty.api.repository.GifticonRepository;
 import com.a705.hellogifty.api.repository.SmallCategoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -48,7 +46,9 @@ public class GifticonService {
     @Transactional
     public void myGifticonEdit(User user, Long gifticonId, GifticonEditRequestDto gifticonEditRequestDto) {
         Gifticon gifticon = gifticonRepository.findById(gifticonId).get();
-        gifticon.update(gifticonEditRequestDto);
+        SmallCategory smallCategory = smallCategoryRepository.findById(gifticonEditRequestDto.getSmallCategoryId()).get();
+        GifticonEditDto gifticonEditDto = new GifticonEditDto(gifticonEditRequestDto, smallCategory);
+        gifticon.update(gifticonEditDto);
     }
 
     @Transactional

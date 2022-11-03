@@ -1,5 +1,6 @@
 package com.a705.hellogifty.api.domain.entity;
 
+import com.a705.hellogifty.api.dto.gifticon.GifticonEditDto;
 import com.a705.hellogifty.api.dto.gifticon.GifticonEditRequestDto;
 import lombok.*;
 
@@ -34,10 +35,11 @@ public class Gifticon extends BaseEntity {
     @Column(length = 300)
     private String img;
 
-    public void update(GifticonEditRequestDto gifticonEditRequestDto) {
-        this.name = gifticonEditRequestDto.getName();
-        this.number = gifticonEditRequestDto.getNumber();
-        this.expirationDate = gifticonEditRequestDto.getExpirationDate();
-        this.smallCategory = gifticonEditRequestDto.getSmallCategory();
+    public void update(GifticonEditDto gifticonEditDto) {
+        this.name = gifticonEditDto.getName();
+        this.number = gifticonEditDto.getNumber();
+        this.expirationDate = gifticonEditDto.getExpirationDate();
+        this.smallCategory = gifticonEditDto.getSmallCategory();
     }
 }
+
