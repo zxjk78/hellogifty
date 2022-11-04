@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Modal } from 'react-native';
 
-import AddGifticonForm2 from './AddGifticonForm2';
+import AddGifticonForm from './AddGifticonForm';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import { AddGifticon } from '../../api/gifticon';
 import AddGifticonLastCheck from './AddGifticonLastCheck';
@@ -90,7 +90,7 @@ const AddTicketModal = ({ gifticonList, visible, handleClose }) => {
             (current === gifticonCopy.length ? (
               <AddGifticonLastCheck gifticonArr={submitingGifticons} />
             ) : (
-              <AddGifticonForm2
+              <AddGifticonForm
                 gifticon={submitingGifticons[current] || gifticonCopy[current]}
                 idx={current}
                 isEnd={current === gifticonCopy.length - 1}

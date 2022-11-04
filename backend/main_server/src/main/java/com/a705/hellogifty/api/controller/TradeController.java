@@ -14,7 +14,11 @@ import com.a705.hellogifty.api.service.TradeService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
+
+import java.io.File;
+import java.io.IOException;
 
 @RequiredArgsConstructor
 @RestController
@@ -40,8 +44,14 @@ public class TradeController {
 
     @ApiOperation(value = "판매글 작성", notes = "판매글 올리기")
     @PostMapping("/")
-    public CommonResult tradePostCreate(@ApiIgnore @LoginUser User loginUser, @RequestBody TradePostRequestDto tradePostRequestDto) {
-        tradeService.tradePostCreate(loginUser, tradePostRequestDto);
+    public CommonResult tradePostCreate(@ApiIgnore @LoginUser User loginUser, @ModelAttribute TradePostRequestDto tradePostRequestDto) throws IOException {
+        String defaultPath = System.getProperty("user.dir")+File.separator+"static"+File.separator+"img"+File.separator+"gifticonCropImg"+File.separator;
+        String originalImgName = tradeService.getOriginalImgName(loginUser, tradePostRequestDto.getGifticonId());
+        MultipartFile cropImg = tradePostRequestDto.getCropImg();
+        File img = new File(defaultPath+"crop_"+originalImgName);
+        cropImg.transferTo(img);
+
+        tradeService.tradePostCreate(loginUser, tradePostRequestDto, img);
         return responseService.getSuccessResult();
     }
 

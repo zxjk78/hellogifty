@@ -126,7 +126,7 @@ const MainTab = () => {
       />
       <Tab.Screen
         name="Profile"
-        component={SearchScreen}
+        component={ProfileScreen}
         options={{
           title: "프로필",
         }}
