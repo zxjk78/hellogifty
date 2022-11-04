@@ -33,10 +33,10 @@ export const requestReadMMSPermission = async () => {
     if (
       (granted && granted3 && granted2) === PermissionsAndroid.RESULTS.GRANTED
     ) {
-      console.log('권한 부여 성공');
+      console.log('getPermission.js: ', '권한 부여 성공');
       return true;
     } else {
-      console.log('권한 부여 실패');
+      console.log('getPermission.js : ', '권한 부여 실패');
       return false;
     }
   } catch (err) {
