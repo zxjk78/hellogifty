@@ -17,11 +17,11 @@ import java.time.LocalDate;
 @Builder
 public class TradePost extends BaseEntity {
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "gifticon_id")
     private Gifticon gifticon;
 
@@ -37,7 +37,7 @@ public class TradePost extends BaseEntity {
     private TradeState tradeState;
 
     @Column(length = 300)
-//    private String img;
+    private String img;
 
     private LocalDate createdAt;
 

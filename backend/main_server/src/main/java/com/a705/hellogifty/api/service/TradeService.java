@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.io.File;
 import java.time.LocalDate;
 
 @Service
@@ -24,12 +25,13 @@ public class TradeService {
 
     @Transactional
     public TradePostDetailResponseDto tradePostDetail(User user, Long tradePostId) {
+        String defaultPath = System.getProperty("user.dir")+File.separator+"static"+File.separator+"img"+File.separator+"gifticonCropImg"+File.separator;
         TradePost tradePost = tradePostRepository.findById(tradePostId).get();
-        return new TradePostDetailResponseDto(tradePost);
+        return new TradePostDetailResponseDto(tradePost, defaultPath);
     }
 
     @Transactional
-    public void tradePostCreate(User user, TradePostRequestDto tradePostRequestDto) {
+    public void tradePostCreate(User user, TradePostRequestDto tradePostRequestDto, File img) {
         Gifticon gifticon = gifticonRepository.findById(tradePostRequestDto.getGifticonId()).get();
         TradePost tradePost = TradePost.builder().user(user)
                 .gifticon(gifticon)
@@ -37,11 +39,17 @@ public class TradeService {
                 .content(tradePostRequestDto.getContent())
                 .price(tradePostRequestDto.getPrice())
                 .tradeState(TradeState.ONSALE)
-//                .img(gifticon.getImg())
+                .img(img.getName())
                 .createdAt(LocalDate.now())
                 .modifiedAt(LocalDate.now()).build();
 
         tradePostRepository.save(tradePost);
+    }
+
+    @Transactional
+    public String getOriginalImgName(User user, Long gifticonId) {
+        Gifticon gifticon = gifticonRepository.findById(gifticonId).get();
+        return gifticon.getImg();
     }
 
     @Transactional

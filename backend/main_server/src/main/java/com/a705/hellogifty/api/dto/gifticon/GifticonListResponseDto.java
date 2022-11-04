@@ -26,17 +26,17 @@ public class GifticonListResponseDto {
 
     private String brandName;
 
-    private String img;
+    private String brandImgPath;
 
-    public GifticonListResponseDto(Gifticon gifticon) {
+    public GifticonListResponseDto(Gifticon gifticon, String defaultPath) {
         id = gifticon.getId();
-//        categoryId = gifticon.getSmallCategory().getId();
+        categoryId = gifticon.getSmallCategory().getLargeCategory().getId();
         name = gifticon.getName();
         expirationDate = gifticon.getExpirationDate().toString();
         isUsed = gifticon.getIsUsed();
 //        isOnTrade = gifticon.getIsOnTrade();
-//        brandName = gifticon.getSmallCategory().getName();
-        img = gifticon.getImg();
+        brandName = gifticon.getSmallCategory().getName();
+        brandImgPath = defaultPath + gifticon.getSmallCategory().getBrandImgName();
 
     }
 }

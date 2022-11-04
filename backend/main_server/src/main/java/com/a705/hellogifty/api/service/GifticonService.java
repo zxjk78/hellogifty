@@ -1,11 +1,9 @@
 package com.a705.hellogifty.api.service;
 
 import com.a705.hellogifty.api.domain.entity.Gifticon;
+import com.a705.hellogifty.api.domain.entity.SmallCategory;
 import com.a705.hellogifty.api.domain.entity.User;
-import com.a705.hellogifty.api.dto.gifticon.GifticonDetailResponseDto;
-import com.a705.hellogifty.api.dto.gifticon.GifticonEditRequestDto;
-import com.a705.hellogifty.api.dto.gifticon.GifticonListResponseDto;
-import com.a705.hellogifty.api.dto.gifticon.GifticonRegisterRequestDto;
+import com.a705.hellogifty.api.dto.gifticon.*;
 import com.a705.hellogifty.api.repository.GifticonRepository;
 import com.a705.hellogifty.api.repository.SmallCategoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,11 +26,11 @@ public class GifticonService {
     @Transactional
     public List<GifticonListResponseDto> myAllGifticon(User user) {
 
-
+        String defaultPath = System.getProperty("user.dir")+File.separator+"static"+File.separator+"img"+File.separator+"brandImg"+File.separator;
         List<GifticonListResponseDto> list = new ArrayList<>();
 
         for (Gifticon gifticon : gifticonRepository.findByUserId(user.getId()).get()) {
-            list.add(new GifticonListResponseDto(gifticon));
+            list.add(new GifticonListResponseDto(gifticon, defaultPath));
         }
 
         return list;
@@ -40,15 +38,17 @@ public class GifticonService {
 
     @Transactional
     public GifticonDetailResponseDto myGifticonDetail(User user, Long gifticonId) {
-
+        String defaultPath = System.getProperty("user.dir")+File.separator+"static"+File.separator+"img"+File.separator+"gifticon"+File.separator;
         Gifticon gifticon = gifticonRepository.findById(gifticonId).get();
-        return new GifticonDetailResponseDto(gifticon);
+        return new GifticonDetailResponseDto(gifticon, defaultPath);
     }
 
     @Transactional
     public void myGifticonEdit(User user, Long gifticonId, GifticonEditRequestDto gifticonEditRequestDto) {
         Gifticon gifticon = gifticonRepository.findById(gifticonId).get();
-        gifticon.update(gifticonEditRequestDto);
+        SmallCategory smallCategory = smallCategoryRepository.findById(gifticonEditRequestDto.getSmallCategoryId()).get();
+        GifticonEditDto gifticonEditDto = new GifticonEditDto(gifticonEditRequestDto, smallCategory);
+        gifticon.update(gifticonEditDto);
     }
 
     @Transactional
@@ -61,12 +61,12 @@ public class GifticonService {
 
 
         Gifticon gifticon = Gifticon.builder().user(user)
-                .smallCategory(null)
+                .smallCategory(smallCategoryRepository.findById(gifticonRegisterRequestDto.getCategoryId()).get())
                 .name(gifticonRegisterRequestDto.getName())
                 .number("나중에연결")
                 .expirationDate(LocalDate.parse(gifticonRegisterRequestDto.getExpirationDate(), DateTimeFormatter.ISO_DATE))
                 .isUsed(false)
-                .img(img.getPath()).build();
+                .img(img.getName()).build();
 
         gifticonRepository.save(gifticon);
     }
