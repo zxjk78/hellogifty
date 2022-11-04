@@ -18,7 +18,7 @@ const ReadMMSStatusBar = ({ onPress }) => {
     setTimeout(() => {
       (async () => {
         const tmp = await getAllMMSAfterAccess(1000, (imgArr) => {
-          console.log(imgArr.length);
+          console.log('찾은 건수', imgArr.length);
           setByteArr(imgArr);
         });
       })();
@@ -34,10 +34,16 @@ const ReadMMSStatusBar = ({ onPress }) => {
     setIsReading(false);
   }, [byteArr]);
 
+
+  const animate = isReading ? {
+    borderWidth: 2,
+    borderColor: 'red'
+  } : null
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <Text>
+        <Text style={{...styles.text, ...animate}}>
           {isReading
             ? '메세지함에서 기프티콘을 찾고 있어요'
             : `총 ${imgArr.length}건의 기프티콘을 찾았어요!`}
@@ -57,13 +63,17 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: GlobalStyles.colors.backgroundComponent,
     // backgroundColor: 'red',
-    height: '35%',
+    height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
+ 
   },
   content: {
     flexDirection: 'row',
   },
+  text: {
+    color: 'black'
+  }
 });
 
 export default ReadMMSStatusBar;

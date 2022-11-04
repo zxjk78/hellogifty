@@ -7,6 +7,8 @@ import {
   Image,
   NativeModules,
   ActivityIndicator,
+  Button,
+  DrawerButton,
 } from "react-native";
 // navigator
 import { NavigationContainer } from "@react-navigation/native";
@@ -31,7 +33,7 @@ import {
 } from "./src/screens";
 import Practice from "./src/components/Practice";
 import { GlobalStyles } from "./src/constants/style";
-import Toast, {BaseToast, ErrorToast} from 'react-native-toast-message';
+import Toast, { BaseToast, ErrorToast } from "react-native-toast-message";
 // import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
@@ -46,33 +48,41 @@ const toastConfig = {
   success: (props) => (
     <BaseToast
       {...props}
-      style={{ borderLeftColor: '#9ED5C5', backgroundColor: '#cef2e7', width: '100%' }}
+      style={{
+        borderLeftColor: "#9ED5C5",
+        backgroundColor: "#cef2e7",
+        width: "100%",
+      }}
       contentContainerStyle={{ paddingHorizontal: 15 }}
       text1Style={{
         fontSize: 18,
-        fontWeight: '400',
-        color: 'black'
+        fontWeight: "400",
+        color: "black",
       }}
     />
   ),
   error: (props) => (
     <ErrorToast
       {...props}
-      style={{ borderLeftColor: '#ff686b', backgroundColor: '#ffa69e', width: '100%' }}
+      style={{
+        borderLeftColor: "#ff686b",
+        backgroundColor: "#ffa69e",
+        width: "100%",
+      }}
       contentContainerStyle={{ paddingHorizontal: 15 }}
       text1Style={{
         fontSize: 18,
-        fontWeight: '400',
-        color: 'black'
+        fontWeight: "400",
+        color: "black",
       }}
     />
   ),
   tomatoToast: ({ text1, props }) => (
-    <View style={{ height: 60, width: '100%', backgroundColor: 'tomato' }}>
+    <View style={{ height: 60, width: "100%", backgroundColor: "tomato" }}>
       <Text>{text1}</Text>
       <Text>{props.uuid}</Text>
     </View>
-  )
+  ),
 };
 
 // tab
@@ -104,17 +114,9 @@ const MainTab = () => {
       <Tab.Screen
         name="MyCoupon"
         component={MyCoupon}
-        options={{
-          title: "내 쿠폰",
-        }}
+        options={{headerShown: false}}
       />
-      <Tab.Screen
-        name="Shopping"
-        component={SearchScreen}
-        options={{
-          title: "쇼핑",
-        }}
-      />
+      <Tab.Screen name="Shopping" component={SearchScreen} />
       <Tab.Screen
         name="Chat"
         component={SearchScreen}
@@ -134,6 +136,7 @@ const MainTab = () => {
         component={LoginScreen2}
         options={{
           title: "로그인",
+          unmountOnBlur: true,
         }}
       />
       <Tab.Screen
@@ -151,12 +154,12 @@ const MyCoupon = () => {
     <>
       <Stack.Navigator
         initialRouteName="MyCouponScreen"
-        screenOptions={{ headerShown: false }}
+        screenOptions={{ headerShown: true }}
       >
-        <Stack.Screen name="MyCouponScreen" component={MyCouponScreen} />
-        <Stack.Screen name="DetailScreen" component={DetailScreen} />
+        <Stack.Screen name="MyCouponScreen" component={MyCouponScreen} options={{title: "내 쿠폰"}} />
+        <Stack.Screen name="DetailScreen" component={DetailScreen} options={{title: "상세 페이지"}}/>
       </Stack.Navigator>
-      <Toast config={toastConfig}/>
+      <Toast config={toastConfig} />
     </>
   );
 };
@@ -172,7 +175,7 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="MainTab" component={MainTab} />
-        <Stack.Screen name="DetailScreen" component={DetailScreen} />
+        {/* <Stack.Screen name="DetailScreen" component={DetailScreen} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

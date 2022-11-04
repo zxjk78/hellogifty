@@ -1,4 +1,4 @@
-import { View, Text, Image, TextInput, Pressable, StyleSheet } from "react-native";
+import { View, Text, Image, TextInput, Pressable, StyleSheet, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import { GlobalStyles } from "../../constants/style";
 
@@ -61,13 +61,14 @@ const Form1 = ({ info, next }) => {
         placeholder="상품 설명을 입력해 주세요"
         keyboardType="string"
       />
-      <Pressable 
+      <TouchableOpacity 
         style={styles.nextButton} 
         onPress={()=>{next({price, title, description})}}
-        android_ripple={{color: 'red'}}  
+        activeOpacity = {0.5}
+        // android_ripple={{color: 'red'}}  
       >
         <Text style={styles.buttonText}>다음</Text>
-      </Pressable>
+      </TouchableOpacity>
     </View>
   );
 };

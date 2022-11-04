@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import Toast from 'react-native-toast-message';
 
 const DetailScreen = ({ route }) => {
-  const item = route.params.item.item;
+  const item = route.params.item;
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
