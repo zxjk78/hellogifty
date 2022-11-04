@@ -222,10 +222,10 @@ const MyCouponScreen = () => {
     const possessionList = [];
     const usedList = [];
     const sellingList = [];
-    (async () => {
-      const data = await fetchMyGifticon();
 
-      data.map((item) => {
+    (async () => {
+      const items = await fetchMyGifticon();
+      data.forEach((item) => {
         // console.log(item.isUsed)
         if (!item.isUsed) {
           possessionList.push(item);
@@ -236,6 +236,7 @@ const MyCouponScreen = () => {
           sellingList.push(item);
         }
       });
+
       setPossession(possessionList);
       setUsed(usedList);
       setSelling(sellingList);

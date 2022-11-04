@@ -111,11 +111,9 @@ const TicketListItem = ({ item, isNormal }) => {
         </Modal>
       </View>
       {modifiedModal ? (
-        <ModifiedTicket onClose={closeModified} item={item.item} />
+        <ModifiedTicket onClose={closeModified} item={item} />
       ) : null}
-      {sellModal ? (
-        <SellingTicket onClose={closeSell} item={item.item} />
-      ) : null}
+      {sellModal ? <SellingTicket onClose={closeSell} item={item} /> : null}
 
       {/* Main */}
       <Image
@@ -123,14 +121,14 @@ const TicketListItem = ({ item, isNormal }) => {
         source={require('../../assets/starbucks.jpg')}
       />
       <View style={styles.text}>
-        <Text style={styles.brandName}>{item.item.brandName}</Text>
-        <Text style={styles.itemName}>{item.item.name}</Text>
+        <Text style={styles.brandName}>{item.brandName}</Text>
+        <Text style={styles.itemName}>{item.name}</Text>
         <Text style={styles.expiration}>
-          유효기간: {item.item.expirationDate} 까지
+          유효기간: {item.expirationDate} 까지
         </Text>
       </View>
       {/* <Image /> */}
-      <Text>{item.item.categoryId}</Text>
+      <Text>{item.categoryId}</Text>
     </TouchableOpacity>
   );
 };

@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text, SafeAreaView, FlatList } from 'react-native';
+import { View, StyleSheet, Text, SafeAreaView, FlatList, ScrollView } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { TicketListItem } from '../components/ticket';
 import { ReadMMSComponent } from '../components/readmms';
@@ -14,6 +14,13 @@ const MyTicketScreen = ({
 }) => {
   const data = extraData;
   const renderItem = ({ item }) => <TicketListItem item={item} />;
+  
+  // useEffect(() => {
+  //   console.log('데이터 받아요~~')
+  //   console.log(route.params)
+  //   setData([route.params])
+  // }, [route])
+  
 
   return (
     <>
@@ -25,14 +32,22 @@ const MyTicketScreen = ({
         />
       )}
       <SafeAreaView style={styles.container}>
-        <Text>편의점</Text>
-        <FlatList
-          data={data}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          style={styles.listItem}
-        />
-        <Text>카페</Text>
+        {/* <ScrollView> */}
+          <Text>편의점</Text>
+          <FlatList
+            data={data}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+            style={styles.listItem}
+          />
+          <Text>카페</Text>
+          {/* <FlatList
+            data={data}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+            style={styles.listItem}
+          /> */}
+        {/* </ScrollView> */}
       </SafeAreaView>
     </>
   );

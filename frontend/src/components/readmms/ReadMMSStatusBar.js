@@ -33,6 +33,9 @@ const styles = StyleSheet.create({
   content: {
     flexDirection: 'row',
   },
+  text: {
+    color: 'black',
+  },
 });
 
 export default ReadMMSStatusBar;

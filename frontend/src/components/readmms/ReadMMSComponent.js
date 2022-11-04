@@ -19,7 +19,7 @@ const ReadMMSComponent = () => {
     console.log('close');
   };
   return (
-    <View>
+    <View style={{height:'10%', }}>
       <AddTicketModal
         gifticonList={gifticonData}
         visible={isModalVisible}

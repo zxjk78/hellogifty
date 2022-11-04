@@ -23,6 +23,7 @@ const Form2 = ({ info, originalImgPath, next, back }) => {
       height: 351,
       freeStyleCropEnabled: true,
     }).then((image) => {
+      console.log(image.path);
       setImagePath(image.path);
     });
   };
