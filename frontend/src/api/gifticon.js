@@ -23,13 +23,22 @@ const AddGifticon = async (gifticonArr) => {
     formData.append('expirationDate', item.expirationDate);
 
     // base64를 file로 변환
-    const tmpImage = base64toFile(item.couponImg, index + '.jpg');
-    console.log(tmpImage);
-    formData.append('img', tmpImage);
+    const fileData = {
+      name: '23',
+      type: 'image/jpeg',
+      uri: 'data:image/png;base64,' + item.couponImg,
+    };
+    formData.append('img', fileData);
+    // base64toFile(item.couponImg, index + '.jpg');
+    // console.log(tmpImage);
+    // formData.append('img', tmpImage);
 
     return formData;
   });
   console.log('변형된 배열', gifticonArr2[0]);
+  const res = await axiosAuthInstance.post('mygifticon/', gifticonArr2[0], {
+    headers: 'multipart/form-data',
+  });
 };
 
 export { fetchMyGifticon, AddGifticon };
