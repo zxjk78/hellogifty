@@ -25,7 +25,7 @@ export async function getAllMMSAfterAccess(id = 1000, callback) {
     let results;
     await mmsModule.getMMSImageArr(id + '', (b64StringArr) => {
       const parsed = JSON.parse(b64StringArr);
-      console.log(parsed.length);
+      console.log('찾은 이미지: ',parsed.length);
       results = parsed.map((item) => item.byteArray);
       callback(results);
     });

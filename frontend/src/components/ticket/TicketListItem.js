@@ -23,7 +23,7 @@ const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
 
 // 을 보면 style은 viewStyle을 따른다고 하고 이는  을 말한다.
 
-const TicketListItem = (item) => {
+const TicketListItem = ({item}) => {
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [modifiedModal, setModifiedModal] = useState(false);
@@ -111,10 +111,10 @@ const TicketListItem = (item) => {
         </Modal>
       </View>
       {modifiedModal ? (
-        <ModifiedTicket onClose={closeModified} item={item.item} />
+        <ModifiedTicket onClose={closeModified} item={item} />
       ) : null}
       {sellModal ? (
-        <SellingTicket onClose={closeSell} item={item.item} />
+        <SellingTicket onClose={closeSell} item={item} />
       ) : null}
 
       {/* Main */}
@@ -123,14 +123,14 @@ const TicketListItem = (item) => {
         source={require("../../assets/starbucks.jpg")}
       />
       <View style={styles.text}>
-        <Text style={styles.brandName}>{item.item.brandName}</Text>
-        <Text style={styles.itemName}>{item.item.name}</Text>
+        <Text style={styles.brandName}>{item.brandName}</Text>
+        <Text style={styles.itemName}>{item.name}</Text>
         <Text style={styles.expiration}>
-          유효기간: {item.item.expirationDate} 까지
+          유효기간: {item.expirationDate} 까지
         </Text>
       </View>
       {/* <Image /> */}
-      <Text>{item.item.categoryId}</Text>
+      <Text>{item.categoryId}</Text>
     </TouchableOpacity>
   );
 };
