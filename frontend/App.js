@@ -114,9 +114,15 @@ const MainTab = () => {
       <Tab.Screen
         name="MyCoupon"
         component={MyCoupon}
-        options={{headerShown: false}}
+        options={{ headerShown: false, title: "내 쿠폰" }}
       />
-      <Tab.Screen name="Shopping" component={SearchScreen} />
+      <Tab.Screen
+        name="Shopping"
+        component={SearchScreen}
+        options={{
+          title: "쇼핑",
+        }}
+      />
       <Tab.Screen
         name="Chat"
         component={SearchScreen}
@@ -156,8 +162,16 @@ const MyCoupon = () => {
         initialRouteName="MyCouponScreen"
         screenOptions={{ headerShown: true }}
       >
-        <Stack.Screen name="MyCouponScreen" component={MyCouponScreen} options={{title: "내 쿠폰"}} />
-        <Stack.Screen name="DetailScreen" component={DetailScreen} options={{title: "상세 페이지"}}/>
+        <Stack.Screen
+          name="MyCouponScreen"
+          component={MyCouponScreen}
+          options={{ title: "내 쿠폰" }}
+        />
+        <Stack.Screen
+          name="DetailScreen"
+          component={DetailScreen}
+          options={{ title: "상세 페이지" }}
+        />
       </Stack.Navigator>
       <Toast config={toastConfig} />
     </>
