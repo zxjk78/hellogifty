@@ -41,14 +41,10 @@ public class SignController {
                                                     @ApiParam(value = "로그인 DTO", required = true) @RequestBody UserLoginRequestDto userLoginRequestDto) {
         TokenResponseDto tokenDto = signService.login(userLoginRequestDto);
 
-        Cookie cookie = new Cookie("refreshToken", tokenDto.getRefreshToken());
-        cookie.setMaxAge(14 * 24 * 60 * 60);
-        cookie.setPath("/");
-        cookie.setSecure(true);
-        cookie.setHttpOnly(true);
-        response.addCookie(cookie);
-
-        return responseService.getOneResult(new AccessTokenResponseDto(tokenDto.getAccessToken(), tokenDto.getAccessTokenExpireDate()));
+        return responseService.getOneResult(
+                new AccessTokenResponseDto(tokenDto.getAccessToken(),
+                tokenDto.getAccessTokenExpireDate(),
+                tokenDto.getRefreshToken()));
     }
 
     @ApiOperation(value = "회원가입", notes = "회원가입 수행")
@@ -69,14 +65,8 @@ public class SignController {
         TokenRequestDto tokenRequestDto = new TokenRequestDto(accessTokenRequestDto.getAccessToken(), refresh.getValue());
         TokenResponseDto tokenDto = signService.reissue(tokenRequestDto, response);
 
-        Cookie cookie = new Cookie("refreshToken", tokenDto.getRefreshToken());
-        cookie.setMaxAge(14 * 24 * 60 * 60);
-        cookie.setPath("/");
-        cookie.setSecure(true);
-        cookie.setHttpOnly(true);
-        response.addCookie(cookie);
 
-        return responseService.getOneResult(new AccessTokenResponseDto(tokenDto.getAccessToken(), tokenDto.getAccessTokenExpireDate()));
+        return responseService.getOneResult(new AccessTokenResponseDto(tokenDto.getAccessToken(), tokenDto.getAccessTokenExpireDate(), tokenDto.getRefreshToken()));
     }
 
     @DeleteMapping("/log-out")

@@ -20,10 +20,8 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.UUID;
 
 @Api(tags = "")
 @RequiredArgsConstructor
@@ -51,14 +49,15 @@ public class GifticonController {
 
     @ApiOperation(value = "기프티콘 등록" , notes = "기프티콘 등록")
     @PostMapping("/")
-    public CommonResult myGifticonRegister(@ApiIgnore @LoginUser User loginUser, @RequestParam Short categoryId, @RequestParam String name, @RequestParam String expirationDate, @RequestPart MultipartFile multipartFile) throws IOException {
-        String fileUploadNow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+    public CommonResult myGifticonRegister(@ApiIgnore @LoginUser User loginUser, @ModelAttribute GifticonRegisterRequestDto gifticonRegisterRequestDto) throws IOException {
+        String fileUploadNow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
         String defaultPath = System.getProperty("user.dir")+File.separator+"static"+File.separator+"img"+File.separator+"gifticon"+File.separator;
-        String originalImgName = multipartFile.getOriginalFilename();
+        MultipartFile originalImg = gifticonRegisterRequestDto.getImg();
+        String originalImgName = originalImg.getOriginalFilename();
         File img = new File(defaultPath+loginUser.getEmail()+"_"+fileUploadNow+"_"+originalImgName);
-        multipartFile.transferTo(img);
+        originalImg.transferTo(img);
 
-        gifticonService.myGifticonRegister(loginUser, categoryId, name, expirationDate, img.getPath());
+        gifticonService.myGifticonRegister(loginUser, gifticonRegisterRequestDto, img);
         return responseService.getSuccessResult();
     }
 

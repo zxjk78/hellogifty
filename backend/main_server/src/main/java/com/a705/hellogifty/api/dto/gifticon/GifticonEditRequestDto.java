@@ -8,15 +8,14 @@ import lombok.Setter;
 import java.time.LocalDate;
 
 @Getter
-@Setter
 public class GifticonEditRequestDto {
 
     private String name;
 
     private String number;
 
-    private LocalDate expirationDate;
+    private String expirationDateString;
 
-//    private SmallCategory smallCategory;
+    private Short smallCategoryId;
 
 }
