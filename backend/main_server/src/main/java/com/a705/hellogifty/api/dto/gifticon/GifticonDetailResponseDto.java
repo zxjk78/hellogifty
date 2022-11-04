@@ -28,7 +28,7 @@ public class GifticonDetailResponseDto {
 
     private String img;
 
-    public GifticonDetailResponseDto(Gifticon gifticon) {
+    public GifticonDetailResponseDto(Gifticon gifticon, String defaultPath) {
         id = gifticon.getId();
         categoryId = gifticon.getSmallCategory().getLargeCategory().getId();
         name = gifticon.getName();
@@ -36,7 +36,7 @@ public class GifticonDetailResponseDto {
         expirationDate = gifticon.getExpirationDate().toString();
         isUsed = gifticon.getIsUsed();
 //        isOnTrade = gifticon.getIsOnTrade();
-        img = gifticon.getImg();
+        img = defaultPath + gifticon.getImg();
     }
 
 }

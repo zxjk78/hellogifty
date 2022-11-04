@@ -38,9 +38,9 @@ public class GifticonService {
 
     @Transactional
     public GifticonDetailResponseDto myGifticonDetail(User user, Long gifticonId) {
-
+        String defaultPath = System.getProperty("user.dir")+File.separator+"static"+File.separator+"img"+File.separator+"gifticon"+File.separator;
         Gifticon gifticon = gifticonRepository.findById(gifticonId).get();
-        return new GifticonDetailResponseDto(gifticon);
+        return new GifticonDetailResponseDto(gifticon, defaultPath);
     }
 
     @Transactional
@@ -66,7 +66,7 @@ public class GifticonService {
                 .number("나중에연결")
                 .expirationDate(LocalDate.parse(gifticonRegisterRequestDto.getExpirationDate(), DateTimeFormatter.ISO_DATE))
                 .isUsed(false)
-                .img(img.getPath()).build();
+                .img(img.getName()).build();
 
         gifticonRepository.save(gifticon);
     }

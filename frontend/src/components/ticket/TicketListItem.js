@@ -7,30 +7,26 @@ import {
   Pressable,
   Alert,
   Modal,
-} from "react-native";
-import { GlobalStyles } from "../../constants/style";
+} from 'react-native';
+import { GlobalStyles } from '../../constants/style';
 // external module
-import { Avatar, Button, Card, Title, Paragraph } from "react-native-paper";
+import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
 
-import React, { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
-import ModifiedTicket from "./ModifiedTicket";
-import SellingTicket from "./SellingTicket";
+import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import ModifiedTicket from './ModifiedTicket';
+import SellingTicket from './SellingTicket';
 
 const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
 
 // https://callstack.github.io/react-native-paper/card.html
 
-// 을 보면 style은 viewStyle을 따른다고 하고 이는  을 말한다.
-
-const TicketListItem = ({item}) => {
+const TicketListItem = ({ item, isNormal }) => {
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [modifiedModal, setModifiedModal] = useState(false);
   const [sellModal, setSellModal] = useState(false);
-  const [position, setPosition] = useState({x: 100, y: 100})
-
-
+  const [position, setPosition] = useState({ x: 100, y: 100 });
 
   const goSell = () => {
     setModalVisible(false);
@@ -54,23 +50,25 @@ const TicketListItem = ({item}) => {
     <TouchableOpacity
       style={styles.container}
       onPress={() => {
-        navigation.navigate("DetailScreen", { item: item });
+        navigation.navigate('DetailScreen', { item: item });
       }}
       delayLongPress={500}
       onLongPress={(e) => {
         // console.log(e.nativeEvent.touches[0].pageX, 'X')
         // console.log(e.nativeEvent.touches[0].pageY, 'Y')
-        let x = e.nativeEvent.touches[0].pageX
-        const y = ( e.nativeEvent.touches[0].pageY - 80 )
+        let x = e.nativeEvent.touches[0].pageX;
+        const y = e.nativeEvent.touches[0].pageY - 80;
 
         if (x >= 250) {
-          x -= 170
-        } else { x += 25}
+          x -= 170;
+        } else {
+          x += 25;
+        }
 
         setPosition({
           x: x,
-          y: y
-        })
+          y: y,
+        });
         setModalVisible(true);
       }}
     >
@@ -81,7 +79,7 @@ const TicketListItem = ({item}) => {
           transparent={true}
           visible={modalVisible}
           onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
+            Alert.alert('Modal has been closed.');
             setModalVisible(!modalVisible);
           }}
         >
@@ -91,18 +89,20 @@ const TicketListItem = ({item}) => {
               setModalVisible(false);
             }}
           >
-            <View style={{...styles.modalView, left: position.x, top: position.y}}>
-              <Pressable 
-                style={[styles.buttonClass]} 
-                onPress={() => goSell()} 
-                android_ripple={{color: 'red'}}
+            <View
+              style={{ ...styles.modalView, left: position.x, top: position.y }}
+            >
+              <Pressable
+                style={[styles.buttonClass]}
+                onPress={() => goSell()}
+                android_ripple={{ color: 'red' }}
               >
                 <Text style={styles.buttonText}>판매하기</Text>
               </Pressable>
               <Pressable
                 style={[styles.buttonClass]}
                 onPress={() => modified()}
-                android_ripple={{color: 'red'}}
+                android_ripple={{ color: 'red' }}
               >
                 <Text style={styles.buttonText}>정보 수정</Text>
               </Pressable>
@@ -113,14 +113,12 @@ const TicketListItem = ({item}) => {
       {modifiedModal ? (
         <ModifiedTicket onClose={closeModified} item={item} />
       ) : null}
-      {sellModal ? (
-        <SellingTicket onClose={closeSell} item={item} />
-      ) : null}
+      {sellModal ? <SellingTicket onClose={closeSell} item={item} /> : null}
 
       {/* Main */}
       <Image
         style={styles.img}
-        source={require("../../assets/starbucks.jpg")}
+        source={require('../../assets/starbucks.jpg')}
       />
       <View style={styles.text}>
         <Text style={styles.brandName}>{item.brandName}</Text>
@@ -140,18 +138,18 @@ export default TicketListItem;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: GlobalStyles.colors.backgroundComponent,
-    flexDirection: "row",
+    flexDirection: 'row',
     padding: 10,
-    alignItems: "center",
-    borderBottomColor: "grey",
+    alignItems: 'center',
+    borderBottomColor: 'grey',
     borderBottomWidth: 1,
-    justifyContent: "space-between",
+    justifyContent: 'space-between',
   },
   img: {
     marginRight: 40,
     height: 100,
     width: 100,
-    resizeMode: "cover",
+    resizeMode: 'cover',
   },
   text: {
     flex: 4,
@@ -171,7 +169,7 @@ const styles = StyleSheet.create({
   },
   modalBack: {
     // backgroundColor: "blue",
-    height: "100%",
+    height: '100%',
   },
   centeredView: {
     // flex: 1,
@@ -183,15 +181,15 @@ const styles = StyleSheet.create({
     // backgroundColor: "black",
   },
   modalView: {
-    position: "absolute",
+    position: 'absolute',
     margin: 10,
-    backgroundColor: "#EEEEEE",
+    backgroundColor: '#EEEEEE',
     borderRadius: 10,
     borderWidth: 2,
-    borderColor: "#829460",
+    borderColor: '#829460',
     padding: 10,
     // alignItems: "center",
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -203,29 +201,29 @@ const styles = StyleSheet.create({
   button: {
     // margin: 2,
     borderRadius: 10,
-    color: "#EEEEEE",
+    color: '#EEEEEE',
     // padding: 7,
   },
   buttonOpen: {
-    backgroundColor: "#F194FF",
+    backgroundColor: '#F194FF',
   },
   buttonClose: {
-    width: "30%",
-    backgroundColor: "#2196F3",
+    width: '30%',
+    backgroundColor: '#2196F3',
   },
   buttonClass: {
     backgroundColor: '#FFE1E1',
     borderRadius: 5,
     borderWidth: 2,
-    marginBottom: 3
+    marginBottom: 3,
   },
   buttonText: {
     fontSize: 22,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     margin: 2,
   },
   textStyle: {
-    color: "white",
+    color: 'white',
   },
   modalText: {
     marginBottom: 15,

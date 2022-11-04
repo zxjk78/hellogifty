@@ -5,7 +5,7 @@ import SelectList from 'react-native-dropdown-select-list';
 
 import { GlobalStyles } from '../../constants/style';
 import { largeCategoryDict } from '../../constants/data/idDictionary';
-const AddGifticonForm2 = ({ gifticon, idx, isEnd, onPrev, onNext }) => {
+const AddGifticonForm = ({ gifticon, idx, isEnd, onPrev, onNext }) => {
   const [name, setName] = useState(null);
   const [expirationDate, setExpirationDate] = useState(null);
 
@@ -158,7 +158,7 @@ const AddGifticonForm2 = ({ gifticon, idx, isEnd, onPrev, onNext }) => {
   );
 };
 
-export default AddGifticonForm2;
+export default AddGifticonForm;
 
 const styles = StyleSheet.create({
   container: {
