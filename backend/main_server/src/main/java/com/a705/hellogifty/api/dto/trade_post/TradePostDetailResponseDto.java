@@ -35,7 +35,9 @@ public class TradePostDetailResponseDto {
 
     private LocalDate modifiedAt;
 
-    public TradePostDetailResponseDto(TradePost tradePost) {
+    private String img;
+
+    public TradePostDetailResponseDto(TradePost tradePost, String defaultPath) {
         id = tradePost.getId();
         gifticonId = tradePost.getGifticon().getId();
         title = tradePost.getTitle();
@@ -45,5 +47,6 @@ public class TradePostDetailResponseDto {
         tradeState = tradePost.getTradeState();
         createdAt = tradePost.getCreatedAt();
         modifiedAt = tradePost.getModifiedAt();
+        img = defaultPath + tradePost.getImg();
     }
 }
