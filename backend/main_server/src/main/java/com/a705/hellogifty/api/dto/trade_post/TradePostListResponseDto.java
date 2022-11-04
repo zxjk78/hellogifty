@@ -38,7 +38,7 @@ public class TradePostListResponseDto {
         title = tradePost.getTitle();
         content = tradePost.getContent();
         price = tradePost.getPrice();
-        img = tradePost.getImg();
+//        img = tradePost.getImg();
 
     }
 }

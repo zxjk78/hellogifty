@@ -7,7 +7,7 @@ import { dummySendMMSImage } from '../../api/mms';
 import { TransparentButton } from '../UI';
 
 const ReadMMSStatusBar = ({ onPress }) => {
-  const [isReading, setIsReading] = useState(false);
+  const [isReading, setIsReading] = useState(true);
   const n = 0;
   const [byteArr, setByteArr] = useState(null);
   const [imgArr, setImgArr] = useState(0);
@@ -18,7 +18,7 @@ const ReadMMSStatusBar = ({ onPress }) => {
     setTimeout(() => {
       (async () => {
         const tmp = await getAllMMSAfterAccess(1000, (imgArr) => {
-          console.log(imgArr.length);
+          console.log('찾은 건수', imgArr.length);
           setByteArr(imgArr);
         });
       })();

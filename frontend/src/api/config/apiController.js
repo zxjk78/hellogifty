@@ -81,23 +81,29 @@ axiosAuthInstance.interceptors.response.use(
       isTokenRefreshing = true;
 
       return new Promise(async (resolve, reject) => {
-        // console.log('accessToken 재발급 요청');
+        console.log('accessToken 재발급 요청');
         const accessToken = await AsyncStorage.getItem('accessToken');
+        const refreshToken = await AsyncStorage.getItem('refreshToken');
         axios
           .post(
             API_URL + 'reissue',
             {
               accessToken: accessToken,
+              refreshToken: refreshToken,
             },
             { withCredentials: true }
           )
           .then(({ data }) => {
             console.log('새 토큰 발급 완료');
 
-            const { accessToken: newToken, accessTokenExpireDate: newDate } =
-              data.data;
+            const {
+              accessToken: newToken,
+              accessTokenExpireDate: newDate,
+              refreshToken,
+            } = data.data;
             // 발급받으면 저장
             AsyncStorage.setItem('accessToken', newToken);
+            AsyncStorage.setItem('refreshToken', refreshToken);
             // axiosAuthInstance.defaults는 사실 해줄필요 없긴할듯? request Interceptor에서 처리해주니까
             axiosAuthInstance.defaults.headers.common['X-AUTH-TOKEN'] =
               newToken;
@@ -110,6 +116,14 @@ axiosAuthInstance.interceptors.response.use(
             resolve(axiosAuthInstance(originalRequest));
           })
           .catch((error) => {
+            console.log('토큰 발급과정에서 에러: ', error.response.data);
+            if (error.response.data.code === 1006) {
+              console.log('refresh token 만료, 로그아웃');
+              AsyncStorage.removeItem('accessToken');
+
+              failedQueue = [];
+              // window.location.reload();
+            }
             processQueue(error, null);
             reject(error);
           })
@@ -118,12 +132,6 @@ axiosAuthInstance.interceptors.response.use(
             isTokenRefreshing = false;
           });
       });
-    } else if (response.data.code === 1006) {
-      // console.log('refresh token 만료, 로그아웃');
-
-      AsyncStorage.removeItem('accessToken');
-      failedQueue = [];
-      // window.location.reload();
     }
 
     return Promise.reject(error);
