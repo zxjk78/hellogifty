@@ -150,9 +150,11 @@ const DetailScreen = ({ route }) => {
           <Text style={{alignSelf: 'center', color: 'grey', fontSize: 15}}>이미지를 클릭해 확대할 수 있습니다.</Text>
         </Pressable>
         <View style={{marginTop: 30, alignItems: 'center'}}>
-          <Text style={{fontSize: 15}}>{item.brandName}</Text>
-          <Text style={{fontSize: 20}}>{item.name}</Text>
-          <Text>유효기간 <Text style={{fontWeight: 'bold'}}>{item.expirationDate}</Text> 까지</Text>
+          <View>
+            <Text style={{fontSize: 15}}>{item.brandName}</Text>
+            <Text style={{fontSize: 20}}>{item.name}</Text>
+            <Text>유효기간 <Text style={{fontWeight: 'bold'}}>{item.expirationDate}</Text> 까지</Text>
+          </View>
         </View>
       </View>
       <View style={{flex: 1}}>

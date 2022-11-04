@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import MyTicketScreen from './MyTicketScreen';
 import { Title } from 'react-native-paper';
+import { fetchMyGifticon } from '../api/gifticon';
 
 const TopTab = createMaterialTopTabNavigator();
 
@@ -205,10 +206,19 @@ const MyCouponScreen = () => {
       },
     ];
 
+
+  
   useEffect(() => {
     const possessionList = []
     const usedList = []
     const sellingList = []
+    console.log('hehhehe');
+
+    (async () => {
+      const items = await fetchMyGifticon();
+      console.log('hi')
+      console.log(items)
+    })();
 
     data.map((item) => {
       // console.log(item.isUsed)
