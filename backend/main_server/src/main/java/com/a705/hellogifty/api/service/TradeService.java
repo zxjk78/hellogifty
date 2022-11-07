@@ -38,7 +38,7 @@ public class TradeService {
                 .title(tradePostRequestDto.getTitle())
                 .content(tradePostRequestDto.getContent())
                 .price(tradePostRequestDto.getPrice())
-                .tradeState(TradeState.ONSALE)
+//                .tradeState(TradeState.ONSALE)
                 .img(img.getName())
                 .createdAt(LocalDate.now())
                 .modifiedAt(LocalDate.now()).build();

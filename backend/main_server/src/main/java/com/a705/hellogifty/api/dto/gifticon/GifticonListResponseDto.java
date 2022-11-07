@@ -1,6 +1,7 @@
 package com.a705.hellogifty.api.dto.gifticon;
 
 import com.a705.hellogifty.api.domain.entity.Gifticon;
+import com.a705.hellogifty.api.domain.enums.TradeState;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,7 +23,7 @@ public class GifticonListResponseDto {
 
     private Boolean isUsed;
 
-    private Boolean isOnTrade;
+//    private boolean isOnTrade;
 
     private String brandName;
 
@@ -34,7 +35,7 @@ public class GifticonListResponseDto {
         name = gifticon.getName();
         expirationDate = gifticon.getExpirationDate().toString();
         isUsed = gifticon.getIsUsed();
-//        isOnTrade = gifticon.getIsOnTrade();
+//        isOnTrade = ;
         brandName = gifticon.getSmallCategory().getName();
         brandImgPath = defaultPath + gifticon.getSmallCategory().getBrandImgName();
 
