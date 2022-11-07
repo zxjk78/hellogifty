@@ -10,7 +10,8 @@ public class SellerInfoDto {
     private String email;
 
     public SellerInfoDto(User user) {
-
+        id = user.getId();
+        email = user.getEmail();
     }
 
 }

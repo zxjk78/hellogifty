@@ -12,5 +12,7 @@ public interface TradePostRepository extends JpaRepository<TradePost, Long> {
 
     Optional<TradePostListResponseDto> findByTitle(String title);
 
+
+
     Optional<TradePost> findById(Long id);
 }
