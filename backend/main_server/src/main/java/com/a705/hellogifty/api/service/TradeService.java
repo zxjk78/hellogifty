@@ -14,7 +14,12 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Base64;
 
 @Service
 @RequiredArgsConstructor
@@ -31,8 +36,20 @@ public class TradeService {
     }
 
     @Transactional
-    public void tradePostCreate(User user, TradePostRequestDto tradePostRequestDto, File img) {
+    public void tradePostCreate(User user, TradePostRequestDto tradePostRequestDto) throws IOException {
         Gifticon gifticon = gifticonRepository.findById(tradePostRequestDto.getGifticonId()).get();
+        String fileUploadNow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
+        String base = tradePostRequestDto.getCropFileBase64();
+        String extension = "png";
+        String defaultPath = System.getProperty("user.dir")+File.separator+"static"+File.separator+"img"+File.separator+"gifticonCropImg"+File.separator;
+        File img = new File(defaultPath+user.getEmail()+"_"+fileUploadNow+"."+extension);
+
+        Base64.Decoder decoder = Base64.getDecoder();
+        byte[] decodedBytes = decoder.decode(base.getBytes());
+        FileOutputStream fileOutputStream = new FileOutputStream(img);
+        fileOutputStream.write(decodedBytes);
+        fileOutputStream.close();
+
         TradePost tradePost = TradePost.builder().user(user)
                 .gifticon(gifticon)
                 .title(tradePostRequestDto.getTitle())
