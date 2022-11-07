@@ -38,11 +38,12 @@ public class TradeService {
     @Transactional
     public void tradePostCreate(User user, TradePostRequestDto tradePostRequestDto) throws IOException {
         Gifticon gifticon = gifticonRepository.findById(tradePostRequestDto.getGifticonId()).get();
-        String fileUploadNow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
+//        String fileUploadNow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
+        String originalImgName = getOriginalImgName(user, gifticon.getId());
         String base = tradePostRequestDto.getCropFileBase64();
-        String extension = "png";
+//        String extension = "png";
         String defaultPath = System.getProperty("user.dir")+File.separator+"static"+File.separator+"img"+File.separator+"gifticonCropImg"+File.separator;
-        File img = new File(defaultPath+user.getEmail()+"_"+fileUploadNow+"."+extension);
+        File img = new File(defaultPath+"crop"+"_"+originalImgName);
 
         Base64.Decoder decoder = Base64.getDecoder();
         byte[] decodedBytes = decoder.decode(base.getBytes());

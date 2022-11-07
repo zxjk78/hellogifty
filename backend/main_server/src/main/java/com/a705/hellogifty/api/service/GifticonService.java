@@ -34,7 +34,7 @@ public class GifticonService {
         String defaultPath = System.getProperty("user.dir")+File.separator+"static"+File.separator+"img"+File.separator+"brandImg"+File.separator;
         List<GifticonListResponseDto> list = new ArrayList<>();
 
-        for (Gifticon gifticon : gifticonRepository.findByUserId(user.getId()).get()) {
+        for (Gifticon gifticon : gifticonRepository.findByUserIdWithSmallCategory(user.getId()).get()) {
             list.add(new GifticonListResponseDto(gifticon, defaultPath));
         }
 
