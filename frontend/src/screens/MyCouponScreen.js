@@ -251,7 +251,7 @@ const MyCouponScreen = () => {
     // const lastMMSImageIdx = (async () => {
     //   return await AsyncStorage.getItem('lastMMSImageIdx');
     // })();
-    const lastMMSImageIdx = 1000;
+    const lastMMSImageIdx = 0;
     setMmsReading(true);
     setTimeout(() => {
       (async () => {
@@ -266,7 +266,6 @@ const MyCouponScreen = () => {
             //
 
             const result = await dummySendMMSImage(imgArr);
-
             setMmsGifticonArr(result);
           }
         );

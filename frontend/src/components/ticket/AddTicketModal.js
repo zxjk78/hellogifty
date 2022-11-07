@@ -14,6 +14,8 @@ const AddTicketModal = ({ gifticonList, visible, handleClose }) => {
   const [submitingGifticons, setSubmitingGifticons] = useState([]);
   const [fetchedData, setFetchedData] = useState(null);
 
+  // console.log(gifticonList);
+  // 이전 버튼 누를 때 저장 필요함!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   const handleNext = (idx, data) => {
     // console.log('인덱스: ', idx, '넘어온 데이터 ', data);
 
@@ -47,7 +49,7 @@ const AddTicketModal = ({ gifticonList, visible, handleClose }) => {
   useEffect(() => {
     setIsLoading(true);
     if (gifticonList) {
-      setGifticonCopy(() => gifticonList.map((item, index) => item));
+      setGifticonCopy(() => gifticonList.map((item, index) =>item))
     }
     setIsLoading(false);
   }, [gifticonList]);

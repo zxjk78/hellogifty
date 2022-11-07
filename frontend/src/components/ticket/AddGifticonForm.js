@@ -5,12 +5,16 @@ import SelectList from 'react-native-dropdown-select-list';
 
 import { GlobalStyles } from '../../constants/style';
 import { largeCategoryDict } from '../../constants/data/idDictionary';
+import { login } from '../../api/auth';
 const AddGifticonForm = ({ gifticon, idx, isEnd, onPrev, onNext }) => {
   const [name, setName] = useState(null);
   const [expirationDate, setExpirationDate] = useState(null);
 
-  const [selected, setSelected] = useState();
-  const [selected2, setSelected2] = useState(+gifticon.category);
+
+  // 용래형~~~~~~~~~ 뒤로가기 수정만 하면 이제 완성!!!!!!!!! 
+  const [selected, setSelected] = useState(+gifticon.categoryId);
+  const [selected2, setSelected2] = useState(+gifticon.categoryId);
+  // console.log(gifticon);
   const data = [
     {
       key: 0,
@@ -89,7 +93,7 @@ const AddGifticonForm = ({ gifticon, idx, isEnd, onPrev, onNext }) => {
     onNext(idx, {
       name: name || gifticon.name,
       expirationDate: expirationDate || gifticon.expirationDate,
-      categoryId: selected2,
+      categoryId: selected,
       couponImg: gifticon.couponImg,
     });
   };
@@ -122,7 +126,7 @@ const AddGifticonForm = ({ gifticon, idx, isEnd, onPrev, onNext }) => {
               setSelected={setSelected}
               data={data}
               onSelect={() => {
-                setSelected2(selected);
+                setSelected(selected);
               }}
               dropdownStyles={{
                 backgroundColor: '#fff',
@@ -134,7 +138,7 @@ const AddGifticonForm = ({ gifticon, idx, isEnd, onPrev, onNext }) => {
               boxStyles={{
                 borderColor: 'red',
               }}
-              defaultOption={data[+gifticon.category] || false}
+              defaultOption={data[+gifticon.categoryId] || false}
             />
           </View>
         </View>
@@ -191,8 +195,9 @@ const styles = StyleSheet.create({
   },
   couponImage: {
     width: '100%',
-    height: 300,
+    height: 350,
     marginTop: '10%',
+    resizeMode: 'stretch',
     zIndex: 1,
   },
   buttonContainer: {
