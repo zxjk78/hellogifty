@@ -64,8 +64,12 @@ public class GifticonService {
     @Transactional
     public void myGifticonRegister(User user, GifticonRegisterRequestDto gifticonRegisterRequestDto) throws IOException {
         String fileUploadNow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
-        String base = gifticonRegisterRequestDto.getFileBase64();
-        String extension = "png";
+        String rawBase = gifticonRegisterRequestDto.getFileBase64();
+        String[] basesplit = rawBase.split(",", 2);
+        String extension = basesplit[0].split(";", 2)[0].split("/", 2)[1];
+        String base = basesplit[1];
+//        String extension = "png";
+//        data:image/jpeg;base64,
         String defaultPath = System.getProperty("user.dir")+File.separator+"static"+File.separator+"img"+File.separator+"gifticon"+File.separator;
         File img = new File(defaultPath+user.getEmail()+"_"+fileUploadNow+"."+extension);
 
