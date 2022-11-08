@@ -40,7 +40,10 @@ public class TradeService {
         Gifticon gifticon = gifticonRepository.findById(tradePostRequestDto.getGifticonId()).get();
 //        String fileUploadNow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
         String originalImgName = getOriginalImgName(user, gifticon.getId());
-        String base = tradePostRequestDto.getCropFileBase64();
+        String rawBase = tradePostRequestDto.getCropFileBase64();
+        String[] basesplit = rawBase.split(",", 2);
+        String extension = basesplit[0].split(";", 2)[0].split("/", 2)[1];
+        String base = basesplit[1];
 //        String extension = "png";
         String defaultPath = System.getProperty("user.dir")+File.separator+"static"+File.separator+"img"+File.separator+"gifticonCropImg"+File.separator;
         File img = new File(defaultPath+"crop"+"_"+originalImgName);
