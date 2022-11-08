@@ -69,4 +69,5 @@ public class TradeController {
         return responseService.getSuccessResult();
     }
 
+
 }

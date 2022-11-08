@@ -42,5 +42,9 @@ public class Gifticon extends BaseEntity {
         this.expirationDate = gifticonEditDto.getExpirationDate();
         this.smallCategory = gifticonEditDto.getSmallCategory();
     }
+
+    public void changeUser(User user) {
+        this.user = user;
+    }
 }
 

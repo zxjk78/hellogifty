@@ -77,4 +77,16 @@ public class  ExceptionAdvice {
     protected CommonResult accessTokenExpiredException(HttpServletRequest request, AccessTokenExpiredException e) {
         return responseService.getFailResult(ErrorCode.AccessTokenExpiredException.getCode(), ErrorCode.AccessTokenExpiredException.getMessage());
     }
+
+    @ExceptionHandler(TradePostNotFoundException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResult tradePostNotFoundException(HttpServletRequest request, TradePostNotFoundException e) {
+        return responseService.getFailResult(ErrorCode.TradePostNotFoundException.getCode(), ErrorCode.TradePostNotFoundException.getMessage());
+    }
+
+    @ExceptionHandler(ChatRoomNotFoundException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResult chatRoomNotFoundException(HttpServletRequest request, ChatRoomNotFoundException e) {
+        return responseService.getFailResult(ErrorCode.ChatRoomNotFoundException.getCode(), ErrorCode.ChatRoomNotFoundException.getMessage());
+    }
 }
