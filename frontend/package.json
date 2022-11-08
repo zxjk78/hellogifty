@@ -36,7 +36,8 @@
     "react-native-toast-message": "^2.1.5",
     "react-native-vector-icons": "^9.2.0",
     "react-native-web": "~0.18.7",
-    "react-native-webview": "11.23.0"
+    "react-native-webview": "11.23.0",
+    "url-safe-base64": "^1.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.19.6",
