@@ -239,7 +239,7 @@ public class MMSReadModule extends ReactContextBaseJavaModule {
             JSONArray jsons = new JSONArray();
 
 
-            if(cursor != null && cursor.moveToFirst()) {
+            if(cursor != null && cursor.moveToFirst() && cursor.moveToNext()) {
                 do {
 
                     int idIdx = cursor.getColumnIndex("_id");
@@ -261,7 +261,6 @@ public class MMSReadModule extends ReactContextBaseJavaModule {
                         JSONObject json = new JSONObject();
 
                         json.put("byteArray", Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT));
-
                         jsons.put(json);
 
                     }

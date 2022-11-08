@@ -16,7 +16,7 @@ const REST_API_KEY = 'f8ffe8f26fd3086ddf3c5494651286cc';
 const REDIRECT_URI = 'http://localhost:8080/api';
 
 // 로그인이 성공하게 되면 어떠한 주소로 이동하게 되는데, 이 주소는 우리 Redirect URI로 code 쿼리스트링을 담아주어 보내주는 주소이다.
-// 해당 값이 accessToken이라고 생각하면 되고, 백엔드에서 이를 통해서 oauth가 제공하는 유저정보 등을 들고온다.
+// 해당 값은 accesscode이고 생각하면 되고, 백엔드에서 이를 이용해서 accessToken을 받고 나머지 작업을 수행한다..
 const INJECTED_JAVASCRIPT = `
         (function() {
           function wrap(fn) {

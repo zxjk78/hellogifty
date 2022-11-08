@@ -9,7 +9,6 @@ import javax.persistence.*;
 public class LargeCategory {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Short id;
 
     @Column(length = 40)
