@@ -10,6 +10,7 @@ import ChatRoomScreen from './ChatRoomScreen';
 import MyCouponScreen from './MyCouponScreen';
 import LoginScreen2 from './LoginScreen2';
 import SignupScreen from './SignupScreen';
+import LoadingScreen from './LoadingScreen';
 export {
   MyTicketScreen,
   SearchScreen,
@@ -23,4 +24,5 @@ export {
   ChatRoomScreen,
   LoginScreen2,
   SignupScreen,
+  LoadingScreen,
 };
