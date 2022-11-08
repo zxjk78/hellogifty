@@ -12,7 +12,7 @@ public class GifticonEditRequestDto {
 
     private String name;
 
-    private String number;
+//    private String number;
 
     private String expirationDateString;
 

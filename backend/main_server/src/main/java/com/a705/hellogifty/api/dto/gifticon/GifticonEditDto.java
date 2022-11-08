@@ -11,7 +11,7 @@ public class GifticonEditDto {
 
     private String name;
 
-    private String number;
+//    private String number;
 
     private LocalDate expirationDate;
 
@@ -19,7 +19,7 @@ public class GifticonEditDto {
 
     public GifticonEditDto(GifticonEditRequestDto gifticonEditRequestDto, SmallCategory category) {
         name = gifticonEditRequestDto.getName();
-        number = gifticonEditRequestDto.getNumber();
+//        number = gifticonEditRequestDto.getNumber();
         expirationDate = LocalDate.parse(gifticonEditRequestDto.getExpirationDateString(), DateTimeFormatter.ISO_DATE);
         smallCategory = category;
     }
