@@ -11,6 +11,7 @@ import com.a705.hellogifty.api.dto.gifticon.GifticonListResponseDto;
 import com.a705.hellogifty.api.dto.gifticon.GifticonRegisterRequestDto;
 import com.a705.hellogifty.api.service.GifticonService;
 import com.a705.hellogifty.api.service.ResponseService;
+import com.fasterxml.jackson.databind.ser.Serializers;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +20,11 @@ import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Base64;
 
 @Api(tags = "")
 @RequiredArgsConstructor
@@ -49,15 +52,9 @@ public class GifticonController {
 
     @ApiOperation(value = "기프티콘 등록" , notes = "기프티콘 등록")
     @PostMapping("/")
-    public CommonResult myGifticonRegister(@ApiIgnore @LoginUser User loginUser, @ModelAttribute GifticonRegisterRequestDto gifticonRegisterRequestDto) throws IOException {
-        String fileUploadNow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
-        String defaultPath = System.getProperty("user.dir")+File.separator+"static"+File.separator+"img"+File.separator+"gifticon"+File.separator;
-        MultipartFile originalImg = gifticonRegisterRequestDto.getImg();
-        String originalImgName = originalImg.getOriginalFilename();
-        File img = new File(defaultPath+loginUser.getEmail()+"_"+fileUploadNow+"_"+originalImgName);
-        originalImg.transferTo(img);
+    public CommonResult myGifticonRegister(@ApiIgnore @LoginUser User loginUser, @RequestBody GifticonRegisterRequestDto gifticonRegisterRequestDto) throws IOException {
 
-        gifticonService.myGifticonRegister(loginUser, gifticonRegisterRequestDto, img);
+        gifticonService.myGifticonRegister(loginUser, gifticonRegisterRequestDto);
         return responseService.getSuccessResult();
     }
 
