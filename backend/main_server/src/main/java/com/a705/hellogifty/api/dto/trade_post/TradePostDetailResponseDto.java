@@ -1,8 +1,6 @@
 package com.a705.hellogifty.api.dto.trade_post;
 
-import com.a705.hellogifty.api.domain.entity.Gifticon;
 import com.a705.hellogifty.api.domain.entity.TradePost;
-import com.a705.hellogifty.api.domain.entity.User;
 import com.a705.hellogifty.api.domain.enums.TradeState;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,7 +25,7 @@ public class TradePostDetailResponseDto {
 
     private Integer price;
 
-    private User sellerInfo;
+    private SellerInfoDto sellerInfo;
 
     private TradeState tradeState;
 
@@ -43,8 +41,8 @@ public class TradePostDetailResponseDto {
         title = tradePost.getTitle();
         content = tradePost.getContent();
         price = tradePost.getPrice();
-        sellerInfo = tradePost.getUser();
-        tradeState = tradePost.getTradeState();
+        sellerInfo = new SellerInfoDto(tradePost.getUser());
+//        tradeState = tradePost.getTradeState();
         createdAt = tradePost.getCreatedAt();
         modifiedAt = tradePost.getModifiedAt();
         img = defaultPath + tradePost.getImg();

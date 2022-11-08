@@ -18,6 +18,6 @@ public class GifticonRegisterRequestDto implements Serializable {
 
     private String expirationDate;
 
-    private MultipartFile img;
+    private String fileBase64;
 
 }

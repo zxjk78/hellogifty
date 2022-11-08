@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Setter
 @ToString
 @NoArgsConstructor
-public class TradePostRequestDto implements Serializable {
+public class TradePostRequestDto {
 
     private Long gifticonId;
 
@@ -22,6 +22,6 @@ public class TradePostRequestDto implements Serializable {
 
     private Integer price;
 
-    private MultipartFile cropImg;
+    private String cropFileBase64;
 
 }

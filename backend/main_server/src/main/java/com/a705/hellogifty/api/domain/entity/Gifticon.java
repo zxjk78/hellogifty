@@ -1,5 +1,6 @@
 package com.a705.hellogifty.api.domain.entity;
 
+import com.a705.hellogifty.api.domain.enums.TradeState;
 import com.a705.hellogifty.api.dto.gifticon.GifticonEditDto;
 import com.a705.hellogifty.api.dto.gifticon.GifticonEditRequestDto;
 import lombok.*;
@@ -37,7 +38,7 @@ public class Gifticon extends BaseEntity {
 
     public void update(GifticonEditDto gifticonEditDto) {
         this.name = gifticonEditDto.getName();
-        this.number = gifticonEditDto.getNumber();
+//        this.number = gifticonEditDto.getNumber();
         this.expirationDate = gifticonEditDto.getExpirationDate();
         this.smallCategory = gifticonEditDto.getSmallCategory();
     }

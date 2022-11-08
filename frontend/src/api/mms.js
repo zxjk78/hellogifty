@@ -38,7 +38,7 @@ const dummySendMMSImage = async (imageStringArr) => {
         'https://mcdonough.com/wp-content/uploads/2020/09/starbucks-logo-png-transparent.png',
       name: '[스타벅스] 아메리카노 1잔',
       expirationDate: '2022-12-12',
-      couponImg: imageStringArr[6],
+      couponImg: imageStringArr[1],
       categoryId: 1,
     },
     {
@@ -48,7 +48,7 @@ const dummySendMMSImage = async (imageStringArr) => {
         'https://mblogthumb-phinf.pstatic.net/20160604_62/ppanppane_1465006723421ByIAd_PNG/%C0%CC%B5%F0%BE%DF%B7%CE%B0%ED_%282%29.png?type=w800',
       name: '이디야 카페라떼 tall',
       expirationDate: '2022-12-22',
-      couponImg: imageStringArr[5],
+      couponImg: imageStringArr[1],
       categoryId: 3,
     },
   ];

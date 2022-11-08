@@ -16,7 +16,7 @@ public class TradePostListResponseDto {
 
     private Long id;
 
-    private String userEamil;
+    private String userEmail;
 
     private String gifticonName;
 
@@ -32,7 +32,7 @@ public class TradePostListResponseDto {
 
     public TradePostListResponseDto(TradePost tradePost) {
         id = tradePost.getId();
-        userEamil = tradePost.getUser().getEmail();
+        userEmail = tradePost.getUser().getEmail();
         gifticonName = tradePost.getGifticon().getName();
         expirationDate = tradePost.getGifticon().getExpirationDate().toString();
         title = tradePost.getTitle();
