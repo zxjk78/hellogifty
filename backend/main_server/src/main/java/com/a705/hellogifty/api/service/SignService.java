@@ -2,8 +2,11 @@ package com.a705.hellogifty.api.service;
 
 
 import com.a705.hellogifty.advice.exception.*;
+import com.a705.hellogifty.aop.LoginUser;
 import com.a705.hellogifty.api.dto.token.TokenRequestDto;
 import com.a705.hellogifty.api.dto.token.TokenResponseDto;
+import com.a705.hellogifty.api.dto.user.LoginResponseDto;
+import com.a705.hellogifty.api.dto.user.MmsIndexEditDto;
 import com.a705.hellogifty.api.dto.user.UserLoginRequestDto;
 import com.a705.hellogifty.api.dto.user.UserSignupRequestDto;
 import com.a705.hellogifty.api.repository.RefreshTokenRepository;
@@ -30,9 +33,9 @@ public class SignService {
 
 
     @Transactional
-    public TokenResponseDto login(UserLoginRequestDto userLoginRequestDto) {
+    public LoginResponseDto login(UserLoginRequestDto userLoginRequestDto) {
         User user = userRepository.findByEmail(userLoginRequestDto.getEmail()).orElseThrow(EmailLoginFailedException::new);
-
+        Long mmsIndex = user.getMmsIndex();
         if(!passwordEncoder.matches(userLoginRequestDto.getPassword(), user.getPassword()))
             throw new EmailLoginFailedException();
 
@@ -50,15 +53,23 @@ public class SignService {
             savedRefreshToken.updateToken(tokenDto.getRefreshToken());
         }
 
+        LoginResponseDto loginResponseDto = new LoginResponseDto(tokenDto, mmsIndex);
 
-        return tokenDto;
+        return loginResponseDto;
     }
+
 
     @Transactional
     public void signup(UserSignupRequestDto userSignupRequestDto) {
         if (userRepository.findByEmail(userSignupRequestDto.getEmail()).isPresent())
             throw new EmailSignupFailedException();
         User newUser = userRepository.save(userSignupRequestDto.toEntity(passwordEncoder));
+    }
+
+    @Transactional
+    public void userMmsIndexEdit(User user, MmsIndexEditDto mmsIndexEditDto) {
+        User loginUser = userRepository.findByEmail(user.getEmail()).get();
+        loginUser.updateMmsIndex(mmsIndexEditDto);
     }
 
     @Transactional
