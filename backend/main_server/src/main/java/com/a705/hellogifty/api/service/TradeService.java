@@ -1,5 +1,7 @@
 package com.a705.hellogifty.api.service;
 
+import com.a705.hellogifty.advice.exception.TradePostNotFoundException;
+import com.a705.hellogifty.api.domain.entity.ChatRoom;
 import com.a705.hellogifty.api.domain.entity.Gifticon;
 import com.a705.hellogifty.api.domain.entity.TradePost;
 import com.a705.hellogifty.api.domain.entity.User;
@@ -58,8 +60,7 @@ public class TradeService {
                 .price(tradePostRequestDto.getPrice())
 //                .tradeState(TradeState.ONSALE)
                 .img(img.getName())
-                .createdAt(LocalDate.now())
-                .modifiedAt(LocalDate.now()).build();
+                .build();
 
         tradePostRepository.save(tradePost);
     }
@@ -80,4 +81,6 @@ public class TradeService {
     public void tradePostDelete(User user, Long tradePostId) {
         tradePostRepository.deleteById(tradePostId);
     }
+
+
 }
