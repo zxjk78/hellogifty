@@ -21,7 +21,7 @@ const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
 
 // https://callstack.github.io/react-native-paper/card.html
 
-const TicketListItem = ({ item, isNormal }) => {
+const TicketListItem = ({ item, isNormal, refresh }) => {
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [modifiedModal, setModifiedModal] = useState(false);
@@ -111,9 +111,9 @@ const TicketListItem = ({ item, isNormal }) => {
         </Modal>
       </View>
       {modifiedModal ? (
-        <ModifiedTicket onClose={closeModified} item={item} />
+        <ModifiedTicket onClose={closeModified} item={item} refresh={refresh} />
       ) : null}
-      {sellModal ? <SellingTicket onClose={closeSell} item={item} /> : null}
+      {sellModal ? <SellingTicket onClose={closeSell} item={item} refresh={refresh}/> : null}
 
       {/* Main */}
       <Image

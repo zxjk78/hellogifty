@@ -16,7 +16,7 @@ import Form1 from "./Form1";
 import Form2 from "./Form2";
 import Form3 from "./Form3";
 
-const SellingTicket = ({ onClose, item }) => {
+const SellingTicket = ({ onClose, item, refresh }) => {
   const [modalVisible, setModalVisible] = useState(true);
   const [formIdx, setFormIdx] = useState(0);
 
@@ -62,6 +62,7 @@ const SellingTicket = ({ onClose, item }) => {
   const finish = () => {
     showToast();
     setModalVisible(false);
+    refresh()
   };
 
   const formArray = [

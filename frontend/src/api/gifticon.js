@@ -47,4 +47,23 @@ const AddGifticon = async (gifticonArr) => {
   }
 };
 
-export { fetchMyGifticon, AddGifticon };
+const ModifiedGifticon = async (gifticon) => {
+  console.log(gifticon, '기프티콘 수정~~')
+  // gifticon id 없음 내일 추가 ㄱㄱ
+  const data = {
+    expirationDateString: gifticon.expirationDate,
+    name: gifticon.name,
+    smallCategoryId: gifticon.selected
+  }
+  try {
+    const res = await axiosAuthInstance.put('mygifticon/', data);
+    console.log('기프티콘 수정', res.data.data);
+    return res.data.data;
+  } catch (error) {
+    console.log(error);
+  }
+
+  
+}
+
+export { fetchMyGifticon, AddGifticon, ModifiedGifticon };
