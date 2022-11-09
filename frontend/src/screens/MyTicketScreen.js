@@ -10,10 +10,11 @@ const MyTicketScreen = ({
   findMmsImages,
   handleOpenModal,
   isMMSReading,
+  refresh,
   existBar,
 }) => {
   const data = extraData;
-  const renderItem = ({ item }) => <TicketListItem item={item} />;
+  const renderItem = ({ item }) => <TicketListItem item={item} refresh={refresh}/>;
   
   // useEffect(() => {
   //   console.log('데이터 받아요~~')
