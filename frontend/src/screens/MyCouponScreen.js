@@ -21,6 +21,7 @@ const MyCouponScreen = () => {
   const [mmsReading, setMmsReading] = useState(false);
   const [mmsGifticonArr, setMmsGifticonArr] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [refresh, setRefresh] = useState(false);
   // api로 데이터 받아오기
   const data = [
     {
@@ -241,7 +242,8 @@ const MyCouponScreen = () => {
       setUsed(usedList);
       setSelling(sellingList);
     })();
-  }, []);
+    console.log(refresh, '다시 실행~~');
+  }, [refresh]);
 
   // mms 사진에서 최근의 모든 사진 읽어오는 코드
 
@@ -279,6 +281,10 @@ const MyCouponScreen = () => {
     setIsModalVisible(true);
   };
 
+  const actionRefresh = () => {
+    setRefresh(!refresh);
+  }
+
   return (
     <>
       <AddTicketModal
@@ -297,6 +303,7 @@ const MyCouponScreen = () => {
               findMmsImages={mmsGifticonArr}
               handleOpenModal={openModal}
               isMMSReading={mmsReading}
+              refresh={actionRefresh}
               existBar
             />
           )}

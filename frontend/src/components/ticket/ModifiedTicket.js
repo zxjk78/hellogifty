@@ -15,12 +15,13 @@ import { GlobalStyles } from "../../constants/style";
 import Icon from "react-native-vector-icons/Ionicons";
 import SelectList from "react-native-dropdown-select-list";
 import { largeCategoryDict } from "../../constants/data/idDictionary";
+import { ModifiedGifticon } from "../../api/gifticon";
 
-const ModifiedTicket = ({ onClose, item }) => {
+const ModifiedTicket = ({ onClose, item, refresh }) => {
   const [modalVisible, setModalVisible] = useState(true);
   const [name, setName] = useState(item.name);
   const [expirationDate, setExpirationDate] = useState(item.expirationDate);
-  const [selected, setSelected] = useState();
+  const [selected, setSelected] = useState(item.categoryId);
   // const [selected2, setSelected2] = useState(+gifticon.category);
 
   const data = [
@@ -97,10 +98,11 @@ const ModifiedTicket = ({ onClose, item }) => {
       ),
     },
   ];
-  console.log(item.brandImage);
 
   const completeButton = () => {
     setModalVisible(!modalVisible);
+    ModifiedGifticon({name, expirationDate, selected})
+    refresh()
   };
   return (
     <View style={styles.container}>
@@ -171,7 +173,7 @@ const ModifiedTicket = ({ onClose, item }) => {
                     borderWidth: 2,
                     borderColor: "red",
                   }}
-                  // defaultOption={data[+item.categoryId] || false}
+                  defaultOption={data[+item.categoryId] || false}
                 />
               </View>
             </View>
@@ -183,7 +185,7 @@ const ModifiedTicket = ({ onClose, item }) => {
               source={require("../../assets/starbucks.jpg")}
               style={styles.couponImage}
             />
-            <TouchableOpacity style={styles.completeButton}>
+            <TouchableOpacity style={styles.completeButton} onPress={completeButton}>
               <Text>완료</Text>
             </TouchableOpacity>
           </View>
