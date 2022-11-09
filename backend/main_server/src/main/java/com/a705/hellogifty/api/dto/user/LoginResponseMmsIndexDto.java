@@ -16,4 +16,5 @@ public class LoginResponseMmsIndexDto {
     private Date accessTokenExpireDate;
     private String refreshToken;
     private Long userMmsIndex;
+    private String userEmail;
 }
