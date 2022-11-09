@@ -7,7 +7,10 @@ const fetchMyGifticon = async () => {
   try {
     const res = await axiosAuthInstance.get('mygifticon/');
 
-    console.log('기프티콘 목록 데이터 개수: ', res.data.data.length);
+    console.log(
+      'DB에 등록된 기프티콘 목록 데이터 개수: ',
+      res.data.data.length
+    );
     return res.data.data;
   } catch (error) {
     console.log(error);

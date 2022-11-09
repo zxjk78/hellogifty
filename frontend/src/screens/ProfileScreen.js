@@ -1,14 +1,22 @@
-import { StyleSheet, Text, View, Image, FlatList } from 'react-native';
+import { StyleSheet, Text, View, Image, FlatList, Button } from 'react-native';
 import React from 'react';
 
 import { gifticonDummy } from '../constants/data/dummyData';
 import { TicketListItem } from '../components/ticket';
 import { GlobalStyles } from '../constants/style';
+import { logout } from '../api/auth';
 // import SearchResultItem from '../components/shopping/search/SearchResultItem';
 
 const renderItem = ({ item }) => <TicketListItem item={item} />;
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ navigation }) => {
+  const handleLogout = async () => {
+    await logout();
+    navigation.replace('Auth', {
+      screen: 'Login',
+      params: { message: '로그아웃' },
+    });
+  };
   return (
     <View style={styles.wrapper}>
       <View style={styles.profileContainer}>
@@ -20,6 +28,7 @@ const ProfileScreen = () => {
             style={{ width: 60, height: 60, borderRadius: 40, marginRight: 10 }}
           />
           <Text style={{ fontSize: 20 }}>유저아이디</Text>
+          <Button title="로그아웃" onPress={handleLogout} />
         </View>
         <View>
           <Image

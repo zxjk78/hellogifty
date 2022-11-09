@@ -1,29 +1,34 @@
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import { useRoute } from '@react-navigation/native';
+
+import LoadingScreen from './LoadingScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useRef, useState } from 'react';
 import { login, logout, signup } from '../api/auth';
-const LoginScreen2 = () => {
+const LoginScreen2 = ({ navigation }) => {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const route = useRoute();
   useEffect(() => {
     AsyncStorage.getItem('accessToken').then((item) => {
       if (item) {
-        console.log('토큰존재:', item);
+        // console.log('토큰존재:', item);
         setIsLoggedIn(true);
+        navigation.replace('MainTab', { screen: 'MyCoupon' });
       } else {
-        console.log('토큰없음:', item);
+        // console.log('토큰없음:', item);
 
         setIsLoggedIn(false);
       }
     });
-  }, [isLoggedIn]);
+    // }, [route.params?.message]);
+  }, []);
 
   const handleSignup = () => {
     (async () => {
       const result = await signup(id, password);
-      console.log('회원가입 완료: ', result);
+      // console.log('회원가입 완료: ', result);
     })();
   };
   const handleLogin = () => {
@@ -31,12 +36,9 @@ const LoginScreen2 = () => {
       const { accessToken, refreshToken } = await login(id, password);
       await AsyncStorage.setItem('accessToken', accessToken);
       await AsyncStorage.setItem('refreshToken', refreshToken);
-      console.log('엑세스토큰: ', await AsyncStorage.getItem('accessToken'));
-    })();
-  };
-  const handleLogout = () => {
-    (async () => {
-      await logout();
+      // console.log('엑세스토큰: ', await AsyncStorage.getItem('accessToken'));
+
+      navigation.replace('MainTab', { screen: 'MyCoupon' });
     })();
   };
 
@@ -44,8 +46,7 @@ const LoginScreen2 = () => {
     <View>
       {isLoggedIn ? (
         <>
-          <Text>로그인된 상태입니다.</Text>
-          <Button title="로그아웃하기" onPress={handleLogout} />
+          <LoadingScreen />
         </>
       ) : (
         <>
