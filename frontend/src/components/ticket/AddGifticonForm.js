@@ -12,7 +12,6 @@ import SelectList from 'react-native-dropdown-select-list';
 
 import { GlobalStyles } from '../../constants/style';
 import { largeCategoryDict } from '../../constants/data/idDictionary';
-import { login } from '../../api/auth';
 const AddGifticonForm = ({ gifticon, idx, isEnd, onPrev, onNext }) => {
   const [name, setName] = useState(null);
   const [expirationDate, setExpirationDate] = useState(null);

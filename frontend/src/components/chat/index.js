@@ -1,2 +1,3 @@
 import ChatList from './ChatList';
-export { ChatList };
+import ChatRoom from './ChatRoom';
+export { ChatList, ChatRoom };
