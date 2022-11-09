@@ -1,5 +1,15 @@
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  Button,
+  Pressable,
+} from 'react-native';
+import { GlobalStyles } from '../constants/style';
+
 import { useRoute } from '@react-navigation/native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import LoadingScreen from './LoadingScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -10,6 +20,7 @@ const LoginScreen2 = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const route = useRoute();
+
   useEffect(() => {
     AsyncStorage.getItem('accessToken').then((item) => {
       if (item) {
@@ -25,12 +36,6 @@ const LoginScreen2 = ({ navigation }) => {
     // }, [route.params?.message]);
   }, []);
 
-  const handleSignup = () => {
-    (async () => {
-      const result = await signup(id, password);
-      // console.log('회원가입 완료: ', result);
-    })();
-  };
   const handleLogin = () => {
     (async () => {
       const { accessToken, refreshToken } = await login(id, password);
@@ -47,34 +52,63 @@ const LoginScreen2 = ({ navigation }) => {
   };
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       {isLoggedIn ? (
         <>
           <LoadingScreen />
         </>
       ) : (
         <>
-          <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'blue' }}>
-            로그인
-          </Text>
-
-          <Text>아이디</Text>
-          <TextInput placeholder="아이디" onChangeText={setId} />
-
-          <Text>비밀번호</Text>
-          <TextInput placeholder="비밀번호" onChangeText={setPassword} />
-          <Button title="로그인" onPress={handleLogin} />
-          <View style={{ height: '20%' }}></View>
-
-          <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'blue' }}>
-            회원가입
-          </Text>
-          <Text>아이디</Text>
-          <TextInput placeholder="아이디" onChangeText={setId} />
-
-          <Text>비밀번호</Text>
-          <TextInput placeholder="비밀번호" onChangeText={setPassword} />
-          <Button title="회원가입" onPress={handleSignup} />
+          <KeyboardAwareScrollView
+            style={styles.wrapper}
+            contentContainerStyle={styles.container}
+            resetScrollToCoords={{ x: 0, y: 0 }}
+            scrollEnabled={true}
+          >
+            {/* <View style={styles.wrapper}> */}
+            <View style={styles.container}>
+              <View style={styles.title}>
+                <Text style={styles.title}>로그인</Text>
+              </View>
+              <View style={styles.form1}>
+                <View>
+                  {/* <Text style={styles.inputLabel}>아이디</Text> */}
+                  <TextInput
+                    placeholder="아이디"
+                    onChangeText={setId}
+                    style={styles.input}
+                  />
+                </View>
+                <View>
+                  {/* <Text style={styles.inputLabel}>비밀번호</Text> */}
+                  <TextInput
+                    placeholder="비밀번호"
+                    onChangeText={setPassword}
+                    style={styles.input}
+                  />
+                </View>
+                <Pressable onPress={handleLogin} style={styles.btn1}>
+                  <Text style={{ color: '#ffffff' }}>로그인</Text>
+                </Pressable>
+                <Pressable
+                  onPress={() => {
+                    navigation.navigate('Signup');
+                  }}
+                  style={styles.btn2}
+                >
+                  <Text
+                    style={{
+                      color: GlobalStyles.colors.mainPrimary,
+                      marginTop: '10%',
+                    }}
+                  >
+                    회원가입
+                  </Text>
+                </Pressable>
+              </View>
+            </View>
+            {/* </View> */}
+          </KeyboardAwareScrollView>
         </>
       )}
     </View>
@@ -83,4 +117,53 @@ const LoginScreen2 = ({ navigation }) => {
 
 export default LoginScreen2;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  wrapper: {
+    flex: 0.7,
+
+    width: '80%',
+    marginLeft: '10%',
+    marginTop: '20%',
+  },
+  page: {},
+  container: {
+    // flex: 1,
+    // backgroundColor: 'red',
+    marginTop: '15%',
+  },
+  title: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: GlobalStyles.colors.mainPrimary,
+    flex: 1,
+    marginBottom: '5%',
+  },
+  form1: {
+    // flexDirection: 'row',
+    // justifyContent: 'space-around',
+    justifyContent: 'space-around',
+    flex: 2,
+  },
+  inputLabel: {
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
+  input: {
+    height: 60,
+    borderBottomWidth: 1,
+    borderBottomColor: GlobalStyles.colors.mainPrimary,
+    marginBottom: 10,
+  },
+  btn1: {
+    marginTop: 10,
+    backgroundColor: GlobalStyles.colors.mainPrimary,
+    alignItems: 'center',
+    borderRadius: 10,
+    padding: 10,
+  },
+  btn2: {
+    marginTop: 10,
+
+    alignItems: 'flex-end',
+  },
+});
