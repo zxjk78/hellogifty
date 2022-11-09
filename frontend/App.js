@@ -28,7 +28,8 @@ import {
   ShoppingScreen,
   SellingItemDetailScreen,
   ProfileScreen,
-  ChatRoomScreen,
+  ChattingScreen,
+  ChattingRoomScreen,
   MyCouponScreen,
   LoginScreen2,
   LoadingScreen,
@@ -90,6 +91,43 @@ const toastConfig = {
   ),
 };
 
+const Chat = () => {
+  return (
+    <>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen
+          name="ChattingRoomScreen"
+          component={ChattingRoomScreen}
+          options={{ title: '채팅목록' }}
+        />
+        <Stack.Screen
+          name="Chatting"
+          component={ChattingScreen}
+          options={{ title: '채팅방' }}
+        />
+      </Stack.Navigator>
+      <Toast config={toastConfig} />
+    </>
+  );
+};
+
+const Shopping = () => {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen
+        name="Shopping"
+        component={ShoppingScreen}
+        options={{ title: '검색' }}
+      />
+      <Stack.Screen
+        name="ShoppingDetail"
+        component={SellingItemDetailScreen}
+        options={{ title: '판매상세' }}
+      />
+    </Stack.Navigator>
+  );
+};
+
 // tab
 const MainTab = () => {
   return (
@@ -120,18 +158,25 @@ const MainTab = () => {
         component={MyCoupon}
         options={{ headerShown: false, title: '내 쿠폰' }}
       />
+      {/* <Tab.Screen
+        name="Shopping"
+        component={ShoppingScreen}
+        options={{
+          title: '쇼핑',
+        }}
+      /> */}
       <Tab.Screen
         name="Shopping"
-        component={SearchScreen}
+        component={Shopping}
         options={{
           title: '쇼핑',
         }}
       />
       <Tab.Screen
         name="Chat"
-        component={SearchScreen}
+        component={Chat}
         options={{
-          title: '채팅창',
+          title: '채팅',
         }}
       />
       <Tab.Screen

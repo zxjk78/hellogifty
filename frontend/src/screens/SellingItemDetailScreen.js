@@ -9,7 +9,18 @@ import {
 import React from 'react';
 import { SellingItemDetail } from '../components/shopping/detail';
 import { GlobalStyles } from '../constants/style';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 const SellingItemDetailScreen = () => {
+  const navigation = useNavigation();
+  const handleStartChat = async () => {
+    // 가짜 seller 아이디 만들고 하기
+    const sellerId = 1234;
+    const myId = await AsyncStorage.getItem('userId');
+
+    navigation.navigate('Chat', { screen: 'Chatting' });
+  };
+
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
@@ -47,7 +58,7 @@ const SellingItemDetailScreen = () => {
       <View style={styles.buyContainer}>
         <Text style={{ fontWeight: 'bold', fontSize: 20 }}>5,000 원</Text>
 
-        <TouchableOpacity style={styles.chatBtn}>
+        <TouchableOpacity style={styles.chatBtn} onPress={handleStartChat}>
           <Text style={{ color: '#fff', fontWeight: 'bold' }}>채팅하기</Text>
         </TouchableOpacity>
       </View>

@@ -3,14 +3,22 @@ import React, { useLayoutEffect, useState } from 'react';
 import { GlobalStyles } from '../constants/style';
 import { chatListItemDummy } from '../constants/data/dummyData';
 import { ChatList } from '../components/chat';
-const ChatRoomScreen = () => {
+const ChattingRoomScreen = () => {
   const [finishedConversation, setFinishedConversation] = useState([]);
   const [onGoingConversation, setOnGoingConversation] = useState([]);
+
+  // 임시로 만들어진 더미 state들
+
+  const chatRoomIdOptions = [128, 256, 512, 1024, 2056];
+
+  const [userId, setUserId] = useState(1000);
+  const [chatRoomId, setChatRoomId] = useState('');
+
   useLayoutEffect(() => {
     const finished = [];
     const onGoing = [];
     chatListItemDummy.forEach((item) => {
-      if (item.isTransactionDone) {
+      if (item?.isTransactionDone) {
         finished.push(item);
       } else {
         onGoing.push(item);
@@ -32,7 +40,7 @@ const ChatRoomScreen = () => {
   );
 };
 
-export default ChatRoomScreen;
+export default ChattingRoomScreen;
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -40,6 +48,9 @@ const styles = StyleSheet.create({
     width: '90%',
     marginLeft: '5%',
     backgroundColor: GlobalStyles.colors.backgroundComponent,
+  },
+  userProfile: {
+    width: '100%',
   },
   chatStatus: {
     fontWeight: 'bold',

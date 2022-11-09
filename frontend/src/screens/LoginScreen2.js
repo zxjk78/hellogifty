@@ -38,6 +38,10 @@ const LoginScreen2 = ({ navigation }) => {
       await AsyncStorage.setItem('refreshToken', refreshToken);
       // console.log('엑세스토큰: ', await AsyncStorage.getItem('accessToken'));
 
+      // 채팅 위해 유저아이디 하나 넣기
+      const userId = (Math.random() * 100).toFixed(0);
+      await AsyncStorage.setItem('userId', userId);
+
       navigation.replace('MainTab', { screen: 'MyCoupon' });
     })();
   };
