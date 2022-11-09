@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View, TextInput, Image } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  Image,
+  ScrollView,
+} from 'react-native';
 import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import { Button } from 'react-native-paper';
 import SelectList from 'react-native-dropdown-select-list';
@@ -10,8 +17,7 @@ const AddGifticonForm = ({ gifticon, idx, isEnd, onPrev, onNext }) => {
   const [name, setName] = useState(null);
   const [expirationDate, setExpirationDate] = useState(null);
 
-
-  // 용래형~~~~~~~~~ 뒤로가기 수정만 하면 이제 완성!!!!!!!!! 
+  // 용래형~~~~~~~~~ 뒤로가기 수정만 하면 이제 완성!!!!!!!!!
   const [selected, setSelected] = useState(+gifticon.categoryId);
   const [selected2, setSelected2] = useState(+gifticon.categoryId);
   // console.log(gifticon);
@@ -97,9 +103,17 @@ const AddGifticonForm = ({ gifticon, idx, isEnd, onPrev, onNext }) => {
       couponImg: gifticon.couponImg,
     });
   };
+  const prevHandler = () => {
+    onPrev(idx, {
+      name: name || gifticon.name,
+      expirationDate: expirationDate || gifticon.expirationDate,
+      categoryId: selected,
+      couponImg: gifticon.couponImg,
+    });
+  };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View>
         <View>
           <Text style={styles.title}>이름</Text>
@@ -151,14 +165,14 @@ const AddGifticonForm = ({ gifticon, idx, isEnd, onPrev, onNext }) => {
         />
       </View>
       <View style={styles.buttonContainer}>
-        <Button mode="outlined" onPress={onPrev}>
+        <Button mode="outlined" onPress={prevHandler}>
           이전
         </Button>
         <Button mode="contained" onPress={nextHandler}>
           {isEnd ? `완료` : `다음`}
         </Button>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -204,6 +218,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginBottom: '10%',
   },
   dropdownStyles: {},
 });

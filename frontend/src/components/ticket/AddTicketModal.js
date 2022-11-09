@@ -15,7 +15,7 @@ const AddTicketModal = ({ gifticonList, visible, handleClose }) => {
   const [fetchedData, setFetchedData] = useState(null);
 
   // console.log(gifticonList);
-  // 이전 버튼 누를 때 저장 필요함!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  // 이전 버튼 누를 때 저장 완료
   const handleNext = (idx, data) => {
     // console.log('인덱스: ', idx, '넘어온 데이터 ', data);
 
@@ -28,7 +28,9 @@ const AddTicketModal = ({ gifticonList, visible, handleClose }) => {
       setCurrent((prev) => prev + 1);
     }
   };
-  const handlePrev = () => {
+  const handlePrev = (idx, data) => {
+    setFetchedData({ idx, data });
+
     if (current > 0) {
       setCurrent((prev) => prev - 1);
     }
@@ -49,7 +51,7 @@ const AddTicketModal = ({ gifticonList, visible, handleClose }) => {
   useEffect(() => {
     setIsLoading(true);
     if (gifticonList) {
-      setGifticonCopy(() => gifticonList.map((item, index) =>item))
+      setGifticonCopy(() => gifticonList.map((item, index) => item));
     }
     setIsLoading(false);
   }, [gifticonList]);

@@ -239,7 +239,7 @@ public class MMSReadModule extends ReactContextBaseJavaModule {
             JSONArray jsons = new JSONArray();
 
 
-            if(cursor != null && cursor.moveToFirst()) {
+            if(cursor != null && cursor.moveToFirst() && cursor.moveToNext()) {
                 do {
 
                     int idIdx = cursor.getColumnIndex("_id");

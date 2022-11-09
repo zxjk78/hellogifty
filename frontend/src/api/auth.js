@@ -14,7 +14,7 @@ const login = async (email, password) => {
 };
 
 const signup = async (email, password) => {
-  // console.log('회원가입: ', email, password);
+  console.log('회원가입: ', email, password);
   try {
     const res = await axiosAuthInstance.post('signup', {
       email: email,

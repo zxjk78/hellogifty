@@ -15,8 +15,8 @@ export const requestReadMMSPermission = async () => {
     const granted2 = await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.RECEIVE_MMS,
       {
-        title: 'MMS 권한',
-        message: 'MMS 접근 권한',
+        title: 'MMS 권한 요청1',
+        message: 'MMS 접근 권한 요청1',
         buttonNegative: '아니오',
         buttonPositive: '예',
       }
@@ -24,8 +24,8 @@ export const requestReadMMSPermission = async () => {
     const granted3 = await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.RECEIVE_WAP_PUSH,
       {
-        title: 'MMS 권한 요청',
-        message: 'MMS 접근 권한 요청',
+        title: 'MMS 권한 요청2',
+        message: 'MMS 접근 권한 요청2',
         buttonNegative: '아니오',
         buttonPositive: '예',
       }
@@ -33,10 +33,10 @@ export const requestReadMMSPermission = async () => {
     if (
       (granted && granted3 && granted2) === PermissionsAndroid.RESULTS.GRANTED
     ) {
-      console.log('getPermission.js: ', '권한 부여 성공');
+      // console.log('getPermission.js: ', '권한 부여 성공');
       return true;
     } else {
-      console.log('getPermission.js : ', '권한 부여 실패');
+      // console.log('getPermission.js : ', '권한 부여 실패');
       return false;
     }
   } catch (err) {
