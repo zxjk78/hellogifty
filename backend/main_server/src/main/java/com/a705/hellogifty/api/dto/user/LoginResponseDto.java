@@ -1,5 +1,6 @@
 package com.a705.hellogifty.api.dto.user;
 
+import com.a705.hellogifty.api.domain.entity.User;
 import com.a705.hellogifty.api.dto.token.TokenResponseDto;
 import lombok.Getter;
 
@@ -18,12 +19,15 @@ public class LoginResponseDto {
 
     private Long userMmsIndex;
 
-    public LoginResponseDto(TokenResponseDto tokenResponseDto, Long mmsIndex) {
+    private String userEmail;
+
+    public LoginResponseDto(TokenResponseDto tokenResponseDto, Long mmsIndex, User user) {
         grantType = tokenResponseDto.getGrantType();
         accessToken = tokenResponseDto.getAccessToken();
         refreshToken = tokenResponseDto.getRefreshToken();
         accessTokenExpireDate = tokenResponseDto.getAccessTokenExpireDate();
         userMmsIndex = mmsIndex;
+        userEmail = user.getEmail();
     }
 
 }

@@ -53,7 +53,7 @@ public class SignService {
             savedRefreshToken.updateToken(tokenDto.getRefreshToken());
         }
 
-        LoginResponseDto loginResponseDto = new LoginResponseDto(tokenDto, mmsIndex);
+        LoginResponseDto loginResponseDto = new LoginResponseDto(tokenDto, mmsIndex, user);
 
         return loginResponseDto;
     }

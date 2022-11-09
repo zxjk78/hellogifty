@@ -45,7 +45,8 @@ public class SignController {
                 new LoginResponseMmsIndexDto(tokenDto.getAccessToken(),
                 tokenDto.getAccessTokenExpireDate(),
                 tokenDto.getRefreshToken(),
-                tokenDto.getUserMmsIndex()));
+                tokenDto.getUserMmsIndex(),
+                tokenDto.getUserEmail()));
     }
 
     @ApiOperation(value = "회원가입", notes = "회원가입 수행")
