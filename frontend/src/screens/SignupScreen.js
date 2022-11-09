@@ -9,6 +9,7 @@ import {
 import React, { useState } from 'react';
 import { GlobalStyles } from '../constants/style';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { signup } from '../api/auth';
 
 const SignupScreen = ({ navigation }) => {
   const [id, setId] = useState('');
@@ -18,7 +19,9 @@ const SignupScreen = ({ navigation }) => {
   const handleSignup = () => {
     (async () => {
       const result = await signup(id, password);
-      // console.log('회원가입 완료: ', result);
+      if (result) {
+        navigation.navigate('Login');
+      }
     })();
   };
 

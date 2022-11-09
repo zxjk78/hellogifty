@@ -18,11 +18,13 @@ const MyTicketScreen = ({
   handleOpenModal,
   isMMSReading,
   refresh,
-  existBar,
+  existMMSReadBar,
 }) => {
   const data = extraData;
-  const renderItem = ({ item }) => <TicketListItem item={item} refresh={refresh}/>;
-  
+  const renderItem = ({ item }) => (
+    <TicketListItem item={item} refresh={refresh} />
+  );
+
   // useEffect(() => {
   //   console.log('데이터 받아요~~')
   //   console.log(route.params)
@@ -31,7 +33,7 @@ const MyTicketScreen = ({
 
   return (
     <>
-      {existBar && (
+      {existMMSReadBar && (
         <ReadMMSStatusBar
           mmsNum={findMmsImages?.length}
           handleOpenModal={handleOpenModal}

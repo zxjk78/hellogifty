@@ -14,7 +14,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import LoadingScreen from './LoadingScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useRef, useState } from 'react';
-import { login, logout, signup } from '../api/auth';
+import { login } from '../api/auth';
 const LoginScreen2 = ({ navigation }) => {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
@@ -38,14 +38,20 @@ const LoginScreen2 = ({ navigation }) => {
 
   const handleLogin = () => {
     (async () => {
-      const { accessToken, refreshToken } = await login(id, password);
+      const { accessToken, refreshToken, userId, mmsId } = await login(
+        id,
+        password
+      );
       await AsyncStorage.setItem('accessToken', accessToken);
       await AsyncStorage.setItem('refreshToken', refreshToken);
       // console.log('엑세스토큰: ', await AsyncStorage.getItem('accessToken'));
 
       // 채팅 위해 유저아이디 하나 넣기
-      const userId = (Math.random() * 100).toFixed(0);
-      await AsyncStorage.setItem('userId', userId);
+      const userId2 = (Math.random() * 100).toFixed(0);
+      await AsyncStorage.setItem('userId', userId2);
+
+      // 마지막으로 조회한 mms 이미지 id 값 넣기
+      await AsyncStorage.setItem('lastMMSImageIdx', mmsId || 0 + '');
 
       navigation.replace('MainTab', { screen: 'MyCoupon' });
     })();
