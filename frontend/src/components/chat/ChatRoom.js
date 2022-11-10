@@ -4,7 +4,9 @@ import SockJsClient from 'react-stomp';
 import React, { useState, useEffect, useRef } from 'react';
 
 import ChatInput from './ChatInput';
-import ChatBubble from './ChatBubble';
+import PayBubble from './PayBubble';
+import TalkBubble from './TalkBubble';
+import TradeBubble from './TradeBubble';
 
 const PORT = 9090;
 // const CHATTING_SERVER_URL = `http://localhost:${PORT}/chat`;
@@ -129,9 +131,41 @@ const ChatRoom = ({ chatRoomId, userId }) => {
 
       <View style={styles.chatLogArea}>
         {messageList.map((msg, index) => {
-          return (
-            <ChatBubble isMe={+msg.userId === +userId} key={index} msg={msg} />
-          );
+          let choice;
+
+          switch (msg.messageType) {
+            case 'TRADE':
+              choice = (
+                <TradeBubble
+                  isMe={+msg.userId === +userId}
+                  key={index}
+                  msg={msg}
+                />
+              );
+              break;
+            case 'PAY':
+              choice = (
+                <PayBubble
+                  isMe={+msg.userId === +userId}
+                  key={index}
+                  msg={msg}
+                />
+              );
+              break;
+
+            default:
+              choice = (
+                <TalkBubble
+                  isMe={+msg.userId === +userId}
+                  key={index}
+                  msg={msg}
+                />
+              );
+
+              break;
+          }
+
+          return choice;
         })}
       </View>
       <View style={styles.inputArea}>
