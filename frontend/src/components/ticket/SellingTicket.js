@@ -15,6 +15,7 @@ import { GlobalStyles } from "../../constants/style";
 import Form1 from "./Form1";
 import Form2 from "./Form2";
 import Form3 from "./Form3";
+import { sellMyGifticon } from "../../api/gifticon";
 
 const SellingTicket = ({ onClose, item, refresh }) => {
   const [modalVisible, setModalVisible] = useState(true);
@@ -59,10 +60,12 @@ const SellingTicket = ({ onClose, item, refresh }) => {
   };
 
   // 서버로 데이터 보내기
-  const finish = () => {
+  const finish = async (info) => {
+    console.log(info, '여기가 인포~~');
     showToast();
     setModalVisible(false);
-    refresh()
+    await sellMyGifticon(info);
+    refresh();
   };
 
   const formArray = [

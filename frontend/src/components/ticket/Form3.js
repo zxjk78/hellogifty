@@ -39,7 +39,7 @@ const Form3 = ({ info, back, finish }) => {
                 </Pressable>
                 <Pressable
                   style={[styles.button, styles.buttonClose]}
-                  onPress={() => finish()}
+                  onPress={() => finish(info)}
                 >
                   <Text style={styles.textStyle}>네</Text>
                 </Pressable>

@@ -13,7 +13,6 @@ import ImagePicker from 'react-native-image-crop-picker';
 const Form2 = ({ info, originalImgPath, next, back }) => {
   const [imagePath, setImagePath] = useState(info.imagePath);
   const [picture, setPicture] = useState();
-  console.log(info);
 
   // const cropViewRef = useRef();
 
@@ -24,9 +23,8 @@ const Form2 = ({ info, originalImgPath, next, back }) => {
       height: 351,
       freeStyleCropEnabled: true,
     }).then((image) => {
-      console.log(image.path);
       setImagePath(image.path);
-    });
+    }).catch((error) => console.log(error));
   };
 
   // cropViewRef.saveImage(true, 90)
