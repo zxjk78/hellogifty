@@ -53,27 +53,39 @@ const MyTicketScreen = ({
       )}
       <SafeAreaView style={styles.container}>
         <ScrollView>
-          <Text style={styles.categoryText}>카페</Text>
+          <View style={{backgroundColor: '#59cd90'}}>
+            <Text style={styles.categoryText}>카페</Text>
+          </View>
           {dataList[0].map((item) => (
             <TicketListItem key={item.id} item={item} refresh={refresh} />
           ))}
-          <Text style={styles.categoryText}>편의점</Text>
+          <View style={{backgroundColor: '#9d4edd'}}>
+            <Text style={styles.categoryText}>편의점</Text>
+          </View>
           {dataList[1].map((item) => (
             <TicketListItem key={item.id} item={item} refresh={refresh} />
           ))}
-          <Text style={styles.categoryText}>베이커리</Text>
+          <View style={{backgroundColor: '#e9c46a'}}>
+            <Text style={styles.categoryText}>베이커리</Text>
+          </View>
           {dataList[2].map((item) => (
             <TicketListItem key={item.id} item={item} refresh={refresh} />
           ))}
-          <Text style={styles.categoryText}>아이스크림</Text>
+          <View style={{backgroundColor: '#ee6352'}}>
+            <Text style={styles.categoryText}>아이스크림</Text>
+          </View>
           {dataList[3].map((item) => (
             <TicketListItem key={item.id} item={item} refresh={refresh} />
           ))}
-          <Text style={styles.categoryText}>외식/프렌차이즈</Text>
+          <View style={{backgroundColor: '#3099c0'}}>
+            <Text style={styles.categoryText}>외식/프렌차이즈</Text>
+          </View>
           {dataList[4].map((item) => (
             <TicketListItem key={item.id} item={item} refresh={refresh} />
           ))}
-          <Text style={styles.categoryText}>상품권</Text>
+          <View style={{backgroundColor: '#d4cbb3'}}>
+            <Text style={styles.categoryText}>상품권</Text>
+          </View>
           {dataList[5].map((item) => (
             <TicketListItem key={item.id} item={item} refresh={refresh} />
           ))}
@@ -90,12 +102,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   categoryText: {
-    backgroundColor: "#e9c46a",
     height: 40,
     alignItems: "center",
     alignContent: "center",
     // textAlign: 'center',
     fontSize: 20,
+    marginLeft: 10,
   },
   // listItem: {backgroundColor:'red', height:50},
 });

@@ -162,8 +162,7 @@ const TicketListItem = ({ item, isNormal, refresh }) => {
       {/* <Text>{categoryImg[+item.categoryId]}</Text> */}
       <Image
         source={imgUrl[item.categoryId]}
-        // source={require('../../assets/largeCategory/img0.png')}
-        style={{ width: 20, height: 20 }}
+        style={{ width: 30, height: 30 }}
       />
     </TouchableOpacity>
   );
