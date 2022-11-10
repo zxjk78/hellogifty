@@ -18,7 +18,7 @@ const sendMMSImage = async (imageStringArr) => {
 const dummySendMMSImage = async (imageStringArr) => {
   return [
     {
-      idx: 1,
+      id: 1,
       brandName: 'Starbucks',
       brandImage:
         'https://mcdonough.com/wp-content/uploads/2020/09/starbucks-logo-png-transparent.png',
@@ -28,7 +28,7 @@ const dummySendMMSImage = async (imageStringArr) => {
       categoryId: 1,
     },
     {
-      idx: 5,
+      id: 5,
       brandName: 'Ediya',
       brandImage:
         'https://mblogthumb-phinf.pstatic.net/20160604_62/ppanppane_1465006723421ByIAd_PNG/%C0%CC%B5%F0%BE%DF%B7%CE%B0%ED_%282%29.png?type=w800',
@@ -38,7 +38,7 @@ const dummySendMMSImage = async (imageStringArr) => {
       categoryId: 3,
     },
     {
-      idx: 7,
+      id: 7,
       brandName: 'Ediya',
       brandImage:
         'https://mblogthumb-phinf.pstatic.net/20160604_62/ppanppane_1465006723421ByIAd_PNG/%C0%CC%B5%F0%BE%DF%B7%CE%B0%ED_%282%29.png?type=w800',
@@ -48,7 +48,7 @@ const dummySendMMSImage = async (imageStringArr) => {
       categoryId: 1,
     },
     {
-      idx: 71,
+      id: 71,
       brandName: 'Ediya',
       brandImage:
         'https://mblogthumb-phinf.pstatic.net/20160604_62/ppanppane_1465006723421ByIAd_PNG/%C0%CC%B5%F0%BE%DF%B7%CE%B0%ED_%282%29.png?type=w800',
@@ -58,7 +58,7 @@ const dummySendMMSImage = async (imageStringArr) => {
       categoryId: 1,
     },
     {
-      idx: 27,
+      id: 27,
       brandName: 'Ediya',
       brandImage:
         'https://mblogthumb-phinf.pstatic.net/20160604_62/ppanppane_1465006723421ByIAd_PNG/%C0%CC%B5%F0%BE%DF%B7%CE%B0%ED_%282%29.png?type=w800',

@@ -34,6 +34,12 @@ const AddTicketModal = ({ gifticonList, visible, handleClose }) => {
       setCurrent((prev) => prev - 1);
     }
   };
+  const setSelectedItem = (selectedArr) => {
+    setGifticonCopy(gifticonList.filter((item) => item.id));
+
+    console.log(selectedArr);
+    setCurrent((prev) => prev + 1);
+  };
   useEffect(() => {
     if (!fetchedData) return;
     const { data, idx } = fetchedData;
@@ -83,7 +89,8 @@ const AddTicketModal = ({ gifticonList, visible, handleClose }) => {
             (current === 0 ? (
               <AddGifticonFirstCheck
                 imageStringArr={gifticonList}
-                handleClose={handleClose}
+                onClose={handleClose}
+                onSubmit={setSelectedItem}
               />
             ) : current > gifticonCopy.length ? (
               <AddGifticonLastCheck gifticonArr={submitingGifticons} />
