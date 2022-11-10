@@ -12,15 +12,20 @@ import SelectList from 'react-native-dropdown-select-list';
 
 import { GlobalStyles } from '../../constants/style';
 import { largeCategoryDict } from '../../constants/data/idDictionary';
-const AddGifticonForm = ({ gifticon, idx, isEnd, onPrev, onNext }) => {
+const AddGifticonForm = ({
+  gifticon,
+  idx,
+  isEnd,
+  onPrev,
+  onNext,
+  onSubmit,
+}) => {
   const [name, setName] = useState(null);
   const [expirationDate, setExpirationDate] = useState(null);
-
-  // 용래형~~~~~~~~~ 뒤로가기 수정만 하면 이제 완성!!!!!!!!!
   const [selected, setSelected] = useState(+gifticon.categoryId);
   const [selected2, setSelected2] = useState(+gifticon.categoryId);
   // console.log(gifticon);
-  const data = [
+  const categoryData = [
     {
       key: 0,
       value: (
@@ -137,7 +142,7 @@ const AddGifticonForm = ({ gifticon, idx, isEnd, onPrev, onNext }) => {
             <Text style={styles.title}>카테고리</Text>
             <SelectList
               setSelected={setSelected}
-              data={data}
+              data={categoryData}
               onSelect={() => {
                 setSelected(selected);
               }}
@@ -151,7 +156,7 @@ const AddGifticonForm = ({ gifticon, idx, isEnd, onPrev, onNext }) => {
               boxStyles={{
                 borderColor: 'red',
               }}
-              defaultOption={data[+gifticon.categoryId] || false}
+              defaultOption={categoryData[+gifticon.categoryId] || false}
             />
           </View>
         </View>
@@ -164,13 +169,10 @@ const AddGifticonForm = ({ gifticon, idx, isEnd, onPrev, onNext }) => {
         />
       </View>
       <View style={styles.buttonContainer}>
-        {idx > 0 ? (
-          <Button mode="outlined" onPress={prevHandler}>
-            이전
-          </Button>
-        ) : (
-          <View></View>
-        )}
+        <Button mode="outlined" onPress={prevHandler}>
+          이전
+        </Button>
+
         <Button mode="contained" onPress={nextHandler}>
           {isEnd ? `완료` : `다음`}
         </Button>

@@ -1,4 +1,6 @@
-import { StyleSheet, Text, View, Image, Button } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
+import { Button } from 'react-native-paper';
+
 import React from 'react';
 import { AddGifticon } from '../../api/gifticon';
 
@@ -35,21 +37,29 @@ const LastCheckItem = ({ item, idx }) => {
   );
 };
 
-const AddGifticonLastCheck = ({ gifticonArr }) => {
+const AddGifticonLastCheck = ({ gifticonArr, onPrev }) => {
   const handleSubmit = async () => {
     // byteCode는 이미지로 바꾸어서 formData에 담아 전송하기
 
     const result = await AddGifticon(gifticonArr);
   };
-
+  // console.log(gifticonArr.length);
   return (
-    <View style={{}}>
+    <ScrollView style={{}}>
       <Text>마지막으로 확인하시고 저장 버튼을 눌러 주세요.</Text>
       {gifticonArr.map((item, index) => (
         <LastCheckItem item={item} idx={index} key={index} />
       ))}
-      <Button title="제출" onPress={handleSubmit} />
-    </View>
+      <View>
+        <Button mode="contained" onPress={handleSubmit}>
+          제출
+        </Button>
+
+        <Button mode="outlined" onPress={onPrev}>
+          취소
+        </Button>
+      </View>
+    </ScrollView>
   );
 };
 

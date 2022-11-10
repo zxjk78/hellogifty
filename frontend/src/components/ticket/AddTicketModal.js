@@ -19,27 +19,33 @@ const AddTicketModal = ({ gifticonList, visible, handleClose }) => {
   const handleNext = (idx, data) => {
     // console.log('인덱스: ', idx, '넘어온 데이터 ', data);
 
-    setFetchedData({ idx, data });
-
-    if (idx === gifticonList.length - 1) {
-      setCurrent((prev) => prev + 1);
-    } else {
-      setCurrent((prev) => prev + 1);
+    if (idx) {
+      setFetchedData({ idx, data });
     }
+    setCurrent((prev) => prev + 1);
   };
   const handlePrev = (idx, data) => {
-    setFetchedData({ idx, data });
+    if (idx) {
+      setFetchedData({ idx, data });
+    }
 
     if (current > 0) {
       setCurrent((prev) => prev - 1);
     }
   };
   const setSelectedItem = (selectedArr) => {
-    setGifticonCopy(gifticonList.filter((item) => item.id));
+    setGifticonCopy(
+      gifticonList.filter((item) => !selectedArr.includes(item.id))
+    );
 
-    console.log(selectedArr);
+    // console.log(selectedArr);
     setCurrent((prev) => prev + 1);
   };
+
+  const handleLastCheck = () => {
+    console.log('제출전 마지막 체크');
+  };
+
   useEffect(() => {
     if (!fetchedData) return;
     const { data, idx } = fetchedData;
@@ -71,7 +77,7 @@ const AddTicketModal = ({ gifticonList, visible, handleClose }) => {
                 {current === 0
                   ? '기프티콘 선별'
                   : current <= gifticonCopy.length
-                  ? `기프티콘 등록 (${current} / ${gifticonCopy?.length})`
+                  ? `기프티콘 등록 (${current} / ${gifticonCopy.length})`
                   : '마지막 확인'}
               </Text>
             )}
@@ -93,14 +99,20 @@ const AddTicketModal = ({ gifticonList, visible, handleClose }) => {
                 onSubmit={setSelectedItem}
               />
             ) : current > gifticonCopy.length ? (
-              <AddGifticonLastCheck gifticonArr={submitingGifticons} />
+              <AddGifticonLastCheck
+                onPrev={handlePrev}
+                gifticonArr={submitingGifticons}
+              />
             ) : (
               <AddGifticonForm
-                gifticon={submitingGifticons[current] || gifticonCopy[current]}
-                idx={current}
-                isEnd={current === gifticonCopy.length}
+                gifticon={
+                  submitingGifticons[current - 1] || gifticonCopy[current - 1]
+                }
+                idx={current - 1}
+                isEnd={current + 1 > gifticonCopy.length}
                 onNext={handleNext}
                 onPrev={handlePrev}
+                onSubmit={handleLastCheck}
               />
             ))}
         </View>

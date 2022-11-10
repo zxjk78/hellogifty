@@ -305,7 +305,7 @@ const MyCouponScreen = () => {
               findMmsImages={mmsGifticonArr}
               handleOpenModal={openModal}
               isMMSReading={mmsReading}
-              refresh={actionRefresh}
+              refresh={handleRefresh}
               existMMSReadBar
             />
           )}
