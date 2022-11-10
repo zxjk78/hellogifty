@@ -3,14 +3,14 @@ package com.a705.hellogifty.api.controller;
 
 
 import com.a705.hellogifty.advice.exception.RefreshTokenExpiredException;
+import com.a705.hellogifty.aop.LoginUser;
 import com.a705.hellogifty.api.dto.basic_response.CommonResult;
 import com.a705.hellogifty.api.dto.basic_response.OneResult;
 import com.a705.hellogifty.api.dto.token.AccessTokenRequestDto;
 import com.a705.hellogifty.api.dto.token.AccessTokenResponseDto;
 import com.a705.hellogifty.api.dto.token.TokenRequestDto;
 import com.a705.hellogifty.api.dto.token.TokenResponseDto;
-import com.a705.hellogifty.api.dto.user.UserLoginRequestDto;
-import com.a705.hellogifty.api.dto.user.UserSignupRequestDto;
+import com.a705.hellogifty.api.dto.user.*;
 import com.a705.hellogifty.api.service.ResponseService;
 import com.a705.hellogifty.api.service.SignService;
 import com.a705.hellogifty.api.domain.entity.User;
@@ -37,14 +37,16 @@ public class SignController {
 
     @ApiOperation(value = "로그인", notes = "이메일로 로그인 수행")
     @PostMapping("/login")
-    public OneResult<AccessTokenResponseDto> login (HttpServletResponse response,
+    public OneResult<LoginResponseMmsIndexDto> login (HttpServletResponse response,
                                                     @ApiParam(value = "로그인 DTO", required = true) @RequestBody UserLoginRequestDto userLoginRequestDto) {
-        TokenResponseDto tokenDto = signService.login(userLoginRequestDto);
+        LoginResponseDto tokenDto = signService.login(userLoginRequestDto);
 
         return responseService.getOneResult(
-                new AccessTokenResponseDto(tokenDto.getAccessToken(),
+                new LoginResponseMmsIndexDto(tokenDto.getAccessToken(),
                 tokenDto.getAccessTokenExpireDate(),
-                tokenDto.getRefreshToken()));
+                tokenDto.getRefreshToken(),
+                tokenDto.getUserMmsIndex(),
+                tokenDto.getUserEmail()));
     }
 
     @ApiOperation(value = "회원가입", notes = "회원가입 수행")
@@ -52,6 +54,14 @@ public class SignController {
     public CommonResult signup (
             @ApiParam(value = "회원가입 DTO", required = true) @RequestBody UserSignupRequestDto userSignupRequestDto) {
         signService.signup(userSignupRequestDto);
+        return responseService.getSuccessResult();
+    }
+
+    @ApiOperation(value = "유저 mmsIndex 변경")
+    @PutMapping("/mmsIndex")
+    public CommonResult userMmsIndexEdit(@ApiIgnore @LoginUser User loginUser, @RequestBody MmsIndexEditDto mmsIndexEditDto) {
+        signService.userMmsIndexEdit(loginUser, mmsIndexEditDto);
+
         return responseService.getSuccessResult();
     }
 

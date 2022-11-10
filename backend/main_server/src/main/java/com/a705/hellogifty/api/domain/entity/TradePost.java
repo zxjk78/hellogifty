@@ -33,21 +33,21 @@ public class TradePost extends BaseEntity {
 
     private Integer price;
 
-//    @Enumerated(EnumType.STRING)
-//    private TradeState tradeState;
+    @Enumerated(EnumType.STRING)
+    private TradeState tradeState = TradeState.ONSALE;
 
     @Column(length = 300)
     private String img;
 
-    private LocalDate createdAt;
-
-    private LocalDate modifiedAt;
 
     public void update(TradePostEditRequestDto tradePostEditRequestDto) {
         this.title = tradePostEditRequestDto.getTitle();
         this.content = tradePostEditRequestDto.getContent();
         this.price = tradePostEditRequestDto.getPrice();
 //        this.tradeState = tradePostEditRequestDto.getTradeState();
-        this.modifiedAt = LocalDate.now();
+    }
+
+    public void changeStateTosoldOut() {
+        this.tradeState = TradeState.SOLDOUT;
     }
 }
