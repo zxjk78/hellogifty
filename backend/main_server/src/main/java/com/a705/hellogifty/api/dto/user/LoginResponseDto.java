@@ -19,7 +19,7 @@ public class LoginResponseDto {
 
     private Long userMmsIndex;
 
-    private String userEmail;
+    private Long userId;
 
     public LoginResponseDto(TokenResponseDto tokenResponseDto, Long mmsIndex, User user) {
         grantType = tokenResponseDto.getGrantType();
@@ -27,7 +27,7 @@ public class LoginResponseDto {
         refreshToken = tokenResponseDto.getRefreshToken();
         accessTokenExpireDate = tokenResponseDto.getAccessTokenExpireDate();
         userMmsIndex = mmsIndex;
-        userEmail = user.getEmail();
+        userId = user.getId();
     }
 
 }
