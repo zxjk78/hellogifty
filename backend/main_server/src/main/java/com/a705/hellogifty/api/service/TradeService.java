@@ -32,7 +32,7 @@ public class TradeService {
 
     @Transactional
     public TradePostDetailResponseDto tradePostDetail(User user, Long tradePostId) {
-        String defaultPath = System.getProperty("user.dir")+File.separator+"static"+File.separator+"img"+File.separator+"gifticonCropImg"+File.separator;
+        String defaultPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"gifticonCropImg"+File.separator;
         TradePost tradePost = tradePostRepository.findById(tradePostId).get();
         return new TradePostDetailResponseDto(tradePost, defaultPath);
     }
@@ -47,7 +47,7 @@ public class TradeService {
         String extension = basesplit[0].split(";", 2)[0].split("/", 2)[1];
         String base = basesplit[1];
 //        String extension = "png";
-        String defaultPath = System.getProperty("user.dir")+File.separator+"static"+File.separator+"img"+File.separator+"gifticonCropImg"+File.separator;
+        String defaultPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"gifticonCropImg"+File.separator;
         File img = new File(defaultPath+"crop"+"_"+originalImgName);
 
         Base64.Decoder decoder = Base64.getDecoder();
@@ -61,7 +61,7 @@ public class TradeService {
                 .title(tradePostRequestDto.getTitle())
                 .content(tradePostRequestDto.getContent())
                 .price(tradePostRequestDto.getPrice())
-//                .tradeState(TradeState.ONSALE)
+                .tradeState(TradeState.ONSALE)
                 .img(img.getName())
                 .build();
 

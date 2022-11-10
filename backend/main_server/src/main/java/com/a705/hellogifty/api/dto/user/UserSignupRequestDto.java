@@ -12,10 +12,16 @@ public class UserSignupRequestDto {
     private String email;
     private String password;
 
+    private String name;
+
+    private String phoneNumber;
+
     @Builder
-    public UserSignupRequestDto(String email, String password) {
+    public UserSignupRequestDto(String email, String password, String name, String phoneNumber) {
         this.email = email;
         this.password = password;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
     }
 
     public User toEntity(PasswordEncoder passwordEncoder) {
@@ -23,6 +29,8 @@ public class UserSignupRequestDto {
                 .email(email)
                 .password(passwordEncoder.encode(password))
                 .mmsIndex(0L)
+                .name(name)
+                .phoneNumber(phoneNumber)
                 .roles(Collections.singletonList("ROLE_USER")) // security에서 검증할떄 USER
                 .build();
     }
