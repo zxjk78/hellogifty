@@ -43,8 +43,8 @@ public class TradePostDetailResponseDto {
         price = tradePost.getPrice();
         sellerInfo = new SellerInfoDto(tradePost.getUser());
 //        tradeState = tradePost.getTradeState();
-        createdAt = tradePost.getCreatedAt();
-        modifiedAt = tradePost.getModifiedAt();
+        createdAt = tradePost.getCreatedTime().toLocalDate();
+        modifiedAt = tradePost.getModifiedTime().toLocalDate();
         img = defaultPath + tradePost.getImg();
     }
 }

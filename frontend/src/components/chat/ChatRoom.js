@@ -75,6 +75,7 @@ const ChatRoom = ({ chatRoomId, userId }) => {
       chatRoomId: chatRoomId, // Number
       userId: userId, // Number
       text: chatContent, // String
+      messageType: 'CHAT', // String: 'CHAT','PAY','TRADE'
     };
 
     $websocket.current.sendMessage('/chat/message', JSON.stringify(dataDto));

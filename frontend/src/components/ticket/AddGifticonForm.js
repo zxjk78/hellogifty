@@ -164,9 +164,13 @@ const AddGifticonForm = ({ gifticon, idx, isEnd, onPrev, onNext }) => {
         />
       </View>
       <View style={styles.buttonContainer}>
-        <Button mode="outlined" onPress={prevHandler}>
-          이전
-        </Button>
+        {idx > 0 ? (
+          <Button mode="outlined" onPress={prevHandler}>
+            이전
+          </Button>
+        ) : (
+          <View></View>
+        )}
         <Button mode="contained" onPress={nextHandler}>
           {isEnd ? `완료` : `다음`}
         </Button>

@@ -1,9 +1,8 @@
 import { NativeModules } from 'react-native';
-import { Buffer } from 'buffer';
 
 // 이미지 코드 받아오는 함수
 
-export async function convertImageUri(imgId = 2404) {
+export async function convertImageUri(imgId) {
   const mmsModule = NativeModules.MMSReadModule;
 
   try {
@@ -21,7 +20,7 @@ export async function convertImageUri(imgId = 2404) {
 
 // 해당 모듈 자바 코드 분석해서, 접속했을 때 이후의 MMS 이미지 기록을 검토하고, base64 bytecode를 json에 넣어서 반환하는 함수
 
-export async function getAllMMSAfterAccess(id = 1000, callback) {
+export async function getAllMMSAfterAccess(id = 0, callback) {
   const mmsModule = NativeModules.MMSReadModule;
   try {
     let results;
