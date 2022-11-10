@@ -1,5 +1,7 @@
 import { axiosAuthInstance } from './config/apiController';
 import { base64toFile, b64toFile2 } from '../utils/mmsFunc';
+import RNFS from 'react-native-fs';
+
 const fetchMyGifticon = async () => {
   console.log('내 기프티콘 목록 받기');
   try {
@@ -40,4 +42,27 @@ const AddGifticon = async (gifticonArr) => {
   });
 };
 
-export { fetchMyGifticon, AddGifticon };
+const sellMyGifticon = (info) => {
+  RNFS.readFile(info.imagePath, 'base64')
+  .then(async (res) => {
+    const cropFileBase64 = res;
+    const data = {
+      content: info.description,
+      cropFileBase64: cropFileBase64,
+      gifticonId: info.item.id,
+      price: +info.price,
+      title: info.title
+    }
+    try {
+      const res = await axiosAuthInstance.post('trade/', data);
+      console.log('판매등록 성공!!');
+      return res.data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  })
+  .catch((error) => console.log(error, '여기서'));
+};
+
+
+export { fetchMyGifticon, AddGifticon, sellMyGifticon };
