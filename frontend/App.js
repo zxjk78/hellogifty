@@ -20,9 +20,7 @@ import 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 // custom components
 import {
-  MyTicketScreen,
   SearchScreen,
-  LoginScreen,
   TestScreen,
   DetailScreen,
   ShoppingScreen,
