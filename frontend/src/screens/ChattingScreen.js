@@ -4,7 +4,6 @@ import { GlobalStyles } from '../constants/style';
 import { chatListItemDummy } from '../constants/data/dummyData';
 import { ChatList, ChatRoom } from '../components/chat';
 import { useRoute } from '@react-navigation/native';
-
 const ChattingScreen = () => {
   const route = useRoute();
   const [chatRoomId, setChatRoomId] = useState('');

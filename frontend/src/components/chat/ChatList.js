@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet, Text, View, FlatList, Pressable } from 'react-native';
 import ChatListItem from './ChatListItem';
 import { GlobalStyles } from '../../constants/style';
-
 const ChatList = ({ list, isOngoing }) => {
   const renderItem = ({ item }) => <ChatListItem item={item} />;
   return (

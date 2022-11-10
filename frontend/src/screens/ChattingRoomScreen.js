@@ -3,6 +3,9 @@ import React, { useLayoutEffect, useState } from 'react';
 import { GlobalStyles } from '../constants/style';
 import { chatListItemDummy } from '../constants/data/dummyData';
 import { ChatList } from '../components/chat';
+
+// 채팅방도 ID 값이 아닌, 다른 것을 표시해주도록 하기
+
 const ChattingRoomScreen = () => {
   const [finishedConversation, setFinishedConversation] = useState([]);
   const [onGoingConversation, setOnGoingConversation] = useState([]);
