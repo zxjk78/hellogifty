@@ -22,6 +22,7 @@ public class UserSignupRequestDto {
         return User.builder()
                 .email(email)
                 .password(passwordEncoder.encode(password))
+                .mmsIndex(0L)
                 .roles(Collections.singletonList("ROLE_USER")) // security에서 검증할떄 USER
                 .build();
     }

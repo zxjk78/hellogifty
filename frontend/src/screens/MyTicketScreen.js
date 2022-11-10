@@ -18,7 +18,7 @@ const MyTicketScreen = ({
   handleOpenModal,
   isMMSReading,
   refresh,
-  existBar,
+  existMMSReadBar,
 }) => {
   const [dataList, setDataList] = useState([[], [], [], [], [], []]);
   const data = extraData;
@@ -44,7 +44,7 @@ const MyTicketScreen = ({
 
   return (
     <>
-      {existBar && (
+      {existMMSReadBar && (
         <ReadMMSStatusBar
           mmsNum={findMmsImages?.length}
           handleOpenModal={handleOpenModal}

@@ -249,11 +249,13 @@ const MyCouponScreen = () => {
 
   useEffect(() => {
     requestReadMMSPermission();
+    let lastMMSImageIdx;
+    AsyncStorage.getItem('lastMMSImageIdx').then((idx) => {
+      lastMMSImageIdx = idx || 0;
+      console.log(idx);
+    });
 
-    // const lastMMSImageIdx = (async () => {
-    //   return await AsyncStorage.getItem('lastMMSImageIdx');
-    // })();
-    const lastMMSImageIdx = 0;
+    // const lastMMSImageIdx = 0;
     setMmsReading(true);
     setTimeout(() => {
       (async () => {
@@ -283,7 +285,7 @@ const MyCouponScreen = () => {
 
   const handleRefresh = () => {
     setRefresh(!refresh);
-  }
+  };
 
   return (
     <>
@@ -303,8 +305,8 @@ const MyCouponScreen = () => {
               findMmsImages={mmsGifticonArr}
               handleOpenModal={openModal}
               isMMSReading={mmsReading}
-              refresh={handleRefresh}
-              existBar
+              refresh={actionRefresh}
+              existMMSReadBar
             />
           )}
         </TopTab.Screen>
