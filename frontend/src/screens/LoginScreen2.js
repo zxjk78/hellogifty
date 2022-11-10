@@ -80,7 +80,7 @@ const LoginScreen2 = ({ navigation }) => {
                 <View>
                   {/* <Text style={styles.inputLabel}>아이디</Text> */}
                   <TextInput
-                    placeholder="아이디"
+                    placeholder="이메일"
                     onChangeText={setId}
                     style={styles.input}
                   />

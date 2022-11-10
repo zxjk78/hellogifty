@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
+import { expressDateCal } from '../../utils/showDate';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -9,9 +10,7 @@ const ChatListItem = ({ item }) => {
   const navigation = useNavigation();
   const enterChatRoom = async () => {
     const userId = await AsyncStorage.getItem('userId');
-    // const userId =  AsyncStorage.getItem('userId').then(() => {
-    //   navigation.navigate('Chatting', { userId: userId, chatRoomId: item.id });
-    // });
+
     navigation.navigate('Chatting', { userId: userId, chatRoomId: item.id });
   };
   return (
@@ -25,7 +24,7 @@ const ChatListItem = ({ item }) => {
       </View>
       <View>
         <Text style={{ textAlign: 'right', fontSize: 12, marginBottom: 5 }}>
-          {item.lastChatCreatedTime}
+          {expressDateCal(item.lastChatCreatedTime)}
         </Text>
         <Text>{item.lastChatContent}</Text>
       </View>

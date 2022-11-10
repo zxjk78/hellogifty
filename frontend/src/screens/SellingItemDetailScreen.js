@@ -11,14 +11,18 @@ import { SellingItemDetail } from '../components/shopping/detail';
 import { GlobalStyles } from '../constants/style';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-const SellingItemDetailScreen = () => {
+
+import { enterChatRoom } from '../api/trade';
+const SellingItemDetailScreen = ({ tradeId }) => {
   const navigation = useNavigation();
   const handleStartChat = async () => {
     // 가짜 seller 아이디 만들고 하기
+    const tradeId = 1;
     const sellerId = 1234;
     const myId = await AsyncStorage.getItem('userId');
 
-    navigation.navigate('Chat', { screen: 'Chatting' });
+    const res = await enterChatRoom(tradeId);
+    // navigation.navigate('Chat', { screen: 'Chatting' });
   };
 
   return (

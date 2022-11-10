@@ -31,7 +31,7 @@ public class GifticonService {
     @Transactional
     public List<GifticonListResponseDto> myAllGifticon(User user) {
 
-        String defaultPath = System.getProperty("user.dir")+File.separator+"static"+File.separator+"img"+File.separator+"brandImg"+File.separator;
+        String defaultPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"brandImg"+File.separator;
         List<GifticonListResponseDto> list = new ArrayList<>();
 
         for (Gifticon gifticon : gifticonRepository.findByUserIdWithSmallCategory(user.getId()).get()) {
@@ -43,7 +43,7 @@ public class GifticonService {
 
     @Transactional
     public GifticonDetailResponseDto myGifticonDetail(User user, Long gifticonId) {
-        String defaultPath = System.getProperty("user.dir")+File.separator+"static"+File.separator+"img"+File.separator+"gifticon"+File.separator;
+        String defaultPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"gifticon"+File.separator;
         Gifticon gifticon = gifticonRepository.findById(gifticonId).get();
         return new GifticonDetailResponseDto(gifticon, defaultPath);
     }
@@ -70,7 +70,7 @@ public class GifticonService {
         String base = basesplit[1];
 //        String extension = "png";
 //        data:image/jpeg;base64,
-        String defaultPath = System.getProperty("user.dir")+File.separator+"static"+File.separator+"img"+File.separator+"gifticon"+File.separator;
+        String defaultPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"gifticon"+File.separator;
         File img = new File(defaultPath+user.getEmail()+"_"+fileUploadNow+"."+extension);
 
         Base64.Decoder decoder = Base64.getDecoder();

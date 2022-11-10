@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 
-const ChatBubble = ({ isMe, msg }) => {
+const TalkBubble = ({ isMe, msg }) => {
   return (
     <View style={isMe ? styles.myChat : styles.oppoChat}>
       <Text>{msg.text}</Text>
@@ -9,7 +9,7 @@ const ChatBubble = ({ isMe, msg }) => {
   );
 };
 
-export default ChatBubble;
+export default TalkBubble;
 
 const styles = StyleSheet.create({
   myChat: {

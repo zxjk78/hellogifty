@@ -34,6 +34,8 @@ public class User extends BaseEntity implements UserDetails {
     @Column(nullable = false, length = 100)
     String password;
 
+    String phoneNumber;
+
     Long mmsIndex;
 
     @ElementCollection(fetch = FetchType.EAGER)
