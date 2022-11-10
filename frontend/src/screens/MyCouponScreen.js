@@ -26,7 +26,7 @@ const MyCouponScreen = () => {
   const data = [
     {
       id: 1,
-      categoryId: 1,
+      categoryId: 0,
       name: '아이스커피',
       expirationDate: '2022-10-10',
       isUsed: 0,
@@ -56,7 +56,7 @@ const MyCouponScreen = () => {
     },
     {
       id: 4,
-      categoryId: 5,
+      categoryId: 0,
       name: '달고나라떼',
       expirationDate: '2022-11-10',
       isUsed: 0,
@@ -96,7 +96,7 @@ const MyCouponScreen = () => {
     },
     {
       id: 15,
-      categoryId: 3,
+      categoryId: 5,
       name: '코코아',
       expirationDate: '2022-11-15',
       isUsed: 0,
@@ -116,7 +116,7 @@ const MyCouponScreen = () => {
     },
     {
       id: 161,
-      categoryId: 3,
+      categoryId: 4,
       name: '콜드',
       expirationDate: '2022-11-15',
       isUsed: 0,
@@ -126,7 +126,7 @@ const MyCouponScreen = () => {
     },
     {
       id: 162,
-      categoryId: 3,
+      categoryId: 2,
       name: '코코아',
       expirationDate: '2022-11-15',
       isUsed: 0,
@@ -146,7 +146,7 @@ const MyCouponScreen = () => {
     },
     {
       id: 1604,
-      categoryId: 3,
+      categoryId: 1,
       name: '코코아',
       expirationDate: '2022-11-15',
       isUsed: 0,
@@ -166,7 +166,7 @@ const MyCouponScreen = () => {
     },
     {
       id: 1606,
-      categoryId: 3,
+      categoryId: 5,
       name: '아이스라떼',
       expirationDate: '2022-11-15',
       isUsed: 0,
@@ -196,7 +196,7 @@ const MyCouponScreen = () => {
     },
     {
       id: 1690,
-      categoryId: 3,
+      categoryId: 0,
       name: '코코아',
       expirationDate: '2022-11-15',
       isUsed: 0,
@@ -206,7 +206,7 @@ const MyCouponScreen = () => {
     },
     {
       id: 1680,
-      categoryId: 3,
+      categoryId: 1,
       name: '마지막',
       expirationDate: '2022-11-15',
       isUsed: 0,
@@ -283,7 +283,7 @@ const MyCouponScreen = () => {
     setIsModalVisible(true);
   };
 
-  const actionRefresh = () => {
+  const handleRefresh = () => {
     setRefresh(!refresh);
   };
 
