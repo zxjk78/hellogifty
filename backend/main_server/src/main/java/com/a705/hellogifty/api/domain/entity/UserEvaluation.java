@@ -13,6 +13,17 @@ public class UserEvaluation extends BaseEntity {
     @JoinColumn(name = "User_id")
     private User user;
 
-    private Float totalScore;
+    private Float totalScore = 100f;
+
+    public static UserEvaluation createUserEvaluation(User newUser) {
+        UserEvaluation userEvaluation = new UserEvaluation();
+        userEvaluation.user = newUser;
+
+        return userEvaluation;
+    }
+
+    public void addScore(float score) {
+        this.totalScore+=score;
+    }
 
 }

@@ -2,6 +2,8 @@ package com.a705.hellogifty.api.controller;
 
 import com.a705.hellogifty.aop.LoginUser;
 import com.a705.hellogifty.api.domain.entity.User;
+import com.a705.hellogifty.api.dto.UserEvaluationRequestDto;
+import com.a705.hellogifty.api.dto.UserReportRequestDto;
 import com.a705.hellogifty.api.dto.basic_response.CommonResult;
 import com.a705.hellogifty.api.dto.basic_response.ManyResult;
 import com.a705.hellogifty.api.dto.basic_response.OneResult;
@@ -69,5 +71,29 @@ public class TradeController {
         return responseService.getSuccessResult();
     }
 
+    // 거래 후 유저 평가
+    @ApiOperation(value = "유저 평가", notes = "유저 평가")
+    @PostMapping("/{id}/evaluation/user/{userId}")
+    public CommonResult evaluateUser(
+            @ApiIgnore @LoginUser User loginUser,
+            @PathVariable("id") Long tradePostId,
+            @PathVariable("userId") Long targetUserId,
+            @RequestBody UserEvaluationRequestDto userEvaluationRequestDto)
+    {
+        tradeService.evaluateUser(tradePostId, loginUser, targetUserId, userEvaluationRequestDto.getScore());
+        return responseService.getSuccessResult();
+    }
 
+    // 유저 신고
+    @ApiOperation(value = "유저 신고", notes = "유저 신고")
+    @PostMapping("/{id}/report/user/{userId}")
+    public CommonResult evaluateUser(
+            @ApiIgnore @LoginUser User loginUser,
+            @PathVariable("id") Long tradePostId,
+            @PathVariable("userId") Long targetUserId,
+            @RequestBody UserReportRequestDto userReportRequestDto)
+    {
+        tradeService.reportUser(tradePostId, loginUser, targetUserId, userReportRequestDto.getReason(), userReportRequestDto.getContent() );
+        return responseService.getSuccessResult();
+    }
 }
