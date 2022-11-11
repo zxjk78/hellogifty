@@ -9,7 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AddTicketModal } from '../components/ticket';
 
 import { requestReadMMSPermission } from '../utils/getPermission';
-import { getAllMMSAfterAccess } from '../utils/mmsFunc';
+import { getAllMMSAfterAccess } from '../utils/mmsGifticonFunc';
 import { dummySendMMSImage } from '../api/mms';
 
 const TopTab = createMaterialTopTabNavigator();
@@ -262,7 +262,7 @@ const MyCouponScreen = () => {
         const tmp = await getAllMMSAfterAccess(
           lastMMSImageIdx,
           async (imgArr) => {
-            console.log('찾은 mms 사진 개수: ', imgArr.length);
+            // console.log('찾은 mms 사진 개수: ', imgArr.length);
 
             // 사진들을 찾고 서버로 보내서, 기프티콘인 것들의 idx값과, 그 텍스트들의 응답을 받는 코드 필요.
             //
