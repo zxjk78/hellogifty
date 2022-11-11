@@ -6,14 +6,14 @@ import lombok.Getter;
 import java.time.LocalDate;
 
 @Getter
-public class MyInfoGifticonResponseDto {
+public class UserInfoGifticonResponseDto {
 
     private Long gifticonId;
     private String brandName;
     private String brandImage;
     private LocalDate expirationDate;
 
-    public MyInfoGifticonResponseDto(Gifticon gifticon) {
+    public UserInfoGifticonResponseDto(Gifticon gifticon) {
         this.gifticonId=gifticon.getId();
         this.brandName=gifticon.getSmallCategory().getName();
         this.brandImage=gifticon.getImg();
