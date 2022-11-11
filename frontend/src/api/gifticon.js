@@ -49,6 +49,10 @@ const AddGifticon = async (gifticonArr) => {
   }
 };
 
+const ModifiedGifticon = (data) => {
+  console.log(data);
+}
+
 const sellMyGifticon = (info) => {
   RNFS.readFile(info.imagePath, "base64")
     .then(async (res) => {
@@ -71,4 +75,4 @@ const sellMyGifticon = (info) => {
     .catch((error) => console.log(error, "여기서"));
 };
 
-export { fetchMyGifticon, AddGifticon, sellMyGifticon };
+export { fetchMyGifticon, AddGifticon, ModifiedGifticon, sellMyGifticon };

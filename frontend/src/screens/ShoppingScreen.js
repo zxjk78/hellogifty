@@ -1,15 +1,19 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
 import {
-  SearchResultList,
+  StyleSheet,
+  Keyboard,
+  View,
+  TouchableWithoutFeedback,
+} from "react-native";
+import React from "react";
+import {
   SearchKeywordInput,
-} from '../components/shopping/search';
+} from "../components/shopping/search";
+
 const ShoppingScreen = () => {
   return (
     <View>
       <SearchKeywordInput />
-      <View style={{ marginTop: '5%' }}></View>
-      <SearchResultList />
+      <View style={{ marginTop: "5%" }}></View>
     </View>
   );
 };

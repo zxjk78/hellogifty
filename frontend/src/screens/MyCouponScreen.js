@@ -306,15 +306,16 @@ const MyCouponScreen = () => {
               handleOpenModal={openModal}
               isMMSReading={mmsReading}
               refresh={handleRefresh}
+              type={0}
               existMMSReadBar
             />
           )}
         </TopTab.Screen>
         <TopTab.Screen name="사용 완료">
-          {(props) => <MyTicketScreen {...props} extraData={used} />}
+          {(props) => <MyTicketScreen {...props} extraData={used} type={1}/>}
         </TopTab.Screen>
         <TopTab.Screen name="판매중">
-          {(props) => <MyTicketScreen {...props} extraData={selling} />}
+          {(props) => <MyTicketScreen {...props} extraData={selling} type={2}/>}
         </TopTab.Screen>
       </TopTab.Navigator>
     </>
