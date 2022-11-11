@@ -2,8 +2,10 @@ import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 import React from 'react';
 import { GlobalStyles } from '../../../constants/style';
 import { useNavigation } from '@react-navigation/native';
-const SearchResultItem = () => {
+
+const SearchResultItem = ({resultItem}) => {
   const navigation = useNavigation();
+  // console.log(resultItem, '검색 결과 아이템~~~');
   const handleDetail = () => {
     console.log('상세 조회 시도');
     navigation.navigate('ShoppingDetail');

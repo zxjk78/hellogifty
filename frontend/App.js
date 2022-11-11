@@ -113,9 +113,9 @@ const Shopping = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen
-        name="Shopping"
+        name="Shoppings"
         component={ShoppingScreen}
-        options={{ title: '검색' }}
+        options={{ title: '검색',  }}
       />
       <Stack.Screen
         name="ShoppingDetail"
@@ -168,6 +168,7 @@ const MainTab = () => {
         component={Shopping}
         options={{
           title: '쇼핑',
+          unmountOnBlur: true,
         }}
       />
       <Tab.Screen

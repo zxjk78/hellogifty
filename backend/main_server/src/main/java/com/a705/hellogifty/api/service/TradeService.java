@@ -13,6 +13,7 @@ import com.a705.hellogifty.api.dto.trade_post.TradePostRequestDto;
 import com.a705.hellogifty.api.repository.*;
 import com.sun.jdi.request.DuplicateRequestException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -36,6 +37,9 @@ public class TradeService {
     private final UserEvaluationRepository userEvaluationRepository;
     private final ReportRepository reportRepository;
 
+    @Value("${image.gifticon-crop.path}")
+    String gifticonCroppedImagePath;
+
     @Transactional
     public TradePostDetailResponseDto tradePostDetail(User user, Long tradePostId) {
         String defaultPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"gifticonCropImg"+File.separator;
@@ -53,7 +57,8 @@ public class TradeService {
         String extension = basesplit[0].split(";", 2)[0].split("/", 2)[1];
         String base = basesplit[1];
 //        String extension = "png";
-        String defaultPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"gifticonCropImg"+File.separator;
+//        String defaultPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"gifticonCropImg"+File.separator;
+        String defaultPath = System.getProperty("user.dir")+gifticonCroppedImagePath;
         File img = new File(defaultPath+"crop"+"_"+originalImgName);
 
         Base64.Decoder decoder = Base64.getDecoder();
