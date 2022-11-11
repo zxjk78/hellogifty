@@ -43,7 +43,7 @@ const dummySendMMSImage = async (imageStringArr) => {
       brandImage:
         'https://mblogthumb-phinf.pstatic.net/20160604_62/ppanppane_1465006723421ByIAd_PNG/%C0%CC%B5%F0%BE%DF%B7%CE%B0%ED_%282%29.png?type=w800',
       name: '잘못된데이터',
-      expirationDate: '잘못읽은데이터',
+      expirationDate: '2022-12-22',
       couponImg: imageStringArr[0],
       categoryId: 1,
     },
@@ -53,7 +53,7 @@ const dummySendMMSImage = async (imageStringArr) => {
       brandImage:
         'https://mblogthumb-phinf.pstatic.net/20160604_62/ppanppane_1465006723421ByIAd_PNG/%C0%CC%B5%F0%BE%DF%B7%CE%B0%ED_%282%29.png?type=w800',
       name: '잘못된데이터2',
-      expirationDate: '잘못읽은데이터',
+      expirationDate: '2022-12-22',
       couponImg: imageStringArr[0],
       categoryId: 1,
     },
@@ -63,7 +63,7 @@ const dummySendMMSImage = async (imageStringArr) => {
       brandImage:
         'https://mblogthumb-phinf.pstatic.net/20160604_62/ppanppane_1465006723421ByIAd_PNG/%C0%CC%B5%F0%BE%DF%B7%CE%B0%ED_%282%29.png?type=w800',
       name: '잘못된데이터3',
-      expirationDate: '잘못읽은데이터',
+      expirationDate: '2022-12-22',
       couponImg: imageStringArr[0],
       categoryId: 1,
     },

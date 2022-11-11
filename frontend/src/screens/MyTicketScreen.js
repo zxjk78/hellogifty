@@ -21,11 +21,9 @@ const MyTicketScreen = ({
   existMMSReadBar,
 }) => {
   const [dataList, setDataList] = useState([[], [], [], [], [], []]);
+  // const [pressList, setPressList] = useState([true, ])
   const data = extraData;
 
-  const renderItem = ({ item }) => (
-    <TicketListItem item={item} refresh={refresh} />
-  );
 
   useEffect(() => {
     const array = [[], [], [], [], [], []];
