@@ -154,7 +154,7 @@ const MainTab = () => {
       <Tab.Screen
         name="MyCoupon"
         component={MyCoupon}
-        options={{ headerShown: false, title: '내 쿠폰' }}
+        options={{ headerShown: false, title: '내 쿠폰', unmountOnBlur: true }}
       />
       {/* <Tab.Screen
         name="Shopping"

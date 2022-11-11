@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { requestReadMMSPermission } from '../../utils/getPermission';
 import { GlobalStyles } from '../../constants/style';
-import { getAllMMSAfterAccess } from '../../utils/mmsFunc';
 import { dummySendMMSImage } from '../../api/mms';
 import { TransparentButton } from '../UI';
 

@@ -33,3 +33,19 @@ export async function getAllMMSAfterAccess(id = 0, callback) {
     console.log(error);
   }
 }
+
+export function createGifticonArr(resArr, imgArr) {
+  const result = [];
+  // console.log('이미지들', imgArr.length);
+  resArr.forEach((res) => {
+    const gifticonInfo = {
+      ...res,
+      couponImg: imgArr[res.id],
+      categoryId: null, // 작은 카테고리를 이렇게 저장
+      largeCategoryId: null,
+    };
+    result.push(gifticonInfo);
+  });
+
+  return result;
+}
