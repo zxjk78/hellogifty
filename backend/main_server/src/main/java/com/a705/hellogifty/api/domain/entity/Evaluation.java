@@ -21,4 +21,13 @@ public class Evaluation extends BaseEntity{
     private User evaluatee;
 
     private Float score;
+
+    public static Evaluation createEvaluation(TradeHistory tradeHistory, User loginUser, User targetUser, float score) {
+        Evaluation evaluation = new Evaluation();
+        evaluation.tradeHistory=tradeHistory;
+        evaluation.evaluator=loginUser;
+        evaluation.evaluatee=targetUser;
+        evaluation.score=score;
+        return evaluation;
+    }
 }

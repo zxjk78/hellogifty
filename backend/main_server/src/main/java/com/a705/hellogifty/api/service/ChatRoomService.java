@@ -2,12 +2,10 @@ package com.a705.hellogifty.api.service;
 
 import com.a705.hellogifty.advice.exception.ChatRoomNotFoundException;
 import com.a705.hellogifty.advice.exception.TradePostNotFoundException;
-import com.a705.hellogifty.api.domain.entity.ChatRoom;
-import com.a705.hellogifty.api.domain.entity.Gifticon;
-import com.a705.hellogifty.api.domain.entity.TradePost;
-import com.a705.hellogifty.api.domain.entity.User;
+import com.a705.hellogifty.api.domain.entity.*;
 import com.a705.hellogifty.api.dto.ChatRoomUsersResponseDto;
 import com.a705.hellogifty.api.repository.ChatRoomRepository;
+import com.a705.hellogifty.api.repository.TradeHistoryRepository;
 import com.a705.hellogifty.api.repository.TradePostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,6 +19,7 @@ public class ChatRoomService {
 
     private final ChatRoomRepository chatRoomRepository;
     private final TradePostRepository tradePostRepository;
+    private final TradeHistoryRepository tradeHistoryRepository;
 
     @Transactional
     public Long getChatRoomId(User loginUser, Long tradePostId) {
@@ -41,7 +40,7 @@ public class ChatRoomService {
         ChatRoom chatRoom = chatRoomRepository.findById(chatRoomId).orElseThrow(ChatRoomNotFoundException::new);
 
         TradePost tradePost = tradePostRepository.findById(chatRoom.getTradePost().getId()).orElseThrow(TradePostNotFoundException::new);
-        if (!tradePost.getUser().equals(loginUser.getId())) throw new IllegalAccessException();
+        if (!tradePost.getUser().getId().equals(loginUser.getId())) throw new IllegalAccessException();
 
         // 소유주 변경
         Gifticon gifticon = tradePost.getGifticon();
@@ -51,6 +50,8 @@ public class ChatRoomService {
         tradePost.changeStateTosoldOut();
 
         // 거래내역 추가
+        TradeHistory tradeHistory = TradeHistory.createTradeHistory(tradePost, loginUser, chatRoom.getBuyer());
+        tradeHistoryRepository.save(tradeHistory);
     }
 
 

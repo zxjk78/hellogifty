@@ -8,6 +8,7 @@ import com.a705.hellogifty.api.dto.gifticon.*;
 import com.a705.hellogifty.api.repository.GifticonRepository;
 import com.a705.hellogifty.api.repository.SmallCategoryRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -27,6 +28,9 @@ public class GifticonService {
 
     private final GifticonRepository gifticonRepository;
     private final SmallCategoryRepository smallCategoryRepository;
+
+    @Value("${image.gifticon.path}")
+    String gifticonImagePath;
 
     @Transactional
     public List<GifticonListResponseDto> myAllGifticon(User user) {
@@ -70,7 +74,8 @@ public class GifticonService {
         String base = basesplit[1];
 //        String extension = "png";
 //        data:image/jpeg;base64,
-        String defaultPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"gifticon"+File.separator;
+//        String defaultPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"gifticon"+File.separator;
+        String defaultPath = System.getProperty("user.dir")+gifticonImagePath;
         File img = new File(defaultPath+user.getEmail()+"_"+fileUploadNow+"."+extension);
 
         Base64.Decoder decoder = Base64.getDecoder();

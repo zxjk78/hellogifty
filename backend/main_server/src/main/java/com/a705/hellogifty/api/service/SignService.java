@@ -3,6 +3,7 @@ package com.a705.hellogifty.api.service;
 
 import com.a705.hellogifty.advice.exception.*;
 import com.a705.hellogifty.aop.LoginUser;
+import com.a705.hellogifty.api.domain.entity.UserEvaluation;
 import com.a705.hellogifty.api.dto.token.TokenRequestDto;
 import com.a705.hellogifty.api.dto.token.TokenResponseDto;
 import com.a705.hellogifty.api.dto.user.LoginResponseDto;
@@ -10,6 +11,7 @@ import com.a705.hellogifty.api.dto.user.MmsIndexEditDto;
 import com.a705.hellogifty.api.dto.user.UserLoginRequestDto;
 import com.a705.hellogifty.api.dto.user.UserSignupRequestDto;
 import com.a705.hellogifty.api.repository.RefreshTokenRepository;
+import com.a705.hellogifty.api.repository.UserEvaluationRepository;
 import com.a705.hellogifty.api.repository.UserRepository;
 import com.a705.hellogifty.api.domain.entity.RefreshToken;
 import com.a705.hellogifty.api.domain.entity.User;
@@ -27,6 +29,7 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 public class SignService {
     private final UserRepository userRepository;
+    private final UserEvaluationRepository userEvaluationRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
     private final RefreshTokenRepository refreshTokenRepository;
@@ -64,6 +67,7 @@ public class SignService {
         if (userRepository.findByEmail(userSignupRequestDto.getEmail()).isPresent())
             throw new EmailSignupFailedException();
         User newUser = userRepository.save(userSignupRequestDto.toEntity(passwordEncoder));
+        userEvaluationRepository.save(UserEvaluation.createUserEvaluation(newUser));
     }
 
     @Transactional
