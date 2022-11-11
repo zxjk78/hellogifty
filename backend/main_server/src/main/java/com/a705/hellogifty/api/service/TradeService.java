@@ -120,6 +120,7 @@ public class TradeService {
         User targetUser = userRepository.findById(targetUserId).orElseThrow(UserNotFoundException::new);
         Report report = Report.createReport(tradePost, loginUser, targetUser, reason, content);
         reportRepository.save(report);
+    }
 
 
     @Transactional
