@@ -29,11 +29,11 @@ public class TradeController {
     private final ResponseService responseService;
 
 
-//    @ApiOperation(value = "판매글 검색", notes = "판매글 검색")
-//    @GetMapping("/")
-//    public ManyResult<TradePostListResponseDto> searchTradePost (@RequestParam String word) {
-//
-//    }
+    @ApiOperation(value = "판매글 검색", notes = "판매글 검색")
+    @GetMapping("/")
+    public ManyResult<TradePostListResponseDto> searchTradePost (@RequestParam(required = false) String keyWord, @RequestParam(required = false) Short smallCategoryId, @RequestParam(required = false) Short largeCategoryId, @RequestParam(required = false, defaultValue = "1") Integer sortChoice) {
+        return responseService.getManyResult(tradeService.tradePostSearchResult(keyWord, smallCategoryId, largeCategoryId, sortChoice));
+    }
 
     @ApiOperation(value = "판매글 상세정보", notes = "판매글 상세정보")
     @GetMapping("/{tradePostId}")
