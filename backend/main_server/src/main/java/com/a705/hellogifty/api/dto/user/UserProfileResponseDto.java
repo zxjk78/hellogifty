@@ -9,22 +9,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
-public class MyInfoResponseDto {
+public class UserProfileResponseDto {
 
     private Long id;
     private String name;
-
     private Float evalScore;
-
     private List<UserInfoTradePostResponseDto> salesRecord;
-    private List<UserInfoTradePostResponseDto> purchaseRecord;
 
-    public MyInfoResponseDto(User user, List<TradeHistory> salesRecord, List<TradeHistory> purchaseRecord){
-        this.id = user.getId();
-        this.name = user.getName();
+    public UserProfileResponseDto(User userWithScore,List<TradeHistory> salesRecord) {
+        this.id = userWithScore.getId();
+        this.name = userWithScore.getName();
+        this.evalScore = userWithScore.getUserEvaluation().getTotalScore();
         this.salesRecord = salesRecord.stream().map(th->new UserInfoTradePostResponseDto(th.getTradePost())).collect(Collectors.toList());
-        this.purchaseRecord = purchaseRecord.stream().map(th->new UserInfoTradePostResponseDto(th.getTradePost())).collect(Collectors.toList());
     }
-
-
 }
