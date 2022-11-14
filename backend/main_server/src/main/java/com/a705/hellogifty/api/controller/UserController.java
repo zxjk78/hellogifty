@@ -21,6 +21,8 @@ public class UserController {
     private final UserService userService;
     private final ResponseService responseService;
 
+
+
     @GetMapping("/my-info")
     public OneResult<MyInfoResponseDto> getMyInfo(@ApiIgnore @LoginUser User loginUser) {
         return responseService.getOneResult(userService.getMyInfo(loginUser));
