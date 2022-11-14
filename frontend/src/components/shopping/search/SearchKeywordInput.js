@@ -34,9 +34,9 @@ const SearchKeywordInput = () => {
   useEffect(() => {
     // api 보내서 검색 자료 가져오기
     const resultList = [];
-    (() => {
-      // const result = searchByKeyword(searchKeyword);
-      // console.log(result);
+    (async () => {
+      const result = await searchByKeyword(searchKeyword);
+      console.log(result);
       // resultList.push(result);
       // setResultDataList(resultList);
     })();

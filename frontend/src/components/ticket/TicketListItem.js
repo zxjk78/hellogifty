@@ -149,7 +149,7 @@ const TicketListItem = ({ item, isNormal, refresh, type }) => {
       <Image
         style={styles.img}
         // source={require("../../assets/starbucks.jpg")}
-        // source={require('C:\\Users\\SSAFY\\Desktop\\ssafy\\S07P31A705\\backend\\main_server\\src\\main\\resources\\static\\img\\brandImg\\PARISBAGUETTE.png')}
+        // api get 로 요청 보내서 이미지 넣기
         source={{ uri: item.brandImgPath}}
       />
       <View style={styles.text}>

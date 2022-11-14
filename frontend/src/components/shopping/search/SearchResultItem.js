@@ -3,12 +3,15 @@ import React from 'react';
 import { GlobalStyles } from '../../../constants/style';
 import { useNavigation } from '@react-navigation/native';
 
-const SearchResultItem = ({resultItem}) => {
+const SearchResultItem = ({ resultItem }) => {
   const navigation = useNavigation();
   // console.log(resultItem, '검색 결과 아이템~~~');
   const handleDetail = () => {
     console.log('상세 조회 시도');
-    navigation.navigate('ShoppingDetail');
+    navigation.navigate('ShoppingDetail', {
+      tradeId: resultItem.id,
+      // tradeId: 1,
+    });
   };
   return (
     <Pressable style={styles.container} onPress={handleDetail}>
