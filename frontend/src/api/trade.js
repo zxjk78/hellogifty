@@ -10,3 +10,15 @@ export const enterChatRoom = async (tradeId) => {
     console.log(error);
   }
 };
+
+export const fetchTradeItemDetail = async (tradeId) => {
+  try {
+    const res = await axiosAuthInstance.get('trade/' + tradeId);
+
+    console.log(res.data);
+
+    return res.data.data;
+  } catch (error) {
+    console.log(error);
+  }
+};

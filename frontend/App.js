@@ -115,7 +115,7 @@ const Shopping = () => {
       <Stack.Screen
         name="Shoppings"
         component={ShoppingScreen}
-        options={{ title: '검색',  }}
+        options={{ title: '검색' }}
       />
       <Stack.Screen
         name="ShoppingDetail"
@@ -182,7 +182,7 @@ const MainTab = () => {
         name="Profile"
         component={ProfileScreen}
         options={{
-          title: '프로필',
+          title: '상대 프로필',
         }}
       />
 

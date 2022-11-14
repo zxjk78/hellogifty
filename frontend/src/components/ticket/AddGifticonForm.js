@@ -95,10 +95,17 @@ const smallCategoryData = [
       key: 1,
       value: (
         <View style={{ flexDirection: 'row' }}>
-          <Image
+          {/* <Image
             source={require('../../assets/largeCategory/img0.png')}
             style={{ width: 20, height: 20 }}
-          />
+          /> */}
+          {/* 서버 내의 자원에 접근하는데, 저번에도 accessToken으로 막아놨는지 물어보기 */}
+          {/* <Image
+            source={{
+              url: 'http://localhost:8080/image/brand?path=STARBUCKS.png',
+            }}
+            style={{ width: 20, height: 20 }}
+          /> */}
           <Text>{smallCategoryDict[1]}</Text>
         </View>
       ),
