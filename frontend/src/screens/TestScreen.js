@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View, TextInput, Image } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Button } from 'react-native-paper';
-import { AddGifticon, AddGifticonFromFile } from '../api/gifticon';
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { AddGifticonFromFile } from '../api/gifticon';
+import { launchImageLibrary } from 'react-native-image-picker';
 import RNFS from 'react-native-fs';
 import AddGifticonFromFileModal from '../components/ticket/AddGifticonFromFileModal';
 

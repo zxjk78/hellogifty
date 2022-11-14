@@ -61,7 +61,7 @@ export const AddGifticonFromFile = async (gifticonInfo) => {
       ),
     };
     const res = await axiosAuthInstance.post('mygifticon/', gifticon);
-    return res;
+    return res.data.success;
   } catch (error) {
     console.log('에러발생');
   }

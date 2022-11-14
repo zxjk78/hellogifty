@@ -1,92 +1,424 @@
-import { StyleSheet, Text, View, Modal, Pressable, Image } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Modal,
+  Pressable,
+  Image,
+  ScrollView,
+} from 'react-native';
 import React, { useState } from 'react';
 import { Button, TextInput } from 'react-native-paper';
 import SelectDropdown from 'react-native-select-dropdown';
-
+import { AddGifticonFromFile } from '../../api/gifticon';
+import {
+  largeCategoryDict,
+  smallCategoryDict,
+} from '../../constants/data/idDictionary';
 import { launchImageLibrary } from 'react-native-image-picker';
-import RNFS from 'react-native-fs';
 
-const AddGifticonFromFileModal = ({ onClose }) => {
+import CategoryDropdown from '../UI/CategoryDropdown';
+import { GlobalStyles } from '../../constants/style';
+
+const largeCategoryData = [
+  {
+    key: 0,
+    value: (
+      <View style={{ flexDirection: 'row' }}>
+        <Image
+          source={require('../../assets/largeCategory/img0.png')}
+          style={{ width: 20, height: 20 }}
+        />
+        <Text>{largeCategoryDict[0]}</Text>
+      </View>
+    ),
+  },
+  {
+    key: 1,
+    value: (
+      <View style={{ flexDirection: 'row' }}>
+        <Image
+          source={require('../../assets/largeCategory/img1.png')}
+          style={{ width: 20, height: 20 }}
+        />
+        <Text>{largeCategoryDict[1]}</Text>
+      </View>
+    ),
+  },
+  {
+    key: 2,
+    value: (
+      <View style={{ flexDirection: 'row' }}>
+        <Image
+          source={require('../../assets/largeCategory/img2.png')}
+          style={{ width: 20, height: 20 }}
+        />
+        <Text>{largeCategoryDict[2]}</Text>
+      </View>
+    ),
+  },
+  {
+    key: 3,
+    value: (
+      <View style={{ flexDirection: 'row' }}>
+        <Image
+          source={require('../../assets/largeCategory/img3.png')}
+          style={{ width: 20, height: 20 }}
+        />
+        <Text>{largeCategoryDict[3]}</Text>
+      </View>
+    ),
+  },
+  {
+    key: 4,
+    value: (
+      <View style={{ flexDirection: 'row' }}>
+        <Image
+          source={require('../../assets/largeCategory/img4.png')}
+          style={{ width: 20, height: 20 }}
+        />
+        <Text>{largeCategoryDict[4]}</Text>
+      </View>
+    ),
+  },
+  {
+    key: 5,
+    value: (
+      <View style={{ flexDirection: 'row' }}>
+        <Image
+          source={require('../../assets/largeCategory/img5.png')}
+          style={{ width: 20, height: 20 }}
+        />
+        <Text>{largeCategoryDict[5]}</Text>
+      </View>
+    ),
+  },
+];
+const smallCategoryData = [
+  [
+    {
+      key: 1,
+      value: (
+        <View style={{ flexDirection: 'row' }}>
+          {/* <Image
+            source={require('../../assets/largeCategory/img0.png')}
+            style={{ width: 20, height: 20 }}
+          /> */}
+          {/* 서버 내의 자원에 접근하는데, 저번에도 accessToken으로 막아놨는지 물어보기 */}
+          {/* <Image
+            source={{
+              url: 'http://localhost:8080/image/brand?path=STARBUCKS.png',
+            }}
+            style={{ width: 20, height: 20 }}
+          /> */}
+          <Text>{smallCategoryDict[1]}</Text>
+        </View>
+      ),
+    },
+    {
+      key: 2,
+      value: (
+        <View style={{ flexDirection: 'row' }}>
+          <Image
+            source={require('../../assets/largeCategory/img1.png')}
+            style={{ width: 20, height: 20 }}
+          />
+          <Text>{smallCategoryDict[2]}</Text>
+        </View>
+      ),
+    },
+  ],
+  [
+    {
+      key: 3,
+      value: (
+        <View style={{ flexDirection: 'row' }}>
+          <Image
+            source={require('../../assets/largeCategory/img0.png')}
+            style={{ width: 20, height: 20 }}
+          />
+          <Text>{smallCategoryDict[3]}</Text>
+        </View>
+      ),
+    },
+    {
+      key: 4,
+      value: (
+        <View style={{ flexDirection: 'row' }}>
+          <Image
+            source={require('../../assets/largeCategory/img1.png')}
+            style={{ width: 20, height: 20 }}
+          />
+          <Text>{smallCategoryDict[4]}</Text>
+        </View>
+      ),
+    },
+  ],
+  [
+    {
+      key: 5,
+      value: (
+        <View style={{ flexDirection: 'row' }}>
+          <Image
+            source={require('../../assets/largeCategory/img0.png')}
+            style={{ width: 20, height: 20 }}
+          />
+          <Text>{smallCategoryDict[5]}</Text>
+        </View>
+      ),
+    },
+    {
+      key: 6,
+      value: (
+        <View style={{ flexDirection: 'row' }}>
+          <Image
+            source={require('../../assets/largeCategory/img1.png')}
+            style={{ width: 20, height: 20 }}
+          />
+          <Text>{smallCategoryDict[6]}</Text>
+        </View>
+      ),
+    },
+  ],
+  [
+    {
+      key: 7,
+      value: (
+        <View style={{ flexDirection: 'row' }}>
+          <Image
+            source={require('../../assets/largeCategory/img0.png')}
+            style={{ width: 20, height: 20 }}
+          />
+          <Text>{smallCategoryDict[7]}</Text>
+        </View>
+      ),
+    },
+    {
+      key: 8,
+      value: (
+        <View style={{ flexDirection: 'row' }}>
+          <Image
+            source={require('../../assets/largeCategory/img1.png')}
+            style={{ width: 20, height: 20 }}
+          />
+          <Text>{smallCategoryDict[8]}</Text>
+        </View>
+      ),
+    },
+  ],
+  [
+    {
+      key: 9,
+      value: (
+        <View style={{ flexDirection: 'row' }}>
+          <Image
+            source={require('../../assets/largeCategory/img0.png')}
+            style={{ width: 20, height: 20 }}
+          />
+          <Text>{smallCategoryDict[9]}</Text>
+        </View>
+      ),
+    },
+    {
+      key: 10,
+      value: (
+        <View style={{ flexDirection: 'row' }}>
+          <Image
+            source={require('../../assets/largeCategory/img1.png')}
+            style={{ width: 20, height: 20 }}
+          />
+          <Text>{smallCategoryDict[10]}</Text>
+        </View>
+      ),
+    },
+  ],
+  [
+    {
+      key: 11,
+      value: (
+        <View style={{ flexDirection: 'row' }}>
+          <Image
+            source={require('../../assets/largeCategory/img0.png')}
+            style={{ width: 20, height: 20 }}
+          />
+          <Text>{smallCategoryDict[11]}</Text>
+        </View>
+      ),
+    },
+    {
+      key: 12,
+      value: (
+        <View style={{ flexDirection: 'row' }}>
+          <Image
+            source={require('../../assets/largeCategory/img1.png')}
+            style={{ width: 20, height: 20 }}
+          />
+          <Text>{smallCategoryDict[12]}</Text>
+        </View>
+      ),
+    },
+  ],
+];
+
+const AddGifticonFromFileModal = ({ visible, onClose }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const [expirationDate, setExpirationDate] = useState('');
   const [fileBase64, setFileBase64] = useState('');
-  const [categoryId, setCategoryId] = useState('');
-  const countries = ['Egypt', 'Canada', 'Australia', 'Ireland'];
+  const [categoryId, setCategoryId] = useState(-1);
+
+  const [largeCategoryId, setLargeCategoryId] = useState(-1);
+  // const [smallCategoryId, setSmallCategoryId] = useState(-1);
 
   const selectImageFromFile = async () => {
     const options = {
       mediaType: 'photo',
-      maxWidth: 300,
-      maxHeight: 300,
+      maxWidth: 600,
+      maxHeight: 1000,
       includeBase64: true,
     };
     const result = await launchImageLibrary(options);
 
-    console.log(Object.keys(result.assets[0]));
-    // console.log(result.assets[0].base64);
-    // base64로 들어옴
-
     setFileBase64(result.assets[0].base64);
   };
+  const addGifticon = async () => {
+    if (
+      !(
+        name.length > 0 &&
+        number.length > 0 &&
+        categoryId > 0 &&
+        fileBase64.length > 0 &&
+        expirationDate.length > 0
+      )
+    )
+      return;
 
+    const result = await AddGifticonFromFile({
+      name,
+      number,
+      categoryId,
+      fileBase64,
+      expirationDate,
+    });
+
+    if (result) {
+      setNumber('');
+      setName('');
+      setExpirationDate('');
+      setLargeCategoryId(-1);
+      setCategoryId(-1);
+      setFileBase64('');
+      onClose();
+      // 여력 있으면 toast 넣어서 알리기
+    }
+  };
   return (
-    <Modal animationType="slide">
-      <Text>파일에서 기프티콘 추가하기</Text>
-
-      <Button onPress={onClose}>닫기</Button>
-      <TextInput
-        label="이름"
-        value={name}
-        mode="outlined"
-        onChangeText={(text) => setName(text)}
-      />
-      <TextInput
-        label="기프티콘 번호"
-        value={expirationDate}
-        mode="outlined"
-        onChangeText={(text) => setNumber(expirationDate)}
-      />
-      <TextInput
-        label="유효기간"
-        value={number}
-        mode="outlined"
-        onChangeText={(text) => setNumber(text)}
-      />
-
-      <View>
-        <SelectDropdown
-          data={countries}
-          onSelect={(selectedItem, index) => {
-            console.log(selectedItem, index);
+    <Modal animationType="slide" style={{ flex: 1 }} visible={visible}>
+      <View style={{ flex: 1 }}>
+        <ScrollView
+          style={{
+            width: '90%',
+            marginLeft: '5%',
+            marginTop: '10%',
+            minHeight: '80%',
+            flex: 8,
           }}
-          buttonTextAfterSelection={(selectedItem, index) => {
-            // text represented after item is selected
-            // if data array is an array of objects then return selectedItem.property to render after item is selected
-            return selectedItem;
-          }}
-          rowTextForSelection={(item, index) => {
-            // text represented for each item in dropdown
-            // if data array is an array of objects then return item.property to represent item in dropdown
-            return item;
-          }}
-        />
-      </View>
-
-      <View style={styles.imgContainer}>
-        <Text>쿠폰 이미지</Text>
-        <Pressable onPress={selectImageFromFile}>
-          {fileBase64.length > 0 ? (
-            <Image
-              source={{ uri: `data:image/jpeg;base64,${fileBase64}` }}
-              style={{ width: 100, height: 100, backgroundColor: '#d3d3d3' }}
+        >
+          <Text style={styles.header}>파일에서 기프티콘 추가</Text>
+          <TextInput
+            label="이름"
+            value={name}
+            mode="outlined"
+            onChangeText={(text) => setName(text)}
+          />
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginTop: '10%',
+            }}
+          >
+            <TextInput
+              style={{ flex: 1 }}
+              label="기프티콘 번호"
+              value={number}
+              mode="outlined"
+              onChangeText={(text) => setNumber(text)}
             />
-          ) : (
-            <View style={styles.selectImgeContainer}>
-              <Text>이미지를 선택해 주세요</Text>
+            <TextInput
+              style={{ flex: 1 }}
+              label="유효기간"
+              value={expirationDate}
+              mode="outlined"
+              onChangeText={(text) => setExpirationDate(text)}
+            />
+          </View>
+
+          <View style={styles.categoryContainer}>
+            <View>
+              <CategoryDropdown
+                categoryItem={largeCategoryData}
+                onChange={(lgCId) => setLargeCategoryId(lgCId)}
+                defaultTxt="대분류"
+              />
             </View>
-          )}
-        </Pressable>
+            <View style={{ width: '10%' }}></View>
+            <View>
+              <CategoryDropdown
+                categoryItem={smallCategoryData[largeCategoryId] || null}
+                onChange={(smCId) => setCategoryId(smCId)}
+                defaultTxt="소분류"
+              />
+            </View>
+          </View>
+
+          <View style={styles.imgContainer}>
+            <Text
+              style={{
+                color: GlobalStyles.colors.mainPrimary,
+                fontSize: 20,
+                fontWeight: 'bold',
+                marginVertical: '3%',
+              }}
+            >
+              쿠폰 이미지
+            </Text>
+            <Pressable
+              onPress={selectImageFromFile}
+              style={{ alignItems: 'center' }}
+            >
+              {fileBase64.length > 0 ? (
+                <Image
+                  source={{ uri: `data:image/jpeg;base64,${fileBase64}` }}
+                  style={{
+                    width: 300,
+                    height: 400,
+                    backgroundColor: '#d3d3d3',
+                  }}
+                />
+              ) : (
+                <View style={styles.selectImgeContainer}>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      color: GlobalStyles.colors.mainPrimary,
+                    }}
+                  >
+                    이미지를 선택해 주세요
+                  </Text>
+                </View>
+              )}
+            </Pressable>
+          </View>
+        </ScrollView>
+        <View style={styles.btnContainer}>
+          <Button mode="outlined" onPress={onClose}>
+            취소하기
+          </Button>
+          <Button mode="contained" onPress={addGifticon}>
+            제출하기
+          </Button>
+        </View>
       </View>
     </Modal>
   );
@@ -96,13 +428,39 @@ export default AddGifticonFromFileModal;
 
 const styles = StyleSheet.create({
   imgContainer: {
-    width: 200,
-    height: 200,
+    width: '100%',
+    height: '30%',
   },
   selectImgeContainer: {
+    width: '100%',
+    height: 200,
+    alignItems: 'center',
+    justifyContent: 'center',
+    // backgroundColor: 'red',
+
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderStyle: 'dashed',
+    borderColor: GlobalStyles.colors.mainPrimary,
     borderWidth: 2,
+  },
+  header: {
+    fontSize: 25,
+    marginBottom: '10%',
+    color: GlobalStyles.colors.mainPrimary,
+    fontWeight: 'bold',
+  },
+  btnContainer: {
+    width: '80%',
+    marginLeft: '10%',
+    paddingVertical: '5%',
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    // flex: 1,
+  },
+  categoryContainer: {
+    marginTop: '10%',
+    flexDirection: 'row',
   },
 });

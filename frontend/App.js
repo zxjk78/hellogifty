@@ -232,10 +232,7 @@ const Auth = () => {
 };
 
 const App = () => {
-  const { MMSReadModule } = NativeModules;
-  const [imgTmp, setImgTmp] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // const [isLoading, setIsLoading] = useState(true);
 
   useLayoutEffect(() => {
     // setIsLoading(true);

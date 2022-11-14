@@ -11,6 +11,7 @@ import { AddTicketModal } from '../components/ticket';
 import { requestReadMMSPermission } from '../utils/getPermission';
 import { getAllMMSAfterAccess } from '../utils/mmsGifticonFunc';
 import { dummySendMMSImage } from '../api/mms';
+import AddGifticonFromFileModal from '../components/ticket/AddGifticonFromFileModal';
 
 const TopTab = createMaterialTopTabNavigator();
 
@@ -22,6 +23,9 @@ const MyCouponScreen = () => {
   const [mmsGifticonArr, setMmsGifticonArr] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [refresh, setRefresh] = useState(false);
+
+  const [isAddGifticonFileMoadlOpen, setIsAddGifticonFileMoadlOpen] =
+    useState(false);
   // api로 데이터 받아오기
   const data = [
     {
@@ -289,6 +293,11 @@ const MyCouponScreen = () => {
 
   return (
     <>
+      <AddGifticonFromFileModal
+        visible={isAddGifticonFileMoadlOpen}
+        onClose={() => setIsAddGifticonFileMoadlOpen(false)}
+      />
+
       <AddTicketModal
         gifticonList={mmsGifticonArr}
         visible={isModalVisible}
@@ -308,14 +317,17 @@ const MyCouponScreen = () => {
               refresh={handleRefresh}
               type={0}
               existMMSReadBar
+              onFileModalOpen={() => setIsAddGifticonFileMoadlOpen(true)}
             />
           )}
         </TopTab.Screen>
         <TopTab.Screen name="사용 완료">
-          {(props) => <MyTicketScreen {...props} extraData={used} type={1}/>}
+          {(props) => <MyTicketScreen {...props} extraData={used} type={1} />}
         </TopTab.Screen>
         <TopTab.Screen name="판매중">
-          {(props) => <MyTicketScreen {...props} extraData={selling} type={2}/>}
+          {(props) => (
+            <MyTicketScreen {...props} extraData={selling} type={2} />
+          )}
         </TopTab.Screen>
       </TopTab.Navigator>
     </>
