@@ -19,6 +19,7 @@ import { launchImageLibrary } from 'react-native-image-picker';
 
 import CategoryDropdown from '../UI/CategoryDropdown';
 import { GlobalStyles } from '../../constants/style';
+import { fetchBrandImage } from '../../api/image';
 
 const largeCategoryData = [
   {
@@ -105,12 +106,14 @@ const smallCategoryData = [
             style={{ width: 20, height: 20 }}
           /> */}
           {/* 서버 내의 자원에 접근하는데, 저번에도 accessToken으로 막아놨는지 물어보기 */}
-          {/* <Image
+          <Image
             source={{
               url: 'http://localhost:8080/image/brand?path=STARBUCKS.png',
             }}
             style={{ width: 20, height: 20 }}
-          /> */}
+            onLoad={() => {}}
+            onError={() => console.log('이미지 찾는중 에러 발생')}
+          />
           <Text>{smallCategoryDict[1]}</Text>
         </View>
       ),
@@ -269,6 +272,12 @@ const AddGifticonFromFileModal = ({ visible, onClose }) => {
 
   const [largeCategoryId, setLargeCategoryId] = useState(-1);
   // const [smallCategoryId, setSmallCategoryId] = useState(-1);
+
+  const fetchImg = async () => {
+    const res = await fetchBrandImage('PARISBAGUETTE.png');
+    console.log(res);
+  };
+  fetchImg();
 
   const selectImageFromFile = async () => {
     const options = {
