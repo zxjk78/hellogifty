@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import React, { useRef, useState } from "react";
 import { GlobalStyles } from "../../constants/style";
-import ImagePicker from "react-native-image-crop-picker";
 
 const Form3 = ({ info, back, finish }) => {
   const [modalVisible, setModalVisible] = useState(false);

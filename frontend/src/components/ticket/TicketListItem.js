@@ -148,7 +148,9 @@ const TicketListItem = ({ item, isNormal, refresh, type }) => {
       {/* Main */}
       <Image
         style={styles.img}
-        source={require("../../assets/starbucks.jpg")}
+        // source={require("../../assets/starbucks.jpg")}
+        // source={require('C:\\Users\\SSAFY\\Desktop\\ssafy\\S07P31A705\\backend\\main_server\\src\\main\\resources\\static\\img\\brandImg\\PARISBAGUETTE.png')}
+        source={{ uri: item.brandImgPath}}
       />
       <View style={styles.text}>
         <Text style={styles.brandName}>{item.brandName}</Text>
