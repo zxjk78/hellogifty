@@ -40,7 +40,7 @@ public class SignController {
     public OneResult<LoginResponseMmsIndexDto> login (HttpServletResponse response,
                                                     @ApiParam(value = "로그인 DTO", required = true) @RequestBody UserLoginRequestDto userLoginRequestDto) {
         LoginResponseDto tokenDto = signService.login(userLoginRequestDto);
-
+        System.out.println("log in");
         return responseService.getOneResult(
                 new LoginResponseMmsIndexDto(tokenDto.getAccessToken(),
                 tokenDto.getAccessTokenExpireDate(),

@@ -81,23 +81,26 @@ public class User extends BaseEntity implements UserDetails {
         return true;
     }
 
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//    List<Gifticon> gifticonList = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//    List<TradePost> tradePostList = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
-//    List<TradeHistory> saleHistoryList = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL)
-//    List<TradeHistory> purchaseHistoryList = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "evaluator", cascade = CascadeType.ALL)
-//    List<Evaluation> evaluationByMeList = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "evaluatee", cascade = CascadeType.ALL)
-//    List<Evaluation> evaluationForMeList = new ArrayList<>();
+    @OneToOne(mappedBy="user", cascade = CascadeType.ALL)
+    UserEvaluation userEvaluation;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    List<Gifticon> gifticonList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    List<TradePost> tradePostList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
+    List<TradeHistory> saleHistoryList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL)
+    List<TradeHistory> purchaseHistoryList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "evaluator", cascade = CascadeType.ALL)
+    List<Evaluation> evaluationByMeList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "evaluatee", cascade = CascadeType.ALL)
+    List<Evaluation> evaluationForMeList = new ArrayList<>();
 
 
 }

@@ -6,15 +6,32 @@ import {
   TouchableOpacity,
   Button,
 } from 'react-native';
-import React from 'react';
-import { SellingItemDetail } from '../components/shopping/detail';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { GlobalStyles } from '../constants/style';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
-import { enterChatRoom } from '../api/trade';
-const SellingItemDetailScreen = ({ tradeId }) => {
+import { enterChatRoom, fetchTradeItemDetail } from '../api/trade';
+const SellingItemDetailScreen = ({}) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [itemDetail, setItemDetail] = useState(null);
+
   const navigation = useNavigation();
+  const route = useRoute();
+
+  // 판매상품 정보 받아오기
+  useLayoutEffect(() => {
+    setIsLoading(true);
+    const tradeItemId = route.params.tradeId;
+
+    (async () => {
+      const result = await fetchTradeItemDetail(tradeItemId);
+
+      setItemDetail(result);
+    })();
+    setIsLoading(false);
+  }, []);
+
   const handleStartChat = async () => {
     // 가짜 seller 아이디 만들고 하기
     const tradeId = 1;
@@ -34,6 +51,8 @@ const SellingItemDetailScreen = ({ tradeId }) => {
             uri: 'https://photo.coolenjoy.co.kr/data/editor/2012/c0f3b1f7c870df665e0469510699344b98619cf9.jpg',
           }}
         />
+
+        {/* <Image style={styles.couponImage} source={{ uri: itemDetail.img }} />   이미지 조사 필요 = 크롭에서 가져오려고 하는 것 같다. */}
         <View style={styles.profileContainer}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Image
@@ -45,7 +64,8 @@ const SellingItemDetailScreen = ({ tradeId }) => {
             <Text
               style={{ fontSize: 20, marginLeft: '10%', fontWeight: 'bold' }}
             >
-              유저이름
+              {/* {itemDetail.name} */}
+              {/* {itemDetail.email} */}
             </Text>
           </View>
           <Image
@@ -56,11 +76,13 @@ const SellingItemDetailScreen = ({ tradeId }) => {
           />
         </View>
         <View style={styles.contentContainer}>
-          <Text style={{ fontSize: 20, padding: 5 }}>텍스트 들어갈 곳</Text>
+          <Text style={{ fontSize: 20, padding: 5 }}>{itemDetail.content}</Text>
         </View>
       </View>
       <View style={styles.buyContainer}>
-        <Text style={{ fontWeight: 'bold', fontSize: 20 }}>5,000 원</Text>
+        <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
+          {itemDetail.price} 원
+        </Text>
 
         <TouchableOpacity style={styles.chatBtn} onPress={handleStartChat}>
           <Text style={{ color: '#fff', fontWeight: 'bold' }}>채팅하기</Text>

@@ -22,7 +22,7 @@ const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
 
 // https://callstack.github.io/react-native-paper/card.html
 
-const TicketListItem = ({ item, isNormal, refresh }) => {
+const TicketListItem = ({ item, isNormal, refresh, type }) => {
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [modifiedModal, setModifiedModal] = useState(false);
@@ -55,7 +55,6 @@ const TicketListItem = ({ item, isNormal, refresh }) => {
     require('../../assets/largeCategory/img4.png'),
     require('../../assets/largeCategory/img5.png')
   ]
-  // console.log(imgUrl[0]);
 
   const goSell = () => {
     setModalVisible(false);
@@ -83,22 +82,22 @@ const TicketListItem = ({ item, isNormal, refresh }) => {
       }}
       delayLongPress={500}
       onLongPress={(e) => {
-        // console.log(e.nativeEvent.touches[0].pageX, 'X')
-        // console.log(e.nativeEvent.touches[0].pageY, 'Y')
-        let x = e.nativeEvent.touches[0].pageX;
-        const y = e.nativeEvent.touches[0].pageY - 80;
-
-        if (x >= 250) {
-          x -= 170;
-        } else {
-          x += 25;
+        if (type === 0) {
+          let x = e.nativeEvent.touches[0].pageX;
+          const y = e.nativeEvent.touches[0].pageY - 80;
+  
+          if (x >= 250) {
+            x -= 170;
+          } else {
+            x += 25;
+          }
+  
+          setPosition({
+            x: x,
+            y: y,
+          });
+          setModalVisible(true);
         }
-
-        setPosition({
-          x: x,
-          y: y,
-        });
-        setModalVisible(true);
       }}
     >
       {/* Modal */}
@@ -149,7 +148,9 @@ const TicketListItem = ({ item, isNormal, refresh }) => {
       {/* Main */}
       <Image
         style={styles.img}
-        source={require("../../assets/starbucks.jpg")}
+        // source={require("../../assets/starbucks.jpg")}
+        // api get 로 요청 보내서 이미지 넣기
+        source={{ uri: item.brandImgPath}}
       />
       <View style={styles.text}>
         <Text style={styles.brandName}>{item.brandName}</Text>
@@ -162,8 +163,7 @@ const TicketListItem = ({ item, isNormal, refresh }) => {
       {/* <Text>{categoryImg[+item.categoryId]}</Text> */}
       <Image
         source={imgUrl[item.categoryId]}
-        // source={require('../../assets/largeCategory/img0.png')}
-        style={{ width: 20, height: 20 }}
+        style={{ width: 30, height: 30 }}
       />
     </TouchableOpacity>
   );

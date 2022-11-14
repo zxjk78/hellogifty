@@ -2,7 +2,21 @@ import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import { Button } from 'react-native-paper';
 
 import React from 'react';
-import { addGifticon } from '../../api/gifticon';
+import { AddGifticon } from '../../api/gifticon';
+import Toast from 'react-native-toast-message';
+import { useNavigation } from '@react-navigation/native';
+
+const showToast = () => {
+  Toast.show({
+    type: 'success',
+    text1: `😊 쿠폰 등록이 완료되었습니다.✔️`,
+    position: 'top',
+    visibilityTime: 4000,
+    topOffset: 10,
+    // onShow: () => {},
+    // onHide: () => {},
+  });
+};
 
 const LastCheckItem = ({ item, idx }) => {
   // console.log(item);
@@ -37,9 +51,14 @@ const LastCheckItem = ({ item, idx }) => {
   );
 };
 
-const AddGifticonLastCheck = ({ gifticonArr, onPrev }) => {
+const AddGifticonLastCheck = ({ gifticonArr, onPrev, onSubmit }) => {
   const handleSubmit = async () => {
-    const result = await addGifticon(gifticonArr);
+    // byteCode는 이미지로 바꾸어서 formData에 담아 전송하기
+
+    const result = await AddGifticon(gifticonArr);
+
+    showToast();
+    onSubmit();
   };
   return (
     <ScrollView style={{}}>

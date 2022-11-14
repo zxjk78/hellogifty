@@ -10,21 +10,32 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Button } from "react-native-paper";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { GlobalStyles } from "../../constants/style";
 import Icon from "react-native-vector-icons/Ionicons";
 import SelectList from "react-native-dropdown-select-list";
-import { largeCategoryDict } from "../../constants/data/idDictionary";
-import { ModifiedGifticon } from "../../api/gifticon";
+import {
+  largeCategoryDict,
+  smallCategoryDict,
+} from "../../constants/data/idDictionary";
+import { getGifticonDetail, ModifiedGifticon } from "../../api/gifticon";
 
 const ModifiedTicket = ({ onClose, item, refresh }) => {
+  const smallCategoryId = item.categoryId % 2 ? 1 : 0
   const [modalVisible, setModalVisible] = useState(true);
   const [name, setName] = useState(item.name);
   const [expirationDate, setExpirationDate] = useState(item.expirationDate);
-  const [selected, setSelected] = useState(item.categoryId);
+  const [selected, setSelected] = useState([Math.ceil(item.categoryId/2) - 1, smallCategoryId]);
   // const [selected2, setSelected2] = useState(+gifticon.category);
 
-  const data = [
+  useEffect(() => { 
+    (async () => {
+      const gifticonInfo = await getGifticonDetail(item.id);
+      console.log(gifticonInfo, '가져온 기프티콘 정보~~');
+    })();
+  }, [])
+
+  const largeCategoryData = [
     {
       key: 0,
       value: (
@@ -99,11 +110,182 @@ const ModifiedTicket = ({ onClose, item, refresh }) => {
     },
   ];
 
+  const smallCategoryData = [
+    [
+      {
+        key: 1,
+        value: (
+          <View style={{ flexDirection: "row" }}>
+            <Image
+              source={require("../../assets/largeCategory/img0.png")}
+              style={{ width: 20, height: 20 }}
+            />
+            <Text>{smallCategoryDict[1]}</Text>
+          </View>
+        ),
+      },
+      {
+        key: 2,
+        value: (
+          <View style={{ flexDirection: "row" }}>
+            <Image
+              source={require("../../assets/largeCategory/img1.png")}
+              style={{ width: 20, height: 20 }}
+            />
+            <Text>{smallCategoryDict[2]}</Text>
+          </View>
+        ),
+      },
+    ],
+    [
+      {
+        key: 3,
+        value: (
+          <View style={{ flexDirection: "row" }}>
+            <Image
+              source={require("../../assets/largeCategory/img0.png")}
+              style={{ width: 20, height: 20 }}
+            />
+            <Text>{smallCategoryDict[3]}</Text>
+          </View>
+        ),
+      },
+      {
+        key: 4,
+        value: (
+          <View style={{ flexDirection: "row" }}>
+            <Image
+              source={require("../../assets/largeCategory/img1.png")}
+              style={{ width: 20, height: 20 }}
+            />
+            <Text>{smallCategoryDict[4]}</Text>
+          </View>
+        ),
+      },
+    ],
+    [
+      {
+        key: 5,
+        value: (
+          <View style={{ flexDirection: "row" }}>
+            <Image
+              source={require("../../assets/largeCategory/img0.png")}
+              style={{ width: 20, height: 20 }}
+            />
+            <Text>{smallCategoryDict[5]}</Text>
+          </View>
+        ),
+      },
+      {
+        key: 6,
+        value: (
+          <View style={{ flexDirection: "row" }}>
+            <Image
+              source={require("../../assets/largeCategory/img1.png")}
+              style={{ width: 20, height: 20 }}
+            />
+            <Text>{smallCategoryDict[6]}</Text>
+          </View>
+        ),
+      },
+    ],
+    [
+      {
+        key: 7,
+        value: (
+          <View style={{ flexDirection: "row" }}>
+            <Image
+              source={require("../../assets/largeCategory/img0.png")}
+              style={{ width: 20, height: 20 }}
+            />
+            <Text>{smallCategoryDict[7]}</Text>
+          </View>
+        ),
+      },
+      {
+        key: 8,
+        value: (
+          <View style={{ flexDirection: "row" }}>
+            <Image
+              source={require("../../assets/largeCategory/img1.png")}
+              style={{ width: 20, height: 20 }}
+            />
+            <Text>{smallCategoryDict[8]}</Text>
+          </View>
+        ),
+      },
+    ],
+    [
+      {
+        key: 9,
+        value: (
+          <View style={{ flexDirection: "row" }}>
+            <Image
+              source={require("../../assets/largeCategory/img0.png")}
+              style={{ width: 20, height: 20 }}
+            />
+            <Text>{smallCategoryDict[9]}</Text>
+          </View>
+        ),
+      },
+      {
+        key: 10,
+        value: (
+          <View style={{ flexDirection: "row" }}>
+            <Image
+              source={require("../../assets/largeCategory/img1.png")}
+              style={{ width: 20, height: 20 }}
+            />
+            <Text>{smallCategoryDict[10]}</Text>
+          </View>
+        ),
+      },
+    ],
+    [
+      {
+        key: 11,
+        value: (
+          <View style={{ flexDirection: "row" }}>
+            <Image
+              source={require("../../assets/largeCategory/img0.png")}
+              style={{ width: 20, height: 20 }}
+            />
+            <Text>{smallCategoryDict[11]}</Text>
+          </View>
+        ),
+      },
+      {
+        key: 12,
+        value: (
+          <View style={{ flexDirection: "row" }}>
+            <Image
+              source={require("../../assets/largeCategory/img1.png")}
+              style={{ width: 20, height: 20 }}
+            />
+            <Text>{smallCategoryDict[12]}</Text>
+          </View>
+        ),
+      },
+    ],
+  ];
+  console.log(item, 'itemitmsdfsdf')
+
+  // console.log(smallCategoryData[+selected[0]][+selected[1]], '확인확인');
+
   const completeButton = () => {
     setModalVisible(!modalVisible);
-    ModifiedGifticon({name, expirationDate, selected})
-    refresh()
+    ModifiedGifticon({ name, expirationDate, selected });
+    refresh();
   };
+
+  const handleLargeCategory = (selectedId) => {
+    // console.log(selectedId);
+    setSelected([selectedId, 0]);
+  }
+  const handleSmallCategory = (selectedId) => {
+    console.log(selectedId)
+    // setSelected([selected[0], selectedId])
+  }
   return (
     <View style={styles.container}>
       <Modal
@@ -132,16 +314,18 @@ const ModifiedTicket = ({ onClose, item, refresh }) => {
                 </Text>
               </Pressable>
             </View>
-            <View>
-              <Text style={styles.title}>이름</Text>
-              <TextInput
-                defaultValue={item.name}
-                style={styles.input}
-                onChangeText={setName}
-              />
-            </View>
-            <View style={styles.middle}>
-              <View style={{ flex: 2.5 }}>
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-between" }}
+            >
+              <View>
+                <Text style={styles.title}>이름</Text>
+                <TextInput
+                  defaultValue={item.name}
+                  style={styles.input}
+                  onChangeText={setName}
+                />
+              </View>
+              <View style={{ flex: 2.3 }}>
                 <Text style={styles.title}>유효기간</Text>
                 <TextInput
                   defaultValue={item.expirationDate}
@@ -149,31 +333,55 @@ const ModifiedTicket = ({ onClose, item, refresh }) => {
                   // onChangeText={setExpirationDate}
                 />
               </View>
-
-              <View style={{ flex: 1 }} />
+            </View>
+            <View style={styles.middle}>
+              {/* <View style={{ flex: 1 }} /> */}
               <View style={{ flex: 4, zIndex: 3 }}>
-                <Text style={styles.title}>카테고리</Text>
+                <Text style={styles.title}>대분류</Text>
                 <SelectList
-                  setSelected={setSelected}
-                  data={data}
-                  onSelect={() => {
-                    setSelected(selected);
+                  setSelected={handleLargeCategory}
+                  data={largeCategoryData}
+                  // onSelect={() => {
+                  //   setSelected([selected[0], 0]);
+                  //   console.log(selected)
+                  // }}
+                  dropdownStyles={{
+                    backgroundColor: "#fff",
+                    position: "absolute",
+                    paddingRight: 10,
+                    borderColor: "red",
+                    width: "117%",
+                  }}
+                  placeholder="카테고리"
+                  boxStyles={{
+                    width: "117%",
+                    borderRadius: 5,
+                    borderWidth: 2,
+                    borderColor: "red",
+                  }}
+                  defaultOption={largeCategoryData[+selected[0]] || false}
+                />
+              </View>
+              <View style={{ flex: 4, zIndex: 3 }}>
+                <Text style={styles.title}>소분류</Text>
+                <SelectList
+                  setSelected={handleSmallCategory}
+                  // onSelect={(val) => setSmallCategory(val)}
+                  data={smallCategoryData[selected[1]]}
+                  disabledItemStyles={{
+                    backgroundColor: "red",
                   }}
                   dropdownStyles={{
                     backgroundColor: "#fff",
                     position: "absolute",
                     paddingRight: 10,
                     borderColor: "red",
-                    width: '117%',
                   }}
-                  placeholder="카테고리"
+                  placeholder="소분류"
                   boxStyles={{
-                    width: '117%',
-                    borderRadius: 5,
-                    borderWidth: 2,
                     borderColor: "red",
                   }}
-                  defaultOption={data[+item.categoryId] || false}
+                  // defaultOption={smallCategoryData[+selected[0]][+selected[1]] || false}
                 />
               </View>
             </View>
@@ -185,7 +393,10 @@ const ModifiedTicket = ({ onClose, item, refresh }) => {
               source={require("../../assets/starbucks.jpg")}
               style={styles.couponImage}
             />
-            <TouchableOpacity style={styles.completeButton} onPress={completeButton}>
+            <TouchableOpacity
+              style={styles.completeButton}
+              onPress={completeButton}
+            >
               <Text>완료</Text>
             </TouchableOpacity>
           </View>
@@ -217,7 +428,7 @@ const styles = StyleSheet.create({
     borderColor: "red",
   },
   modalText: {
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: "bold",
     textAlign: "left",
   },
@@ -225,12 +436,12 @@ const styles = StyleSheet.create({
     marginTop: 7,
   },
   icon: {
-    fontSize: 25,
+    fontSize: 20,
   },
   // 내부
   title: {
     fontWeight: "bold",
-    fontSize: 20,
+    fontSize: 17,
   },
   brand: {
     flexDirection: "row",
@@ -251,13 +462,14 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
   },
   expirationInput: {
-    width: "120%",
-    height: 50,
+    width: "110%",
+    height: 40,
     borderRadius: 5,
     borderWidth: 2,
     borderColor: "red",
     padding: 4,
     paddingLeft: 12,
+    marginLeft: 5,
   },
   couponImage: {
     width: "80%",
