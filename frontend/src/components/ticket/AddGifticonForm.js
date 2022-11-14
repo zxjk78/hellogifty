@@ -9,12 +9,14 @@ import {
 import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import { Button } from 'react-native-paper';
 import SelectList from 'react-native-dropdown-select-list';
-
+import CategoryDropdown from '../UI/CategoryDropdown';
 import { GlobalStyles } from '../../constants/style';
 import {
   largeCategoryDict,
   smallCategoryDict,
 } from '../../constants/data/idDictionary';
+import { API_URL } from '../../api/config/http-config';
+import B64Image from '../UI/B64Image';
 const largeCategoryData = [
   {
     key: 0,
@@ -95,17 +97,10 @@ const smallCategoryData = [
       key: 1,
       value: (
         <View style={{ flexDirection: 'row' }}>
-          {/* <Image
-            source={require('../../assets/largeCategory/img0.png')}
-            style={{ width: 20, height: 20 }}
-          /> */}
-          {/* 서버 내의 자원에 접근하는데, 저번에도 accessToken으로 막아놨는지 물어보기 */}
-          {/* <Image
-            source={{
-              url: 'http://localhost:8080/image/brand?path=STARBUCKS.png',
-            }}
-            style={{ width: 20, height: 20 }}
-          /> */}
+          <B64Image
+            src={API_URL + 'image/brand?path=STARBUCKS.png'}
+            style={{ width: 30, height: 30 }}
+          />
           <Text>{smallCategoryDict[1]}</Text>
         </View>
       ),
@@ -114,9 +109,9 @@ const smallCategoryData = [
       key: 2,
       value: (
         <View style={{ flexDirection: 'row' }}>
-          <Image
-            source={require('../../assets/largeCategory/img1.png')}
-            style={{ width: 20, height: 20 }}
+          <B64Image
+            src={API_URL + 'image/brand?path=TWOSOMEPLACE.png'}
+            style={{ width: 30, height: 30 }}
           />
           <Text>{smallCategoryDict[2]}</Text>
         </View>
@@ -128,9 +123,9 @@ const smallCategoryData = [
       key: 3,
       value: (
         <View style={{ flexDirection: 'row' }}>
-          <Image
-            source={require('../../assets/largeCategory/img0.png')}
-            style={{ width: 20, height: 20 }}
+          <B64Image
+            src={API_URL + 'image/brand?path=CU.png'}
+            style={{ width: 30, height: 30 }}
           />
           <Text>{smallCategoryDict[3]}</Text>
         </View>
@@ -140,9 +135,9 @@ const smallCategoryData = [
       key: 4,
       value: (
         <View style={{ flexDirection: 'row' }}>
-          <Image
-            source={require('../../assets/largeCategory/img1.png')}
-            style={{ width: 20, height: 20 }}
+          <B64Image
+            src={API_URL + 'image/brand?path=GS25.png'}
+            style={{ width: 30, height: 30 }}
           />
           <Text>{smallCategoryDict[4]}</Text>
         </View>
@@ -154,9 +149,9 @@ const smallCategoryData = [
       key: 5,
       value: (
         <View style={{ flexDirection: 'row' }}>
-          <Image
-            source={require('../../assets/largeCategory/img0.png')}
-            style={{ width: 20, height: 20 }}
+          <B64Image
+            src={API_URL + 'image/brand?path=PARISBAGUETTE.png'}
+            style={{ width: 30, height: 30 }}
           />
           <Text>{smallCategoryDict[5]}</Text>
         </View>
@@ -166,9 +161,9 @@ const smallCategoryData = [
       key: 6,
       value: (
         <View style={{ flexDirection: 'row' }}>
-          <Image
-            source={require('../../assets/largeCategory/img1.png')}
-            style={{ width: 20, height: 20 }}
+          <B64Image
+            src={API_URL + 'image/brand?path=TOUSLESJOURS.png'}
+            style={{ width: 30, height: 30 }}
           />
           <Text>{smallCategoryDict[6]}</Text>
         </View>
@@ -180,9 +175,9 @@ const smallCategoryData = [
       key: 7,
       value: (
         <View style={{ flexDirection: 'row' }}>
-          <Image
-            source={require('../../assets/largeCategory/img0.png')}
-            style={{ width: 20, height: 20 }}
+          <B64Image
+            src={API_URL + 'image/brand?path=BASKINROBBINS.png'}
+            style={{ width: 30, height: 30 }}
           />
           <Text>{smallCategoryDict[7]}</Text>
         </View>
@@ -192,9 +187,9 @@ const smallCategoryData = [
       key: 8,
       value: (
         <View style={{ flexDirection: 'row' }}>
-          <Image
-            source={require('../../assets/largeCategory/img1.png')}
-            style={{ width: 20, height: 20 }}
+          <B64Image
+            src={API_URL + 'image/brand?path=SEOLBING.png'}
+            style={{ width: 30, height: 30 }}
           />
           <Text>{smallCategoryDict[8]}</Text>
         </View>
@@ -206,9 +201,9 @@ const smallCategoryData = [
       key: 9,
       value: (
         <View style={{ flexDirection: 'row' }}>
-          <Image
-            source={require('../../assets/largeCategory/img0.png')}
-            style={{ width: 20, height: 20 }}
+          <B64Image
+            src={API_URL + 'image/brand?path=BHC.png'}
+            style={{ width: 30, height: 30 }}
           />
           <Text>{smallCategoryDict[9]}</Text>
         </View>
@@ -218,9 +213,9 @@ const smallCategoryData = [
       key: 10,
       value: (
         <View style={{ flexDirection: 'row' }}>
-          <Image
-            source={require('../../assets/largeCategory/img1.png')}
-            style={{ width: 20, height: 20 }}
+          <B64Image
+            src={API_URL + 'image/brand?path=DOMINO.png'}
+            style={{ width: 30, height: 30 }}
           />
           <Text>{smallCategoryDict[10]}</Text>
         </View>
@@ -232,9 +227,9 @@ const smallCategoryData = [
       key: 11,
       value: (
         <View style={{ flexDirection: 'row' }}>
-          <Image
-            source={require('../../assets/largeCategory/img0.png')}
-            style={{ width: 20, height: 20 }}
+          <B64Image
+            src={API_URL + 'image/brand?path=HAPPYCON.jpg'}
+            style={{ width: 30, height: 30 }}
           />
           <Text>{smallCategoryDict[11]}</Text>
         </View>
@@ -244,9 +239,9 @@ const smallCategoryData = [
       key: 12,
       value: (
         <View style={{ flexDirection: 'row' }}>
-          <Image
-            source={require('../../assets/largeCategory/img1.png')}
-            style={{ width: 20, height: 20 }}
+          <B64Image
+            src={API_URL + 'image/brand?path=CGV.png'}
+            style={{ width: 30, height: 30 }}
           />
           <Text>{smallCategoryDict[12]}</Text>
         </View>
@@ -264,6 +259,10 @@ const AddGifticonForm = ({
   onSmCtChange,
   onLgCtChange,
 }) => {
+  const [categoryId, setCategoryId] = useState(-1);
+
+  const [largeCategoryId, setLargeCategoryId] = useState(-1);
+
   const handleName = (txt) => {
     onNameChange(idx, txt);
   };
@@ -287,7 +286,7 @@ const AddGifticonForm = ({
   );
   return (
     <View>
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.mainContainer}>
         <View>
           <View style={styles.middle}>
             <View>
@@ -300,79 +299,54 @@ const AddGifticonForm = ({
             </View>
             <View style={{ flex: 1 }}></View>
 
-            <View style={{ flex: 2.5 }}>
-              <Text style={styles.title}>유효기간</Text>
-              <Text
-                style={{
-                  fontSize: 15,
-                  marginTop: 7,
-                  color: GlobalStyles.colors.mainPrimary,
-                }}
-              >
-                {gifticon.expirationDate}
-              </Text>
-              {/* <TextInput
-              defaultValue={gifticon.expirationDate}
-              style={styles.input}
-              onChangeText={setExpirationDate}
-            /> */}
+            <View
+              style={{
+                marginTop: '10%',
+                flex: 2.5,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}
+            >
+              <View>
+                <Text style={styles.title}>유효기간</Text>
+                <Text
+                  style={{
+                    fontSize: 15,
+                    marginTop: 7,
+                    color: GlobalStyles.colors.mainPrimary,
+                  }}
+                >
+                  {gifticon.expirationDate}
+                </Text>
+              </View>
+              <View>
+                <Text style={styles.title}>쿠폰번호</Text>
+                <Text
+                  style={{
+                    fontSize: 15,
+                    marginTop: 7,
+                    color: GlobalStyles.colors.mainPrimary,
+                  }}
+                >
+                  {gifticon.number}
+                </Text>
+              </View>
             </View>
           </View>
-          <View style={styles.middle}>
-            <View style={{ flex: 6, zIndex: 3 }}>
-              <Text style={styles.title}>대분류</Text>
-              <SelectList
-                setSelected={handleLargeCategory}
-                // onSelect={resetSmallCategory}
-                data={largeCategoryData}
-                disabledItemStyles={{
-                  backgroundColor: 'red',
-                }}
-                disabledTextStyles={{ color: 'red' }}
-                dropdownStyles={{
-                  backgroundColor: '#fff',
-                  position: 'absolute',
-                  paddingRight: 10,
-                  borderColor: 'red',
-                }}
-                placeholder="대분류"
-                boxStyles={{
-                  borderColor: 'red',
-                }}
-                defaultOption={
-                  gifticon.largeCategoryId
-                    ? largeCategoryData[+gifticon.largeCategoryId]
-                    : false
-                }
+          <View style={styles.categoryContainer}>
+            <View>
+              <CategoryDropdown
+                categoryItem={largeCategoryData}
+                onChange={(lgCId) => setLargeCategoryId(lgCId)}
+                defaultTxt="대분류"
               />
             </View>
-            <View style={{ flex: 0.5 }}></View>
-            <View style={{ flex: 4, zIndex: 3 }}>
-              <Text style={styles.title}>소분류</Text>
-              <SelectList
-                setSelected={handleSmallCategory}
-                // onSelect={(val) => setSmallCategory(val)}
-                data={smallCategoryData[largeCategory]}
-                disabledItemStyles={{
-                  backgroundColor: 'red',
-                }}
-                dropdownStyles={{
-                  backgroundColor: '#fff',
-                  position: 'absolute',
-                  paddingRight: 10,
-                  borderColor: 'red',
-                }}
-                placeholder="소분류"
-                boxStyles={{
-                  borderColor: 'red',
-                }}
-                defaultOption={
-                  gifticon.categoryId
-                    ? smallCategoryData[+gifticon.largeCategoryId][
-                        (+gifticon.categoryId + 1) % 2
-                      ]
-                    : false
-                }
+            <View style={{ width: '10%' }}></View>
+            <View>
+              <CategoryDropdown
+                categoryItem={smallCategoryData[largeCategoryId] || null}
+                onChange={(smCId) => handleSmallCategory(smCId)}
+                defaultTxt="소분류"
               />
             </View>
           </View>
@@ -401,11 +375,13 @@ const AddGifticonForm = ({
 export default AddGifticonForm;
 
 const styles = StyleSheet.create({
-  container: {
+  mainContainer: {
     backgroundColor: GlobalStyles.colors.backgroundComponent,
     // backgroundColor: 'red',
     padding: '10%',
     paddingTop: '5%',
+    height: '85%',
+    // width: '95%',
   },
   title: {
     fontWeight: 'bold',
@@ -415,11 +391,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  middle: {
+  categoryContainer: {
+    marginTop: '10%',
     flexDirection: 'row',
-    // justifyContent: 'space-between',
-    marginTop: '5%',
-    // borderWidth: 1,
+    width: '90%',
   },
   input: {
     // width: '50%',
@@ -431,16 +406,17 @@ const styles = StyleSheet.create({
   },
   couponImage: {
     width: '100%',
-    height: 350,
+    height: 500,
     marginTop: '10%',
     resizeMode: 'stretch',
     zIndex: 1,
   },
   buttonContainer: {
-    marginTop: 40,
+    width: '80%',
+    marginHorizontal: '10%',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: '10%',
+    marginVertical: '10%',
   },
   dropdownStyles: {
     overflow: 'scroll',
