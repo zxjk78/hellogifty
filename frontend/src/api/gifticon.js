@@ -51,9 +51,25 @@ const AddGifticon = async (gifticonArr) => {
   }
 };
 
+export const AddGifticonFromFile = async (gifticonInfo) => {
+  try {
+    const gifticon = {
+      ...gifticonInfo,
+      fileBase64: ('data:image/jpeg;base64,' + gifticonInfo.fileBase64).replace(
+        /\n/g,
+        ''
+      ),
+    };
+    const res = await axiosAuthInstance.post('mygifticon/', gifticon);
+    return res;
+  } catch (error) {
+    console.log('에러발생');
+  }
+};
+
 const ModifiedGifticon = (data) => {
   console.log(data);
-}
+};
 
 const sellMyGifticon = (info) => {
   RNFS.readFile(info.imagePath, 'base64')
