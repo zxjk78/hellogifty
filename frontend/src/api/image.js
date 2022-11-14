@@ -9,8 +9,20 @@ export const fetchBrandImage = async (imgPath) => {
       },
     });
 
-    console.log('이미지데이터', res.data);
+    // console.log('이미지데이터', res.data);
     // return res.data.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const fetchImage = async (src) => {
+  // console.log('내 기프티콘 목록 받기');
+  try {
+    const res = await axiosAuthInstance.get(src);
+
+    // console.log('이미지데이터', res.data);
+    return res.data;
   } catch (error) {
     console.log(error);
   }

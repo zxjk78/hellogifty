@@ -1,7 +1,7 @@
 import { axiosAuthInstance } from './config/apiController';
 import RNFS from 'react-native-fs';
 
-const fetchMyGifticon = async () => {
+export const fetchMyGifticonList = async () => {
   // console.log('내 기프티콘 목록 받기');
   try {
     const res = await axiosAuthInstance.get('mygifticon/');
@@ -13,7 +13,19 @@ const fetchMyGifticon = async () => {
   }
 };
 
-const AddGifticon = async (gifticonArr) => {
+export const fetchMyGifticonDetail = async (gifticonId) => {
+  console.log('내 기프티콘 상세 fetch');
+  try {
+    const res = await axiosAuthInstance.get('mygifticon/' + gifticonId);
+
+    // console.log('기프티콘 상세 데이터', res.data.data);
+    return res.data.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const addGifticon = async (gifticonArr) => {
   try {
     console.log('내 기프티콘 등록');
     // 이미지 url을 이미지 file로 변환시켜야 함
@@ -51,7 +63,7 @@ const AddGifticon = async (gifticonArr) => {
   }
 };
 
-export const AddGifticonFromFile = async (gifticonInfo) => {
+export const addGifticonFromFile = async (gifticonInfo) => {
   try {
     const gifticon = {
       ...gifticonInfo,
@@ -72,9 +84,9 @@ const getGifticonDetail = async (id) => {
     const res = await axiosAuthInstance.get(`/mygifticon/${id}`);
     return res.data.data;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 const ModifiedGifticon = (data) => {
   console.log(data);
@@ -102,4 +114,4 @@ const sellMyGifticon = (info) => {
     .catch((error) => console.log(error, '여기서'));
 };
 
-export { fetchMyGifticon, AddGifticon, ModifiedGifticon, sellMyGifticon, getGifticonDetail };
+export { ModifiedGifticon, sellMyGifticon, getGifticonDetail };

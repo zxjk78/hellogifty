@@ -7,16 +7,18 @@ import {
   Pressable,
   Alert,
   Modal,
-} from "react-native";
-import { GlobalStyles } from "../../constants/style";
+} from 'react-native';
+import { GlobalStyles } from '../../constants/style';
 // external module
-import { Avatar, Button, Card, Title, Paragraph } from "react-native-paper";
-import { largeCategoryDict } from "../../constants/data/idDictionary";
+import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
+import { largeCategoryDict } from '../../constants/data/idDictionary';
 
-import React, { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
-import ModifiedTicket from "./ModifiedTicket";
-import SellingTicket from "./SellingTicket";
+import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import ModifiedTicket from './ModifiedTicket';
+import SellingTicket from './SellingTicket';
+import B64Image from '../UI/B64Image';
+import { API_URL } from '../../api/config/http-config';
 
 const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
 
@@ -48,13 +50,13 @@ const TicketListItem = ({ item, isNormal, refresh, type }) => {
   // }
 
   const imgUrl = [
-    require('../../assets/largeCategory/img0.png'), 
+    require('../../assets/largeCategory/img0.png'),
     require('../../assets/largeCategory/img1.png'),
     require('../../assets/largeCategory/img2.png'),
     require('../../assets/largeCategory/img3.png'),
     require('../../assets/largeCategory/img4.png'),
-    require('../../assets/largeCategory/img5.png')
-  ]
+    require('../../assets/largeCategory/img5.png'),
+  ];
 
   const goSell = () => {
     setModalVisible(false);
@@ -78,20 +80,20 @@ const TicketListItem = ({ item, isNormal, refresh, type }) => {
     <TouchableOpacity
       style={styles.container}
       onPress={() => {
-        navigation.navigate("DetailScreen", { item: item });
+        navigation.navigate('DetailScreen', { item: item });
       }}
       delayLongPress={500}
       onLongPress={(e) => {
         if (type === 0) {
           let x = e.nativeEvent.touches[0].pageX;
           const y = e.nativeEvent.touches[0].pageY - 80;
-  
+
           if (x >= 250) {
             x -= 170;
           } else {
             x += 25;
           }
-  
+
           setPosition({
             x: x,
             y: y,
@@ -107,7 +109,7 @@ const TicketListItem = ({ item, isNormal, refresh, type }) => {
           transparent={true}
           visible={modalVisible}
           onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
+            Alert.alert('Modal has been closed.');
             setModalVisible(!modalVisible);
           }}
         >
@@ -123,14 +125,14 @@ const TicketListItem = ({ item, isNormal, refresh, type }) => {
               <Pressable
                 style={[styles.buttonClass]}
                 onPress={() => goSell()}
-                android_ripple={{ color: "red" }}
+                android_ripple={{ color: 'red' }}
               >
                 <Text style={styles.buttonText}>판매하기</Text>
               </Pressable>
               <Pressable
                 style={[styles.buttonClass]}
                 onPress={() => modified()}
-                android_ripple={{ color: "red" }}
+                android_ripple={{ color: 'red' }}
               >
                 <Text style={styles.buttonText}>정보 수정</Text>
               </Pressable>
@@ -146,12 +148,17 @@ const TicketListItem = ({ item, isNormal, refresh, type }) => {
       ) : null}
 
       {/* Main */}
-      <Image
-        style={styles.img}
-        // source={require("../../assets/starbucks.jpg")}
-        // api get 로 요청 보내서 이미지 넣기
-        source={{ uri: item.brandImgPath}}
+      <B64Image
+        src={
+          API_URL +
+          'image/brand?path=' +
+          item.brandImgPath.split('\\')[
+            item.brandImgPath.split('\\').length - 1
+          ]
+        }
+        style={{ width: 100, height: 100, margin: 5 }}
       />
+
       <View style={styles.text}>
         <Text style={styles.brandName}>{item.brandName}</Text>
         <Text style={styles.itemName}>{item.name}</Text>
@@ -174,18 +181,18 @@ export default TicketListItem;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: GlobalStyles.colors.backgroundComponent,
-    flexDirection: "row",
+    flexDirection: 'row',
     padding: 10,
-    alignItems: "center",
-    borderBottomColor: "grey",
+    alignItems: 'center',
+    borderBottomColor: 'grey',
     borderBottomWidth: 1,
-    justifyContent: "space-between",
+    justifyContent: 'space-between',
   },
   img: {
     marginRight: 40,
     height: 100,
     width: 100,
-    resizeMode: "cover",
+    resizeMode: 'cover',
   },
   text: {
     flex: 4,
@@ -205,7 +212,7 @@ const styles = StyleSheet.create({
   },
   modalBack: {
     // backgroundColor: "blue",
-    height: "100%",
+    height: '100%',
   },
   centeredView: {
     // flex: 1,
@@ -217,15 +224,15 @@ const styles = StyleSheet.create({
     // backgroundColor: "black",
   },
   modalView: {
-    position: "absolute",
+    position: 'absolute',
     margin: 10,
-    backgroundColor: "#EEEEEE",
+    backgroundColor: '#EEEEEE',
     borderRadius: 10,
     borderWidth: 2,
-    borderColor: "#829460",
+    borderColor: '#829460',
     padding: 10,
     // alignItems: "center",
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -237,29 +244,29 @@ const styles = StyleSheet.create({
   button: {
     // margin: 2,
     borderRadius: 10,
-    color: "#EEEEEE",
+    color: '#EEEEEE',
     // padding: 7,
   },
   buttonOpen: {
-    backgroundColor: "#F194FF",
+    backgroundColor: '#F194FF',
   },
   buttonClose: {
-    width: "30%",
-    backgroundColor: "#2196F3",
+    width: '30%',
+    backgroundColor: '#2196F3',
   },
   buttonClass: {
-    backgroundColor: "#FFE1E1",
+    backgroundColor: '#FFE1E1',
     borderRadius: 5,
     borderWidth: 2,
     marginBottom: 3,
   },
   buttonText: {
     fontSize: 22,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     margin: 2,
   },
   textStyle: {
-    color: "white",
+    color: 'white',
   },
   modalText: {
     marginBottom: 15,
