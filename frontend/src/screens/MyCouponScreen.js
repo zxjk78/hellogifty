@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import MyTicketScreen from './MyTicketScreen';
 import { Title } from 'react-native-paper';
-import { fetchMyGifticon } from '../api/gifticon';
+import { fetchMyGifticonList } from '../api/gifticon';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { AddTicketModal } from '../components/ticket';
@@ -229,7 +229,7 @@ const MyCouponScreen = () => {
     const sellingList = [];
 
     (async () => {
-      const items = await fetchMyGifticon();
+      const items = await fetchMyGifticonList();
       items.forEach((item) => {
         // console.log(item.isUsed)
         if (!item.isUsed) {

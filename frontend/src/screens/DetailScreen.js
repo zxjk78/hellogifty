@@ -1,19 +1,35 @@
-import { View, Text, Image, StyleSheet, Pressable, Modal } from "react-native";
-import React, { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { View, Text, Image, StyleSheet, Pressable, Modal } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
+import B64Image from '../components/UI/B64Image';
+import { API_URL } from '../api/config/http-config';
+import { fetchMyGifticonDetail } from '../api/gifticon';
 
+// 처음 로딩 시 받아오던가 route로 오는것이기 때문에 여기서도 사용할 수 있던가 해야 함
 const DetailScreen = ({ route }) => {
-  const item = route.params.item;
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
   const [imgVisible, setImgVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [info, setInfo] = useState(null);
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    (async () => {
+      const gifticonInfo = await fetchMyGifticonDetail(route.params.item.id);
+      setInfo(gifticonInfo);
+    })();
+
+    setIsLoading(false);
+  }, []);
 
   const showToast = () => {
     Toast.show({
       type: 'success',
-      text1: `😊 ${item.name} 사용이 완료되었습니다.✔️`,
+      text1: `😊 ${info.name} 사용이 완료되었습니다.✔️`,
       position: 'top',
       visibilityTime: 4000,
       topOffset: 10,
@@ -25,7 +41,7 @@ const DetailScreen = ({ route }) => {
   const showToast2 = () => {
     Toast.show({
       type: 'error',
-      text1: `${item.name} 를(을) 삭제 하였습니다.`,
+      text1: `${info.name} 를(을) 삭제 하였습니다.`,
       position: 'top',
       visibilityTime: 4000,
       topOffset: 10,
@@ -35,149 +51,191 @@ const DetailScreen = ({ route }) => {
   };
 
   const handleImg = () => {
-    setImgVisible(!imgVisible)
-  }
+    setImgVisible(!imgVisible);
+  };
 
   const uesd = () => {
     showToast();
     // 사용완료 api 보내고
     setModalVisible(false);
-    navigation.navigate("MyCouponScreen");
+    navigation.navigate('MyCouponScreen');
   };
 
   const deleteTicket = () => {
     showToast2();
     // 삭제 api 보내고
-    setModalVisible2(!modalVisible2)
-    navigation.navigate("MyCouponScreen");
-  }
+    setModalVisible2(!modalVisible2);
+    navigation.navigate('MyCouponScreen');
+  };
 
   return (
     <View style={styles.container}>
       {/* Modal */}
       {/* Used */}
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>{item.name} 를(을) 사용하셨습니까?</Text>
+      {!isLoading && info && (
+        <>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              Alert.alert('Modal has been closed.');
+              setModalVisible(!modalVisible);
+            }}
+          >
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalText}>
+                  {info.name} 를(을) 사용하셨습니까?
+                </Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    width: 150,
+                  }}
+                >
+                  <Pressable
+                    style={[styles.button, styles.buttonClose]}
+                    onPress={() => setModalVisible(!modalVisible)}
+                  >
+                    <Text style={styles.textStyle}>아니요</Text>
+                  </Pressable>
+                  <Pressable
+                    style={[styles.button, styles.buttonClose]}
+                    onPress={uesd}
+                  >
+                    <Text style={styles.textStyle}>네</Text>
+                  </Pressable>
+                </View>
+              </View>
+            </View>
+          </Modal>
+          {/* Delete */}
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible2}
+            onRequestClose={() => {
+              Alert.alert('Modal has been closed.');
+              setModalVisible2(!modalVisible2);
+            }}
+          >
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalText}>
+                  정말 {info.name} 을(를) 삭제 하시겠습니까?
+                </Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    width: 150,
+                  }}
+                >
+                  <Pressable
+                    style={[styles.button, styles.buttonClose]}
+                    onPress={() => setModalVisible2(!modalVisible2)}
+                  >
+                    <Text style={styles.textStyle}>아니요</Text>
+                  </Pressable>
+                  <Pressable
+                    style={[styles.button, styles.buttonClose]}
+                    onPress={deleteTicket}
+                  >
+                    <Text style={styles.textStyle}>네</Text>
+                  </Pressable>
+                </View>
+              </View>
+            </View>
+          </Modal>
+
+          {/* Image */}
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={imgVisible}
+            onRequestClose={() => {
+              Alert.alert('Modal has been closed.');
+              setImgVisible(!imgVisible);
+            }}
+          >
+            <Pressable onPress={handleImg} style={styles.imgModal}>
+              <B64Image
+                src={
+                  API_URL +
+                  'image/gifticon?path=' +
+                  info.img.split('\\')[info.img.split('\\').length - 1]
+                }
+                style={styles.img}
+              />
+            </Pressable>
+          </Modal>
+
+          {/* Main */}
+          <View style={{ flex: 8 }}>
+            <Pressable onPress={handleImg}>
+              <B64Image
+                src={
+                  API_URL +
+                  'image/gifticon?path=' +
+                  info.img.split('\\')[info.img.split('\\').length - 1]
+                }
+                style={styles.img}
+              />
+
+              <Text
+                style={{ alignSelf: 'center', color: 'grey', fontSize: 15 }}
+              >
+                이미지를 클릭해 확대할 수 있습니다.
+              </Text>
+            </Pressable>
+            <View style={{ marginTop: 30, alignItems: 'center' }}>
+              <View>
+                {/* <B64Image
+              src={API_URL + 'image/brand?path=' + item.brandName + '.png'}
+              style={{ width: 100, height: 100 }}
+            /> */}
+                <Text style={{ fontSize: 15 }}>{info.brandName}</Text>
+                <Text style={{ fontSize: 20 }}>{info.name}</Text>
+                <Text>
+                  유효기간{' '}
+                  <Text style={{ fontWeight: 'bold' }}>
+                    {info.expirationDate}
+                  </Text>{' '}
+                  까지
+                </Text>
+              </View>
+            </View>
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text style={{ fontSize: 18 }}>
+              사용 후 <Text style={{ color: '#84dcc6' }}>사용 완료</Text> 버튼을
+              눌러주세요.
+            </Text>
+          </View>
+          <View style={{ flex: 1 }}>
             <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                width: 150,
-              }}
+              style={{ flexDirection: 'row', justifyContent: 'space-between' }}
             >
               <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => setModalVisible(!modalVisible)}
+                style={styles.deleteButton}
+                onPress={() => setModalVisible2(true)}
+                android_ripple={{ color: '#ff686b' }}
               >
-                <Text style={styles.textStyle}>아니요</Text>
+                <Text style={{ color: '#ff686b' }}>삭제</Text>
               </Pressable>
               <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={uesd}
+                style={styles.usedButton}
+                onPress={() => setModalVisible(true)}
+                android_ripple={{ color: '#84dcc6' }}
               >
-                <Text style={styles.textStyle}>네</Text>
+                <Text>사용 완료</Text>
               </Pressable>
             </View>
           </View>
-        </View>
-      </Modal>
-      {/* Delete */}
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible2}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-          setModalVisible2(!modalVisible2);
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>정말 {item.name} 을(를) 삭제 하시겠습니까?</Text>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                width: 150,
-              }}
-            >
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => setModalVisible2(!modalVisible2)}
-              >
-                <Text style={styles.textStyle}>아니요</Text>
-              </Pressable>
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={deleteTicket}
-              >
-                <Text style={styles.textStyle}>네</Text>
-              </Pressable>
-            </View>
-          </View>
-        </View>
-      </Modal>
-
-      {/* Image */}
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={imgVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-          setImgVisible(!imgVisible);
-        }}
-      >
-        <Pressable onPress={handleImg} style={styles.imgModal}>
-          <Image style={styles.bigImg} source={require("../assets/starbucks.jpg")} />
-        </Pressable>
-      </Modal>
-
-      {/* Main */}
-      <View style={{ flex: 8 }}>
-        <Pressable onPress={handleImg}>
-          <Image style={styles.img} source={require("../assets/starbucks.jpg")} />
-          <Text style={{alignSelf: 'center', color: 'grey', fontSize: 15}}>이미지를 클릭해 확대할 수 있습니다.</Text>
-        </Pressable>
-        <View style={{marginTop: 30, alignItems: 'center'}}>
-          <View>
-            <Text style={{fontSize: 15}}>{item.brandName}</Text>
-            <Text style={{fontSize: 20}}>{item.name}</Text>
-            <Text>유효기간 <Text style={{fontWeight: 'bold'}}>{item.expirationDate}</Text> 까지</Text>
-          </View>
-        </View>
-      </View>
-      <View style={{flex: 1}}>
-        <Text style={{fontSize: 18}}>사용 후 <Text style={{color: '#84dcc6'}}>사용 완료</Text> 버튼을 눌러주세요.</Text>
-      </View>
-      <View style={{ flex: 1 }}>
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <Pressable
-            style={styles.deleteButton}
-            onPress={() => setModalVisible2(true)}
-            android_ripple={{ color: "#ff686b" }}
-          >
-            <Text style={{color: "#ff686b"}}>삭제</Text>
-          </Pressable>
-          <Pressable
-            style={styles.usedButton}
-            onPress={() => setModalVisible(true)}
-            android_ripple={{ color: "#84dcc6" }}
-          >
-            <Text>사용 완료</Text>
-          </Pressable>
-        </View>
-      </View>
+        </>
+      )}
     </View>
   );
 };
@@ -187,7 +245,7 @@ export default DetailScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
+    alignItems: 'center',
   },
   img: {
     width: 320,
@@ -201,11 +259,11 @@ const styles = StyleSheet.create({
     height: 50,
     margin: 5,
     borderWidth: 2,
-    borderColor: "#ff686b",
+    borderColor: '#ff686b',
     // backgroundColor: '#ff686b',
     borderRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   usedButton: {
     width: 280,
@@ -213,26 +271,26 @@ const styles = StyleSheet.create({
     margin: 5,
     borderWidth: 2,
     borderRadius: 10,
-    borderColor: "#a5ffd6",
-    backgroundColor: "#a5ffd6",
-    justifyContent: "center",
-    alignItems: "center",
+    borderColor: '#a5ffd6',
+    backgroundColor: '#a5ffd6',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   // Modal
   centeredView: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     // backgroundColor: 'black',
     // marginTop: 22
   },
   modalView: {
     margin: 20,
-    backgroundColor: "green",
+    backgroundColor: 'green',
     borderRadius: 20,
     padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
+    alignItems: 'center',
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -247,20 +305,20 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   buttonOpen: {
-    backgroundColor: "#F194FF",
+    backgroundColor: '#F194FF',
   },
   buttonClose: {
-    backgroundColor: "#2196F3",
+    backgroundColor: '#2196F3',
   },
   textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   modalText: {
     fontSize: 17,
     marginBottom: 15,
-    textAlign: "center",
+    textAlign: 'center',
   },
   // imgModal
   imgModal: {
@@ -269,11 +327,11 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'black'
+    backgroundColor: 'black',
   },
   bigImg: {
     width: '100%',
     height: '100%',
     resizeMode: 'contain',
-  }
+  },
 });
