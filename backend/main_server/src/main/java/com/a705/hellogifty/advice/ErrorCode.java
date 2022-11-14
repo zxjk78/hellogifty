@@ -17,7 +17,9 @@ public enum ErrorCode {
     RefreshTokenNotFoundException(1007, "리프레시 토큰이 DB에 존재하지 않음"),
     AccessTokenExpiredException(1013, "엑세스 토큰이 만료됨, 재발급 필요"),
     TradePostNotFoundException(2000, "거래글이 존재하지 않음"),
-    ChatRoomNotFoundException(3000, "채팅방이 존재하지 않음")
+    ChatRoomNotFoundException(3000, "채팅방이 존재하지 않음"),
+    TradeHistoryNotFoundException(2001, "거래 내역이 존재하지 않음"),
+    UserEvaluationDataNotFound(2002,"유저 평가 점수가 존재하지 않음")
     ;
 
 

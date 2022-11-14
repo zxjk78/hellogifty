@@ -12,7 +12,7 @@ import { GlobalStyles } from '../../constants/style';
 
 const CouponImage = ({ item, onSelect }) => {
   const [selected, setSelected] = useState(false);
-
+  // console.log('이미지아이템: ', item);
   const handleSelect = () => {
     setSelected(!selected);
     onSelect(item.id, !selected);

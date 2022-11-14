@@ -9,8 +9,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AddTicketModal } from '../components/ticket';
 
 import { requestReadMMSPermission } from '../utils/getPermission';
-import { getAllMMSAfterAccess } from '../utils/mmsFunc';
+import { getAllMMSAfterAccess } from '../utils/mmsGifticonFunc';
 import { dummySendMMSImage } from '../api/mms';
+import AddGifticonFromFileModal from '../components/ticket/AddGifticonFromFileModal';
 
 const TopTab = createMaterialTopTabNavigator();
 
@@ -22,6 +23,9 @@ const MyCouponScreen = () => {
   const [mmsGifticonArr, setMmsGifticonArr] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [refresh, setRefresh] = useState(false);
+
+  const [isAddGifticonFileMoadlOpen, setIsAddGifticonFileMoadlOpen] =
+    useState(false);
   // api로 데이터 받아오기
   const data = [
     {
@@ -262,7 +266,7 @@ const MyCouponScreen = () => {
         const tmp = await getAllMMSAfterAccess(
           lastMMSImageIdx,
           async (imgArr) => {
-            console.log('찾은 mms 사진 개수: ', imgArr.length);
+            // console.log('찾은 mms 사진 개수: ', imgArr.length);
 
             // 사진들을 찾고 서버로 보내서, 기프티콘인 것들의 idx값과, 그 텍스트들의 응답을 받는 코드 필요.
             //
@@ -289,6 +293,11 @@ const MyCouponScreen = () => {
 
   return (
     <>
+      <AddGifticonFromFileModal
+        visible={isAddGifticonFileMoadlOpen}
+        onClose={() => setIsAddGifticonFileMoadlOpen(false)}
+      />
+
       <AddTicketModal
         gifticonList={mmsGifticonArr}
         visible={isModalVisible}
@@ -306,15 +315,19 @@ const MyCouponScreen = () => {
               handleOpenModal={openModal}
               isMMSReading={mmsReading}
               refresh={handleRefresh}
+              type={0}
               existMMSReadBar
+              onFileModalOpen={() => setIsAddGifticonFileMoadlOpen(true)}
             />
           )}
         </TopTab.Screen>
         <TopTab.Screen name="사용 완료">
-          {(props) => <MyTicketScreen {...props} extraData={used} />}
+          {(props) => <MyTicketScreen {...props} extraData={used} type={1} />}
         </TopTab.Screen>
         <TopTab.Screen name="판매중">
-          {(props) => <MyTicketScreen {...props} extraData={selling} />}
+          {(props) => (
+            <MyTicketScreen {...props} extraData={selling} type={2} />
+          )}
         </TopTab.Screen>
       </TopTab.Navigator>
     </>

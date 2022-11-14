@@ -113,7 +113,7 @@ const Shopping = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen
-        name="Shopping"
+        name="Shoppings"
         component={ShoppingScreen}
         options={{ title: '검색' }}
       />
@@ -154,7 +154,7 @@ const MainTab = () => {
       <Tab.Screen
         name="MyCoupon"
         component={MyCoupon}
-        options={{ headerShown: false, title: '내 쿠폰' }}
+        options={{ headerShown: false, title: '내 쿠폰', unmountOnBlur: true }}
       />
       {/* <Tab.Screen
         name="Shopping"
@@ -168,6 +168,7 @@ const MainTab = () => {
         component={Shopping}
         options={{
           title: '쇼핑',
+          unmountOnBlur: true,
         }}
       />
       <Tab.Screen
@@ -181,7 +182,7 @@ const MainTab = () => {
         name="Profile"
         component={ProfileScreen}
         options={{
-          title: '프로필',
+          title: '상대 프로필',
         }}
       />
 
@@ -231,10 +232,7 @@ const Auth = () => {
 };
 
 const App = () => {
-  const { MMSReadModule } = NativeModules;
-  const [imgTmp, setImgTmp] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // const [isLoading, setIsLoading] = useState(true);
 
   useLayoutEffect(() => {
     // setIsLoading(true);

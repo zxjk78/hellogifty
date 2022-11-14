@@ -89,4 +89,16 @@ public class  ExceptionAdvice {
     protected CommonResult chatRoomNotFoundException(HttpServletRequest request, ChatRoomNotFoundException e) {
         return responseService.getFailResult(ErrorCode.ChatRoomNotFoundException.getCode(), ErrorCode.ChatRoomNotFoundException.getMessage());
     }
+
+    @ExceptionHandler(TradeHistoryNotFoundException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResult tradeHistoryNotFoundException(HttpServletRequest request, TradeHistoryNotFoundException e) {
+        return responseService.getFailResult(ErrorCode.TradeHistoryNotFoundException.getCode(), ErrorCode.TradeHistoryNotFoundException.getMessage());
+    }
+
+    @ExceptionHandler(UserEvaluationDataNotFound.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResult userEvaluationDataNotFound(HttpServletRequest request, UserEvaluationDataNotFound e) {
+        return responseService.getFailResult(ErrorCode.UserEvaluationDataNotFound.getCode(), ErrorCode.UserEvaluationDataNotFound.getMessage());
+    }
 }

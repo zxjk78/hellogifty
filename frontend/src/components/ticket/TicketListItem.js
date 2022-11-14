@@ -22,7 +22,7 @@ const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
 
 // https://callstack.github.io/react-native-paper/card.html
 
-const TicketListItem = ({ item, isNormal, refresh }) => {
+const TicketListItem = ({ item, isNormal, refresh, type }) => {
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [modifiedModal, setModifiedModal] = useState(false);
@@ -55,7 +55,6 @@ const TicketListItem = ({ item, isNormal, refresh }) => {
     require('../../assets/largeCategory/img4.png'),
     require('../../assets/largeCategory/img5.png')
   ]
-  // console.log(imgUrl[0]);
 
   const goSell = () => {
     setModalVisible(false);
@@ -83,22 +82,22 @@ const TicketListItem = ({ item, isNormal, refresh }) => {
       }}
       delayLongPress={500}
       onLongPress={(e) => {
-        // console.log(e.nativeEvent.touches[0].pageX, 'X')
-        // console.log(e.nativeEvent.touches[0].pageY, 'Y')
-        let x = e.nativeEvent.touches[0].pageX;
-        const y = e.nativeEvent.touches[0].pageY - 80;
-
-        if (x >= 250) {
-          x -= 170;
-        } else {
-          x += 25;
+        if (type === 0) {
+          let x = e.nativeEvent.touches[0].pageX;
+          const y = e.nativeEvent.touches[0].pageY - 80;
+  
+          if (x >= 250) {
+            x -= 170;
+          } else {
+            x += 25;
+          }
+  
+          setPosition({
+            x: x,
+            y: y,
+          });
+          setModalVisible(true);
         }
-
-        setPosition({
-          x: x,
-          y: y,
-        });
-        setModalVisible(true);
       }}
     >
       {/* Modal */}

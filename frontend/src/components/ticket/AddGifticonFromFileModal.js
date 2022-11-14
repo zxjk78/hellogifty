@@ -2,19 +2,24 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput,
+  Modal,
+  Pressable,
   Image,
   ScrollView,
 } from 'react-native';
-import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
-import { Button } from 'react-native-paper';
-import SelectList from 'react-native-dropdown-select-list';
-
-import { GlobalStyles } from '../../constants/style';
+import React, { useState } from 'react';
+import { Button, TextInput } from 'react-native-paper';
+import SelectDropdown from 'react-native-select-dropdown';
+import { AddGifticonFromFile } from '../../api/gifticon';
 import {
   largeCategoryDict,
   smallCategoryDict,
 } from '../../constants/data/idDictionary';
+import { launchImageLibrary } from 'react-native-image-picker';
+
+import CategoryDropdown from '../UI/CategoryDropdown';
+import { GlobalStyles } from '../../constants/style';
+
 const largeCategoryData = [
   {
     key: 0,
@@ -254,195 +259,208 @@ const smallCategoryData = [
     },
   ],
 ];
-const AddGifticonForm = ({
-  gifticon,
-  idx,
-  isEnd,
-  onPrev,
-  onNext,
-  onNameChange,
-  onSmCtChange,
-  onLgCtChange,
-}) => {
-  const handleName = (txt) => {
-    onNameChange(idx, txt);
-  };
-  const handleLargeCategory = (selectedId) => {
-    onLgCtChange(idx, selectedId);
-    setLargeCategory(selectedId);
-  };
 
-  const handleSmallCategory = (selectedId) => {
-    onSmCtChange(idx, selectedId);
-  };
+const AddGifticonFromFileModal = ({ visible, onClose }) => {
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+  const [expirationDate, setExpirationDate] = useState('');
+  const [fileBase64, setFileBase64] = useState('');
+  const [categoryId, setCategoryId] = useState(-1);
 
-  const nextHandler = () => {
-    onNext();
+  const [largeCategoryId, setLargeCategoryId] = useState(-1);
+  // const [smallCategoryId, setSmallCategoryId] = useState(-1);
+
+  const selectImageFromFile = async () => {
+    const options = {
+      mediaType: 'photo',
+      maxWidth: 600,
+      maxHeight: 1000,
+      includeBase64: true,
+    };
+    const result = await launchImageLibrary(options);
+
+    setFileBase64(result.assets[0].base64);
   };
-  const prevHandler = () => {
-    onPrev();
+  const addGifticon = async () => {
+    if (
+      !(
+        name.length > 0 &&
+        number.length > 0 &&
+        categoryId > 0 &&
+        fileBase64.length > 0 &&
+        expirationDate.length > 0
+      )
+    )
+      return;
+
+    const result = await AddGifticonFromFile({
+      name,
+      number,
+      categoryId,
+      fileBase64,
+      expirationDate,
+    });
+
+    if (result) {
+      setNumber('');
+      setName('');
+      setExpirationDate('');
+      setLargeCategoryId(-1);
+      setCategoryId(-1);
+      setFileBase64('');
+      onClose();
+      // 여력 있으면 toast 넣어서 알리기
+    }
   };
-  const [largeCategory, setLargeCategory] = useState(
-    gifticon.largeCategoryId || 0
-  );
   return (
-    <View>
-      <ScrollView style={styles.container}>
-        <View>
-          <View style={styles.middle}>
-            <View>
-              <Text style={styles.title}>이름</Text>
-              <TextInput
-                defaultValue={gifticon.name}
-                style={styles.input}
-                onChangeText={handleName}
-              />
-            </View>
-            <View style={{ flex: 1 }}></View>
-
-            <View style={{ flex: 2.5 }}>
-              <Text style={styles.title}>유효기간</Text>
-              <Text
-                style={{
-                  fontSize: 15,
-                  marginTop: 7,
-                  color: GlobalStyles.colors.mainPrimary,
-                }}
-              >
-                {gifticon.expirationDate}
-              </Text>
-              {/* <TextInput
-              defaultValue={gifticon.expirationDate}
-              style={styles.input}
-              onChangeText={setExpirationDate}
-            /> */}
-            </View>
-          </View>
-          <View style={styles.middle}>
-            <View style={{ flex: 6, zIndex: 3 }}>
-              <Text style={styles.title}>대분류</Text>
-              <SelectList
-                setSelected={handleLargeCategory}
-                // onSelect={resetSmallCategory}
-                data={largeCategoryData}
-                disabledItemStyles={{
-                  backgroundColor: 'red',
-                }}
-                disabledTextStyles={{ color: 'red' }}
-                dropdownStyles={{
-                  backgroundColor: '#fff',
-                  position: 'absolute',
-                  paddingRight: 10,
-                  borderColor: 'red',
-                }}
-                placeholder="대분류"
-                boxStyles={{
-                  borderColor: 'red',
-                }}
-                defaultOption={
-                  gifticon.largeCategoryId
-                    ? largeCategoryData[+gifticon.largeCategoryId]
-                    : false
-                }
-              />
-            </View>
-            <View style={{ flex: 0.5 }}></View>
-            <View style={{ flex: 4, zIndex: 3 }}>
-              <Text style={styles.title}>소분류</Text>
-              <SelectList
-                setSelected={handleSmallCategory}
-                // onSelect={(val) => setSmallCategory(val)}
-                data={smallCategoryData[largeCategory]}
-                disabledItemStyles={{
-                  backgroundColor: 'red',
-                }}
-                dropdownStyles={{
-                  backgroundColor: '#fff',
-                  position: 'absolute',
-                  paddingRight: 10,
-                  borderColor: 'red',
-                }}
-                placeholder="소분류"
-                boxStyles={{
-                  borderColor: 'red',
-                }}
-                defaultOption={
-                  gifticon.categoryId
-                    ? smallCategoryData[+gifticon.largeCategoryId][
-                        (+gifticon.categoryId + 1) % 2
-                      ]
-                    : false
-                }
-              />
-            </View>
-          </View>
-
-          <Image
-            source={{
-              uri: `data:image/jpeg;base64,${gifticon.couponImg}`,
-            }}
-            style={styles.couponImage}
+    <Modal animationType="slide" style={{ flex: 1 }} visible={visible}>
+      <View style={{ flex: 1 }}>
+        <ScrollView
+          style={{
+            width: '90%',
+            marginLeft: '5%',
+            marginTop: '10%',
+            minHeight: '80%',
+            flex: 8,
+          }}
+        >
+          <Text style={styles.header}>파일에서 기프티콘 추가</Text>
+          <TextInput
+            label="이름"
+            value={name}
+            mode="outlined"
+            onChangeText={(text) => setName(text)}
           />
-        </View>
-      </ScrollView>
-      <View style={styles.buttonContainer}>
-        <Button mode="outlined" onPress={prevHandler}>
-          이전
-        </Button>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginTop: '10%',
+            }}
+          >
+            <TextInput
+              style={{ flex: 1 }}
+              label="기프티콘 번호"
+              value={number}
+              mode="outlined"
+              onChangeText={(text) => setNumber(text)}
+            />
+            <TextInput
+              style={{ flex: 1 }}
+              label="유효기간"
+              value={expirationDate}
+              mode="outlined"
+              onChangeText={(text) => setExpirationDate(text)}
+            />
+          </View>
 
-        <Button mode="contained" onPress={nextHandler}>
-          {isEnd ? `완료` : `다음`}
-        </Button>
+          <View style={styles.categoryContainer}>
+            <View>
+              <CategoryDropdown
+                categoryItem={largeCategoryData}
+                onChange={(lgCId) => setLargeCategoryId(lgCId)}
+                defaultTxt="대분류"
+              />
+            </View>
+            <View style={{ width: '10%' }}></View>
+            <View>
+              <CategoryDropdown
+                categoryItem={smallCategoryData[largeCategoryId] || null}
+                onChange={(smCId) => setCategoryId(smCId)}
+                defaultTxt="소분류"
+              />
+            </View>
+          </View>
+
+          <View style={styles.imgContainer}>
+            <Text
+              style={{
+                color: GlobalStyles.colors.mainPrimary,
+                fontSize: 20,
+                fontWeight: 'bold',
+                marginVertical: '3%',
+              }}
+            >
+              쿠폰 이미지
+            </Text>
+            <Pressable
+              onPress={selectImageFromFile}
+              style={{ alignItems: 'center' }}
+            >
+              {fileBase64.length > 0 ? (
+                <Image
+                  source={{ uri: `data:image/jpeg;base64,${fileBase64}` }}
+                  style={{
+                    width: 300,
+                    height: 400,
+                    backgroundColor: '#d3d3d3',
+                  }}
+                />
+              ) : (
+                <View style={styles.selectImgeContainer}>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      color: GlobalStyles.colors.mainPrimary,
+                    }}
+                  >
+                    이미지를 선택해 주세요
+                  </Text>
+                </View>
+              )}
+            </Pressable>
+          </View>
+        </ScrollView>
+        <View style={styles.btnContainer}>
+          <Button mode="outlined" onPress={onClose}>
+            취소하기
+          </Button>
+          <Button mode="contained" onPress={addGifticon}>
+            제출하기
+          </Button>
+        </View>
       </View>
-    </View>
+    </Modal>
   );
 };
 
-export default AddGifticonForm;
+export default AddGifticonFromFileModal;
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: GlobalStyles.colors.backgroundComponent,
-    // backgroundColor: 'red',
-    padding: '10%',
-    paddingTop: '5%',
-  },
-  title: {
-    fontWeight: 'bold',
-    fontSize: 20,
-  },
-  brand: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  middle: {
-    flexDirection: 'row',
-    // justifyContent: 'space-between',
-    marginTop: '5%',
-    // borderWidth: 1,
-  },
-  input: {
-    // width: '50%',
-    borderRadius: 5,
-    borderWidth: 2,
-    borderColor: 'red',
-    padding: 4,
-    paddingLeft: 12,
-  },
-  couponImage: {
+  imgContainer: {
     width: '100%',
-    height: 350,
-    marginTop: '10%',
-    resizeMode: 'stretch',
-    zIndex: 1,
+    height: '30%',
   },
-  buttonContainer: {
-    marginTop: 40,
+  selectImgeContainer: {
+    width: '100%',
+    height: 200,
+    alignItems: 'center',
+    justifyContent: 'center',
+    // backgroundColor: 'red',
+
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderStyle: 'dashed',
+    borderColor: GlobalStyles.colors.mainPrimary,
+    borderWidth: 2,
+  },
+  header: {
+    fontSize: 25,
+    marginBottom: '10%',
+    color: GlobalStyles.colors.mainPrimary,
+    fontWeight: 'bold',
+  },
+  btnContainer: {
+    width: '80%',
+    marginLeft: '10%',
+    paddingVertical: '5%',
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: '10%',
+    // flex: 1,
   },
-  dropdownStyles: {
-    overflow: 'scroll',
+  categoryContainer: {
+    marginTop: '10%',
+    flexDirection: 'row',
   },
 });
