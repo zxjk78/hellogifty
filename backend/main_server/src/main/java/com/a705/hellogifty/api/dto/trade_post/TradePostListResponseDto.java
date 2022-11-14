@@ -18,6 +18,8 @@ public class TradePostListResponseDto {
 
     private String userName;
 
+    private Float userScore;
+
     private String gifticonName;
 
     private String expirationDate;
@@ -38,6 +40,7 @@ public class TradePostListResponseDto {
     public TradePostListResponseDto(TradePost tradePost, String brandImgPath, String cropImgPath) {
         id = tradePost.getId();
         userName = tradePost.getUser().getName();
+        userScore = tradePost.getUser().getUserEvaluation().getTotalScore();
         gifticonName = tradePost.getGifticon().getName();
         expirationDate = tradePost.getGifticon().getExpirationDate().toString();
         title = tradePost.getTitle();

@@ -38,7 +38,7 @@ public class TradePostDetailResponseDto {
         content = tradePost.getContent();
         price = tradePost.getPrice();
         sellerInfo = new SellerInfoDto(tradePost.getUser());
-//        tradeState = tradePost.getTradeState();
+        tradeState = tradePost.getTradeState();
         img = defaultPath + tradePost.getImg();
     }
 }
