@@ -9,9 +9,12 @@ public class SellerInfoDto {
 
     private String email;
 
+    private Float userScore;
+
     public SellerInfoDto(User user) {
         id = user.getId();
         email = user.getEmail();
+        userScore = user.getUserEvaluation().getTotalScore();
     }
 
 }
