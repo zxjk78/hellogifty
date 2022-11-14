@@ -138,7 +138,7 @@ public class TradeService {
 
         List<TradePostListResponseDto> list = new ArrayList<>();
         String brandImgPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"brandImg"+File.separator;
-        String cropImgPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"gifticonCropImg"+File.separator;
+        String cropImgPath = System.getProperty("user.dir")+gifticonCroppedImagePath;
 
         if (keyWord != null && smallCategoryId == null && largeCategoryId == null) {
 //            System.out.println(1);
@@ -189,7 +189,11 @@ public class TradeService {
             // 판매글 정보에 판매자 티어 들어가게 바꾸고 나서 고쳐야할 코드
             Collections.sort(list, (TradePostListResponseDto d1, TradePostListResponseDto d2) -> {
                 int result = 1;
-                if (d1.getId() > d2.getId())
+
+                Float sellerEvaluation1 = tradePostRepository.findById(d1.getId()).get().getUser().getUserEvaluation().getTotalScore();
+                Float sellerEvaluation2 = tradePostRepository.findById(d2.getId()).get().getUser().getUserEvaluation().getTotalScore();
+
+                if (sellerEvaluation1 >= sellerEvaluation2)
                     result = -1;
                 return result;
             });

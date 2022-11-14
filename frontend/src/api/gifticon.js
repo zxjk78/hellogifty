@@ -2,7 +2,7 @@ import { axiosAuthInstance } from './config/apiController';
 import RNFS from 'react-native-fs';
 
 const fetchMyGifticon = async () => {
-  console.log('내 기프티콘 목록 받기');
+  // console.log('내 기프티콘 목록 받기');
   try {
     const res = await axiosAuthInstance.get('mygifticon/');
 
@@ -67,6 +67,15 @@ export const AddGifticonFromFile = async (gifticonInfo) => {
   }
 };
 
+const getGifticonDetail = async (id) => {
+  try {
+    const res = await axiosAuthInstance.get(`/mygifticon/${id}`);
+    return res.data.data;
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 const ModifiedGifticon = (data) => {
   console.log(data);
 };
@@ -93,4 +102,4 @@ const sellMyGifticon = (info) => {
     .catch((error) => console.log(error, '여기서'));
 };
 
-export { fetchMyGifticon, AddGifticon, ModifiedGifticon, sellMyGifticon };
+export { fetchMyGifticon, AddGifticon, ModifiedGifticon, sellMyGifticon, getGifticonDetail };

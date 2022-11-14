@@ -148,7 +148,9 @@ const TicketListItem = ({ item, isNormal, refresh, type }) => {
       {/* Main */}
       <Image
         style={styles.img}
-        source={require("../../assets/starbucks.jpg")}
+        // source={require("../../assets/starbucks.jpg")}
+        // api get 로 요청 보내서 이미지 넣기
+        source={{ uri: item.brandImgPath}}
       />
       <View style={styles.text}>
         <Text style={styles.brandName}>{item.brandName}</Text>
