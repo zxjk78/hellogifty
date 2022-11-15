@@ -105,7 +105,7 @@ public class GifticonService {
         Gifticon gifticon = Gifticon.builder().user(user)
                 .smallCategory(smallCategoryRepository.findById(gifticonRegisterRequestDto.getCategoryId()).get())
                 .name(gifticonRegisterRequestDto.getName())
-                .number("나중에연결")
+                .number(gifticonRegisterRequestDto.getNumber())
                 .expirationDate(LocalDate.parse(gifticonRegisterRequestDto.getExpirationDate(), DateTimeFormatter.ISO_DATE))
                 .isUsed(false)
 //                .tradeState(TradeState.NOTONSALE)
