@@ -342,6 +342,7 @@ const AddGifticonFromFileModal = ({ visible, onClose }) => {
         <CustomCalendar
           handleModalClose={() => setIsCalendarVisible(false)}
           onDateChange={(date) => setExpirationDate(date)}
+          selectedDate={expirationDate}
         />
       </Modal>
       <Modal animationType="slide" style={{ flex: 1 }} visible={visible}>

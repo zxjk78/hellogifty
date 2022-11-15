@@ -4,10 +4,30 @@ import { Calendar } from 'react-native-calendars';
 import moment from 'moment/moment';
 import { GlobalStyles } from '../../constants/style';
 import { Button } from 'react-native-paper';
-const CustomCalendar = ({ handleModalClose, onDateChange }) => {
-  // console.log('모멘트모듈', moment().format('YYYY-MM-DD'));
-  const [expireDate, setExpireDate] = useState(moment().format('YYYY-MM-DD'));
 
+const Arrow = ({ direction }) => {
+  console.log('direction: ', direction);
+  return (
+    <View>
+      <Text> 123 </Text>
+    </View>
+  );
+};
+
+const CustomCalendar = ({ handleModalClose, onDateChange, selectedDate }) => {
+  // console.log('모멘트모듈', moment().format('YYYY-MM-DD'));
+  const [expireDate, setExpireDate] = useState(
+    selectedDate || moment().format('YYYY-MM-DD')
+  );
+
+  const addMonth = () => {
+    const newDate = moment(expireDate).add(1, 'month');
+    setExpireDate(newDate.format('yyyy-MM-DD'));
+  };
+  const subtractMonth = () => {
+    const newDate = moment(expireDate).subtract(1, 'month');
+    setExpireDate(newDate.format('yyyy-MM-DD'));
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.title}>유효기간을 선택해 주세요</Text>
@@ -32,9 +52,13 @@ const CustomCalendar = ({ handleModalClose, onDateChange }) => {
           console.log('month changed', date);
         }}
         // Hide month navigation arrows. Default = false
-        hideArrows={true}
+        hideArrows={false}
         // Replace default arrows with custom ones (direction can be 'left' or 'right')
-        renderArrow={(direction) => <Arrow />}
+        renderArrow={(direction) => (
+          <View>
+            {direction === 'right' ? <Text>{'>'}</Text> : <Text>{'<'}</Text>}
+          </View>
+        )}
         // Do not show days of other months in month page. Default = false
         hideExtraDays={true}
         // If hideArrows = false and hideExtraDays = false do not switch month when tapping on greyed out
@@ -47,9 +71,9 @@ const CustomCalendar = ({ handleModalClose, onDateChange }) => {
         // Show week numbers to the left. Default = false
         showWeekNumbers={false}
         // Handler which gets executed when press arrow icon left. It receive a callback can go back month
-        onPressArrowLeft={(subtractMonth) => subtractMonth()}
+        onPressArrowLeft={() => subtractMonth()}
         // Handler which gets executed when press arrow icon right. It receive a callback can go next month
-        onPressArrowRight={(addMonth) => addMonth()}
+        onPressArrowRight={() => addMonth()}
         // Disable left arrow. Default = false
         disableArrowLeft={false}
         // Disable right arrow. Default = false
@@ -62,7 +86,7 @@ const CustomCalendar = ({ handleModalClose, onDateChange }) => {
           return (
             <View>
               <Text style={styles.calendarHeader}>
-                {moment().format('yyyy년 Mo')}
+                {moment(expireDate).format(`yyyy년 MM월`)}
               </Text>
             </View>
           );

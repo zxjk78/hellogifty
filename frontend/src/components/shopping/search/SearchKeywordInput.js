@@ -8,42 +8,45 @@ import SearchResultList from './SearchResultList';
 const SearchKeywordInput = () => {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [searchOption, setSearchOption] = useState({
-    keyWord: "",
-    largeCategoryId: "",
-    smallCategoryId: "",
+    keyWord: '',
+    largeCategoryId: '',
+    smallCategoryId: '',
     page: 0,
-    sortChoice: 1
+    sortChoice: 1,
   });
   const [resultDataList, setResultDataList] = useState([]);
   const [inputBorderColor, setInputBorderColor] = useState('white');
+  const [isLoading, setIsLoading] = useState(true);
 
   const onDelete = () => {
     setSearchKeyword('');
   };
 
   const inputStyle = {
-      padding: 8,
-      paddingLeft: 20,
-      backgroundColor: 'white',
-      borderRadius: 30,
-      borderWidth: 3,
-      borderColor: inputBorderColor,
-      width: '100%',
-  }
+    padding: 8,
+    paddingLeft: 20,
+    backgroundColor: 'white',
+    borderRadius: 30,
+    borderWidth: 3,
+    borderColor: inputBorderColor,
+    width: '100%',
+  };
   const inputFocus = () => {
-    setInputBorderColor(GlobalStyles.colors.categoryConven)
-  }
+    setInputBorderColor(GlobalStyles.colors.categoryConven);
+  };
   const inputBlur = () => {
-    setInputBorderColor('white')
-  }
+    setInputBorderColor('white');
+  };
 
   useEffect(() => {
+    setIsLoading(true);
     // api 보내서 검색 자료 가져오기
     (async () => {
       const result = await searchByKeyword(searchOption);
       setResultDataList(result);
-      console.log(result, '처음 데이터 가져왔습니다.')
+      // console.log(result, '처음 데이터 가져왔습니다.');
     })();
+    setIsLoading(false);
   }, []);
 
   const search = () => {
@@ -52,7 +55,7 @@ const SearchKeywordInput = () => {
       setResultDataList(result);
     })();
     Keyboard.dismiss();
-  }
+  };
 
   return (
     <>
@@ -61,7 +64,11 @@ const SearchKeywordInput = () => {
           style={inputStyle}
           placeholder={'브랜드명 또는 찾고 싶은 제품을 입력해 주세요.'}
           value={searchKeyword}
-          onChangeText={(text) => setSearchOption((prev)=>{return {...prev, keyWord:text}})}
+          onChangeText={(text) =>
+            setSearchOption((prev) => {
+              return { ...prev, keyWord: text };
+            })
+          }
           onFocus={inputFocus}
           onBlur={inputBlur}
         />
@@ -69,10 +76,16 @@ const SearchKeywordInput = () => {
           <Icon name="search1" onPress={search} style={styles.searchIcon} />
         )}
         {searchKeyword.length > 0 && (
-          <Icon name="closecircle" onPress={onDelete} style={styles.deleteIcon} />
+          <Icon
+            name="closecircle"
+            onPress={onDelete}
+            style={styles.deleteIcon}
+          />
         )}
       </View>
-      <SearchResultList resultDataList={resultDataList}/>
+      {!isLoading && resultDataList && (
+        <SearchResultList resultDataList={resultDataList} />
+      )}
     </>
   );
 };
@@ -92,7 +105,7 @@ const styles = StyleSheet.create({
     height: 20,
     fontSize: 20,
     position: 'relative',
-    right: 70
+    right: 70,
   },
   deleteIcon: {
     width: 30,
