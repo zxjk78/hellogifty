@@ -15,6 +15,10 @@ import com.a705.hellogifty.api.repository.*;
 import com.sun.jdi.request.DuplicateRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -47,7 +51,7 @@ public class TradeService {
     public TradePostDetailResponseDto tradePostDetail(User user, Long tradePostId) {
         String defaultPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"gifticonCropImg"+File.separator;
         TradePost tradePost = tradePostRepository.findById(tradePostId).get();
-        return new TradePostDetailResponseDto(tradePost, defaultPath);
+        return new TradePostDetailResponseDto(tradePost);
     }
 
     @Transactional
@@ -124,7 +128,7 @@ public class TradeService {
 
 
     @Transactional
-    public List<TradePostListResponseDto> tradePostSearchResult(String keyWord, Short smallCategoryId, Short largeCategoryId, Integer sortChoice) {
+    public List<TradePostListResponseDto> tradePostSearchResult(String keyWord, Short smallCategoryId, Short largeCategoryId, Integer sortChoice, int page) {
         // 1. 키워드만 있을 경우
         // 2. smallCategoryId만 있을 경우(small, large 있을때 포함)
         // 3. largeCategoryId만 있을 경우
@@ -136,43 +140,45 @@ public class TradeService {
 //        System.out.println(smallCategoryId);
 //        System.out.println(largeCategoryId);
 
+        Pageable pageable = PageRequest.of(page, 3);
+
         List<TradePostListResponseDto> list = new ArrayList<>();
-        String brandImgPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"brandImg"+File.separator;
-        String cropImgPath = System.getProperty("user.dir")+gifticonCroppedImagePath;
+//        String brandImgPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"brandImg"+File.separator;
+//        String cropImgPath = System.getProperty("user.dir")+gifticonCroppedImagePath;
 
         if (keyWord != null && smallCategoryId == null && largeCategoryId == null) {
 //            System.out.println(1);
-            for (TradePost tradePost : tradePostRepository.findByTitleContains(keyWord).get()) {
-                list.add(new TradePostListResponseDto(tradePost, brandImgPath, cropImgPath));
+            for (TradePost tradePost : tradePostRepository.findByTitleContains(keyWord, pageable).get()) {
+                list.add(new TradePostListResponseDto(tradePost));
             }
         } else if (keyWord == null && smallCategoryId != null) {
 //            System.out.println(2);
             SmallCategory smallCategory = smallCategoryRepository.findById(smallCategoryId).get();
             for (TradePost tradePost : tradePostRepository.findByGifticon_SmallCategory(smallCategory).get()) {
-                list.add(new TradePostListResponseDto(tradePost, brandImgPath, cropImgPath));
+                list.add(new TradePostListResponseDto(tradePost));
             }
         } else if (keyWord == null && smallCategoryId == null && largeCategoryId != null) {
 //            System.out.println(3);
             LargeCategory largeCategory = largeCategoryRepository.findById(largeCategoryId).get();
             for (TradePost tradePost : tradePostRepository.findByGifticon_SmallCategory_LargeCategory(largeCategory).get()) {
-                list.add(new TradePostListResponseDto(tradePost, brandImgPath, cropImgPath));
+                list.add(new TradePostListResponseDto(tradePost));
             }
         } else if (keyWord == null && smallCategoryId == null && largeCategoryId == null) {
 //            System.out.println(4);
             for (TradePost tradePost : tradePostRepository.findAll()) {
-                list.add(new TradePostListResponseDto(tradePost, brandImgPath, cropImgPath));
+                list.add(new TradePostListResponseDto(tradePost));
             }
         } else if (keyWord != null && smallCategoryId != null) {
 //            System.out.println(5);
             SmallCategory smallCategory = smallCategoryRepository.findById(smallCategoryId).get();
             for (TradePost tradePost : tradePostRepository.findByTitleContainsAndGifticon_SmallCategory(keyWord, smallCategory).get()) {
-                list.add(new TradePostListResponseDto(tradePost, brandImgPath, cropImgPath));
+                list.add(new TradePostListResponseDto(tradePost));
             }
         } else if (keyWord != null && smallCategoryId == null && largeCategoryId != null) {
 //            System.out.println(6);
             LargeCategory largeCategory = largeCategoryRepository.findById(largeCategoryId).get();
             for (TradePost tradePost : tradePostRepository.findByTitleContainsAndGifticon_SmallCategory_LargeCategory(keyWord, largeCategory).get()) {
-                list.add(new TradePostListResponseDto(tradePost, brandImgPath, cropImgPath));
+                list.add(new TradePostListResponseDto(tradePost));
             }
         }
 

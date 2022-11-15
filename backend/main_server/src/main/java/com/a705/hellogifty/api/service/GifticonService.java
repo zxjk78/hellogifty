@@ -35,11 +35,11 @@ public class GifticonService {
     @Transactional
     public List<GifticonListResponseDto> myAllGifticon(User user) {
 
-        String defaultPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"brandImg"+File.separator;
+//        String defaultPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"brandImg"+File.separator;
         List<GifticonListResponseDto> list = new ArrayList<>();
 
         for (Gifticon gifticon : gifticonRepository.findByUserIdWithSmallCategory(user.getId()).get()) {
-            list.add(new GifticonListResponseDto(gifticon, defaultPath));
+            list.add(new GifticonListResponseDto(gifticon));
         }
 
         return list;
@@ -47,9 +47,9 @@ public class GifticonService {
 
     @Transactional
     public GifticonDetailResponseDto myGifticonDetail(User user, Long gifticonId) {
-        String defaultPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"gifticon"+File.separator;
+//        String defaultPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"gifticon"+File.separator;
         Gifticon gifticon = gifticonRepository.findById(gifticonId).get();
-        return new GifticonDetailResponseDto(gifticon, defaultPath);
+        return new GifticonDetailResponseDto(gifticon);
     }
 
     @Transactional

@@ -37,7 +37,7 @@ public class TradePostListResponseDto {
     private String brandName;
 
 
-    public TradePostListResponseDto(TradePost tradePost, String brandImgPath, String cropImgPath) {
+    public TradePostListResponseDto(TradePost tradePost) {
         id = tradePost.getId();
         userName = tradePost.getUser().getName();
         userScore = tradePost.getUser().getUserEvaluation().getTotalScore();
@@ -46,8 +46,8 @@ public class TradePostListResponseDto {
         title = tradePost.getTitle();
         content = tradePost.getContent();
         price = tradePost.getPrice();
-        cropImg = cropImgPath + tradePost.getImg();
-        brandImg = brandImgPath + tradePost.getGifticon().getSmallCategory().getBrandImgName();
+        cropImg = tradePost.getImg();
+        brandImg = tradePost.getGifticon().getSmallCategory().getBrandImgName();
         brandName = tradePost.getGifticon().getSmallCategory().getName();
 
     }
