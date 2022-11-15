@@ -9,19 +9,22 @@ import {
 import React, { useRef, useState } from 'react';
 import { GlobalStyles } from '../../constants/style';
 import ImagePicker from 'react-native-image-crop-picker';
+import B64Image from '../UI/B64Image';
+import { API_URL } from '../../api/config/http-config';
 
-const Form2 = ({ info, originalImgPath, next, back }) => {
+const Form2 = ({ info, next, back }) => {
   const [imagePath, setImagePath] = useState(info.imagePath);
   const [picture, setPicture] = useState();
-  console.log('원본패스: ',originalImgPath);
+  console.log('원본패스: ', info.originalImgPath);
   // const cropViewRef = useRef();
 
   const imgPress = () => {
     ImagePicker.openCropper({
-      path: originalImgPath,
+      path: API_URL+'image/gifticon?path='+info.originalImgPath,
       width: 280,
       height: 351,
       freeStyleCropEnabled: true,
+      includeBase64: true,
     }).then((image) => {
       setImagePath(image.path);
     }).catch((error) => console.log(error));
@@ -29,7 +32,7 @@ const Form2 = ({ info, originalImgPath, next, back }) => {
 
   // cropViewRef.saveImage(true, 90)
   // cropViewRef.rotateImage(true)
-
+  
   return (
     <View>
       <Text style={{ marginVertical: 5 }}>
@@ -40,7 +43,8 @@ const Form2 = ({ info, originalImgPath, next, back }) => {
         나오지 않도록, 확인하시고 잘라 주세요. (2/3)
       </Text>
       <Pressable onPress={imgPress}>
-        <Image style={styles.img} source={{ uri: imagePath }} />
+        <B64Image src={API_URL+'image/gifticon?path='+info.imagePath} style={styles.img}/>
+        {/* <Image style={styles.img} source={{ uri: info.imagePath }} /> */}
       </Pressable>
       {/* 버튼 */}
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>

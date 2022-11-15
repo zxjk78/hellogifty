@@ -20,7 +20,14 @@ import { getGifticonDetail, sellMyGifticon } from "../../api/gifticon";
 const SellingTicket = ({ onClose, item, refresh }) => {
   const [modalVisible, setModalVisible] = useState(true);
   const [formIdx, setFormIdx] = useState(0);
-  const [sellInfo, setSellInfo] = useState();
+  const [sellingInfo, setSellingInfo] = useState({
+    price: 0,
+    title: "",
+    content: "",
+    imagePath: "1",
+    id: item.id,
+    brandName: item.brandName
+  });
 
   // 임시
   const uri = item.brandImgPath
@@ -28,7 +35,8 @@ const SellingTicket = ({ onClose, item, refresh }) => {
   useEffect(() => {
     (async () => {
       const data = await getGifticonDetail(item.id);
-      console.log(data, '받아온 데이터 여기~~');
+      console.log(data);
+      setSellingInfo({...data, price:0, originalImgPath:data.img, title:'', content: '', imagePath: data.img});
     })();
   }, [item]);
 
@@ -44,13 +52,6 @@ const SellingTicket = ({ onClose, item, refresh }) => {
     });
   };
 
-  const [sellingInfo, setSellingInfo] = useState({
-    price: 0,
-    title: "",
-    description: "",
-    imagePath: uri,
-    item: item,
-  });
 
   const next = (data) => {
     setSellingInfo((prev) => {
@@ -68,7 +69,7 @@ const SellingTicket = ({ onClose, item, refresh }) => {
 
   // 서버로 데이터 보내기
   const finish = async (info) => {
-    console.log(info, '여기가 인포~~');
+    // console.log(info, '여기가 인포~~');
     showToast();
     setModalVisible(false);
     await sellMyGifticon(info);
@@ -77,7 +78,7 @@ const SellingTicket = ({ onClose, item, refresh }) => {
 
   const formArray = [
     <Form1 next={next} info={sellingInfo} />,
-    <Form2 next={next} back={back} originalImgPath={uri} info={sellingInfo} />,
+    <Form2 next={next} back={back} info={sellingInfo} />,
     <Form3 back={back} finish={finish} info={sellingInfo} />,
   ];
 

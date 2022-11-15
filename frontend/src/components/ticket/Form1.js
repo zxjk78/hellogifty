@@ -6,7 +6,7 @@ import { GlobalStyles } from "../../constants/style";
 const Form1 = ({ info, next }) => {
   const [price, setPrice] = useState(info.price);
   const [title, setTitle] = useState(info.title)
-  const [description, setDescription] = useState(info.description);
+  const [content, setContent] = useState(info.content);
 
   return (
     <View>
@@ -18,9 +18,9 @@ const Form1 = ({ info, next }) => {
           source={require("../../assets/starbucks.jpg")}
         ></Image>
         <View>
-          <Text style={{ marginTop: 10 }}>{info.item.brandName}</Text>
-          <Text style={{ fontSize: 17 }}>{info.item.name}</Text>
-          <Text>유효기간 {info.item.expirationDate} 까지</Text>
+          {/* <Text style={{ marginTop: 10 }}>{info.item}</Text> */}
+          <Text style={{ fontSize: 17 }}>{info.name}</Text>
+          <Text>유효기간 {info.expirationDate} 까지</Text>
         </View>
       </View>
       <View style={styles.price}>
@@ -56,7 +56,7 @@ const Form1 = ({ info, next }) => {
       <TextInput
         style={styles.inputText}
         multiline
-        onChangeText={setDescription}
+        onChangeText={setContent}
         // value={description}
         defaultValue={info.description}
         placeholder="상품 설명을 입력해 주세요"
@@ -64,7 +64,7 @@ const Form1 = ({ info, next }) => {
       />
       <TouchableOpacity 
         style={styles.nextButton} 
-        onPress={()=>{next({price, title, description})}}
+        onPress={()=>{next({price, title, content})}}
         activeOpacity = {0.5}
         // android_ripple={{color: 'red'}}  
       >

@@ -56,9 +56,9 @@ const Form3 = ({ info, back, finish }) => {
       <View style={styles.main}>
         <Image style={styles.img} source={{ uri: info.imagePath }} />
         <View>
-          <Text>{info.item.brandName}</Text>
-          <Text style={{ fontSize: 17 }}>{info.item.name}</Text>
-          <Text>{info.item.expirationDate}</Text>
+          {/* <Text>{info.item.brandName}</Text> */}
+          <Text style={{ fontSize: 17 }}>{info.name}</Text>
+          <Text>{info.expirationDate}</Text>
         </View>
         <View style={styles.nameText}>
           <Text>이름</Text>
@@ -73,7 +73,7 @@ const Form3 = ({ info, back, finish }) => {
         상품 설명
       </Text>
       <ScrollView style={styles.description}>
-        <Text style={{ padding: 2 }}>{info.description}</Text>
+        <Text style={{ padding: 2 }}>{info.content}</Text>
       </ScrollView>
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <Pressable
