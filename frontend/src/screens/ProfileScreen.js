@@ -2,12 +2,12 @@ import { StyleSheet, Text, View, Image, FlatList, Button } from 'react-native';
 import React from 'react';
 
 import { gifticonDummy } from '../constants/data/dummyData';
-import { TicketListItem } from '../components/ticket';
+// import { TicketListItem } from '../components/ticket';
 import { GlobalStyles } from '../constants/style';
 import { logout } from '../api/auth';
 // import SearchResultItem from '../components/shopping/search/SearchResultItem';
 
-const renderItem = ({ item }) => <TicketListItem item={item} />;
+// const renderItem = ({ item }) => <TicketListItem item={item} />;
 
 const ProfileScreen = ({ navigation }) => {
   const handleLogout = async () => {
@@ -39,7 +39,7 @@ const ProfileScreen = ({ navigation }) => {
           />
         </View>
       </View>
-      <View style={styles.ticketBrief}>
+      {/* <View style={styles.ticketBrief}>
         <Text>판매상품 {gifticonDummy.length}개</Text>
       </View>
       <View style={styles.ticketContainer}>
@@ -49,7 +49,7 @@ const ProfileScreen = ({ navigation }) => {
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
         />
-      </View>
+      </View> */}
     </View>
   );
 };
