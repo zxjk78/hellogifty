@@ -26,6 +26,7 @@
     "react-dom": "18.0.0",
     "react-native": "0.69.6",
     "react-native-base64": "^0.2.1",
+    "react-native-calendars": "^1.1291.1",
     "react-native-dropdown-select-list": "^1.0.23",
     "react-native-fs": "^2.20.0",
     "react-native-gesture-handler": "^2.8.0",

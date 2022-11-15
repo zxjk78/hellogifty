@@ -9,14 +9,14 @@ const login = async (email, password) => {
 
     return { accessToken, refreshToken };
   } catch (error) {
-    console.error('로그아웃 에러: ', error);
+    console.error('로그인 에러: ', error);
   }
 };
 
 const signup = async (email, password) => {
   console.log('회원가입: ', email, password);
   try {
-    const res = await axiosAuthInstance.post('signup', {
+    const res = await axiosCommonInstance.post('signup', {
       email: email,
       password: password,
     });
@@ -36,7 +36,7 @@ const logout = async () => {
     // console.log('로그아웃 응답:', res.data);
     return res.data.success;
   } catch (error) {
-    console.error('로그인 에러: ', error);
+    console.error('로그아웃 에러: ', error);
   } finally {
     await AsyncStorage.removeItem('accessToken');
   }
