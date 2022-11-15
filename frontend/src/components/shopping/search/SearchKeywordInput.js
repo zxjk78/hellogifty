@@ -7,8 +7,13 @@ import { GlobalStyles } from '../../../constants/style';
 import SearchResultList from './SearchResultList';
 const SearchKeywordInput = () => {
   const [searchKeyword, setSearchKeyword] = useState('');
-  const [searchLargeCategoryId, setSearchLargeCategoryId] = useState();
-  const [searchSmallCategoryId, setSearchSmallCategoryId] = useState();
+  const [searchOption, setSearchOption] = useState({
+    keyWord: "",
+    largeCategoryId: "",
+    smallCategoryId: "",
+    page: 0,
+    sortChoice: 1
+  });
   const [resultDataList, setResultDataList] = useState([]);
   const [inputBorderColor, setInputBorderColor] = useState('white');
 
@@ -35,7 +40,7 @@ const SearchKeywordInput = () => {
   useEffect(() => {
     // api 보내서 검색 자료 가져오기
     (async () => {
-      const result = await searchByKeyword("");
+      const result = await searchByKeyword(searchOption);
       setResultDataList(result);
       console.log(result, '처음 데이터 가져왔습니다.')
     })();
@@ -43,7 +48,7 @@ const SearchKeywordInput = () => {
 
   const search = () => {
     (async () => {
-      const result = await searchByKeyword(searchKeyword);
+      const result = await searchByKeyword(searchOption);
       setResultDataList(result);
     })();
     Keyboard.dismiss();
@@ -56,7 +61,7 @@ const SearchKeywordInput = () => {
           style={inputStyle}
           placeholder={'브랜드명 또는 찾고 싶은 제품을 입력해 주세요.'}
           value={searchKeyword}
-          onChangeText={(text) => setSearchKeyword(text)}
+          onChangeText={(text) => setSearchOption((prev)=>{return {...prev, keyWord:text}})}
           onFocus={inputFocus}
           onBlur={inputBlur}
         />
