@@ -22,12 +22,12 @@ const SellingTicket = ({ onClose, item, refresh }) => {
   const [formIdx, setFormIdx] = useState(0);
 
   // 임시
-  const uri = "https://mblogthumb-phinf.pstatic.net/MjAxODA5MjhfMjI3/MDAxNTM4MTQwNjMzNzI5.c7ZF7CxdxBkwou-yz5d4JnsF1mUGeNyBKd6cM28I4Ikg.sxZ2LGLrc9sC3NBGqpAE4XqHRyFVAZJks-MRwUOShP8g.JPEG.zoqgns7549/KakaoTalk_20180928_220601336.jpg"
-
+  const uri = item.brandImgPath
+  // console.log(item, '여기여기여기')
   useEffect(() => {
     (async () => {
       const data = await getGifticonDetail(item.id);
-      console.log(data);
+      console.log(data, '받아온 데이터 여기~~');
     })();
   }, [item]);
 

@@ -31,7 +31,7 @@ public class TradePostDetailResponseDto {
 
     private String img;
 
-    public TradePostDetailResponseDto(TradePost tradePost, String defaultPath) {
+    public TradePostDetailResponseDto(TradePost tradePost) {
         id = tradePost.getId();
         gifticonId = tradePost.getGifticon().getId();
         title = tradePost.getTitle();
@@ -39,6 +39,6 @@ public class TradePostDetailResponseDto {
         price = tradePost.getPrice();
         sellerInfo = new SellerInfoDto(tradePost.getUser());
         tradeState = tradePost.getTradeState();
-        img = defaultPath + tradePost.getImg();
+        img = tradePost.getImg();
     }
 }

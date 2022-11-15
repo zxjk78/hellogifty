@@ -30,7 +30,6 @@ const TicketListItem = ({ item, isNormal, refresh, type }) => {
   const [modifiedModal, setModifiedModal] = useState(false);
   const [sellModal, setSellModal] = useState(false);
   const [position, setPosition] = useState({ x: 100, y: 100 });
-  console.log(item);
 
 
   const imgUrl = [
