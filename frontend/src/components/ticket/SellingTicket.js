@@ -8,22 +8,28 @@ import {
   Modal,
   Pressable,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import Toast from "react-native-toast-message";
 import { GlobalStyles } from "../../constants/style";
 import Form1 from "./Form1";
 import Form2 from "./Form2";
 import Form3 from "./Form3";
-import { sellMyGifticon } from "../../api/gifticon";
+import { getGifticonDetail, sellMyGifticon } from "../../api/gifticon";
 
 const SellingTicket = ({ onClose, item, refresh }) => {
   const [modalVisible, setModalVisible] = useState(true);
   const [formIdx, setFormIdx] = useState(0);
 
   // 임시
-  const uri =
-    "https://mblogthumb-phinf.pstatic.net/MjAxODA5MjhfMjI3/MDAxNTM4MTQwNjMzNzI5.c7ZF7CxdxBkwou-yz5d4JnsF1mUGeNyBKd6cM28I4Ikg.sxZ2LGLrc9sC3NBGqpAE4XqHRyFVAZJks-MRwUOShP8g.JPEG.zoqgns7549/KakaoTalk_20180928_220601336.jpg?type=w800";
+  const uri = "https://mblogthumb-phinf.pstatic.net/MjAxODA5MjhfMjI3/MDAxNTM4MTQwNjMzNzI5.c7ZF7CxdxBkwou-yz5d4JnsF1mUGeNyBKd6cM28I4Ikg.sxZ2LGLrc9sC3NBGqpAE4XqHRyFVAZJks-MRwUOShP8g.JPEG.zoqgns7549/KakaoTalk_20180928_220601336.jpg"
+
+  useEffect(() => {
+    (async () => {
+      const data = await getGifticonDetail(item.id);
+      console.log(data);
+    })();
+  }, [item]);
 
   const showToast = () => {
     Toast.show({

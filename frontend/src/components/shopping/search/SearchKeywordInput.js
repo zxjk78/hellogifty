@@ -12,7 +12,6 @@ const SearchKeywordInput = () => {
 
   const onDelete = () => {
     setSearchKeyword('');
-    Keyboard.dismiss();
   };
 
   const inputStyle = {
@@ -33,14 +32,18 @@ const SearchKeywordInput = () => {
 
   useEffect(() => {
     // api 보내서 검색 자료 가져오기
+
+  }, [resultDataList]);
+
+  const search = () => {
     const resultList = [];
     (async () => {
       const result = await searchByKeyword(searchKeyword);
-      console.log(result);
-      // resultList.push(result);
-      // setResultDataList(resultList);
+      resultList.push(result);
+      setResultDataList(resultList);
     })();
-  }, [searchKeyword]);
+    Keyboard.dismiss();
+  }
 
   return (
     <>
@@ -53,6 +56,9 @@ const SearchKeywordInput = () => {
           onFocus={inputFocus}
           onBlur={inputBlur}
         />
+        {searchKeyword.length > 0 && (
+          <Icon name="search1" onPress={search} style={styles.searchIcon} />
+        )}
         {searchKeyword.length > 0 && (
           <Icon name="closecircle" onPress={onDelete} style={styles.deleteIcon} />
         )}
@@ -72,11 +78,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  searchIcon: {
+    width: 30,
+    height: 20,
+    fontSize: 20,
+    position: 'relative',
+    right: 70
+  },
   deleteIcon: {
     width: 30,
     height: 20,
     fontSize: 20,
     position: 'relative',
-    right: 40,
+    right: 65,
   },
 });
