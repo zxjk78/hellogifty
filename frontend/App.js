@@ -182,7 +182,7 @@ const MainTab = () => {
         name="Profile"
         component={ProfileScreen}
         options={{
-          title: '상대 프로필',
+          title: '프로필',
         }}
       />
 

@@ -12,7 +12,7 @@ import ChatLoading from './ChatLoading';
 const PORT = 9090;
 // const CHATTING_SERVER_URL = `http://localhost:${PORT}/chat`;
 const CHATTING_SERVER_URL = `http://k7a705.p.ssafy.io:${PORT}/chat`;
-const ChatRoom = ({ chatRoomId, userId }) => {
+const ChatRoom = ({ chatRoomId, userId, sellorId }) => {
   const $websocket = useRef(null);
   const [connected, setConnected] = useState(false);
 
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
     height: '70%',
     width: '90%',
     marginLeft: '7%',
-    marginTop: '5%',
+    marginTop: '13%',
   },
   inputArea: {
     height: '10%',
