@@ -38,7 +38,6 @@ const MyCouponScreen = () => {
     (async () => {
       const items = await fetchMyGifticonList();
       items.forEach((item) => {
-        // console.log(item.isUsed)
         if (!item.isUsed) {
           possessionList.push(item);
         } else if (!!item.isUsed) {
