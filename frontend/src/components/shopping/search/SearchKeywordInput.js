@@ -9,36 +9,39 @@ const SearchKeywordInput = () => {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [searchLargeCategoryId, setSearchLargeCategoryId] = useState();
   const [searchSmallCategoryId, setSearchSmallCategoryId] = useState();
-  const [resultDataList, setResultDataList] = useState([]);
+  const [resultDataList, setResultDataList] = useState(null);
   const [inputBorderColor, setInputBorderColor] = useState('white');
+  const [isLoading, setIsLoading] = useState(true);
 
   const onDelete = () => {
     setSearchKeyword('');
   };
 
   const inputStyle = {
-      padding: 8,
-      paddingLeft: 20,
-      backgroundColor: 'white',
-      borderRadius: 30,
-      borderWidth: 3,
-      borderColor: inputBorderColor,
-      width: '100%',
-  }
+    padding: 8,
+    paddingLeft: 20,
+    backgroundColor: 'white',
+    borderRadius: 30,
+    borderWidth: 3,
+    borderColor: inputBorderColor,
+    width: '100%',
+  };
   const inputFocus = () => {
-    setInputBorderColor(GlobalStyles.colors.categoryConven)
-  }
+    setInputBorderColor(GlobalStyles.colors.categoryConven);
+  };
   const inputBlur = () => {
-    setInputBorderColor('white')
-  }
+    setInputBorderColor('white');
+  };
 
   useEffect(() => {
+    setIsLoading(true);
     // api 보내서 검색 자료 가져오기
     (async () => {
-      const result = await searchByKeyword("");
+      const result = await searchByKeyword('');
       setResultDataList(result);
-      console.log(result, '처음 데이터 가져왔습니다.')
+      // console.log(result, '처음 데이터 가져왔습니다.');
     })();
+    setIsLoading(false);
   }, []);
 
   const search = () => {
@@ -47,7 +50,7 @@ const SearchKeywordInput = () => {
       setResultDataList(result);
     })();
     Keyboard.dismiss();
-  }
+  };
 
   return (
     <>
@@ -64,10 +67,16 @@ const SearchKeywordInput = () => {
           <Icon name="search1" onPress={search} style={styles.searchIcon} />
         )}
         {searchKeyword.length > 0 && (
-          <Icon name="closecircle" onPress={onDelete} style={styles.deleteIcon} />
+          <Icon
+            name="closecircle"
+            onPress={onDelete}
+            style={styles.deleteIcon}
+          />
         )}
       </View>
-      <SearchResultList resultDataList={resultDataList}/>
+      {!isLoading && resultDataList && (
+        <SearchResultList resultDataList={resultDataList} />
+      )}
     </>
   );
 };
@@ -87,7 +96,7 @@ const styles = StyleSheet.create({
     height: 20,
     fontSize: 20,
     position: 'relative',
-    right: 70
+    right: 70,
   },
   deleteIcon: {
     width: 30,

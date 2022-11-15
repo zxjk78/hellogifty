@@ -23,7 +23,7 @@ const SellingItemDetailScreen = ({}) => {
   useLayoutEffect(() => {
     setIsLoading(true);
     const tradeItemId = route.params.tradeId;
-
+    console.log('트레이드아이템아이디:', tradeItemId);
     (async () => {
       const result = await fetchTradeItemDetail(tradeItemId);
 
@@ -44,50 +44,62 @@ const SellingItemDetailScreen = ({}) => {
 
   return (
     <View style={styles.wrapper}>
-      <View style={styles.container}>
-        <Image
-          style={styles.couponImage}
-          source={{
-            uri: 'https://photo.coolenjoy.co.kr/data/editor/2012/c0f3b1f7c870df665e0469510699344b98619cf9.jpg',
-          }}
-        />
-
-        {/* <Image style={styles.couponImage} source={{ uri: itemDetail.img }} />   이미지 조사 필요 = 크롭에서 가져오려고 하는 것 같다. */}
-        <View style={styles.profileContainer}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      {!isLoading && itemDetail && (
+        <>
+          <View style={styles.container}>
             <Image
+              style={styles.couponImage}
               source={{
                 uri: 'https://photo.coolenjoy.co.kr/data/editor/2012/c0f3b1f7c870df665e0469510699344b98619cf9.jpg',
               }}
-              style={styles.profileImg}
             />
-            <Text
-              style={{ fontSize: 20, marginLeft: '10%', fontWeight: 'bold' }}
-            >
-              {/* {itemDetail.name} */}
-              {/* {itemDetail.email} */}
-            </Text>
-          </View>
-          <Image
-            source={{
-              uri: 'https://photo.coolenjoy.co.kr/data/editor/2012/c0f3b1f7c870df665e0469510699344b98619cf9.jpg',
-            }}
-            style={styles.profileRank}
-          />
-        </View>
-        <View style={styles.contentContainer}>
-          <Text style={{ fontSize: 20, padding: 5 }}>{itemDetail.content}</Text>
-        </View>
-      </View>
-      <View style={styles.buyContainer}>
-        <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
-          {itemDetail.price} 원
-        </Text>
 
-        <TouchableOpacity style={styles.chatBtn} onPress={handleStartChat}>
-          <Text style={{ color: '#fff', fontWeight: 'bold' }}>채팅하기</Text>
-        </TouchableOpacity>
-      </View>
+            {/* <Image style={styles.couponImage} source={{ uri: itemDetail.img }} />   이미지 조사 필요 = 크롭에서 가져오려고 하는 것 같다. */}
+            <View style={styles.profileContainer}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Image
+                  source={{
+                    uri: 'https://photo.coolenjoy.co.kr/data/editor/2012/c0f3b1f7c870df665e0469510699344b98619cf9.jpg',
+                  }}
+                  style={styles.profileImg}
+                />
+                <Text
+                  style={{
+                    fontSize: 20,
+                    marginLeft: '10%',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  {/* {itemDetail.name} */}
+                  {/* {itemDetail.email} */}
+                </Text>
+              </View>
+              <Image
+                source={{
+                  uri: 'https://photo.coolenjoy.co.kr/data/editor/2012/c0f3b1f7c870df665e0469510699344b98619cf9.jpg',
+                }}
+                style={styles.profileRank}
+              />
+            </View>
+            <View style={styles.contentContainer}>
+              <Text style={{ fontSize: 20, padding: 5 }}>
+                {itemDetail.content}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.buyContainer}>
+            <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
+              {itemDetail.price} 원
+            </Text>
+
+            <TouchableOpacity style={styles.chatBtn} onPress={handleStartChat}>
+              <Text style={{ color: '#fff', fontWeight: 'bold' }}>
+                채팅하기
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </>
+      )}
     </View>
   );
 };

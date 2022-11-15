@@ -15,7 +15,7 @@ export const fetchTradeItemDetail = async (tradeId) => {
   try {
     const res = await axiosAuthInstance.get('trade/' + tradeId);
 
-    console.log(res.data);
+    console.log('응답데이터', res.data.data);
 
     return res.data.data;
   } catch (error) {
