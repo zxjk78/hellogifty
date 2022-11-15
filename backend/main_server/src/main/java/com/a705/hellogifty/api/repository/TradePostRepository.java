@@ -14,7 +14,7 @@ import java.util.Optional;
 @Repository
 public interface TradePostRepository extends JpaRepository<TradePost, Long> {
 
-    Optional<List<TradePost>> findByTitleContains(String title, Pageable pageable);
+    Optional<List<TradePost>> findByTitleContains(String title);
 
     Optional<List<TradePost>> findByGifticon_SmallCategory(SmallCategory smallCategory);
 

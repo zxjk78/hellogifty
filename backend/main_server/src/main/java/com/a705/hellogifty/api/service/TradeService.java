@@ -15,10 +15,7 @@ import com.a705.hellogifty.api.repository.*;
 import com.sun.jdi.request.DuplicateRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -128,7 +125,7 @@ public class TradeService {
 
 
     @Transactional
-    public List<TradePostListResponseDto> tradePostSearchResult(String keyWord, Short smallCategoryId, Short largeCategoryId, Integer sortChoice, int page) {
+    public Page<TradePostListResponseDto> tradePostSearchResult(String keyWord, Short smallCategoryId, Short largeCategoryId, Integer sortChoice, int page) {
         // 1. 키워드만 있을 경우
         // 2. smallCategoryId만 있을 경우(small, large 있을때 포함)
         // 3. largeCategoryId만 있을 경우
@@ -140,7 +137,7 @@ public class TradeService {
 //        System.out.println(smallCategoryId);
 //        System.out.println(largeCategoryId);
 
-        Pageable pageable = PageRequest.of(page, 3);
+
 
         List<TradePostListResponseDto> list = new ArrayList<>();
 //        String brandImgPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"brandImg"+File.separator;
@@ -148,7 +145,7 @@ public class TradeService {
 
         if (keyWord != null && smallCategoryId == null && largeCategoryId == null) {
 //            System.out.println(1);
-            for (TradePost tradePost : tradePostRepository.findByTitleContains(keyWord, pageable).get()) {
+            for (TradePost tradePost : tradePostRepository.findByTitleContains(keyWord).get()) {
                 list.add(new TradePostListResponseDto(tradePost));
             }
         } else if (keyWord == null && smallCategoryId != null) {
@@ -230,6 +227,10 @@ public class TradeService {
         }
 
 
-        return list;
+        Pageable pageable = PageRequest.of(page, 20);
+        int start = Math.min((int)pageable.getOffset(), list.size());
+        int end = Math.min((start + pageable.getPageSize()), list.size());
+
+        return new PageImpl<>(list.subList(start, end), pageable, list.size());
     }
 }

@@ -4,6 +4,8 @@ package com.a705.hellogifty.api.service;
 import com.a705.hellogifty.api.dto.basic_response.CommonResult;
 import com.a705.hellogifty.api.dto.basic_response.ManyResult;
 import com.a705.hellogifty.api.dto.basic_response.OneResult;
+import com.a705.hellogifty.api.dto.basic_response.PageResult;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +24,13 @@ public class ResponseService {
     public <T> ManyResult<T> getManyResult(List<T> list) {
         ManyResult<T> result = new ManyResult<>();
         result.setData(list);
+        setSuccessResult(result);
+        return result;
+    }
+
+    public <T> PageResult<T> getPageResult(Page<T> page) {
+        PageResult<T> result = new PageResult<>();
+        result.setData(page);
         setSuccessResult(result);
         return result;
     }
