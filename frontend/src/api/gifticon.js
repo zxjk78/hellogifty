@@ -72,10 +72,11 @@ export const addGifticonFromFile = async (gifticonInfo) => {
         ''
       ),
     };
+    // console.log('요청 dto: ', Object.keys(gifticon));
     const res = await axiosAuthInstance.post('mygifticon/', gifticon);
     return res.data.success;
   } catch (error) {
-    console.log('에러발생');
+    console.log('앨범에서 쿠폰 등록 시 에러: ', error);
   }
 };
 

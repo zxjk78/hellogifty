@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import React, { useState } from 'react';
 import { Button, TextInput } from 'react-native-paper';
-import { AddGifticonFromFile } from '../../api/gifticon';
+import { addGifticonFromFile } from '../../api/gifticon';
 import {
   largeCategoryDict,
   smallCategoryDict,
@@ -95,16 +95,22 @@ const largeCategoryData = [
     ),
   },
 ];
+const smallImgConfig = {
+  width: 30,
+  height: 30,
+};
+
 const smallCategoryData = [
   [
     {
       key: 1,
       value: (
         <View style={{ flexDirection: 'row' }}>
-          <B64Image
-            src={API_URL + 'image/brand?path=STARBUCKS.png'}
-            style={{ width: 30, height: 30 }}
+          <Image
+            source={require('../../assets/smallCategory/STARBUCKS.png')}
+            style={smallImgConfig}
           />
+
           <Text>{smallCategoryDict[1]}</Text>
         </View>
       ),
@@ -113,10 +119,11 @@ const smallCategoryData = [
       key: 2,
       value: (
         <View style={{ flexDirection: 'row' }}>
-          <B64Image
-            src={API_URL + 'image/brand?path=TWOSOMEPLACE.png'}
-            style={{ width: 30, height: 30 }}
+          <Image
+            source={require('../../assets/smallCategory/TWOSOMEPLACE.png')}
+            style={smallImgConfig}
           />
+
           <Text>{smallCategoryDict[2]}</Text>
         </View>
       ),
@@ -127,10 +134,11 @@ const smallCategoryData = [
       key: 3,
       value: (
         <View style={{ flexDirection: 'row' }}>
-          <B64Image
-            src={API_URL + 'image/brand?path=CU.png'}
-            style={{ width: 30, height: 30 }}
+          <Image
+            source={require('../../assets/smallCategory/CU.png')}
+            style={smallImgConfig}
           />
+
           <Text>{smallCategoryDict[3]}</Text>
         </View>
       ),
@@ -139,10 +147,11 @@ const smallCategoryData = [
       key: 4,
       value: (
         <View style={{ flexDirection: 'row' }}>
-          <B64Image
-            src={API_URL + 'image/brand?path=GS25.png'}
-            style={{ width: 30, height: 30 }}
+          <Image
+            source={require('../../assets/smallCategory/GS25.png')}
+            style={smallImgConfig}
           />
+
           <Text>{smallCategoryDict[4]}</Text>
         </View>
       ),
@@ -153,10 +162,11 @@ const smallCategoryData = [
       key: 5,
       value: (
         <View style={{ flexDirection: 'row' }}>
-          <B64Image
-            src={API_URL + 'image/brand?path=PARISBAGUETTE.png'}
-            style={{ width: 30, height: 30 }}
+          <Image
+            source={require('../../assets/smallCategory/PARISBAGUETTE.png')}
+            style={smallImgConfig}
           />
+
           <Text>{smallCategoryDict[5]}</Text>
         </View>
       ),
@@ -165,10 +175,11 @@ const smallCategoryData = [
       key: 6,
       value: (
         <View style={{ flexDirection: 'row' }}>
-          <B64Image
-            src={API_URL + 'image/brand?path=TOUSLESJOURS.png'}
-            style={{ width: 30, height: 30 }}
+          <Image
+            source={require('../../assets/smallCategory/TOUSLESJOURS.png')}
+            style={smallImgConfig}
           />
+
           <Text>{smallCategoryDict[6]}</Text>
         </View>
       ),
@@ -179,10 +190,11 @@ const smallCategoryData = [
       key: 7,
       value: (
         <View style={{ flexDirection: 'row' }}>
-          <B64Image
-            src={API_URL + 'image/brand?path=BASKINROBBINS.png'}
-            style={{ width: 30, height: 30 }}
+          <Image
+            source={require('../../assets/smallCategory/BASKINROBBINS.png')}
+            style={smallImgConfig}
           />
+
           <Text>{smallCategoryDict[7]}</Text>
         </View>
       ),
@@ -191,10 +203,11 @@ const smallCategoryData = [
       key: 8,
       value: (
         <View style={{ flexDirection: 'row' }}>
-          <B64Image
-            src={API_URL + 'image/brand?path=SEOLBING.png'}
-            style={{ width: 30, height: 30 }}
+          <Image
+            source={require('../../assets/smallCategory/SEOLBING.png')}
+            style={smallImgConfig}
           />
+
           <Text>{smallCategoryDict[8]}</Text>
         </View>
       ),
@@ -205,10 +218,11 @@ const smallCategoryData = [
       key: 9,
       value: (
         <View style={{ flexDirection: 'row' }}>
-          <B64Image
-            src={API_URL + 'image/brand?path=BHC.png'}
-            style={{ width: 30, height: 30 }}
+          <Image
+            source={require('../../assets/smallCategory/BHC.png')}
+            style={smallImgConfig}
           />
+
           <Text>{smallCategoryDict[9]}</Text>
         </View>
       ),
@@ -217,10 +231,11 @@ const smallCategoryData = [
       key: 10,
       value: (
         <View style={{ flexDirection: 'row' }}>
-          <B64Image
-            src={API_URL + 'image/brand?path=DOMINO.png'}
-            style={{ width: 30, height: 30 }}
+          <Image
+            source={require('../../assets/smallCategory/DOMINO.png')}
+            style={smallImgConfig}
           />
+
           <Text>{smallCategoryDict[10]}</Text>
         </View>
       ),
@@ -231,10 +246,11 @@ const smallCategoryData = [
       key: 11,
       value: (
         <View style={{ flexDirection: 'row' }}>
-          <B64Image
-            src={API_URL + 'image/brand?path=HAPPYCON.jpg'}
-            style={{ width: 30, height: 30 }}
+          <Image
+            source={require('../../assets/smallCategory/HAPPYCON.jpg')}
+            style={smallImgConfig}
           />
+
           <Text>{smallCategoryDict[11]}</Text>
         </View>
       ),
@@ -243,10 +259,11 @@ const smallCategoryData = [
       key: 12,
       value: (
         <View style={{ flexDirection: 'row' }}>
-          <B64Image
-            src={API_URL + 'image/brand?path=CGV.png'}
-            style={{ width: 30, height: 30 }}
+          <Image
+            source={require('../../assets/smallCategory/CGV.png')}
+            style={smallImgConfig}
           />
+
           <Text>{smallCategoryDict[12]}</Text>
         </View>
       ),
@@ -263,12 +280,6 @@ const AddGifticonFromFileModal = ({ visible, onClose }) => {
 
   const [largeCategoryId, setLargeCategoryId] = useState(-1);
   // const [smallCategoryId, setSmallCategoryId] = useState(-1);
-
-  const fetchImg = async () => {
-    const res = await fetchBrandImage('PARISBAGUETTE.png');
-    console.log(res);
-  };
-  fetchImg();
 
   const selectImageFromFile = async () => {
     const options = {
@@ -293,9 +304,9 @@ const AddGifticonFromFileModal = ({ visible, onClose }) => {
     )
       return;
 
-    const result = await AddGifticonFromFile({
+    const result = await addGifticonFromFile({
       name,
-      number,
+      // number,
       categoryId,
       fileBase64,
       expirationDate,
@@ -427,6 +438,10 @@ const AddGifticonFromFileModal = ({ visible, onClose }) => {
 export default AddGifticonFromFileModal;
 
 const styles = StyleSheet.create({
+  smallCategoryImg: {
+    width: 30,
+    height: 30,
+  },
   imgContainer: {
     width: '100%',
     height: '30%',

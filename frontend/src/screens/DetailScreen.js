@@ -162,11 +162,7 @@ const DetailScreen = ({ route }) => {
           >
             <Pressable onPress={handleImg} style={styles.imgModal}>
               <B64Image
-                src={
-                  API_URL +
-                  'image/gifticon?path=' +
-                  info.img.split('\\')[info.img.split('\\').length - 1]
-                }
+                src={API_URL + 'image/gifticon?path=' + info.img}
                 style={styles.img}
               />
             </Pressable>
@@ -176,11 +172,7 @@ const DetailScreen = ({ route }) => {
           <View style={{ flex: 8 }}>
             <Pressable onPress={handleImg}>
               <B64Image
-                src={
-                  API_URL +
-                  'image/gifticon?path=' +
-                  info.img.split('\\')[info.img.split('\\').length - 1]
-                }
+                src={API_URL + 'image/gifticon?path=' + info.img}
                 style={styles.img}
               />
 
