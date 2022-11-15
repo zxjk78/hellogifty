@@ -7,7 +7,9 @@ import { GlobalStyles } from '../../../constants/style';
 import SearchResultList from './SearchResultList';
 const SearchKeywordInput = () => {
   const [searchKeyword, setSearchKeyword] = useState('');
-  const [resultDataList, setResultDataList] = useState([{id:1},{id:2},{id:3},{id:4},{id:5},{id:6},{id:7},{id:8}]);
+  const [searchLargeCategoryId, setSearchLargeCategoryId] = useState();
+  const [searchSmallCategoryId, setSearchSmallCategoryId] = useState();
+  const [resultDataList, setResultDataList] = useState([]);
   const [inputBorderColor, setInputBorderColor] = useState('white');
 
   const onDelete = () => {
@@ -32,15 +34,17 @@ const SearchKeywordInput = () => {
 
   useEffect(() => {
     // api 보내서 검색 자료 가져오기
-
-  }, [resultDataList]);
+    (async () => {
+      const result = await searchByKeyword("");
+      setResultDataList(result);
+      console.log(result, '처음 데이터 가져왔습니다.')
+    })();
+  }, []);
 
   const search = () => {
-    const resultList = [];
     (async () => {
       const result = await searchByKeyword(searchKeyword);
-      resultList.push(result);
-      setResultDataList(resultList);
+      setResultDataList(result);
     })();
     Keyboard.dismiss();
   }
