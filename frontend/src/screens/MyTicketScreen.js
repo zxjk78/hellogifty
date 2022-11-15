@@ -25,7 +25,6 @@ const MyTicketScreen = ({
   onFileModalOpen,
 }) => {
   const [dataList, setDataList] = useState([[], [], [], [], [], []]);
-  // const [pressList, setPressList] = useState([true, ])
   const data = extraData;
 
   useEffect(() => {
@@ -34,7 +33,6 @@ const MyTicketScreen = ({
       array[item.categoryId].push(item);
     });
     setDataList(array);
-    console.log(array[2]);
   }, [extraData]);
 
   const cafe = (

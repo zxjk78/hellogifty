@@ -31,23 +31,6 @@ const TicketListItem = ({ item, isNormal, refresh, type }) => {
   const [sellModal, setSellModal] = useState(false);
   const [position, setPosition] = useState({ x: 100, y: 100 });
 
-  // const img = () => {
-  //   const value = item.categoryId
-  //   console.log(value, 'value check');
-  //   if (value === 0) {
-  //     const imgUrl = require('../../assets/largeCategory/img0.png');
-  //   } else if (value === 1) {
-  //     const imgUrl = require('../../assets/largeCategory/img1.png');
-  //   } else if (value === 2) {
-  //     const imgUrl = require('../../assets/largeCategory/img2.png');
-  //   } else if (value === 3) {
-  //     const imgUrl = require('../../assets/largeCategory/img3.png');
-  //   } else if (value === 4) {
-  //     const imgUrl = require('../../assets/largeCategory/img4.png');
-  //   } else if (value === 5) {
-  //     const imgUrl = require('../../assets/largeCategory/img5.png');
-  //   }
-  // }
 
   const imgUrl = [
     require('../../assets/largeCategory/img0.png'),

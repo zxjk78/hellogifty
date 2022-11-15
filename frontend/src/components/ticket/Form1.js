@@ -14,6 +14,7 @@ const Form1 = ({ info, next }) => {
       <View style={styles.ticket}>
         <Image
           style={{ height: 50, width: 50, marginLeft: 10 }}
+          // image 주소 바꾸기
           source={require("../../assets/starbucks.jpg")}
         ></Image>
         <View>
