@@ -72,6 +72,7 @@ export const addGifticonFromFile = async (gifticonInfo) => {
         ''
       ),
     };
+    console.log('요청 dto: ', Object.keys(gifticon));
     const res = await axiosAuthInstance.post('mygifticon/', gifticon);
     return res.data.success;
   } catch (error) {

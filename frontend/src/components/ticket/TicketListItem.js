@@ -32,7 +32,6 @@ const TicketListItem = ({ item, isNormal, refresh, type }) => {
   const [position, setPosition] = useState({ x: 100, y: 100 });
   console.log(item);
 
-
   const imgUrl = [
     require('../../assets/largeCategory/img0.png'),
     require('../../assets/largeCategory/img1.png'),
@@ -136,9 +135,7 @@ const TicketListItem = ({ item, isNormal, refresh, type }) => {
         src={
           API_URL +
           'image/brand?path=' +
-          item.brandImgPath.split('\\')[
-            item.brandImgPath.split('\\').length - 1
-          ]
+          item.brandImgPath.split('')[item.brandImgPath.split('\\').length - 1]
         }
         style={{ width: 100, height: 100, margin: 5 }}
       />
