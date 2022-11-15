@@ -8,16 +8,22 @@ import { API_URL } from './config/http-config';
 //   });
 // };
 
-const searchByKeyword = async (keyword, sort = 1, largeCategoryId = null, smallCategoryId = null) => {
+const searchByKeyword = async (keword) => {
   try {
     const res = await axiosAuthInstance.get('/trade/', {
+      // params: {
+      //   keyWord: keyword,
+      //   largeCategoryId,
+      //   smallCategoryId,
+      //   sortChoice: sort
+      // }
       params: {
-        kewWord: keyword,
-        largeCategoryId,
-        smallCategoryId,
-        sortChoice: sort
+        keyWord: "",
+        sortChoice: 1,
+        page: 0
       }
     });
+    console.log(res.data)
     return res.data.data
   } catch (error) {
     console.log(error);
