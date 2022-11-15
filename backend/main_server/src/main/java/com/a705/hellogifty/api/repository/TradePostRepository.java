@@ -4,6 +4,7 @@ import com.a705.hellogifty.api.domain.entity.LargeCategory;
 import com.a705.hellogifty.api.domain.entity.SmallCategory;
 import com.a705.hellogifty.api.domain.entity.TradePost;
 import com.a705.hellogifty.api.dto.trade_post.TradePostListResponseDto;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,7 +14,7 @@ import java.util.Optional;
 @Repository
 public interface TradePostRepository extends JpaRepository<TradePost, Long> {
 
-    Optional<List<TradePost>> findByTitleContains(String title);
+    Optional<List<TradePost>> findByTitleContains(String title, Pageable pageable);
 
     Optional<List<TradePost>> findByGifticon_SmallCategory(SmallCategory smallCategory);
 

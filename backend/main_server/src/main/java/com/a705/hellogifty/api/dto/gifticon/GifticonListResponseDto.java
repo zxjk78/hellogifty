@@ -29,7 +29,7 @@ public class GifticonListResponseDto {
 
     private String brandImgPath;
 
-    public GifticonListResponseDto(Gifticon gifticon, String defaultPath) {
+    public GifticonListResponseDto(Gifticon gifticon) {
         id = gifticon.getId();
         categoryId = gifticon.getSmallCategory().getLargeCategory().getId();
         name = gifticon.getName();
@@ -37,7 +37,7 @@ public class GifticonListResponseDto {
         isUsed = gifticon.getIsUsed();
 //        isOnTrade = ;
         brandName = gifticon.getSmallCategory().getName();
-        brandImgPath = defaultPath + gifticon.getSmallCategory().getBrandImgName();
+        brandImgPath = gifticon.getSmallCategory().getBrandImgName();
 
     }
 }
