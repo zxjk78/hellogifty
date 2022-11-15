@@ -20,6 +20,7 @@ import { getGifticonDetail, sellMyGifticon } from "../../api/gifticon";
 const SellingTicket = ({ onClose, item, refresh }) => {
   const [modalVisible, setModalVisible] = useState(true);
   const [formIdx, setFormIdx] = useState(0);
+  const [sellInfo, setSellInfo] = useState();
 
   // 임시
   const uri = item.brandImgPath
