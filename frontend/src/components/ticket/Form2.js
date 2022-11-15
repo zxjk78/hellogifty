@@ -13,7 +13,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 const Form2 = ({ info, originalImgPath, next, back }) => {
   const [imagePath, setImagePath] = useState(info.imagePath);
   const [picture, setPicture] = useState();
-console.log('원본패스: ',originalImgPath);
+  console.log('원본패스: ',originalImgPath);
   // const cropViewRef = useRef();
 
   const imgPress = () => {
