@@ -2,11 +2,13 @@ package com.a705.hellogifty.api.service;
 
 import com.a705.hellogifty.api.domain.entity.Gifticon;
 import com.a705.hellogifty.api.domain.entity.SmallCategory;
+import com.a705.hellogifty.api.domain.entity.TradePost;
 import com.a705.hellogifty.api.domain.entity.User;
 import com.a705.hellogifty.api.domain.enums.TradeState;
 import com.a705.hellogifty.api.dto.gifticon.*;
 import com.a705.hellogifty.api.repository.GifticonRepository;
 import com.a705.hellogifty.api.repository.SmallCategoryRepository;
+import com.a705.hellogifty.api.repository.TradePostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -29,6 +31,8 @@ public class GifticonService {
     private final GifticonRepository gifticonRepository;
     private final SmallCategoryRepository smallCategoryRepository;
 
+    private final TradePostRepository tradePostRepository;
+
     @Value("${image.gifticon.path}")
     String gifticonImagePath;
 
@@ -40,6 +44,20 @@ public class GifticonService {
 
         for (Gifticon gifticon : gifticonRepository.findByUserIdWithSmallCategory(user.getId()).get()) {
             list.add(new GifticonListResponseDto(gifticon));
+        }
+
+        return list;
+    }
+
+    @Transactional
+    public List<GifticonListResponseDto> myTradeGifticon(User user) {
+        List<GifticonListResponseDto> list = new ArrayList<>();
+
+        for (TradePost tradePost : tradePostRepository.findByUser(user).get()) {
+            if ( tradePost.getTradeState().equals(TradeState.ONSALE) ) {
+                Gifticon gifticon = gifticonRepository.findById(tradePost.getGifticon().getId()).get();
+                list.add(new GifticonListResponseDto(gifticon));
+            }
         }
 
         return list;
