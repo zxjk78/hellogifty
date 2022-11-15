@@ -19,7 +19,18 @@ const B64Image = ({ src, style }) => {
 
   return (
     <View>
-      {!isLoading && <Image source={{ uri: imgB64 }} style={style} />}
+      {!isLoading && (
+        <Image
+          source={{ uri: imgB64 }}
+          style={style}
+          onError={() => {
+            // console.log('이미지에러');
+            setImgB64(
+              'https://reactnativecode.com/wp-content/uploads/2018/02/Default_Image_Thumbnail.png'
+            );
+          }}
+        />
+      )}
     </View>
   );
 };

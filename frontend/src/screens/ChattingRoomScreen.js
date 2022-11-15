@@ -3,6 +3,7 @@ import React, { useLayoutEffect, useState } from 'react';
 import { GlobalStyles } from '../constants/style';
 import { chatListItemDummy } from '../constants/data/dummyData';
 import { ChatList } from '../components/chat';
+import { fetchChatRoomList } from '../api/trade';
 
 // 채팅방도 ID 값이 아닌, 다른 것을 표시해주도록 하기
 
@@ -30,6 +31,14 @@ const ChattingRoomScreen = () => {
     setFinishedConversation(finished);
     setOnGoingConversation(onGoing);
   }, [chatListItemDummy]);
+  // useLayoutEffect(() => {
+  //   (async () => {
+  //     const res = await fetchChatRoomList();
+  //   })();
+
+  //   // setFinishedConversation(finished);
+  //   // setOnGoingConversation(onGoing);
+  // }, []);
 
   return (
     <View style={styles.wrapper}>
