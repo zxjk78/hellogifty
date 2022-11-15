@@ -95,7 +95,6 @@ const largeCategoryData = [
     ),
   },
 ];
-
 const smallImgConfig = {
   width: 30,
   height: 30,
@@ -281,12 +280,6 @@ const AddGifticonFromFileModal = ({ visible, onClose }) => {
 
   const [largeCategoryId, setLargeCategoryId] = useState(-1);
   // const [smallCategoryId, setSmallCategoryId] = useState(-1);
-
-  const fetchImg = async () => {
-    const res = await fetchBrandImage('PARISBAGUETTE.png');
-    console.log(res);
-  };
-  fetchImg();
 
   const selectImageFromFile = async () => {
     const options = {

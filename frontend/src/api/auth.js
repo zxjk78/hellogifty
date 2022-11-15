@@ -9,7 +9,7 @@ const login = async (email, password) => {
 
     return { accessToken, refreshToken };
   } catch (error) {
-    console.error(error);
+    console.error('로그아웃 에러: ', error);
   }
 };
 
@@ -24,7 +24,7 @@ const signup = async (email, password) => {
     // console.log('회원가입 응답: ', res.data);
     return res.data.success;
   } catch (error) {
-    console.error(error);
+    console.error('회원가입 에러: ', error);
   }
 };
 
@@ -36,7 +36,7 @@ const logout = async () => {
     // console.log('로그아웃 응답:', res.data);
     return res.data.success;
   } catch (error) {
-    console.error(error);
+    console.error('로그인 에러: ', error);
   } finally {
     await AsyncStorage.removeItem('accessToken');
   }
