@@ -104,6 +104,13 @@ const ModifiedGifticon = (data) => {
   console.log(data);
 };
 
+const isUsedGifticon = async (id) => {
+  try {
+    const res = await axiosAuthInstance.put(`/mygifticon/isused/${id}`)
+    return res
+  } catch (error) {console.log(error, '사용완료 에러')}
+}
+
 // const sellMyGifticon = (info) => {
 //   console.log(info.imagePath, '이미지 이미지')
 //   RNFS.readFile(info.imagePath, 'base64')
@@ -160,9 +167,13 @@ const deleteMyGifticon = async (id) => {
   }
 };
 
+<<<<<<< HEAD
 export {
   ModifiedGifticon,
   sellMyGifticon,
   getGifticonDetail,
   deleteMyGifticon,
 };
+=======
+export { ModifiedGifticon, sellMyGifticon, getGifticonDetail, deleteMyGifticon, isUsedGifticon };
+>>>>>>> b39ecb6fccbaafd0751391ea7ac0476241947028
