@@ -15,7 +15,7 @@ import AddGifticonFromFileModal from '../components/ticket/AddGifticonFromFileMo
 
 const TopTab = createMaterialTopTabNavigator();
 
-const MyCouponScreen = () => {
+const MyCouponScreen = ({route: params}) => {
   const [possession, setPossession] = useState([]);
   const [used, setUsed] = useState([]);
   const [selling, setSelling] = useState([]);
@@ -25,7 +25,11 @@ const MyCouponScreen = () => {
   const [refresh, setRefresh] = useState(false);
   const [isAddGifticonFileMoadlOpen, setIsAddGifticonFileMoadlOpen] = useState(false);
 
-
+  // route 통해서 refresh 하기 위한 요상한 로직 
+  if (params.params !== undefined) {
+    setRefresh(!refresh);
+    params.params = undefined
+  }
 
   // const mmsDummyData =
 
@@ -38,18 +42,14 @@ const MyCouponScreen = () => {
     (async () => {
       const items = await fetchMyGifticonList();
       items.forEach((item) => {
-        if (!item.isUsed) {
+        if (!item.isUsed && !item.onTrade) {
           possessionList.push(item);
         } else if (!!item.isUsed) {
           usedList.push(item);
+        } else if (!!item.onTrade) {
+          sellingList.push(item)
         }
       });
-      const sellingItems = await fetchMySellingGifticonList();
-      console.log(sellingItems, '아이템아이템')
-      sellingItems.forEach((item) => {
-        sellingList.push(item);
-      })
-
       setPossession(possessionList);
       setUsed(usedList);
       setSelling(sellingList);

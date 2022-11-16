@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 import B64Image from '../components/UI/B64Image';
 import { API_URL } from '../api/config/http-config';
-import { deleteMyGifticon, fetchMyGifticonDetail } from '../api/gifticon';
+import { deleteMyGifticon, fetchMyGifticonDetail, isUsedGifticon } from '../api/gifticon';
 
 // 처음 로딩 시 받아오던가 route로 오는것이기 때문에 여기서도 사용할 수 있던가 해야 함
 const DetailScreen = ({ route }) => {
@@ -57,17 +57,18 @@ const DetailScreen = ({ route }) => {
   const uesd = () => {
     showToast();
     // 사용완료 api 보내고
+    isUsedGifticon(route.params.item.id);
     setModalVisible(false);
-    navigation.navigate('MyCouponScreen');
+    navigation.navigate('MyCouponScreen', {detailRefresh: 'ho'});
   };
 
   const deleteTicket = async () => {
     showToast2();
     // 삭제 api 보내고
     await deleteMyGifticon(route.params.item.id);
-    route.params.refresh();
+    // route.params.refresh();
     setModalVisible2(!modalVisible2);
-    navigation.navigate('MyCouponScreen');
+    navigation.navigate('MyCouponScreen', {detailRefresh: 'ho'});
   };
 
   return (

@@ -1,24 +1,25 @@
 import { View, Text, Image, TextInput, Pressable, StyleSheet, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import { GlobalStyles } from "../../constants/style";
+import B64Image from "../UI/B64Image";
+import { API_URL } from "../../api/config/http-config";
 
 
 const Form1 = ({ info, next }) => {
   const [price, setPrice] = useState(info.price);
   const [title, setTitle] = useState(info.title)
   const [content, setContent] = useState(info.content);
-
+  console.log(info)
   return (
     <View>
       <Text style={{ marginVertical: 5 }}> 가격과 설명을 적어주세요 (1/3)</Text>
       <View style={styles.ticket}>
-        <Image
-          style={{ height: 50, width: 50, marginLeft: 10 }}
-          // image 주소 바꾸기
-          source={require("../../assets/starbucks.jpg")}
-        ></Image>
+        <B64Image
+          src={API_URL + 'image/brand?path=' + info.brandImgPath}
+          style={{ height: 50, width: 50, marginRight: 10 }}
+        />
         <View>
-          {/* <Text style={{ marginTop: 10 }}>{info.item}</Text> */}
+          <Text style={{ marginTop: 10 }}>{info.brandName}</Text>
           <Text style={{ fontSize: 17 }}>{info.name}</Text>
           <Text>유효기간 {info.expirationDate} 까지</Text>
         </View>

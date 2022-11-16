@@ -19,21 +19,26 @@ import {
   smallCategoryDict,
 } from "../../constants/data/idDictionary";
 import { getGifticonDetail, ModifiedGifticon } from "../../api/gifticon";
+import B64Image from "../UI/B64Image";
+import { API_URL } from "../../api/config/http-config";
 
 const ModifiedTicket = ({ onClose, item, refresh }) => {
-  const smallCategoryId = item.categoryId % 2 ? 1 : 0
+  const smallCategoryId = item.categoryId % 2 ? 1 : 0;
   const [modalVisible, setModalVisible] = useState(true);
   const [name, setName] = useState(item.name);
   const [expirationDate, setExpirationDate] = useState(item.expirationDate);
-  const [selected, setSelected] = useState([Math.ceil(item.categoryId/2) - 1, smallCategoryId]);
+  const [selected, setSelected] = useState([
+    Math.ceil(item.categoryId / 2) - 1,
+    smallCategoryId,
+  ]);
   // const [selected2, setSelected2] = useState(+gifticon.category);
 
-  useEffect(() => { 
+  useEffect(() => {
     (async () => {
       const gifticonInfo = await getGifticonDetail(item.id);
-      console.log(gifticonInfo, '가져온 기프티콘 정보~~');
+      console.log(gifticonInfo, "가져온 기프티콘 정보~~");
     })();
-  }, [])
+  }, []);
 
   const largeCategoryData = [
     {
@@ -268,7 +273,7 @@ const ModifiedTicket = ({ onClose, item, refresh }) => {
       },
     ],
   ];
-  console.log(item, 'itemitmsdfsdf')
+  console.log(item, "정보수정 아이템");
 
   // console.log(smallCategoryData[+selected[0]][+selected[1]], '확인확인');
 
@@ -281,11 +286,11 @@ const ModifiedTicket = ({ onClose, item, refresh }) => {
   const handleLargeCategory = (selectedId) => {
     // console.log(selectedId);
     setSelected([selectedId, 0]);
-  }
+  };
   const handleSmallCategory = (selectedId) => {
-    console.log(selectedId)
+    console.log(selectedId);
     // setSelected([selected[0], selectedId])
-  }
+  };
   return (
     <View style={styles.container}>
       <Modal
@@ -336,7 +341,7 @@ const ModifiedTicket = ({ onClose, item, refresh }) => {
             </View>
             <View style={styles.middle}>
               {/* <View style={{ flex: 1 }} /> */}
-              <View style={{ flex: 4, zIndex: 3 }}>
+              <View style={{ flex: 10, zIndex: 3, marginRight: 5 }}>
                 <Text style={styles.title}>대분류</Text>
                 <SelectList
                   setSelected={handleLargeCategory}
@@ -362,7 +367,7 @@ const ModifiedTicket = ({ onClose, item, refresh }) => {
                   defaultOption={largeCategoryData[+selected[0]] || false}
                 />
               </View>
-              <View style={{ flex: 4, zIndex: 3 }}>
+              <View style={{ flex: 9, zIndex: 3, paddingLeft: 20 }}>
                 <Text style={styles.title}>소분류</Text>
                 <SelectList
                   setSelected={handleSmallCategory}
@@ -374,23 +379,23 @@ const ModifiedTicket = ({ onClose, item, refresh }) => {
                   dropdownStyles={{
                     backgroundColor: "#fff",
                     position: "absolute",
-                    paddingRight: 10,
                     borderColor: "red",
+                    padding: -5
                   }}
                   placeholder="소분류"
                   boxStyles={{
                     borderColor: "red",
+                    borderRadius: 5,
+                    borderWidth: 2,
+                    paddingLeft: -50,
                   }}
                   // defaultOption={smallCategoryData[+selected[0]][+selected[1]] || false}
                 />
               </View>
             </View>
 
-            <Image
-              // source={{
-              //   uri: `data:image/jpeg;base64,${gifticon.couponImg}`,
-              // }}
-              source={require("../../assets/starbucks.jpg")}
+            <B64Image
+              src={API_URL + "image/brand?path=" + item.brandImgPath}
               style={styles.couponImage}
             />
             <TouchableOpacity
@@ -451,6 +456,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     // justifyContent: 'space-between',
     marginTop: "5%",
+    width: "110%"
     // borderWidth: 1,
   },
   input: {
