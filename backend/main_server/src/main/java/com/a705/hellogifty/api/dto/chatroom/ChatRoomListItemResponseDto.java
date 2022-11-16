@@ -1,6 +1,7 @@
 package com.a705.hellogifty.api.dto.chatroom;
 
 import com.a705.hellogifty.api.domain.entity.ChatRoom;
+import com.a705.hellogifty.api.domain.enums.TradeState;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -14,7 +15,7 @@ public class ChatRoomListItemResponseDto {
 
     public ChatRoomListItemResponseDto(ChatRoom chatRoom) {
         this.chatRoomId = chatRoom.getId();
-        this.tradePostInfo = new SimpleTradePostInfo(chatRoom.getTradePost().getId(), chatRoom.getTradePost().getTitle());
+        this.tradePostInfo = new SimpleTradePostInfo(chatRoom.getTradePost().getId(), chatRoom.getTradePost().getTitle(), chatRoom.getTradePost().getTradeState());
         this.seller = new SimpleUserInfo(chatRoom.getTradePost().getUser().getId(), chatRoom.getTradePost().getUser().getName());
         this.buyer = new SimpleUserInfo(chatRoom.getBuyer().getId(), chatRoom.getBuyer().getName());
     }
@@ -32,4 +33,5 @@ class SimpleUserInfo {
 class SimpleTradePostInfo {
     private Long id;
     private String title;
+    private TradeState tradeState;
 }
