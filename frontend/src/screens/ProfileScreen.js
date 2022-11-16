@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, FlatList } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import React, { useEffect } from 'react';
 import { Button } from 'react-native-paper';
 import { TicketListItem } from '../components/ticket';
@@ -10,8 +10,9 @@ import { useState } from 'react';
 import { fetchMyInfo } from '../api/profile';
 import LevelBadgeContainer from '../components/profile/LevelBadgeContainer';
 import { List } from 'react-native-paper';
-import B64Image from '../components/UI/B64Image';
+import CustomImage from '../components/UI/CustomImage';
 import { API_URL } from '../api/config/http-config';
+import { AddComma } from '../utils/regexp';
 
 const renderItem = ({ item }) => <TicketListItem item={item} />;
 
@@ -31,7 +32,7 @@ const ProfileScreen = ({}) => {
         setIsOther(true);
       } else {
         const info = await fetchMyInfo();
-        // console.log(info.purchaseRecord[0].image);
+        console.log(info);
         setUserInfo(info);
       }
     })();
@@ -84,7 +85,7 @@ const ProfileScreen = ({}) => {
           <View style={styles.scoreContainer}>
             <LevelBadgeContainer level={userInfo.evalScore || 0} />
           </View>
-          <View style={styles.ticketContainer}>
+          <ScrollView style={styles.ticketContainer}>
             <View style={styles.ticketList}>
               <List.AccordionGroup>
                 {!isOther && (
@@ -94,13 +95,13 @@ const ProfileScreen = ({}) => {
                   >
                     {userInfo.purchaseRecord.map((record) => (
                       <List.Item
-                        key={record.tradePostId}
+                        key={record.tradePostId + 2}
                         title={record.title}
                         description={
                           record.gifticonInfo.expirationDate + ' 까지'
                         }
                         left={() => (
-                          <B64Image
+                          <CustomImage
                             src={
                               API_URL +
                               'image/gifticon-cropped?path=' +
@@ -119,11 +120,11 @@ const ProfileScreen = ({}) => {
                 >
                   {userInfo.salesRecord.map((record) => (
                     <List.Item
-                      key={record.tradePostId}
+                      key={record.tradePostId + 1}
                       title={record.title}
-                      description={record.price + ' 원'}
+                      description={AddComma(+record.price) + ' 원'}
                       left={() => (
-                        <B64Image
+                        <CustomImage
                           src={
                             API_URL +
                             'image/gifticon-cropped?path=' +
@@ -137,7 +138,7 @@ const ProfileScreen = ({}) => {
                 </List.Accordion>
               </List.AccordionGroup>
             </View>
-          </View>
+          </ScrollView>
         </>
       )}
     </View>
@@ -171,7 +172,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   ticketContainer: {
-    flex: 10,
+    height: '50%',
     // backgroundColor: 'red',
     // flexDirection: 'row',
   },

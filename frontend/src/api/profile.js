@@ -11,3 +11,12 @@ export const fetchMyInfo = async () => {
     console.error('내 정보 받아오기 에러: ', error);
   }
 };
+export const fetchUserInfo = async (userId) => {
+  try {
+    const res = await axiosAuthInstance.get('user/' + userId);
+
+    return res.data.data;
+  } catch (error) {
+    console.error('타 유저 정보 받아오기 에러: ', error);
+  }
+};

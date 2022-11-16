@@ -1,53 +1,47 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React, { useLayoutEffect, useState } from 'react';
 import { GlobalStyles } from '../constants/style';
-import { chatListItemDummy } from '../constants/data/dummyData';
 import { ChatList } from '../components/chat';
-import { fetchChatRoomList } from '../api/trade';
-
+import { fetchMyChatRoom } from '../api/trade';
 // 채팅방도 ID 값이 아닌, 다른 것을 표시해주도록 하기
 
 const ChattingRoomScreen = () => {
-  const [finishedConversation, setFinishedConversation] = useState([]);
-  const [onGoingConversation, setOnGoingConversation] = useState([]);
-
-  // 임시로 만들어진 더미 state들
-
-  const chatRoomIdOptions = [128, 256, 512, 1024, 2056];
-
-  const [userId, setUserId] = useState(1000);
-  const [chatRoomId, setChatRoomId] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [finishedChatRoom, setFinishedChatRoom] = useState(null);
+  const [onGoingChatRoom, setOnGoingChatRoom] = useState(null);
 
   useLayoutEffect(() => {
     const finished = [];
     const onGoing = [];
-    chatListItemDummy.forEach((item) => {
-      if (item?.isTransactionDone) {
-        finished.push(item);
-      } else {
-        onGoing.push(item);
-      }
-    });
-    setFinishedConversation(finished);
-    setOnGoingConversation(onGoing);
-  }, [chatListItemDummy]);
-  // useLayoutEffect(() => {
-  //   (async () => {
-  //     const res = await fetchChatRoomList();
-  //   })();
 
-  //   // setFinishedConversation(finished);
-  //   // setOnGoingConversation(onGoing);
-  // }, []);
+    (async () => {
+      const res = await fetchMyChatRoom();
+
+      // res map 돌면서 거래 끝났는지 아닌지 판단해서 보내주기  ONSALE, EXPIRED, SOLDOUT
+      res.forEach((trade) => {
+        if (trade.tradePostInfo.tradeState === 'ONSALE') {
+          onGoing.push(trade);
+        } else {
+          finished.push(trade);
+        }
+      });
+      setFinishedChatRoom(finished);
+      setOnGoingChatRoom(onGoing);
+    })();
+  }, []);
 
   return (
     <View style={styles.wrapper}>
-      <Text
-        style={styles.chatStatus}
-      >{`거래 중인 채팅이 ${onGoingConversation.length}건, \n거래 완료한 채팅이 ${finishedConversation.length}건 있습니다.`}</Text>
+      {!isLoading && onGoingChatRoom && finishedChatRoom && (
+        <>
+          <Text
+            style={styles.chatStatus}
+          >{`거래 중인 채팅이 ${onGoingChatRoom.length}건, \n거래 완료한 채팅이 ${finishedChatRoom.length}건 있습니다.`}</Text>
 
-      <ChatList list={onGoingConversation} isOngoing />
-      <ChatList list={finishedConversation} />
+          <ChatList list={onGoingChatRoom} isOngoing />
+          <ChatList list={finishedChatRoom} />
+        </>
+      )}
     </View>
   );
 };

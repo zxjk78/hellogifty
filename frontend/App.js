@@ -183,6 +183,7 @@ const MainTab = () => {
         component={ProfileScreen}
         options={{
           title: '프로필',
+          unmountOnBlur: true,
         }}
       />
 

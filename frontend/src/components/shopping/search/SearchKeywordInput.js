@@ -44,7 +44,7 @@ const SearchKeywordInput = () => {
       setIsLoading(true);
       const result = await searchByKeyword(searchOption);
       setResultDataList(result);
-      console.log(result, '처음 데이터 가져왔습니다.');
+      // console.log(result, '처음 데이터 가져왔습니다.');
       setIsLoading(false);
     })();
   }, []);

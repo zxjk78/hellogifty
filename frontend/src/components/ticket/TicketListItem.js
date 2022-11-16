@@ -17,7 +17,7 @@ import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import ModifiedTicket from './ModifiedTicket';
 import SellingTicket from './SellingTicket';
-import B64Image from '../UI/B64Image';
+import CustomImage from '../UI/CustomImage';
 import { API_URL } from '../../api/config/http-config';
 
 const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
@@ -131,10 +131,7 @@ const TicketListItem = ({ item, isNormal, refresh, type }) => {
       ) : null}
 
       {/* Main */}
-      <B64Image
-        src={API_URL + 'image/brand?path=' + item.brandImgPath}
-        style={{ width: 100, height: 100, margin: 5 }}
-      />
+      <CustomImage source={API_URL + 'image/brand?path=' + item.brandImgPath} />
 
       <View style={styles.text}>
         <Text style={styles.brandName}>{item.brandName}</Text>
