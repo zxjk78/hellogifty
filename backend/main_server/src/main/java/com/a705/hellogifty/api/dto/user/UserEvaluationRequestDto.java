@@ -1,4 +1,4 @@
-package com.a705.hellogifty.api.dto;
+package com.a705.hellogifty.api.dto.user;
 
 import lombok.Getter;
 

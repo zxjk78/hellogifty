@@ -27,5 +27,9 @@ public interface TradePostRepository extends JpaRepository<TradePost, Long> {
 
     Optional<TradePost> findById(Long id);
 
+    Optional<TradePost> findByUserAndId(User user, Long id);
+
+    void deleteByUserAndId(User user, Long id);
+
     Optional<List<TradePost>> findByUser(User user);
 }
