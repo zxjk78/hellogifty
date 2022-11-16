@@ -8,19 +8,19 @@ import {
   Modal,
   Pressable,
   TouchableOpacity,
-} from "react-native";
-import { Button } from "react-native-paper";
-import React, { useEffect, useState } from "react";
-import { GlobalStyles } from "../../constants/style";
-import Icon from "react-native-vector-icons/Ionicons";
-import SelectList from "react-native-dropdown-select-list";
+} from 'react-native';
+import { Button } from 'react-native-paper';
+import React, { useEffect, useState } from 'react';
+import { GlobalStyles } from '../../constants/style';
+import Icon from 'react-native-vector-icons/Ionicons';
+import SelectList from 'react-native-dropdown-select-list';
 import {
   largeCategoryDict,
   smallCategoryDict,
-} from "../../constants/data/idDictionary";
-import { getGifticonDetail, ModifiedGifticon } from "../../api/gifticon";
-import B64Image from "../UI/B64Image";
-import { API_URL } from "../../api/config/http-config";
+} from '../../constants/data/idDictionary';
+import { getGifticonDetail, ModifiedGifticon } from '../../api/gifticon';
+import { API_URL } from '../../api/config/http-config';
+import CustomImage from '../UI/CustomImage';
 
 const ModifiedTicket = ({ onClose, item, refresh }) => {
   const smallCategoryId = item.categoryId % 2 ? 1 : 0;
@@ -36,7 +36,7 @@ const ModifiedTicket = ({ onClose, item, refresh }) => {
   useEffect(() => {
     (async () => {
       const gifticonInfo = await getGifticonDetail(item.id);
-      console.log(gifticonInfo, "가져온 기프티콘 정보~~");
+      console.log(gifticonInfo, '가져온 기프티콘 정보~~');
     })();
   }, []);
 
@@ -44,9 +44,9 @@ const ModifiedTicket = ({ onClose, item, refresh }) => {
     {
       key: 0,
       value: (
-        <View style={{ flexDirection: "row" }}>
+        <View style={{ flexDirection: 'row' }}>
           <Image
-            source={require("../../assets/largeCategory/img0.png")}
+            source={require('../../assets/largeCategory/img0.png')}
             style={{ width: 20, height: 20 }}
           />
           <Text>{largeCategoryDict[0]}</Text>
@@ -56,9 +56,9 @@ const ModifiedTicket = ({ onClose, item, refresh }) => {
     {
       key: 1,
       value: (
-        <View style={{ flexDirection: "row" }}>
+        <View style={{ flexDirection: 'row' }}>
           <Image
-            source={require("../../assets/largeCategory/img1.png")}
+            source={require('../../assets/largeCategory/img1.png')}
             style={{ width: 20, height: 20 }}
           />
           <Text>{largeCategoryDict[1]}</Text>
@@ -68,9 +68,9 @@ const ModifiedTicket = ({ onClose, item, refresh }) => {
     {
       key: 2,
       value: (
-        <View style={{ flexDirection: "row" }}>
+        <View style={{ flexDirection: 'row' }}>
           <Image
-            source={require("../../assets/largeCategory/img2.png")}
+            source={require('../../assets/largeCategory/img2.png')}
             style={{ width: 20, height: 20 }}
           />
           <Text>{largeCategoryDict[2]}</Text>
@@ -80,9 +80,9 @@ const ModifiedTicket = ({ onClose, item, refresh }) => {
     {
       key: 3,
       value: (
-        <View style={{ flexDirection: "row" }}>
+        <View style={{ flexDirection: 'row' }}>
           <Image
-            source={require("../../assets/largeCategory/img3.png")}
+            source={require('../../assets/largeCategory/img3.png')}
             style={{ width: 20, height: 20 }}
           />
           <Text>{largeCategoryDict[3]}</Text>
@@ -92,9 +92,9 @@ const ModifiedTicket = ({ onClose, item, refresh }) => {
     {
       key: 4,
       value: (
-        <View style={{ flexDirection: "row" }}>
+        <View style={{ flexDirection: 'row' }}>
           <Image
-            source={require("../../assets/largeCategory/img4.png")}
+            source={require('../../assets/largeCategory/img4.png')}
             style={{ width: 20, height: 20 }}
           />
           <Text>{largeCategoryDict[4]}</Text>
@@ -104,9 +104,9 @@ const ModifiedTicket = ({ onClose, item, refresh }) => {
     {
       key: 5,
       value: (
-        <View style={{ flexDirection: "row" }}>
+        <View style={{ flexDirection: 'row' }}>
           <Image
-            source={require("../../assets/largeCategory/img5.png")}
+            source={require('../../assets/largeCategory/img5.png')}
             style={{ width: 20, height: 20 }}
           />
           <Text>{largeCategoryDict[5]}</Text>
@@ -120,9 +120,9 @@ const ModifiedTicket = ({ onClose, item, refresh }) => {
       {
         key: 1,
         value: (
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: 'row' }}>
             <Image
-              source={require("../../assets/largeCategory/img0.png")}
+              source={require('../../assets/largeCategory/img0.png')}
               style={{ width: 20, height: 20 }}
             />
             <Text>{smallCategoryDict[1]}</Text>
@@ -132,9 +132,9 @@ const ModifiedTicket = ({ onClose, item, refresh }) => {
       {
         key: 2,
         value: (
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: 'row' }}>
             <Image
-              source={require("../../assets/largeCategory/img1.png")}
+              source={require('../../assets/largeCategory/img1.png')}
               style={{ width: 20, height: 20 }}
             />
             <Text>{smallCategoryDict[2]}</Text>
@@ -146,9 +146,9 @@ const ModifiedTicket = ({ onClose, item, refresh }) => {
       {
         key: 3,
         value: (
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: 'row' }}>
             <Image
-              source={require("../../assets/largeCategory/img0.png")}
+              source={require('../../assets/largeCategory/img0.png')}
               style={{ width: 20, height: 20 }}
             />
             <Text>{smallCategoryDict[3]}</Text>
@@ -158,9 +158,9 @@ const ModifiedTicket = ({ onClose, item, refresh }) => {
       {
         key: 4,
         value: (
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: 'row' }}>
             <Image
-              source={require("../../assets/largeCategory/img1.png")}
+              source={require('../../assets/largeCategory/img1.png')}
               style={{ width: 20, height: 20 }}
             />
             <Text>{smallCategoryDict[4]}</Text>
@@ -172,9 +172,9 @@ const ModifiedTicket = ({ onClose, item, refresh }) => {
       {
         key: 5,
         value: (
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: 'row' }}>
             <Image
-              source={require("../../assets/largeCategory/img0.png")}
+              source={require('../../assets/largeCategory/img0.png')}
               style={{ width: 20, height: 20 }}
             />
             <Text>{smallCategoryDict[5]}</Text>
@@ -184,9 +184,9 @@ const ModifiedTicket = ({ onClose, item, refresh }) => {
       {
         key: 6,
         value: (
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: 'row' }}>
             <Image
-              source={require("../../assets/largeCategory/img1.png")}
+              source={require('../../assets/largeCategory/img1.png')}
               style={{ width: 20, height: 20 }}
             />
             <Text>{smallCategoryDict[6]}</Text>
@@ -198,9 +198,9 @@ const ModifiedTicket = ({ onClose, item, refresh }) => {
       {
         key: 7,
         value: (
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: 'row' }}>
             <Image
-              source={require("../../assets/largeCategory/img0.png")}
+              source={require('../../assets/largeCategory/img0.png')}
               style={{ width: 20, height: 20 }}
             />
             <Text>{smallCategoryDict[7]}</Text>
@@ -210,9 +210,9 @@ const ModifiedTicket = ({ onClose, item, refresh }) => {
       {
         key: 8,
         value: (
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: 'row' }}>
             <Image
-              source={require("../../assets/largeCategory/img1.png")}
+              source={require('../../assets/largeCategory/img1.png')}
               style={{ width: 20, height: 20 }}
             />
             <Text>{smallCategoryDict[8]}</Text>
@@ -224,9 +224,9 @@ const ModifiedTicket = ({ onClose, item, refresh }) => {
       {
         key: 9,
         value: (
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: 'row' }}>
             <Image
-              source={require("../../assets/largeCategory/img0.png")}
+              source={require('../../assets/largeCategory/img0.png')}
               style={{ width: 20, height: 20 }}
             />
             <Text>{smallCategoryDict[9]}</Text>
@@ -236,9 +236,9 @@ const ModifiedTicket = ({ onClose, item, refresh }) => {
       {
         key: 10,
         value: (
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: 'row' }}>
             <Image
-              source={require("../../assets/largeCategory/img1.png")}
+              source={require('../../assets/largeCategory/img1.png')}
               style={{ width: 20, height: 20 }}
             />
             <Text>{smallCategoryDict[10]}</Text>
@@ -250,9 +250,9 @@ const ModifiedTicket = ({ onClose, item, refresh }) => {
       {
         key: 11,
         value: (
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: 'row' }}>
             <Image
-              source={require("../../assets/largeCategory/img0.png")}
+              source={require('../../assets/largeCategory/img0.png')}
               style={{ width: 20, height: 20 }}
             />
             <Text>{smallCategoryDict[11]}</Text>
@@ -262,9 +262,9 @@ const ModifiedTicket = ({ onClose, item, refresh }) => {
       {
         key: 12,
         value: (
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: 'row' }}>
             <Image
-              source={require("../../assets/largeCategory/img1.png")}
+              source={require('../../assets/largeCategory/img1.png')}
               style={{ width: 20, height: 20 }}
             />
             <Text>{smallCategoryDict[12]}</Text>
@@ -273,7 +273,7 @@ const ModifiedTicket = ({ onClose, item, refresh }) => {
       },
     ],
   ];
-  console.log(item, "정보수정 아이템");
+  console.log(item, '정보수정 아이템');
 
   // console.log(smallCategoryData[+selected[0]][+selected[1]], '확인확인');
 
@@ -298,13 +298,13 @@ const ModifiedTicket = ({ onClose, item, refresh }) => {
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
+          Alert.alert('Modal has been closed.');
         }}
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <View
-              style={{ flexDirection: "row", justifyContent: "space-between" }}
+              style={{ flexDirection: 'row', justifyContent: 'space-between' }}
             >
               <Text style={styles.modalText}>정보 수정</Text>
               <Pressable
@@ -320,7 +320,7 @@ const ModifiedTicket = ({ onClose, item, refresh }) => {
               </Pressable>
             </View>
             <View
-              style={{ flexDirection: "row", justifyContent: "space-between" }}
+              style={{ flexDirection: 'row', justifyContent: 'space-between' }}
             >
               <View>
                 <Text style={styles.title}>이름</Text>
@@ -351,18 +351,18 @@ const ModifiedTicket = ({ onClose, item, refresh }) => {
                   //   console.log(selected)
                   // }}
                   dropdownStyles={{
-                    backgroundColor: "#fff",
-                    position: "absolute",
+                    backgroundColor: '#fff',
+                    position: 'absolute',
                     paddingRight: 10,
-                    borderColor: "red",
-                    width: "117%",
+                    borderColor: 'red',
+                    width: '117%',
                   }}
                   placeholder="카테고리"
                   boxStyles={{
-                    width: "117%",
+                    width: '117%',
                     borderRadius: 5,
                     borderWidth: 2,
-                    borderColor: "red",
+                    borderColor: 'red',
                   }}
                   defaultOption={largeCategoryData[+selected[0]] || false}
                 />
@@ -374,17 +374,17 @@ const ModifiedTicket = ({ onClose, item, refresh }) => {
                   // onSelect={(val) => setSmallCategory(val)}
                   data={smallCategoryData[selected[1]]}
                   disabledItemStyles={{
-                    backgroundColor: "red",
+                    backgroundColor: 'red',
                   }}
                   dropdownStyles={{
-                    backgroundColor: "#fff",
-                    position: "absolute",
-                    borderColor: "red",
-                    padding: -5
+                    backgroundColor: '#fff',
+                    position: 'absolute',
+                    borderColor: 'red',
+                    padding: -5,
                   }}
                   placeholder="소분류"
                   boxStyles={{
-                    borderColor: "red",
+                    borderColor: 'red',
                     borderRadius: 5,
                     borderWidth: 2,
                     paddingLeft: -50,
@@ -394,8 +394,8 @@ const ModifiedTicket = ({ onClose, item, refresh }) => {
               </View>
             </View>
 
-            <B64Image
-              src={API_URL + "image/brand?path=" + item.brandImgPath}
+            <CustomImage
+              source={API_URL + 'image/brand?path=' + item.brandImgPath}
               style={styles.couponImage}
             />
             <TouchableOpacity
@@ -416,8 +416,8 @@ export default ModifiedTicket;
 const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 40,
     // backgroundColor: 'green'
   },
@@ -425,17 +425,17 @@ const styles = StyleSheet.create({
     height: 550,
     width: 340,
     margin: 20,
-    backgroundColor: "white",
+    backgroundColor: 'white',
     padding: 35,
     paddingVertical: 25,
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: "red",
+    borderColor: 'red',
   },
   modalText: {
     fontSize: 25,
-    fontWeight: "bold",
-    textAlign: "left",
+    fontWeight: 'bold',
+    textAlign: 'left',
   },
   textStyle: {
     marginTop: 7,
@@ -445,51 +445,51 @@ const styles = StyleSheet.create({
   },
   // 내부
   title: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
     fontSize: 17,
   },
   brand: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   middle: {
-    flexDirection: "row",
+    flexDirection: 'row',
     // justifyContent: 'space-between',
-    marginTop: "5%",
-    width: "110%"
+    marginTop: '5%',
+    width: '110%',
     // borderWidth: 1,
   },
   input: {
     // width: '50%',
     borderRadius: 5,
     borderWidth: 2,
-    borderColor: "red",
+    borderColor: 'red',
     padding: 4,
     paddingLeft: 12,
   },
   expirationInput: {
-    width: "110%",
+    width: '110%',
     height: 40,
     borderRadius: 5,
     borderWidth: 2,
-    borderColor: "red",
+    borderColor: 'red',
     padding: 4,
     paddingLeft: 12,
     marginLeft: 5,
   },
   couponImage: {
-    width: "80%",
-    alignSelf: "center",
+    width: '80%',
+    alignSelf: 'center',
     height: 210,
-    marginTop: "10%",
-    resizeMode: "stretch",
+    marginTop: '10%',
+    resizeMode: 'stretch',
     zIndex: 1,
   },
   completeButton: {
     width: 120,
-    alignSelf: "center",
-    alignItems: "center",
-    justifyContent: "center",
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 20,
     paddingVertical: 12,
     paddingHorizontal: 32,
