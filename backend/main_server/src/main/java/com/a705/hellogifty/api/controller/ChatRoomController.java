@@ -35,7 +35,7 @@ public class ChatRoomController {
             @PathVariable("id") Long chatRoomId) throws Exception{
         if(loginUser==null) throw new IllegalAccessException();
         ChatRoomUsersResponseDto res = chatRoomService.getChatRoomUsers(loginUser, chatRoomId);
-        return responseService.getOneResult(chatRoomId);
+        return responseService.getOneResult(res);
     }
 
 
