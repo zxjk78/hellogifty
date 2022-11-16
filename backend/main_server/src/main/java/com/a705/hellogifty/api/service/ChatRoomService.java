@@ -3,13 +3,17 @@ package com.a705.hellogifty.api.service;
 import com.a705.hellogifty.advice.exception.ChatRoomNotFoundException;
 import com.a705.hellogifty.advice.exception.TradePostNotFoundException;
 import com.a705.hellogifty.api.domain.entity.*;
-import com.a705.hellogifty.api.dto.ChatRoomUsersResponseDto;
+import com.a705.hellogifty.api.dto.chatroom.ChatRoomListItemResponseDto;
+import com.a705.hellogifty.api.dto.chatroom.ChatRoomUsersResponseDto;
 import com.a705.hellogifty.api.repository.ChatRoomRepository;
 import com.a705.hellogifty.api.repository.TradeHistoryRepository;
 import com.a705.hellogifty.api.repository.TradePostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -61,5 +65,11 @@ public class ChatRoomService {
         User buyer = chatRoom.getBuyer();
 
         return new ChatRoomUsersResponseDto(seller, buyer);
+    }
+
+    public List<ChatRoomListItemResponseDto> getMyChatRoomList(User loginUser) {
+        return chatRoomRepository.findBySellerOrBuyerWithSellerAndBuyer(loginUser).stream()
+                .map(ChatRoomListItemResponseDto::new)
+                .collect(Collectors.toList());
     }
 }

@@ -1,6 +1,7 @@
-package com.a705.hellogifty.api.dto;
+package com.a705.hellogifty.api.dto.chatroom;
 
 import com.a705.hellogifty.api.domain.entity.User;
+import com.a705.hellogifty.api.dto.user.UserInfoResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
