@@ -17,12 +17,12 @@ export const fetchMyGifticonList = async () => {
 
 export const fetchMySellingGifticonList = async () => {
   try {
-    const res = await axiosAuthInstance.get("mygifticon/ontrade");
+    const res = await axiosAuthInstance.get('mygifticon/ontrade');
     return res.data.data;
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const fetchMyGifticonDetail = async (gifticonId) => {
   console.log('내 기프티콘 상세 fetch');
@@ -130,13 +130,14 @@ const sellMyGifticon = async (info) => {
   console.log(info, '이미지 이미지');
 
   try {
-    const resImgB64 = await fetchImage(
-      API_URL + 'image/gifticon?path=' + info.imagePath
-    );
+    // const resImgB64 = await fetchImage(
+    //   API_URL + 'image/gifticon?path=' + info.imagePath
+    // );
     // console.log(resImgB64, 'base64 이미지 이미지')
     const data = {
       content: info.content,
-      cropFileBase64: 'data:image/jpeg;base64,' + resImgB64,
+      // cropFileBase64: 'data:image/jpeg;base64,' + resImgB64,
+      cropFileBase64: info.imagePath,
       gifticonId: info.id,
       price: +info.price,
       title: info.title,
@@ -152,9 +153,16 @@ const sellMyGifticon = async (info) => {
 
 const deleteMyGifticon = async (id) => {
   try {
-    const res = await axiosAuthInstance.delete(`mygifticon/${id}`)
-    return console.log('삭제 성공')
-  } catch (error) {console.log(error, '기프티콘 삭제 에러')}
-}
+    const res = await axiosAuthInstance.delete(`mygifticon/${id}`);
+    return console.log('삭제 성공');
+  } catch (error) {
+    console.log(error, '기프티콘 삭제 에러');
+  }
+};
 
-export { ModifiedGifticon, sellMyGifticon, getGifticonDetail, deleteMyGifticon };
+export {
+  ModifiedGifticon,
+  sellMyGifticon,
+  getGifticonDetail,
+  deleteMyGifticon,
+};

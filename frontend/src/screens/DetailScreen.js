@@ -2,7 +2,7 @@ import { View, Text, Image, StyleSheet, Pressable, Modal } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
-import B64Image from '../components/UI/B64Image';
+import CustomImage from '../components/UI/CustomImage';
 import { API_URL } from '../api/config/http-config';
 import { deleteMyGifticon, fetchMyGifticonDetail } from '../api/gifticon';
 
@@ -163,7 +163,7 @@ const DetailScreen = ({ route }) => {
             }}
           >
             <Pressable onPress={handleImg} style={styles.imgModal}>
-              <B64Image
+              <CustomImage
                 src={API_URL + 'image/gifticon?path=' + info.img}
                 style={styles.img}
               />
@@ -173,7 +173,7 @@ const DetailScreen = ({ route }) => {
           {/* Main */}
           <View style={{ flex: 8 }}>
             <Pressable onPress={handleImg}>
-              <B64Image
+              <CustomImage
                 src={API_URL + 'image/gifticon?path=' + info.img}
                 style={styles.img}
               />
@@ -186,7 +186,7 @@ const DetailScreen = ({ route }) => {
             </Pressable>
             <View style={{ marginTop: 30, alignItems: 'center' }}>
               <View>
-                {/* <B64Image
+                {/* <CustomImage
               src={API_URL + 'image/brand?path=' + item.brandName + '.png'}
               style={{ width: 100, height: 100 }}
             /> */}

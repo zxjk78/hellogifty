@@ -55,9 +55,40 @@ export const fetchTradeItemDetail = async (tradeId) => {
   try {
     const res = await axiosAuthInstance.get('trade/' + tradeId);
 
-    console.log('응답데이터', res.data.data);
+    console.log('거래정보 요청 응답데이터', res.data.data);
 
     return res.data.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//-------------------- 평가, 신고
+
+export const submitUserEvaluation = async (tradeId, oppoId, score) => {
+  try {
+    const res = await axiosAuthInstance.post(
+      'trade/' + tradeId + '/evaluation/user/' + oppoId,
+      { score }
+    );
+
+    console.log('평가 요청 응답데이터', res.data);
+
+    // return res.data.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const submitUserReport = async (tradeId, oppoId, content, reason) => {
+  try {
+    const res = await axiosAuthInstance.post(
+      'trade/' + tradeId + '/report/user/' + oppoId,
+      { content, reason }
+    );
+
+    console.log('평가 요청 응답데이터', res.data);
+
+    // return res.data.data;
   } catch (error) {
     console.log(error);
   }

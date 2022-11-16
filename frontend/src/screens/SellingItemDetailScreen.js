@@ -4,7 +4,7 @@ import { GlobalStyles } from '../constants/style';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Button } from 'react-native-paper';
-import B64Image from '../components/UI/B64Image';
+import CustomImage from '../components/UI/CustomImage';
 import { enterChatRoom, fetchTradeItemDetail } from '../api/trade';
 
 import { API_URL } from '../api/config/http-config';
@@ -32,6 +32,7 @@ const SellingItemDetailScreen = ({}) => {
   const handleStartChat = async () => {
     const tradeId = itemDetail.id;
     const sellerId = itemDetail.sellerInfo.id;
+    const tradeState = itemDetail.tradeState;
     const userId = await AsyncStorage.getItem('userId');
     // console.log(userId);
     const res = await enterChatRoom(tradeId);
@@ -40,7 +41,9 @@ const SellingItemDetailScreen = ({}) => {
       screen: 'Chatting',
       params: {
         userId: userId,
+        tradeState,
         chatRoomId: res.data,
+        tradeId,
       },
     });
   };
@@ -51,7 +54,7 @@ const SellingItemDetailScreen = ({}) => {
         <>
           <View style={styles.container}>
             <ScrollView style={{ maxHeight: 300 }}>
-              <B64Image
+              <CustomImage
                 src={API_URL + 'image/gifticon-cropped?path=' + itemDetail.img}
                 style={{ width: '100%', height: 400, resizeMode: 'center' }}
               />
@@ -60,7 +63,7 @@ const SellingItemDetailScreen = ({}) => {
             {/* <Image style={styles.couponImage} source={{ uri: itemDetail.img }} />   이미지 조사 필요 = 크롭에서 가져오려고 하는 것 같다. */}
             <View style={styles.profileContainer}>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <B64Image
+                <CustomImage
                   src={API_URL + 'image/gifticon-cropped?path=' + 12121212}
                   style={{ width: 40, height: 40, resizeMode: 'center' }}
                 />

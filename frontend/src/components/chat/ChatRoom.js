@@ -9,11 +9,18 @@ import PayBubble from './PayBubble';
 import TalkBubble from './TalkBubble';
 import TradeBubble from './TradeBubble';
 import ChatLoading from './ChatLoading';
-import { completeTrade, fetchChatRoomUsers } from '../../api/trade';
+import {
+  completeTrade,
+  fetchChatRoomUsers,
+  submitUserEvaluation,
+} from '../../api/trade';
+import EvaluationModal from '../evaluation/EvaluationModal';
+
 const PORT = 9090;
 // const CHATTING_SERVER_URL = `http://localhost:${PORT}/chat`;
 const CHATTING_SERVER_URL = `http://k7a705.p.ssafy.io:${PORT}/chat`;
-const ChatRoom = ({ chatRoomId, userId }) => {
+
+const ChatRoom = ({ chatRoomId, userId, tradeState, tradeId }) => {
   const $websocket = useRef(null);
   const [connected, setConnected] = useState(false);
 
@@ -24,24 +31,17 @@ const ChatRoom = ({ chatRoomId, userId }) => {
   useEffect(() => {
     (async () => {
       const { buyer, seller } = await fetchChatRoomUsers(chatRoomId);
-      // console.log(
-      //   '구매자',
-      //   buyer,
-      //   '판매자',
-      //   seller,
-      //   '유저',
-      //   userId,
-      //   '챗룸',
-      //   chatRoomId
-      // );
+
       setSellerInfo(seller);
       setBuyerInfo(buyer);
     })();
   }, [chatRoomId]);
 
   // 거래 완료 관련 state
-  const [isTradeDone, setIsTradeDone] = useState(false);
-
+  const [isTradeDone, setIsTradeDone] = useState(
+    tradeState !== 'ONSALE' ? true : false
+  );
+  const [isEvalModalOpen, setIsEvalModalOpen] = useState(false);
   // 소켓 연결 주기적으로 체크
   const CHECK_SOCKET_CONNECTION_TIME = 1000;
   useEffect(() => {
@@ -134,26 +134,32 @@ const ChatRoom = ({ chatRoomId, userId }) => {
     });
   };
 
+  // 거래 완료 관련 로직
+
   const handleTrade = async () => {
-    // console.log(
-    //   '해당유저아이디: ' + userId,
-    //   '판매자아이디: ' + sellerInfo.id,
-    //   '구매자아이디: ' + buyerInfo.id
-    // );
     if (isSeller()) {
       if (!checkIsTradeReady() || isTradeDone) return;
-      console.log('판매자 거래 완료 로직');
       const success = await completeTrade(chatRoomId);
       if (success) {
         console.log('거래를 완료하였습니다.');
-
+        setIsEvalModalOpen(true);
         setIsTradeDone(true);
+        const dataDto = {
+          chatRoomId: chatRoomId, // Number
+          userId: userId, // Number
+          text: sellerInfo.name + '님이 판매하였습니다.', // String
+          messageType: 'TRADE', // String: 'TALK','PAY','TRADE'
+        };
+
+        $websocket.current.sendMessage(
+          '/chat/message',
+          JSON.stringify(dataDto)
+        );
       }
     } else {
       // 입금완료 채팅 추가하기
       // api 없이, 계속 생겨나는 채팅 리스트를 뒤져서 type이 PAY 가 있으면 입금완료로 인식할 것
       if (isTradeDone) return;
-      console.log('구매자 입금 완료 로직');
       const dataDto = {
         chatRoomId: chatRoomId, // Number
         userId: userId, // Number
@@ -171,7 +177,11 @@ const ChatRoom = ({ chatRoomId, userId }) => {
   const checkIsTradeReady = () => {
     return messageList.some((msg) => msg.messageType === 'PAY');
   };
+  const handleSubmitEvaluation = async (tradeId, oppoId, score) => {
+    const res = await submitUserEvaluation(tradeId, oppoId, score);
 
+    isEvalModalOpen(false);
+  };
   return (
     <View style={{ flex: 1 }}>
       {/* <View style={styles.configArea}> */}
@@ -187,6 +197,15 @@ const ChatRoom = ({ chatRoomId, userId }) => {
         <ChatLoading />
       ) : (
         <>
+          <EvaluationModal
+            visible={isEvalModalOpen}
+            buyerId={buyerInfo.id}
+            sellerId={sellerInfo.id}
+            userId={userId}
+            tradeId={tradeId}
+            onSubmit={handleSubmitEvaluation}
+          />
+
           <Button
             style={styles.tradeBtn}
             onPress={handleTrade}

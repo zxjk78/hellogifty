@@ -10,10 +10,11 @@ const ChatListItem = ({ item }) => {
   // 채팅방이 존재하는 경우, id를 들고 입장
   const enterChatRoom = async () => {
     const userId = await AsyncStorage.getItem('userId');
-
     navigation.navigate('Chatting', {
       userId: userId,
-      chatRoomId: item.tradePostInfo.id,
+      chatRoomId: item.chatRoomId,
+      tradeState: item.tradePostInfo.tradeState,
+      tradeId: item.tradePostInfo.id,
     });
   };
   return (

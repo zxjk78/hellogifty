@@ -22,7 +22,6 @@ import { Calendar } from 'react-native-calendars';
 import CategoryDropdown from '../UI/CategoryDropdown';
 import { GlobalStyles } from '../../constants/style';
 import { fetchBrandImage } from '../../api/image';
-import B64Image from '../UI/B64Image';
 import { API_URL } from '../../api/config/http-config';
 import CustomCalendar from '../UI/CustomCalendar';
 const largeCategoryData = [

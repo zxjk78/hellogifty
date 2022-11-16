@@ -16,7 +16,6 @@ import {
   smallCategoryDict,
 } from '../../constants/data/idDictionary';
 import { API_URL } from '../../api/config/http-config';
-import B64Image from '../UI/B64Image';
 
 const smallImgConfig = {
   width: 30,

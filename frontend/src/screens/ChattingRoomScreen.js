@@ -16,6 +16,7 @@ const ChattingRoomScreen = () => {
 
     (async () => {
       const res = await fetchMyChatRoom();
+
       // res map 돌면서 거래 끝났는지 아닌지 판단해서 보내주기  ONSALE, EXPIRED, SOLDOUT
       res.forEach((trade) => {
         if (trade.tradePostInfo.tradeState === 'ONSALE') {
