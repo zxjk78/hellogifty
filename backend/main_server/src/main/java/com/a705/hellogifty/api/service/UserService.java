@@ -1,13 +1,10 @@
 package com.a705.hellogifty.api.service;
 
 import com.a705.hellogifty.advice.exception.UserNotFoundException;
-import com.a705.hellogifty.api.domain.entity.Evaluation;
 import com.a705.hellogifty.api.domain.entity.TradeHistory;
 import com.a705.hellogifty.api.domain.entity.User;
-import com.a705.hellogifty.api.dto.UserInfoResponseDto;
 import com.a705.hellogifty.api.dto.user.MyInfoResponseDto;
 import com.a705.hellogifty.api.dto.user.UserProfileResponseDto;
-import com.a705.hellogifty.api.repository.EvalutationRepository;
 import com.a705.hellogifty.api.repository.TradeHistoryRepository;
 import com.a705.hellogifty.api.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

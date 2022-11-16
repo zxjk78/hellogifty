@@ -2,8 +2,6 @@ package com.a705.hellogifty.api.controller;
 
 import com.a705.hellogifty.aop.LoginUser;
 import com.a705.hellogifty.api.domain.entity.User;
-import com.a705.hellogifty.api.dto.UserInfoResponseDto;
-import com.a705.hellogifty.api.dto.basic_response.CommonResult;
 import com.a705.hellogifty.api.dto.basic_response.OneResult;
 import com.a705.hellogifty.api.dto.user.MyInfoResponseDto;
 import com.a705.hellogifty.api.dto.user.UserProfileResponseDto;
