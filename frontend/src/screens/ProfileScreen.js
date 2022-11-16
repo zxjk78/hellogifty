@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View, Image, FlatList, Button } from 'react-native';
+import { StyleSheet, Text, View, Image, FlatList } from 'react-native';
 import React, { useEffect } from 'react';
-
+import { Button } from 'react-native-paper';
 import { TicketListItem } from '../components/ticket';
 import { GlobalStyles } from '../constants/style';
 import { logout } from '../api/auth';
@@ -11,6 +11,7 @@ import { fetchMyInfo } from '../api/profile';
 import LevelBadgeContainer from '../components/profile/LevelBadgeContainer';
 import { List } from 'react-native-paper';
 import B64Image from '../components/UI/B64Image';
+import { API_URL } from '../api/config/http-config';
 
 const renderItem = ({ item }) => <TicketListItem item={item} />;
 
@@ -30,6 +31,7 @@ const ProfileScreen = ({}) => {
         setIsOther(true);
       } else {
         const info = await fetchMyInfo();
+        // console.log(info.purchaseRecord[0].image);
         setUserInfo(info);
       }
     })();
@@ -73,7 +75,11 @@ const ProfileScreen = ({}) => {
                 {userInfo.name || userInfo.id + `번 유저`}
               </Text>
             </View>
-            {!isOther && <Button title="로그아웃" onPress={handleLogout} />}
+            {!isOther && (
+              <Button mode="contained" onPress={handleLogout}>
+                로그아웃
+              </Button>
+            )}
           </View>
           <View style={styles.scoreContainer}>
             <LevelBadgeContainer level={userInfo.evalScore || 0} />
@@ -95,7 +101,11 @@ const ProfileScreen = ({}) => {
                         }
                         left={() => (
                           <B64Image
-                            src={record.image}
+                            src={
+                              API_URL +
+                              'image/gifticon-cropped?path=' +
+                              record.image
+                            }
                             style={{ width: 30, height: 30 }}
                           />
                         )}
@@ -114,7 +124,11 @@ const ProfileScreen = ({}) => {
                       description={record.price + ' 원'}
                       left={() => (
                         <B64Image
-                          src={record.image}
+                          src={
+                            API_URL +
+                            'image/gifticon-cropped?path=' +
+                            record.image
+                          }
                           style={{ width: 30, height: 30 }}
                         />
                       )}

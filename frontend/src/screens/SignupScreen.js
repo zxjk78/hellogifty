@@ -10,19 +10,51 @@ import React, { useState } from 'react';
 import { GlobalStyles } from '../constants/style';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { signup } from '../api/auth';
+import { emailRegExp, passwordRegExp, phoneNumExp } from '../utils/regexp';
 
 const SignupScreen = ({ navigation }) => {
-  const [id, setId] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+
+  const [isEmailValid, setIsEmailValid] = useState(false);
+  const [isPwValid, setIsPwValid] = useState(false);
+  const [isPhoneValid, setIsPhoneValid] = useState(false);
+
   const handleSignup = () => {
+    if (!(isEmailValid && isPwValid && isPhoneValid)) return;
     (async () => {
-      const result = await signup(id, password);
+      const result = await signup(email, password, name, phoneNumber);
       if (result) {
         navigation.navigate('Login');
       }
     })();
+  };
+
+  const handleEmailChange = (txt) => {
+    setEmail(() => txt);
+    if (txt.length > 0 && emailRegExp.test(txt)) {
+      setIsEmailValid(true);
+    } else {
+      setIsEmailValid(false);
+    }
+  };
+  const handlePwChange = (txt) => {
+    setPassword(() => txt);
+    if (txt.length > 0 && passwordRegExp.test(txt)) {
+      setIsPwValid(true);
+    } else {
+      setIsPwValid(false);
+    }
+  };
+  const handlePhoneChange = (txt) => {
+    setPhoneNumber(() => txt);
+    if (txt.length > 0 && phoneNumExp.test(txt)) {
+      setIsPhoneValid(true);
+    } else {
+      setIsPhoneValid(false);
+    }
   };
 
   return (
@@ -39,41 +71,60 @@ const SignupScreen = ({ navigation }) => {
 
         <View style={styles.form1}>
           <View>
-            {/* <Text style={styles.inputLabel}>아이디</Text> */}
             <TextInput
               placeholder="이메일"
-              onChangeText={setId}
+              onChangeText={handleEmailChange}
               style={styles.input}
             />
+            <Text style={styles.regMsg}>
+              {email.length > 0 &&
+                !isEmailValid &&
+                '정확한 이메일을 입력해 주세요'}
+            </Text>
           </View>
           <View>
-            {/* <Text style={styles.inputLabel}>비밀번호</Text> */}
             <TextInput
               placeholder="비밀번호"
-              onChangeText={setPassword}
+              onChangeText={handlePwChange}
+              secureTextEntry={true}
               style={styles.input}
             />
+            <Text style={styles.regMsg}>
+              {password.length > 0 &&
+                !isPwValid &&
+                '비밀번호는 특수문자를 포함한 영숫자 5~16자로 입력해 주세요'}
+            </Text>
           </View>
-        </View>
-        <Text style={{ marginVertical: 10 }}>
-          안전한 거래를 위해 개인정보를 입력해 주세요.
-        </Text>
-        <View style={styles.form1}>
           <View>
-            {/* <Text style={styles.inputLabel}>이름</Text> */}
             <TextInput
-              placeholder="이름"
+              placeholder="닉네임"
               onChangeText={setName}
               style={styles.input}
             />
           </View>
+        </View>
+        <Text
+          style={{
+            marginVertical: 10,
+            color: GlobalStyles.colors.mainPrimary,
+            fontSize: 14,
+            fontWeight: 'bold',
+          }}
+        >
+          안전한 거래를 위해 핸드폰 번호를 입력해 주세요.
+        </Text>
+        <View style={styles.form1}>
           <View>
-            {/* <Text style={styles.inputLabel}>전화번호</Text> */}
             <TextInput
-              placeholder="전화번호"
-              onChangeText={setPhoneNumber}
+              placeholder="핸드폰 번호"
+              onChangeText={handlePhoneChange}
               style={styles.input}
             />
+            <Text style={styles.regMsg}>
+              {password.length > 0 &&
+                !isPhoneValid &&
+                '핸드폰 번호를 정확히 입력해 주세요'}
+            </Text>
           </View>
         </View>
         <Pressable onPress={handleSignup} style={styles.btn1}>
@@ -141,5 +192,8 @@ const styles = StyleSheet.create({
     marginTop: 25,
 
     alignItems: 'flex-end',
+  },
+  regMsg: {
+    fontSize: 11,
   },
 });

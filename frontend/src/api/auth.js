@@ -5,20 +5,22 @@ const login = async (email, password) => {
   try {
     const res = await axiosCommonInstance.post('login', { email, password });
     // console.log('로그인 응답: ', res.data.data);
-    const { accessToken, refreshToken } = res.data.data;
+    const { accessToken, refreshToken, userId, userMmsIndex } = res.data.data;
 
-    return { accessToken, refreshToken };
+    return { accessToken, refreshToken, userId, userMmsIndex };
   } catch (error) {
     console.error('로그인 에러: ', error);
   }
 };
 
-const signup = async (email, password) => {
-  console.log('회원가입: ', email, password);
+const signup = async (email, password, name, phoneNumber) => {
+  console.log('회원가입: ', email, password, name, phoneNumber);
   try {
     const res = await axiosCommonInstance.post('signup', {
-      email: email,
-      password: password,
+      email,
+      password,
+      name,
+      phoneNumber,
     });
 
     // console.log('회원가입 응답: ', res.data);

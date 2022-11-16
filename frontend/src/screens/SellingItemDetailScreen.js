@@ -4,7 +4,6 @@ import {
   View,
   Image,
   TouchableOpacity,
-  Button,
   ScrollView,
 } from 'react-native';
 import React, { useEffect, useLayoutEffect, useState } from 'react';
@@ -15,10 +14,11 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { enterChatRoom, fetchTradeItemDetail } from '../api/trade';
 import B64Image from '../components/UI/B64Image';
 import { API_URL } from '../api/config/http-config';
+import { Button } from 'react-native-paper';
 const SellingItemDetailScreen = ({}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [itemDetail, setItemDetail] = useState(null);
-
+  const [userId, setUserId] = useState(null);
   const navigation = useNavigation();
   const route = useRoute();
 
@@ -29,25 +29,23 @@ const SellingItemDetailScreen = ({}) => {
     // console.log('트레이드아이템아이디:', tradeItemId);
     (async () => {
       const result = await fetchTradeItemDetail(tradeItemId);
-
+      setUserId(await AsyncStorage.getItem('userId'));
       setItemDetail(result);
     })();
     setIsLoading(false);
   }, []);
 
   const handleStartChat = async () => {
-    // 가짜 seller 아이디 만들고 하기
     const tradeId = itemDetail.id;
     const sellerId = itemDetail.sellerInfo.id;
     const userId = await AsyncStorage.getItem('userId');
-
+    // console.log(userId);
     const res = await enterChatRoom(tradeId);
     // console.log('채팅신청응답', res);
     navigation.navigate('Chat', {
       screen: 'Chatting',
       params: {
         userId: userId,
-        sellerId: sellerId,
         chatRoomId: res.data,
       },
     });
@@ -111,12 +109,16 @@ const SellingItemDetailScreen = ({}) => {
             <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
               {itemDetail.price} 원
             </Text>
-
-            <TouchableOpacity style={styles.chatBtn} onPress={handleStartChat}>
-              <Text style={{ color: '#fff', fontWeight: 'bold' }}>
+            {/* <Button style={styles.chatBtn} onPress={handleStartChat}>
+              채팅하기
+            </Button> */}
+            {userId == itemDetail.sellerInfo.id ? (
+              <Button mode="outlined">판매중인 상품입니다</Button>
+            ) : (
+              <Button mode="contained" onPress={handleStartChat}>
                 채팅하기
-              </Text>
-            </TouchableOpacity>
+              </Button>
+            )}
           </View>
         </>
       )}
@@ -177,13 +179,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
 
-  chatBtn: {
-    backgroundColor: 'red',
-    width: '40%',
-    height: '60%',
-    borderRadius: 10,
-
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+  // chatBtn: {
+  //   backgroundColor: 'red',
+  //   width: '40%',
+  //   height: '60%',
+  //   borderRadius: 10,
+  //   color: '#fff',
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  // },
 });
