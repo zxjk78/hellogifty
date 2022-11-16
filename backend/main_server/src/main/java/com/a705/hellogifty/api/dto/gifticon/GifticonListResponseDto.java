@@ -1,6 +1,7 @@
 package com.a705.hellogifty.api.dto.gifticon;
 
 import com.a705.hellogifty.api.domain.entity.Gifticon;
+import com.a705.hellogifty.api.domain.entity.TradePost;
 import com.a705.hellogifty.api.domain.enums.TradeState;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,21 +24,28 @@ public class GifticonListResponseDto {
 
     private Boolean isUsed;
 
-//    private boolean isOnTrade;
+    private boolean isOnTrade;
 
     private String brandName;
 
     private String brandImgPath;
 
     public GifticonListResponseDto(Gifticon gifticon) {
-        id = gifticon.getId();
-        categoryId = gifticon.getSmallCategory().getLargeCategory().getId();
-        name = gifticon.getName();
-        expirationDate = gifticon.getExpirationDate().toString();
-        isUsed = gifticon.getIsUsed();
-//        isOnTrade = ;
-        brandName = gifticon.getSmallCategory().getName();
-        brandImgPath = gifticon.getSmallCategory().getBrandImgName();
+        this.id = gifticon.getId();
+        this.categoryId = gifticon.getSmallCategory().getLargeCategory().getId();
+        this.name = gifticon.getName();
+        this.expirationDate = gifticon.getExpirationDate().toString();
+        this.isUsed = gifticon.getIsUsed();
+        boolean onTradeFlag = false;
+        for(TradePost tp : gifticon.getTradePostList()) {
+            if(TradeState.ONSALE.equals(tp.getTradeState())) {
+                onTradeFlag=true;
+                break;
+            }
+        }
+        this.isOnTrade = onTradeFlag;
+        this.brandName = gifticon.getSmallCategory().getName();
+        this.brandImgPath = gifticon.getSmallCategory().getBrandImgName();
 
     }
 }

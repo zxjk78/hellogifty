@@ -26,7 +26,8 @@ const SellingTicket = ({ onClose, item, refresh }) => {
     content: "",
     imagePath: "1",
     id: item.id,
-    brandName: item.brandName
+    brandName: item.brandName,
+    brandImgPath: item.brandImgPath
   });
 
   // 임시
@@ -36,7 +37,7 @@ const SellingTicket = ({ onClose, item, refresh }) => {
     (async () => {
       const data = await getGifticonDetail(item.id);
       console.log(data);
-      setSellingInfo({...data, price:0, originalImgPath:data.img, title:'', content: '', imagePath: data.img});
+      setSellingInfo({...data, ...item, price:0, originalImgPath:data.img, title:'', content: '', imagePath: data.img});
     })();
   }, [item]);
 
