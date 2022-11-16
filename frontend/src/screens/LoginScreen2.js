@@ -15,11 +15,14 @@ import LoadingScreen from './LoadingScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useRef, useState } from 'react';
 import { login } from '../api/auth';
+import { emailRegExp, passwordRegExp } from '../utils/regexp';
 const LoginScreen2 = ({ navigation }) => {
-  const [id, setId] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const route = useRoute();
+  const [isEmailValid, setIsEmailValid] = useState(false);
+  const [isPwValid, setIsPwValid] = useState(false);
 
   useEffect(() => {
     AsyncStorage.getItem('accessToken').then((item) => {
@@ -37,24 +40,45 @@ const LoginScreen2 = ({ navigation }) => {
   }, []);
 
   const handleLogin = () => {
+    if (!(isEmailValid && isPwValid)) return;
+
     (async () => {
-      const { accessToken, refreshToken, userId, mmsId } = await login(
-        id,
+      const { accessToken, refreshToken, userId, userMmsIndex } = await login(
+        email,
         password
       );
       await AsyncStorage.setItem('accessToken', accessToken);
       await AsyncStorage.setItem('refreshToken', refreshToken);
       // console.log('엑세스토큰: ', await AsyncStorage.getItem('accessToken'));
 
-      // 채팅 위해 유저아이디 하나 넣기
-      const userId2 = (Math.random() * 100).toFixed(0);
-      await AsyncStorage.setItem('userId', userId2);
+      // 유저아이디 저장
+      await AsyncStorage.setItem('userId', userId + '');
 
       // 마지막으로 조회한 mms 이미지 id 값 넣기
-      await AsyncStorage.setItem('lastMMSImageIdx', mmsId || 0 + '');
+      await AsyncStorage.setItem(
+        'lastMMSImageIdx',
+        userMmsIndex + '' || 0 + ''
+      );
 
       navigation.replace('MainTab', { screen: 'MyCoupon' });
     })();
+  };
+
+  const handleEmailChange = (txt) => {
+    setEmail(() => txt);
+    if (txt.length > 0 && emailRegExp.test(txt)) {
+      setIsEmailValid(true);
+    } else {
+      setIsEmailValid(false);
+    }
+  };
+  const handlePwChange = (txt) => {
+    setPassword(() => txt);
+    if (txt.length > 0 && passwordRegExp.test(txt)) {
+      setIsPwValid(true);
+    } else {
+      setIsPwValid(false);
+    }
   };
 
   return (
@@ -81,17 +105,28 @@ const LoginScreen2 = ({ navigation }) => {
                   {/* <Text style={styles.inputLabel}>아이디</Text> */}
                   <TextInput
                     placeholder="이메일"
-                    onChangeText={setId}
+                    onChangeText={handleEmailChange}
                     style={styles.input}
                   />
+                  <Text style={styles.regMsg}>
+                    {email.length > 0 &&
+                      !isEmailValid &&
+                      '정확한 이메일을 입력해 주세요'}
+                  </Text>
                 </View>
                 <View>
                   {/* <Text style={styles.inputLabel}>비밀번호</Text> */}
                   <TextInput
                     placeholder="비밀번호"
-                    onChangeText={setPassword}
+                    onChangeText={handlePwChange}
                     style={styles.input}
+                    secureTextEntry={true}
                   />
+                  <Text style={styles.regMsg}>
+                    {password.length > 0 &&
+                      !isPwValid &&
+                      '비밀번호는 특수문자를 포함한 영숫자 5~16자로 입력해 주세요'}
+                  </Text>
                 </View>
                 <Pressable onPress={handleLogin} style={styles.btn1}>
                   <Text style={{ color: '#ffffff' }}>로그인</Text>
@@ -171,5 +206,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
 
     alignItems: 'flex-end',
+  },
+  regMsg: {
+    fontSize: 11,
   },
 });

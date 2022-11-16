@@ -5,7 +5,7 @@ import { chatListItemDummy } from '../constants/data/dummyData';
 import { ChatList, ChatRoom } from '../components/chat';
 import { useRoute } from '@react-navigation/native';
 
-// chatRoomId, userId=buyerId 들고 채팅방 입장
+// chatRoomId, userId 들고 채팅방 입장 -> ChatRoomId로 던져주는 역할
 const ChattingScreen = () => {
   const route = useRoute();
   const [chatRoomId, setChatRoomId] = useState('');
@@ -19,11 +19,7 @@ const ChattingScreen = () => {
   return (
     <View style={{ flex: 1 }}>
       {chatRoomId != '' ? (
-        <ChatRoom
-          chatRoomId={chatRoomId}
-          userId={route.params?.userId}
-          sellorId={route.params?.sellorId}
-        />
+        <ChatRoom chatRoomId={chatRoomId} userId={route.params?.userId} />
       ) : (
         <Text>채팅방이 존재하지 않습니다.</Text>
       )}

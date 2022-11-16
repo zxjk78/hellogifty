@@ -11,6 +11,7 @@ import { fetchMyInfo } from '../api/profile';
 import LevelBadgeContainer from '../components/profile/LevelBadgeContainer';
 import { List } from 'react-native-paper';
 import B64Image from '../components/UI/B64Image';
+import { API_URL } from '../api/config/http-config';
 
 const renderItem = ({ item }) => <TicketListItem item={item} />;
 
@@ -30,6 +31,7 @@ const ProfileScreen = ({}) => {
         setIsOther(true);
       } else {
         const info = await fetchMyInfo();
+        // console.log(info.purchaseRecord[0].image);
         setUserInfo(info);
       }
     })();
@@ -95,7 +97,11 @@ const ProfileScreen = ({}) => {
                         }
                         left={() => (
                           <B64Image
-                            src={record.image}
+                            src={
+                              API_URL +
+                              'image/gifticon-cropped?path=' +
+                              record.image
+                            }
                             style={{ width: 30, height: 30 }}
                           />
                         )}
@@ -114,7 +120,11 @@ const ProfileScreen = ({}) => {
                       description={record.price + ' 원'}
                       left={() => (
                         <B64Image
-                          src={record.image}
+                          src={
+                            API_URL +
+                            'image/gifticon-cropped?path=' +
+                            record.image
+                          }
                           style={{ width: 30, height: 30 }}
                         />
                       )}

@@ -4,11 +4,12 @@ import { useEffect, useState } from 'react';
 import { fetchImage } from '../../api/image';
 
 const B64Image = ({ src, style }) => {
-  const [imgB64, setImgB64] = useState('1');
+  const [imgB64, setImgB64] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     setIsLoading(true);
     (async () => {
+      console.log(src);
       const res = await fetchImage(src);
       const res2 = 'data:image/jpeg;base64,' + res;
       setImgB64(res2);
@@ -19,7 +20,7 @@ const B64Image = ({ src, style }) => {
 
   return (
     <View>
-      {!isLoading && (
+      {!isLoading && imgB64 && (
         <Image
           source={{ uri: imgB64 }}
           style={style}
