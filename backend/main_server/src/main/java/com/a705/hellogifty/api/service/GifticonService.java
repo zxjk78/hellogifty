@@ -21,6 +21,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -35,12 +36,10 @@ public class GifticonService {
     @Transactional
     public List<GifticonListResponseDto> myAllGifticon(User user) {
 
-        String defaultPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"brandImg"+File.separator;
-        List<GifticonListResponseDto> list = new ArrayList<>();
+//        String defaultPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"brandImg"+File.separator;
+        List<GifticonListResponseDto> list = gifticonRepository.findByUserIdWithTradePostAndSmallCategory(user.getId()).get().stream()
+                .map(GifticonListResponseDto::new).collect(Collectors.toList());
 
-        for (Gifticon gifticon : gifticonRepository.findByUserIdWithSmallCategory(user.getId()).get()) {
-            list.add(new GifticonListResponseDto(gifticon, defaultPath));
-        }
 
         return list;
     }
