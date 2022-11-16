@@ -135,9 +135,13 @@ const ChatRoom = ({ chatRoomId, userId }) => {
   };
 
   const handleTrade = async () => {
-    console.log(userId, sellerInfo.id, buyerInfo.id);
-    if (userId === sellerInfo.id) {
-      if (!checkIsTradeReady()) return;
+    // console.log(
+    //   '해당유저아이디: ' + userId,
+    //   '판매자아이디: ' + sellerInfo.id,
+    //   '구매자아이디: ' + buyerInfo.id
+    // );
+    if (isSeller()) {
+      if (!checkIsTradeReady() || isTradeDone) return;
       console.log('판매자 거래 완료 로직');
       const success = await completeTrade(chatRoomId);
       if (success) {
@@ -146,10 +150,10 @@ const ChatRoom = ({ chatRoomId, userId }) => {
         setIsTradeDone(true);
       }
     } else {
-      console.log('구매자 입금 완료 로직');
       // 입금완료 채팅 추가하기
       // api 없이, 계속 생겨나는 채팅 리스트를 뒤져서 type이 PAY 가 있으면 입금완료로 인식할 것
-
+      if (isTradeDone) return;
+      console.log('구매자 입금 완료 로직');
       const dataDto = {
         chatRoomId: chatRoomId, // Number
         userId: userId, // Number

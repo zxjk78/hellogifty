@@ -32,7 +32,7 @@ const ProfileScreen = ({}) => {
         setIsOther(true);
       } else {
         const info = await fetchMyInfo();
-        // console.log(info.purchaseRecord[0].image);
+        console.log(info);
         setUserInfo(info);
       }
     })();

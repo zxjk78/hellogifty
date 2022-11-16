@@ -13,6 +13,9 @@ const ChattingScreen = () => {
   useEffect(() => {
     // console.log('전달된 채팅방아이디: ', route.params?.chatRoomId);
     // console.log('전달된 유저아이디: ', route.params?.userId);
+
+    // 챗룸일때 tradeState가 무조건 전달되니까, 이거를 계속 안으로 끌고 들어가서 채팅방 자체에서 표시해주기
+
     setChatRoomId(route.params?.chatRoomId);
   }, [route.params?.chatRoomId]);
 

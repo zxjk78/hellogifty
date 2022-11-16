@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, Image } from 'react-native';
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { fetchImage } from '../../api/image';
+import { API_URL } from '../../api/config/http-config';
 
 const B64Image = ({ src, style }) => {
   const [imgB64, setImgB64] = useState(null);
@@ -21,7 +22,7 @@ const B64Image = ({ src, style }) => {
     <View>
       {!isLoading && imgB64 && (
         <Image
-          source={{ uri: imgB64 }}
+          source={{ uri: API_URL + 'image/brand?path=BHC.png' }}
           style={style}
           onError={() => {
             // console.log('이미지에러');
