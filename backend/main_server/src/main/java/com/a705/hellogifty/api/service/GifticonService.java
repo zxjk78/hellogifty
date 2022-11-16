@@ -2,11 +2,13 @@ package com.a705.hellogifty.api.service;
 
 import com.a705.hellogifty.api.domain.entity.Gifticon;
 import com.a705.hellogifty.api.domain.entity.SmallCategory;
+import com.a705.hellogifty.api.domain.entity.TradePost;
 import com.a705.hellogifty.api.domain.entity.User;
 import com.a705.hellogifty.api.domain.enums.TradeState;
 import com.a705.hellogifty.api.dto.gifticon.*;
 import com.a705.hellogifty.api.repository.GifticonRepository;
 import com.a705.hellogifty.api.repository.SmallCategoryRepository;
+import com.a705.hellogifty.api.repository.TradePostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -29,6 +31,8 @@ public class GifticonService {
     private final GifticonRepository gifticonRepository;
     private final SmallCategoryRepository smallCategoryRepository;
 
+    private final TradePostRepository tradePostRepository;
+
     @Value("${image.gifticon.path}")
     String gifticonImagePath;
 
@@ -46,15 +50,29 @@ public class GifticonService {
     }
 
     @Transactional
+    public List<GifticonListResponseDto> myTradeGifticon(User user) {
+        List<GifticonListResponseDto> list = new ArrayList<>();
+
+        for (TradePost tradePost : tradePostRepository.findByUser(user).get()) {
+            if ( tradePost.getTradeState().equals(TradeState.ONSALE) ) {
+                Gifticon gifticon = gifticonRepository.findById(tradePost.getGifticon().getId()).get();
+                list.add(new GifticonListResponseDto(gifticon));
+            }
+        }
+
+        return list;
+    }
+
+    @Transactional
     public GifticonDetailResponseDto myGifticonDetail(User user, Long gifticonId) {
 //        String defaultPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"gifticon"+File.separator;
-        Gifticon gifticon = gifticonRepository.findById(gifticonId).get();
+        Gifticon gifticon = gifticonRepository.findByUserAndId(user, gifticonId).get();
         return new GifticonDetailResponseDto(gifticon);
     }
 
     @Transactional
     public void myGifticonEdit(User user, Long gifticonId, GifticonEditRequestDto gifticonEditRequestDto) {
-        Gifticon gifticon = gifticonRepository.findById(gifticonId).get();
+        Gifticon gifticon = gifticonRepository.findByUserAndId(user, gifticonId).get();
         SmallCategory smallCategory = smallCategoryRepository.findById(gifticonEditRequestDto.getSmallCategoryId()).get();
         GifticonEditDto gifticonEditDto = new GifticonEditDto(gifticonEditRequestDto, smallCategory);
         gifticon.update(gifticonEditDto);
@@ -62,7 +80,7 @@ public class GifticonService {
 
     @Transactional
     public void myGifticonDelete(User user, Long gifticonId) {
-        gifticonRepository.deleteById(gifticonId);
+        gifticonRepository.deleteByUserAndId(user, gifticonId);
     }
 
     @Transactional
@@ -87,7 +105,7 @@ public class GifticonService {
         Gifticon gifticon = Gifticon.builder().user(user)
                 .smallCategory(smallCategoryRepository.findById(gifticonRegisterRequestDto.getCategoryId()).get())
                 .name(gifticonRegisterRequestDto.getName())
-                .number("나중에연결")
+                .number(gifticonRegisterRequestDto.getNumber())
                 .expirationDate(LocalDate.parse(gifticonRegisterRequestDto.getExpirationDate(), DateTimeFormatter.ISO_DATE))
                 .isUsed(false)
 //                .tradeState(TradeState.NOTONSALE)

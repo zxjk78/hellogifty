@@ -18,5 +18,7 @@ public interface GifticonRepository extends JpaRepository<Gifticon, Long> {
     Optional<List<Gifticon>> findByUserIdWithSmallCategory(@Param("userId") Long userId);
     Optional<List<Gifticon>> findByUserId(Long userId);
 
-    Optional<Gifticon> findById(Long id);
+    Optional<Gifticon> findByUserAndId(User user, Long id);
+
+    void deleteByUserAndId(User user, Long id);
 }
