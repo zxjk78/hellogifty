@@ -22,6 +22,7 @@ public class MyInfoResponseDto {
     public MyInfoResponseDto(User user, List<TradeHistory> salesRecord, List<TradeHistory> purchaseRecord){
         this.id = user.getId();
         this.name = user.getName();
+        this.evalScore = user.getUserEvaluation().getTotalScore();
         this.salesRecord = salesRecord.stream().map(th->new UserInfoTradePostResponseDto(th.getTradePost())).collect(Collectors.toList());
         this.purchaseRecord = purchaseRecord.stream().map(th->new UserInfoTradePostResponseDto(th.getTradePost())).collect(Collectors.toList());
     }
