@@ -63,7 +63,7 @@ const TicketListItem = ({ item, isNormal, refresh, type }) => {
     <TouchableOpacity
       style={styles.container}
       onPress={() => {
-        navigation.navigate('DetailScreen', { item: item });
+        navigation.navigate('DetailScreen', { item: item, refresh: refresh });
       }}
       delayLongPress={500}
       onLongPress={(e) => {
