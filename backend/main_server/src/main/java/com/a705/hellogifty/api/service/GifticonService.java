@@ -66,13 +66,13 @@ public class GifticonService {
     @Transactional
     public GifticonDetailResponseDto myGifticonDetail(User user, Long gifticonId) {
 //        String defaultPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"gifticon"+File.separator;
-        Gifticon gifticon = gifticonRepository.findById(gifticonId).get();
+        Gifticon gifticon = gifticonRepository.findByUserAndId(user, gifticonId).get();
         return new GifticonDetailResponseDto(gifticon);
     }
 
     @Transactional
     public void myGifticonEdit(User user, Long gifticonId, GifticonEditRequestDto gifticonEditRequestDto) {
-        Gifticon gifticon = gifticonRepository.findById(gifticonId).get();
+        Gifticon gifticon = gifticonRepository.findByUserAndId(user, gifticonId).get();
         SmallCategory smallCategory = smallCategoryRepository.findById(gifticonEditRequestDto.getSmallCategoryId()).get();
         GifticonEditDto gifticonEditDto = new GifticonEditDto(gifticonEditRequestDto, smallCategory);
         gifticon.update(gifticonEditDto);
@@ -80,7 +80,7 @@ public class GifticonService {
 
     @Transactional
     public void myGifticonDelete(User user, Long gifticonId) {
-        gifticonRepository.deleteById(gifticonId);
+        gifticonRepository.deleteByUserAndId(user, gifticonId);
     }
 
     @Transactional
