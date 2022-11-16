@@ -19,7 +19,9 @@ public enum ErrorCode {
     TradePostNotFoundException(2000, "거래글이 존재하지 않음"),
     ChatRoomNotFoundException(3000, "채팅방이 존재하지 않음"),
     TradeHistoryNotFoundException(2001, "거래 내역이 존재하지 않음"),
-    UserEvaluationDataNotFound(2002,"유저 평가 점수가 존재하지 않음")
+    UserEvaluationDataNotFound(2002,"유저 평가 점수가 존재하지 않음"),
+
+    LargeCategoryNotFoundException(2003, "해당하는 카테고리가 존지하지 않음")
     ;
 
 

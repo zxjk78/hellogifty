@@ -101,4 +101,10 @@ public class  ExceptionAdvice {
     protected CommonResult userEvaluationDataNotFound(HttpServletRequest request, UserEvaluationDataNotFound e) {
         return responseService.getFailResult(ErrorCode.UserEvaluationDataNotFound.getCode(), ErrorCode.UserEvaluationDataNotFound.getMessage());
     }
+
+    @ExceptionHandler(LargeCategoryNotFoundException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResult largeCategoryNotFoundException(HttpServletRequest request, LargeCategoryNotFoundException e) {
+        return responseService.getFailResult(ErrorCode.LargeCategoryNotFoundException.getCode(), ErrorCode.LargeCategoryNotFoundException.getMessage());
+    }
 }
