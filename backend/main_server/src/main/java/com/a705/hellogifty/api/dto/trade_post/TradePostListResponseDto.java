@@ -16,7 +16,9 @@ public class TradePostListResponseDto {
 
     private Long id;
 
-    private String userEmail;
+    private String userName;
+
+    private Float userScore;
 
     private String gifticonName;
 
@@ -28,17 +30,25 @@ public class TradePostListResponseDto {
 
     private Integer price;
 
-    private String img;
+    private String cropImg;
+
+    private String brandImg;
+
+    private String brandName;
+
 
     public TradePostListResponseDto(TradePost tradePost) {
         id = tradePost.getId();
-        userEmail = tradePost.getUser().getEmail();
+        userName = tradePost.getUser().getName();
+        userScore = tradePost.getUser().getUserEvaluation().getTotalScore();
         gifticonName = tradePost.getGifticon().getName();
         expirationDate = tradePost.getGifticon().getExpirationDate().toString();
         title = tradePost.getTitle();
         content = tradePost.getContent();
         price = tradePost.getPrice();
-//        img = tradePost.getImg();
+        cropImg = tradePost.getImg();
+        brandImg = tradePost.getGifticon().getSmallCategory().getBrandImgName();
+        brandName = tradePost.getGifticon().getSmallCategory().getName();
 
     }
 }

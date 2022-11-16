@@ -48,6 +48,10 @@ public class Gifticon extends BaseEntity {
         this.smallCategory = gifticonEditDto.getSmallCategory();
     }
 
+    public void changeIsUsed() {
+        this.isUsed = this.isUsed.equals(false);
+    }
+
     public void changeUser(User user) {
         this.user = user;
     }

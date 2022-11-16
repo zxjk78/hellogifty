@@ -37,7 +37,6 @@ public class GifticonListResponseDto {
         this.expirationDate = gifticon.getExpirationDate().toString();
         this.isUsed = gifticon.getIsUsed();
         boolean onTradeFlag = false;
-        System.out.println("######******:"+gifticon.getTradePostList().size());
         for(TradePost tp : gifticon.getTradePostList()) {
             if(TradeState.ONSALE.equals(tp.getTradeState())) {
                 onTradeFlag=true;

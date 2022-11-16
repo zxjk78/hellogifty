@@ -43,6 +43,12 @@ public class GifticonController {
         return responseService.getManyResult(gifticonService.myAllGifticon(loginUser));
     }
 
+    @ApiOperation(value = "내가 판매중인 기프티콘 목록 조회", notes = "로그인한 유저가 판매글을 올린 기프티콘 리스트")
+    @GetMapping("/ontrade")
+    public ManyResult<GifticonListResponseDto> myTradeGifticon (@ApiIgnore @LoginUser User loginUser) {
+        return responseService.getManyResult(gifticonService.myTradeGifticon(loginUser));
+    }
+
     @ApiOperation(value = "내 소유 기프티콘 상세정보", notes = "기프티콘 상세 정보 조회")
     @GetMapping("/{gifticonId}")
     public OneResult<GifticonDetailResponseDto> myGifticonDetail (@ApiIgnore @LoginUser User loginUser, @PathVariable Long gifticonId) {
@@ -62,6 +68,13 @@ public class GifticonController {
     @PutMapping("/{gifticonId}")
     public CommonResult myGifticonEdit (@ApiIgnore @LoginUser User loginUser, @PathVariable Long gifticonId, @RequestBody GifticonEditRequestDto gifticonEdit) {
         gifticonService.myGifticonEdit(loginUser, gifticonId, gifticonEdit);
+        return responseService.getSuccessResult();
+    }
+
+    @ApiOperation(value = "기프티콘 사용여부 변경", notes = "기프티콘 사용여부 변경")
+    @PutMapping("/isused/{gifticonId}")
+    public CommonResult changeGifticonState (@ApiIgnore @LoginUser User loginUser, @PathVariable Long gifticonId) {
+        gifticonService.changeGifticonState(loginUser, gifticonId);
         return responseService.getSuccessResult();
     }
 
