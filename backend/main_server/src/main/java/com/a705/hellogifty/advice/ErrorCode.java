@@ -20,8 +20,9 @@ public enum ErrorCode {
     ChatRoomNotFoundException(3000, "채팅방이 존재하지 않음"),
     TradeHistoryNotFoundException(2001, "거래 내역이 존재하지 않음"),
     UserEvaluationDataNotFound(2002,"유저 평가 점수가 존재하지 않음"),
-
-    LargeCategoryNotFoundException(2003, "해당하는 카테고리가 존지하지 않음")
+    LargeCategoryNotFoundException(2003, "해당하는 카테고리가 존재하지 않음"),
+    GifticonNotFoundException(2004, "해당하는 기프티콘이 존재하지 않음"),
+    SmallCategoryNotFoundException(2005, "해당하는 브랜드가 존재하지 않음")
     ;
 
 
