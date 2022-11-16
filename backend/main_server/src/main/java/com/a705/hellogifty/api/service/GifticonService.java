@@ -82,6 +82,12 @@ public class GifticonService {
     }
 
     @Transactional
+    public void changeGifticonState(User user, Long gifticonId) {
+        Gifticon gifticon = gifticonRepository.findByUserAndId(user, gifticonId).orElseThrow(GifticonNotFoundException::new);
+        gifticon.changeIsUsed();
+    }
+
+    @Transactional
     public void myGifticonDelete(User user, Long gifticonId) {
         gifticonRepository.deleteByUserAndId(user, gifticonId);
     }
