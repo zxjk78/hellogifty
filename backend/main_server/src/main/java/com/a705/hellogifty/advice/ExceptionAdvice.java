@@ -116,7 +116,7 @@ public class  ExceptionAdvice {
 
     @ExceptionHandler(SmallCategoryNotFoundException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    protected CommonResult SmallCategoryNotFoundException(HttpServletRequest request, SmallCategoryNotFoundException e) {
+    protected CommonResult smallCategoryNotFoundException(HttpServletRequest request, SmallCategoryNotFoundException e) {
         return responseService.getFailResult(ErrorCode.SmallCategoryNotFoundException.getCode(), ErrorCode.SmallCategoryNotFoundException.getMessage());
     }
 }

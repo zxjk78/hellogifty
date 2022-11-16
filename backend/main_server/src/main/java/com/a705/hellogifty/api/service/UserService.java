@@ -22,10 +22,10 @@ public class UserService {
     private final TradeHistoryRepository tradeHistoryRepository;
 
     public MyInfoResponseDto getMyInfo(User loginUser) {
-
+        User user = userRepository.findByIdWithUserEvaluation(loginUser.getId()).orElseThrow(UserNotFoundException::new);
         List<TradeHistory> salesRecord = tradeHistoryRepository.findAllBySellerWithTradePostWithGifticonWithBrand(loginUser);
         List<TradeHistory> purchaseRecord = tradeHistoryRepository.findAllByBuyerWithTradePostWithGifticonWithBrand(loginUser);
-        return new MyInfoResponseDto(loginUser, salesRecord, purchaseRecord);
+        return new MyInfoResponseDto(user, salesRecord, purchaseRecord);
     }
 
     public UserProfileResponseDto getUserInfo(Long id) {

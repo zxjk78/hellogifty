@@ -71,6 +71,13 @@ public class GifticonController {
         return responseService.getSuccessResult();
     }
 
+    @ApiOperation(value = "기프티콘 사용여부 변경", notes = "기프티콘 사용여부 변경")
+    @PutMapping("/isused/{gifticonId}")
+    public CommonResult changeGifticonState (@ApiIgnore @LoginUser User loginUser, @PathVariable Long gifticonId) {
+        gifticonService.changeGifticonState(loginUser, gifticonId);
+        return responseService.getSuccessResult();
+    }
+
     @ApiOperation(value = "내 소유 기프티콘 삭제", notes = "기프티콘 삭제")
     @DeleteMapping("/{gifticonId}")
     public CommonResult myGifticonDelete (@ApiIgnore @LoginUser User loginUSer, @PathVariable Long gifticonId) {

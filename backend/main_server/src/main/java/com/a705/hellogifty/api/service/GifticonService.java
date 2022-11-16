@@ -26,6 +26,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -43,13 +44,8 @@ public class GifticonService {
     public List<GifticonListResponseDto> myAllGifticon(User user) {
 
 //        String defaultPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"brandImg"+File.separator;
-        List<GifticonListResponseDto> list = new ArrayList<>();
-
-        for (Gifticon gifticon : gifticonRepository.findByUserIdWithSmallCategory(user.getId()).orElseThrow(GifticonNotFoundException::new)) {
-            list.add(new GifticonListResponseDto(gifticon));
-        }
-
-        return list;
+        return gifticonRepository.findByUserIdWithTradePostAndSmallCategory(user.getId()).get().stream()
+                .map(GifticonListResponseDto::new).collect(Collectors.toList());
     }
 
     @Transactional
@@ -62,8 +58,7 @@ public class GifticonService {
                 list.add(new GifticonListResponseDto(gifticon));
             }
         }
-
-        return list;
+        return  list;
     }
 
     @Transactional
@@ -79,6 +74,12 @@ public class GifticonService {
         SmallCategory smallCategory = smallCategoryRepository.findById(gifticonEditRequestDto.getSmallCategoryId()).orElseThrow(SmallCategoryNotFoundException::new);
         GifticonEditDto gifticonEditDto = new GifticonEditDto(gifticonEditRequestDto, smallCategory);
         gifticon.update(gifticonEditDto);
+    }
+
+    @Transactional
+    public void changeGifticonState(User user, Long gifticonId) {
+        Gifticon gifticon = gifticonRepository.findByUserAndId(user, gifticonId).orElseThrow(GifticonNotFoundException::new);
+        gifticon.changeIsUsed();
     }
 
     @Transactional

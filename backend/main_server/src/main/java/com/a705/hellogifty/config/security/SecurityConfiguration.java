@@ -32,7 +32,7 @@ public class SecurityConfiguration {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests() // exception Handling을 위해 permit
-                .antMatchers("/login/**", "/signup/**", "/reissue", "/exception/**").permitAll()
+                .antMatchers("/login/**", "/signup/**", "/reissue", "/exception/**", "/image/**").permitAll()
                 .anyRequest().hasRole("USER")
                 .and()
                 .exceptionHandling()
