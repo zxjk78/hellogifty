@@ -53,7 +53,7 @@ public class TradeService {
 
     @Transactional
     public void tradePostCreate(User user, TradePostRequestDto tradePostRequestDto) throws IOException {
-        Gifticon gifticon = gifticonRepository.findById(tradePostRequestDto.getGifticonId()).get();
+        Gifticon gifticon = gifticonRepository.findByUserAndId(user, tradePostRequestDto.getGifticonId()).get();
 //        String fileUploadNow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
         String originalImgName = getOriginalImgName(user, gifticon.getId());
         String rawBase = tradePostRequestDto.getCropFileBase64();
@@ -85,19 +85,19 @@ public class TradeService {
 
     @Transactional
     public String getOriginalImgName(User user, Long gifticonId) {
-        Gifticon gifticon = gifticonRepository.findById(gifticonId).get();
+        Gifticon gifticon = gifticonRepository.findByUserAndId(user, gifticonId).get();
         return gifticon.getImg();
     }
 
     @Transactional
     public void tradePostEdit(User user, Long tradePostId, TradePostEditRequestDto tradePostEditRequestDto) {
-        TradePost tradePost = tradePostRepository.findById(tradePostId).get();
+        TradePost tradePost = tradePostRepository.findByUserAndId(user, tradePostId).get();
         tradePost.update(tradePostEditRequestDto);
     }
 
     @Transactional
     public void tradePostDelete(User user, Long tradePostId) {
-        tradePostRepository.deleteById(tradePostId);
+        tradePostRepository.deleteByUserAndId(user, tradePostId);
     }
 
     @Transactional
