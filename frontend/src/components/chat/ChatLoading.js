@@ -3,10 +3,10 @@ import React from 'react';
 
 const ChatLoading = ({ oppoId, tradeId }) => {
   return (
-    <View>
+    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
       <Image
         source={require('../../assets/Logo.png')}
-        style={{ width: 100, height: 100 }}
+        style={{ width: 300, height: 300 }}
       />
       <Text>ChatLoading</Text>
       <Text>채팅방에 입장 중입니다.</Text>

@@ -5,9 +5,12 @@ const PayBubble = ({ msg, isMe }) => {
   return (
     <View style={{ padding: 10 }}>
       <View style={[styles.common, isMe ? styles.myChat : styles.oppoChat]}>
-        <Image source={require('../../assets/Logo.png')} />
+        <Image
+          source={require('../../assets/Logo.png')}
+          style={{ width: 50, height: 50 }}
+        />
+        <Text>입금하였습니다.</Text>
       </View>
-      <Text>입금하였습니다.</Text>
     </View>
   );
 };

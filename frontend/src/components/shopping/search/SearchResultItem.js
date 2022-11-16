@@ -4,6 +4,7 @@ import { GlobalStyles } from '../../../constants/style';
 import { useNavigation } from '@react-navigation/native';
 import B64Image from '../../UI/B64Image';
 import { API_URL } from '../../../api/config/http-config';
+import { AddComma } from '../../../utils/regexp';
 
 const SearchResultItem = ({ resultItem }) => {
   const navigation = useNavigation();
@@ -42,7 +43,7 @@ const SearchResultItem = ({ resultItem }) => {
       </View>
       <View style={styles.otherInfo}>
         <Text>{resultItem.userName}</Text>
-        <Text>{resultItem.price} 원</Text>
+        <Text>{AddComma(resultItem.price)} 원</Text>
       </View>
     </Pressable>
   );

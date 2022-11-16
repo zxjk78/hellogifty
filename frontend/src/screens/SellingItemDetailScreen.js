@@ -1,20 +1,14 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { GlobalStyles } from '../constants/style';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation, useRoute } from '@react-navigation/native';
-
-import { enterChatRoom, fetchTradeItemDetail } from '../api/trade';
-import B64Image from '../components/UI/B64Image';
-import { API_URL } from '../api/config/http-config';
 import { Button } from 'react-native-paper';
+import B64Image from '../components/UI/B64Image';
+import { enterChatRoom, fetchTradeItemDetail } from '../api/trade';
+
+import { API_URL } from '../api/config/http-config';
+import { AddComma } from '../utils/regexp';
 const SellingItemDetailScreen = ({}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [itemDetail, setItemDetail] = useState(null);
@@ -90,14 +84,14 @@ const SellingItemDetailScreen = ({}) => {
                 }}
               >
                 {/* {itemDetail.name} */}
-                {itemDetail.sellerInfo.userScore}점
+                {/* {itemDetail.sellerInfo.userScore}점 */}
               </Text>
-              <Image
+              {/* <Image
                 source={{
                   uri: 'https://photo.coolenjoy.co.kr/data/editor/2012/c0f3b1f7c870df665e0469510699344b98619cf9.jpg',
                 }}
                 style={styles.profileRank}
-              />
+              /> */}
             </View>
             <View style={styles.contentContainer}>
               <Text style={{ fontSize: 20, padding: 5 }}>
@@ -107,13 +101,13 @@ const SellingItemDetailScreen = ({}) => {
           </View>
           <View style={styles.buyContainer}>
             <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
-              {itemDetail.price} 원
+              {AddComma(+itemDetail.price)} 원
             </Text>
             {/* <Button style={styles.chatBtn} onPress={handleStartChat}>
               채팅하기
             </Button> */}
             {userId == itemDetail.sellerInfo.id ? (
-              <Button mode="outlined">판매중인 상품입니다</Button>
+              <Button mode="outlined">본인이 판매중인 상품입니다</Button>
             ) : (
               <Button mode="contained" onPress={handleStartChat}>
                 채팅하기

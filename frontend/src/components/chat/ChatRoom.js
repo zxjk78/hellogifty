@@ -24,16 +24,16 @@ const ChatRoom = ({ chatRoomId, userId }) => {
   useEffect(() => {
     (async () => {
       const { buyer, seller } = await fetchChatRoomUsers(chatRoomId);
-      console.log(
-        '구매자',
-        buyer,
-        '판매자',
-        seller,
-        '유저',
-        userId,
-        '챗룸',
-        chatRoomId
-      );
+      // console.log(
+      //   '구매자',
+      //   buyer,
+      //   '판매자',
+      //   seller,
+      //   '유저',
+      //   userId,
+      //   '챗룸',
+      //   chatRoomId
+      // );
       setSellerInfo(seller);
       setBuyerInfo(buyer);
     })();
@@ -160,9 +160,9 @@ const ChatRoom = ({ chatRoomId, userId }) => {
       $websocket.current.sendMessage('/chat/message', JSON.stringify(dataDto));
     }
   };
-  // const isMe = (chatUserId) => {
-  //   return chatUserId === userId;
-  // };
+  const isSeller = () => {
+    return +sellerInfo.id === +userId;
+  };
 
   const checkIsTradeReady = () => {
     return messageList.some((msg) => msg.messageType === 'PAY');
@@ -178,10 +178,7 @@ const ChatRoom = ({ chatRoomId, userId }) => {
         onMessage={(msg) => recieveMessageHandler(msg)}
         ref={$websocket}
       />
-      {/* <View style={styles.tmp}>
-          <Text>{chatRoomId} 번 ChatRoom</Text>
-          <Text>{userId} 번 유저와 상대방 유저가 소켓으로 통신</Text>
-        </View> */}
+
       {!(connected && buyerInfo && sellerInfo) ? (
         <ChatLoading />
       ) : (
@@ -189,9 +186,17 @@ const ChatRoom = ({ chatRoomId, userId }) => {
           <Button
             style={styles.tradeBtn}
             onPress={handleTrade}
-            mode={checkIsTradeReady() ? 'contained' : 'outlined'}
+            mode={
+              !isSeller()
+                ? checkIsTradeReady()
+                  ? 'outlined'
+                  : 'contained'
+                : checkIsTradeReady()
+                ? 'contained'
+                : 'outlined'
+            }
           >
-            {userId == sellerInfo.id
+            {isSeller()
               ? checkIsTradeReady()
                 ? isTradeDone
                   ? '판매완료'
@@ -248,11 +253,6 @@ const ChatRoom = ({ chatRoomId, userId }) => {
           </View>
         </>
       )}
-      {/* <View style={styles.connection}>
-          <Text>소켓 연결 상태</Text>
-          <Text> {connected ? '🟢 연결됨' : '🔴 연결 없음'}</Text>
-        </View> */}
-      {/* </View> */}
     </View>
   );
 };

@@ -1,7 +1,7 @@
 import { API_URL } from './config/http-config';
 import { axiosAuthInstance } from './config/apiController';
 
-// 채팅 관련 API
+//---------------------- 채팅 관련 API
 
 // 거래글 id 이용해서 챗룸의 정보를 (없으면 생성해서) 가져오는 api
 export const enterChatRoom = async (tradeId) => {
@@ -33,14 +33,23 @@ export const completeTrade = async (chatroomId) => {
     const res = await axiosAuthInstance.post(
       'chatroom/' + chatroomId + '/done'
     );
-    console.log(res.data);
+    // console.log(res.data);
     return res.data.success;
   } catch (error) {
     console.log('거래 완료하기', error);
   }
 };
+export const fetchMyChatRoom = async () => {
+  try {
+    const res = await axiosAuthInstance.get('chatroom/my');
+    // console.log(res.data);
+    return res.data.data;
+  } catch (error) {
+    console.log('내 참여 채팅방 조회', error);
+  }
+};
 
-// 거래 게시글 관련 API
+//-------------------- 거래 게시글 관련 API
 
 export const fetchTradeItemDetail = async (tradeId) => {
   try {
