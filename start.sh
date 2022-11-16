@@ -6,5 +6,3 @@ sed -i 's/\/src\/main\/resources\/static\/img\/gifticon\//\/home\/ubuntu\/img\/g
 sed -i 's/\/src\/main\/resources\/static\/img\/gifticon_cropped\//\/home\/ubuntu\/img\/gifticon_cropped\//g' ./backend/src/main/resources/application.properties
 sed -i 's/\/src\/main\/resources\/static\/img\/brand\//\/home\/ubuntu\/img\/brand\//g' ./backend/src/main/resources/application.properties
 
-
-
