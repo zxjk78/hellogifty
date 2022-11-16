@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View, Image, FlatList, Button } from 'react-native';
+import { StyleSheet, Text, View, Image, FlatList } from 'react-native';
 import React, { useEffect } from 'react';
-
+import { Button } from 'react-native-paper';
 import { TicketListItem } from '../components/ticket';
 import { GlobalStyles } from '../constants/style';
 import { logout } from '../api/auth';
@@ -75,7 +75,11 @@ const ProfileScreen = ({}) => {
                 {userInfo.name || userInfo.id + `번 유저`}
               </Text>
             </View>
-            {!isOther && <Button title="로그아웃" onPress={handleLogout} />}
+            {!isOther && (
+              <Button mode="contained" onPress={handleLogout}>
+                로그아웃
+              </Button>
+            )}
           </View>
           <View style={styles.scoreContainer}>
             <LevelBadgeContainer level={userInfo.evalScore || 0} />

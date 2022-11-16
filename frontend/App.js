@@ -188,7 +188,7 @@ const MainTab = () => {
 
       <Tab.Screen
         name="test"
-        component={TestScreen}
+        component={LoadingScreen}
         options={{
           title: '테스트',
         }}

@@ -3,15 +3,15 @@ import React, { useEffect, useState } from 'react';
 import { ProgressBar } from 'react-native-paper';
 import { GlobalStyles } from '../../constants/style';
 const badgeArr = [
-  require('../../assets/level/Badge1.png'),
-  require('../../assets/level/Badge2.png'),
-  require('../../assets/level/Badge3.png'),
-  require('../../assets/level/Badge4.png'),
-  require('../../assets/level/Badge5.png'),
+  // require('../../assets/level/Bronze.png'),
+  require('../../assets/level/Silver.png'),
+  require('../../assets/level/Gold.png'),
+  require('../../assets/level/Platinum.png'),
+  require('../../assets/level/Master.png'),
 ];
 
 const LevelBadgeContainer = ({ level }) => {
-  const expArr = [10, 20, 30, 40, 50];
+  const expArr = [10, 20, 30, 40];
   const [isLoading, setIsLoading] = useState(true);
   const [nxtLevelIdx, setNxtLevelIdx] = useState(0);
   const calculateBadge = (level) => {
@@ -41,7 +41,11 @@ const LevelBadgeContainer = ({ level }) => {
               color: GlobalStyles.colors.mainPrimary,
             }}
           >
-            현재 나의 레벨 {level}
+            현재 나의 레벨은{' '}
+            <Text style={{ color: GlobalStyles.colors.mainSecondary }}>
+              {level}
+            </Text>{' '}
+            이에요
           </Text>
 
           <View
@@ -50,13 +54,13 @@ const LevelBadgeContainer = ({ level }) => {
             <Image
               source={
                 badgeArr[nxtLevelIdx - 1] ||
-                require('../../assets/level/Badge0.png')
+                require('../../assets/level/Bronze.png')
               }
-              style={{ width: 50, height: 70 }}
+              style={{ width: 70, height: 70 }}
             />
             <Image
               source={badgeArr[nxtLevelIdx]}
-              style={{ width: 50, height: 70 }}
+              style={{ width: 70, height: 70 }}
             />
           </View>
           <ProgressBar
@@ -64,9 +68,13 @@ const LevelBadgeContainer = ({ level }) => {
               (level - (expArr[nxtLevelIdx - 1] || 0) + 0.1) /
               (expArr[nxtLevelIdx] - (expArr[nxtLevelIdx - 1] || 0))
             }
-            style={{ height: 10 }}
+            style={{ height: 10, width: '90%', alignSelf: 'center' }}
           />
-          <Text>다음 레벨까지 앞으로 {expArr[nxtLevelIdx] - level}</Text>
+          <Text
+            style={{ marginTop: 10, alignSelf: 'flex-end', marginRight: 10 }}
+          >
+            {`다음 티어까지 앞으로 ${expArr[nxtLevelIdx] - level}레벨 남았어요`}
+          </Text>
         </>
       )}
     </View>

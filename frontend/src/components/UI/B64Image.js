@@ -9,7 +9,6 @@ const B64Image = ({ src, style }) => {
   useEffect(() => {
     setIsLoading(true);
     (async () => {
-      console.log(src);
       const res = await fetchImage(src);
       const res2 = 'data:image/jpeg;base64,' + res;
       setImgB64(res2);
