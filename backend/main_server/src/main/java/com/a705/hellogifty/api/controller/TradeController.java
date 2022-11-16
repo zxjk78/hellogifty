@@ -2,6 +2,7 @@ package com.a705.hellogifty.api.controller;
 
 import com.a705.hellogifty.aop.LoginUser;
 import com.a705.hellogifty.api.domain.entity.User;
+import com.a705.hellogifty.api.dto.trade_post.TradePostListResponseDto;
 import com.a705.hellogifty.api.dto.user.UserEvaluationRequestDto;
 import com.a705.hellogifty.api.dto.user.UserReportRequestDto;
 import com.a705.hellogifty.api.dto.basic_response.CommonResult;
