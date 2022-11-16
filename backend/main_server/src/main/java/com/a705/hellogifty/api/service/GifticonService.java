@@ -1,5 +1,8 @@
 package com.a705.hellogifty.api.service;
 
+import com.a705.hellogifty.advice.exception.GifticonNotFoundException;
+import com.a705.hellogifty.advice.exception.SmallCategoryNotFoundException;
+import com.a705.hellogifty.advice.exception.UserNotFoundException;
 import com.a705.hellogifty.api.domain.entity.Gifticon;
 import com.a705.hellogifty.api.domain.entity.SmallCategory;
 import com.a705.hellogifty.api.domain.entity.TradePost;
@@ -42,7 +45,7 @@ public class GifticonService {
 //        String defaultPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"brandImg"+File.separator;
         List<GifticonListResponseDto> list = new ArrayList<>();
 
-        for (Gifticon gifticon : gifticonRepository.findByUserIdWithSmallCategory(user.getId()).get()) {
+        for (Gifticon gifticon : gifticonRepository.findByUserIdWithSmallCategory(user.getId()).orElseThrow(GifticonNotFoundException::new)) {
             list.add(new GifticonListResponseDto(gifticon));
         }
 
@@ -53,9 +56,9 @@ public class GifticonService {
     public List<GifticonListResponseDto> myTradeGifticon(User user) {
         List<GifticonListResponseDto> list = new ArrayList<>();
 
-        for (TradePost tradePost : tradePostRepository.findByUser(user).get()) {
+        for (TradePost tradePost : tradePostRepository.findByUser(user).orElseThrow(UserNotFoundException::new)) {
             if ( tradePost.getTradeState().equals(TradeState.ONSALE) ) {
-                Gifticon gifticon = gifticonRepository.findById(tradePost.getGifticon().getId()).get();
+                Gifticon gifticon = gifticonRepository.findById(tradePost.getGifticon().getId()).orElseThrow(GifticonNotFoundException::new);
                 list.add(new GifticonListResponseDto(gifticon));
             }
         }
@@ -66,21 +69,21 @@ public class GifticonService {
     @Transactional
     public GifticonDetailResponseDto myGifticonDetail(User user, Long gifticonId) {
 //        String defaultPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"gifticon"+File.separator;
-        Gifticon gifticon = gifticonRepository.findById(gifticonId).get();
+        Gifticon gifticon = gifticonRepository.findByUserAndId(user, gifticonId).orElseThrow(GifticonNotFoundException::new);
         return new GifticonDetailResponseDto(gifticon);
     }
 
     @Transactional
     public void myGifticonEdit(User user, Long gifticonId, GifticonEditRequestDto gifticonEditRequestDto) {
-        Gifticon gifticon = gifticonRepository.findById(gifticonId).get();
-        SmallCategory smallCategory = smallCategoryRepository.findById(gifticonEditRequestDto.getSmallCategoryId()).get();
+        Gifticon gifticon = gifticonRepository.findByUserAndId(user, gifticonId).orElseThrow(GifticonNotFoundException::new);
+        SmallCategory smallCategory = smallCategoryRepository.findById(gifticonEditRequestDto.getSmallCategoryId()).orElseThrow(SmallCategoryNotFoundException::new);
         GifticonEditDto gifticonEditDto = new GifticonEditDto(gifticonEditRequestDto, smallCategory);
         gifticon.update(gifticonEditDto);
     }
 
     @Transactional
     public void myGifticonDelete(User user, Long gifticonId) {
-        gifticonRepository.deleteById(gifticonId);
+        gifticonRepository.deleteByUserAndId(user, gifticonId);
     }
 
     @Transactional
@@ -103,7 +106,7 @@ public class GifticonService {
         fileOutputStream.close();
 
         Gifticon gifticon = Gifticon.builder().user(user)
-                .smallCategory(smallCategoryRepository.findById(gifticonRegisterRequestDto.getCategoryId()).get())
+                .smallCategory(smallCategoryRepository.findById(gifticonRegisterRequestDto.getCategoryId()).orElseThrow(SmallCategoryNotFoundException::new))
                 .name(gifticonRegisterRequestDto.getName())
                 .number(gifticonRegisterRequestDto.getNumber())
                 .expirationDate(LocalDate.parse(gifticonRegisterRequestDto.getExpirationDate(), DateTimeFormatter.ISO_DATE))

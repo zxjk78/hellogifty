@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import MyTicketScreen from './MyTicketScreen';
 import { Title } from 'react-native-paper';
-import { fetchMyGifticonList } from '../api/gifticon';
+import { fetchMyGifticonList, fetchMySellingGifticonList } from '../api/gifticon';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { AddTicketModal } from '../components/ticket';
@@ -43,10 +43,12 @@ const MyCouponScreen = () => {
         } else if (!!item.isUsed) {
           usedList.push(item);
         }
-        if (!!item.isOnTrade) {
-          sellingList.push(item);
-        }
       });
+      const sellingItems = await fetchMySellingGifticonList();
+      console.log(sellingItems, '아이템아이템')
+      sellingItems.forEach((item) => {
+        sellingList.push(item);
+      })
 
       setPossession(possessionList);
       setUsed(usedList);

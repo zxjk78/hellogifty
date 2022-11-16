@@ -101,4 +101,22 @@ public class  ExceptionAdvice {
     protected CommonResult userEvaluationDataNotFound(HttpServletRequest request, UserEvaluationDataNotFound e) {
         return responseService.getFailResult(ErrorCode.UserEvaluationDataNotFound.getCode(), ErrorCode.UserEvaluationDataNotFound.getMessage());
     }
+
+    @ExceptionHandler(LargeCategoryNotFoundException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResult largeCategoryNotFoundException(HttpServletRequest request, LargeCategoryNotFoundException e) {
+        return responseService.getFailResult(ErrorCode.LargeCategoryNotFoundException.getCode(), ErrorCode.LargeCategoryNotFoundException.getMessage());
+    }
+
+    @ExceptionHandler(GifticonNotFoundException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResult gifticonNotFoundException(HttpServletRequest request, GifticonNotFoundException e) {
+        return responseService.getFailResult(ErrorCode.GifticonNotFoundException.getCode(), ErrorCode.GifticonNotFoundException.getMessage());
+    }
+
+    @ExceptionHandler(SmallCategoryNotFoundException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResult SmallCategoryNotFoundException(HttpServletRequest request, SmallCategoryNotFoundException e) {
+        return responseService.getFailResult(ErrorCode.SmallCategoryNotFoundException.getCode(), ErrorCode.SmallCategoryNotFoundException.getMessage());
+    }
 }

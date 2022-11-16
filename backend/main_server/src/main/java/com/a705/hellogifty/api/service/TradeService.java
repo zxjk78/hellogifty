@@ -1,9 +1,6 @@
 package com.a705.hellogifty.api.service;
 
-import com.a705.hellogifty.advice.exception.TradeHistoryNotFoundException;
-import com.a705.hellogifty.advice.exception.TradePostNotFoundException;
-import com.a705.hellogifty.advice.exception.UserEvaluationDataNotFound;
-import com.a705.hellogifty.advice.exception.UserNotFoundException;
+import com.a705.hellogifty.advice.exception.*;
 import com.a705.hellogifty.api.domain.entity.*;
 import com.a705.hellogifty.api.domain.enums.ReportReason;
 import com.a705.hellogifty.api.domain.enums.TradeState;
@@ -47,13 +44,13 @@ public class TradeService {
     @Transactional
     public TradePostDetailResponseDto tradePostDetail(User user, Long tradePostId) {
         String defaultPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"gifticonCropImg"+File.separator;
-        TradePost tradePost = tradePostRepository.findById(tradePostId).get();
+        TradePost tradePost = tradePostRepository.findById(tradePostId).orElseThrow(TradePostNotFoundException::new);
         return new TradePostDetailResponseDto(tradePost);
     }
 
     @Transactional
     public void tradePostCreate(User user, TradePostRequestDto tradePostRequestDto) throws IOException {
-        Gifticon gifticon = gifticonRepository.findById(tradePostRequestDto.getGifticonId()).get();
+        Gifticon gifticon = gifticonRepository.findByUserAndId(user, tradePostRequestDto.getGifticonId()).orElseThrow(GifticonNotFoundException::new);
 //        String fileUploadNow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
         String originalImgName = getOriginalImgName(user, gifticon.getId());
         String rawBase = tradePostRequestDto.getCropFileBase64();
@@ -85,19 +82,19 @@ public class TradeService {
 
     @Transactional
     public String getOriginalImgName(User user, Long gifticonId) {
-        Gifticon gifticon = gifticonRepository.findById(gifticonId).get();
+        Gifticon gifticon = gifticonRepository.findByUserAndId(user, gifticonId).orElseThrow(GifticonNotFoundException::new);
         return gifticon.getImg();
     }
 
     @Transactional
     public void tradePostEdit(User user, Long tradePostId, TradePostEditRequestDto tradePostEditRequestDto) {
-        TradePost tradePost = tradePostRepository.findById(tradePostId).get();
+        TradePost tradePost = tradePostRepository.findByUserAndId(user, tradePostId).orElseThrow(TradePostNotFoundException::new);
         tradePost.update(tradePostEditRequestDto);
     }
 
     @Transactional
     public void tradePostDelete(User user, Long tradePostId) {
-        tradePostRepository.deleteById(tradePostId);
+        tradePostRepository.deleteByUserAndId(user, tradePostId);
     }
 
     @Transactional
@@ -133,55 +130,29 @@ public class TradeService {
         // 5. 키워드, small 있을 경우(키워드, small, large 있을때 포함)
         // 6. 키워드, large 있을 경우
 
-//        System.out.println(keyWord);
-//        System.out.println(smallCategoryId);
-//        System.out.println(largeCategoryId);
+
+        List<TradePostListResponseDto> searchedTradePostList = new ArrayList<>();
 
 
-
-        List<TradePostListResponseDto> list = new ArrayList<>();
-//        String brandImgPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"brandImg"+File.separator;
-//        String cropImgPath = System.getProperty("user.dir")+gifticonCroppedImagePath;
-
-        if (keyWord != null && smallCategoryId == null && largeCategoryId == null) {
-//            System.out.println(1);
-            for (TradePost tradePost : tradePostRepository.findByTitleContains(keyWord).get()) {
-                list.add(new TradePostListResponseDto(tradePost));
+        if (largeCategoryId == null && smallCategoryId == null) {
+            for (TradePost tradePost : tradePostRepository.findByTitleContains(keyWord).orElseThrow(TradePostNotFoundException::new)) {
+                searchedTradePostList.add((new TradePostListResponseDto(tradePost)));
             }
-        } else if (keyWord == null && smallCategoryId != null) {
-//            System.out.println(2);
-            SmallCategory smallCategory = smallCategoryRepository.findById(smallCategoryId).get();
-            for (TradePost tradePost : tradePostRepository.findByGifticon_SmallCategory(smallCategory).get()) {
-                list.add(new TradePostListResponseDto(tradePost));
+        } else if (smallCategoryId == null) {
+            LargeCategory largeCategory = largeCategoryRepository.findById(largeCategoryId).orElseThrow(LargeCategoryNotFoundException::new);
+            for (TradePost tradePost : tradePostRepository.findByTitleContainsAndGifticon_SmallCategory_LargeCategory(keyWord, largeCategory).orElseThrow(TradePostNotFoundException::new)) {
+                searchedTradePostList.add(new TradePostListResponseDto(tradePost));
             }
-        } else if (keyWord == null && smallCategoryId == null && largeCategoryId != null) {
-//            System.out.println(3);
-            LargeCategory largeCategory = largeCategoryRepository.findById(largeCategoryId).get();
-            for (TradePost tradePost : tradePostRepository.findByGifticon_SmallCategory_LargeCategory(largeCategory).get()) {
-                list.add(new TradePostListResponseDto(tradePost));
-            }
-        } else if (keyWord == null && smallCategoryId == null && largeCategoryId == null) {
-//            System.out.println(4);
-            for (TradePost tradePost : tradePostRepository.findAll()) {
-                list.add(new TradePostListResponseDto(tradePost));
-            }
-        } else if (keyWord != null && smallCategoryId != null) {
-//            System.out.println(5);
-            SmallCategory smallCategory = smallCategoryRepository.findById(smallCategoryId).get();
-            for (TradePost tradePost : tradePostRepository.findByTitleContainsAndGifticon_SmallCategory(keyWord, smallCategory).get()) {
-                list.add(new TradePostListResponseDto(tradePost));
-            }
-        } else if (keyWord != null && smallCategoryId == null && largeCategoryId != null) {
-//            System.out.println(6);
-            LargeCategory largeCategory = largeCategoryRepository.findById(largeCategoryId).get();
-            for (TradePost tradePost : tradePostRepository.findByTitleContainsAndGifticon_SmallCategory_LargeCategory(keyWord, largeCategory).get()) {
-                list.add(new TradePostListResponseDto(tradePost));
+        } else {
+            SmallCategory smallCategory = smallCategoryRepository.findById(smallCategoryId).orElseThrow(SmallCategoryNotFoundException::new);
+            for (TradePost tradePost : tradePostRepository.findByTitleContainsAndGifticon_SmallCategory(keyWord, smallCategory).orElseThrow(TradePostNotFoundException::new)) {
+                searchedTradePostList.add(new TradePostListResponseDto(tradePost));
             }
         }
 
         if (sortChoice.equals(1)) {
 
-            Collections.sort(list, (TradePostListResponseDto d1, TradePostListResponseDto d2) -> {
+            Collections.sort(searchedTradePostList, (TradePostListResponseDto d1, TradePostListResponseDto d2) -> {
                 int result = 1;
                 if (d1.getId() > d2.getId())
                     result = -1;
@@ -190,11 +161,11 @@ public class TradeService {
             });
         } else if (sortChoice.equals(2)) {
             // 판매글 정보에 판매자 티어 들어가게 바꾸고 나서 고쳐야할 코드
-            Collections.sort(list, (TradePostListResponseDto d1, TradePostListResponseDto d2) -> {
+            Collections.sort(searchedTradePostList, (TradePostListResponseDto d1, TradePostListResponseDto d2) -> {
                 int result = 1;
 
-                Float sellerEvaluation1 = tradePostRepository.findById(d1.getId()).get().getUser().getUserEvaluation().getTotalScore();
-                Float sellerEvaluation2 = tradePostRepository.findById(d2.getId()).get().getUser().getUserEvaluation().getTotalScore();
+                Float sellerEvaluation1 = tradePostRepository.findById(d1.getId()).orElseThrow(TradePostNotFoundException::new).getUser().getUserEvaluation().getTotalScore();
+                Float sellerEvaluation2 = tradePostRepository.findById(d2.getId()).orElseThrow(TradePostNotFoundException::new).getUser().getUserEvaluation().getTotalScore();
 
                 if (sellerEvaluation1 >= sellerEvaluation2)
                     result = -1;
@@ -202,7 +173,7 @@ public class TradeService {
             });
         } else if (sortChoice.equals(3)) {
 
-            Collections.sort(list, (TradePostListResponseDto d1, TradePostListResponseDto d2) -> {
+            Collections.sort(searchedTradePostList, (TradePostListResponseDto d1, TradePostListResponseDto d2) -> {
                 int result = -1;
                 if (d1.getPrice() >= d2.getPrice())
                     result = 1;
@@ -211,7 +182,7 @@ public class TradeService {
             });
         } else if (sortChoice.equals(4)) {
             
-            Collections.sort(list, (TradePostListResponseDto d1, TradePostListResponseDto d2) -> {
+            Collections.sort(searchedTradePostList, (TradePostListResponseDto d1, TradePostListResponseDto d2) -> {
 
                 String[] d1expirationDate = d1.getExpirationDate().split("-");
                 String[] d2expirationDate = d2.getExpirationDate().split("-");
@@ -228,9 +199,9 @@ public class TradeService {
 
 
         Pageable pageable = PageRequest.of(page, 20);
-        int start = Math.min((int)pageable.getOffset(), list.size());
-        int end = Math.min((start + pageable.getPageSize()), list.size());
+        int start = Math.min((int)pageable.getOffset(), searchedTradePostList.size());
+        int end = Math.min((start + pageable.getPageSize()), searchedTradePostList.size());
 
-        return new PageImpl<>(list.subList(start, end), pageable, list.size());
+        return new PageImpl<>(searchedTradePostList.subList(start, end), pageable, searchedTradePostList.size());
     }
 }
