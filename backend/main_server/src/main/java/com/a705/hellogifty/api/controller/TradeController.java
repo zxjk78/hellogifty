@@ -7,6 +7,7 @@ import com.a705.hellogifty.api.dto.UserReportRequestDto;
 import com.a705.hellogifty.api.dto.basic_response.CommonResult;
 import com.a705.hellogifty.api.dto.basic_response.ManyResult;
 import com.a705.hellogifty.api.dto.basic_response.OneResult;
+import com.a705.hellogifty.api.dto.basic_response.PageResult;
 import com.a705.hellogifty.api.dto.trade_post.TradePostDetailResponseDto;
 import com.a705.hellogifty.api.dto.trade_post.TradePostEditRequestDto;
 import com.a705.hellogifty.api.dto.trade_post.TradePostListResponseDto;
@@ -33,8 +34,8 @@ public class TradeController {
 
     @ApiOperation(value = "판매글 검색", notes = "판매글 검색")
     @GetMapping("/")
-    public ManyResult<TradePostListResponseDto> searchTradePost (@RequestParam(required = false) String keyWord, @RequestParam(required = false) Short smallCategoryId, @RequestParam(required = false) Short largeCategoryId, @RequestParam(required = false, defaultValue = "1") Integer sortChoice, int page) {
-        return responseService.getManyResult(tradeService.tradePostSearchResult(keyWord, smallCategoryId, largeCategoryId, sortChoice, page));
+    public PageResult<TradePostListResponseDto> searchTradePost (@RequestParam(required = false) String keyWord, @RequestParam(required = false) Short smallCategoryId, @RequestParam(required = false) Short largeCategoryId, @RequestParam(required = false, defaultValue = "1") Integer sortChoice, int page) {
+        return responseService.getPageResult(tradeService.tradePostSearchResult(keyWord, smallCategoryId, largeCategoryId, sortChoice, page));
     }
 
     @ApiOperation(value = "판매글 상세정보", notes = "판매글 상세정보")
