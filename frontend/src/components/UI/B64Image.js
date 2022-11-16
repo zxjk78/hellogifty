@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { fetchImage } from '../../api/image';
 
 const B64Image = ({ src, style }) => {
-  const [imgB64, setImgB64] = useState('1');
+  const [imgB64, setImgB64] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     setIsLoading(true);
@@ -19,7 +19,18 @@ const B64Image = ({ src, style }) => {
 
   return (
     <View>
-      {!isLoading && <Image source={{ uri: imgB64 }} style={style} />}
+      {!isLoading && imgB64 && (
+        <Image
+          source={{ uri: imgB64 }}
+          style={style}
+          onError={() => {
+            // console.log('이미지에러');
+            setImgB64(
+              'https://reactnativecode.com/wp-content/uploads/2018/02/Default_Image_Thumbnail.png'
+            );
+          }}
+        />
+      )}
     </View>
   );
 };

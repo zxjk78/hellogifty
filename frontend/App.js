@@ -182,13 +182,13 @@ const MainTab = () => {
         name="Profile"
         component={ProfileScreen}
         options={{
-          title: '상대 프로필',
+          title: '프로필',
         }}
       />
 
       <Tab.Screen
         name="test"
-        component={TestScreen}
+        component={LoadingScreen}
         options={{
           title: '테스트',
         }}

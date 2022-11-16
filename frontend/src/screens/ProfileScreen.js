@@ -1,15 +1,43 @@
-import { StyleSheet, Text, View, Image, FlatList, Button } from 'react-native';
-import React from 'react';
-
-import { gifticonDummy } from '../constants/data/dummyData';
-// import { TicketListItem } from '../components/ticket';
+import { StyleSheet, Text, View, Image, FlatList } from 'react-native';
+import React, { useEffect } from 'react';
+import { Button } from 'react-native-paper';
+import { TicketListItem } from '../components/ticket';
 import { GlobalStyles } from '../constants/style';
 import { logout } from '../api/auth';
-// import SearchResultItem from '../components/shopping/search/SearchResultItem';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useState } from 'react';
+import { fetchMyInfo } from '../api/profile';
+import LevelBadgeContainer from '../components/profile/LevelBadgeContainer';
+import { List } from 'react-native-paper';
+import B64Image from '../components/UI/B64Image';
+import { API_URL } from '../api/config/http-config';
 
-// const renderItem = ({ item }) => <TicketListItem item={item} />;
+const renderItem = ({ item }) => <TicketListItem item={item} />;
 
-const ProfileScreen = ({ navigation }) => {
+// const ProfileScreen = ({ navigation }) => {
+const ProfileScreen = ({}) => {
+  const route = useRoute();
+  const navigation = useNavigation();
+  const [isOther, setIsOther] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [userInfo, setUserInfo] = useState(null);
+  useEffect(() => {
+    setIsLoading(true);
+    (async () => {
+      const userId = await AsyncStorage.getItem('userId');
+      // 다른 유저 프로파일 클릭으로 타고 들어온거면 타인 프로필, 내 탭 클릭해서 들어오면 내 탭 프로필
+      if (route.params?.userId && route.params?.userId !== userId) {
+        setIsOther(true);
+      } else {
+        const info = await fetchMyInfo();
+        // console.log(info.purchaseRecord[0].image);
+        setUserInfo(info);
+      }
+    })();
+    setIsLoading(false);
+  }, [route.params?.userId]);
+
   const handleLogout = async () => {
     await logout();
     navigation.replace('Auth', {
@@ -19,37 +47,99 @@ const ProfileScreen = ({ navigation }) => {
   };
   return (
     <View style={styles.wrapper}>
-      <View style={styles.profileContainer}>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Image
-            source={{
-              uri: 'https://photo.coolenjoy.co.kr/data/editor/2012/c0f3b1f7c870df665e0469510699344b98619cf9.jpg',
-            }}
-            style={{ width: 60, height: 60, borderRadius: 40, marginRight: 10 }}
-          />
-          <Text style={{ fontSize: 20 }}>유저아이디</Text>
-          <Button title="로그아웃" onPress={handleLogout} />
-        </View>
-        <View>
-          <Image
-            source={{
-              uri: 'https://photo.coolenjoy.co.kr/data/editor/2012/c0f3b1f7c870df665e0469510699344b98619cf9.jpg',
-            }}
-            style={{ width: 60, height: 60 }}
-          />
-        </View>
-      </View>
-      {/* <View style={styles.ticketBrief}>
-        <Text>판매상품 {gifticonDummy.length}개</Text>
-      </View>
-      <View style={styles.ticketContainer}>
-        <FlatList
-          // 나중에 searchResultItem 형식으로 바꾸기
-          data={gifticonDummy}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-        />
-      </View> */}
+      {!isLoading && userInfo && (
+        <>
+          <View style={styles.profileContainer}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            >
+              <Image
+                source={{
+                  uri: 'https://www.mtsolar.us/wp-content/uploads/2020/04/avatar-placeholder.png',
+                }}
+                style={{
+                  width: 60,
+                  height: 60,
+                  borderRadius: 40,
+                  marginRight: 10,
+                }}
+                onError={(e) => {
+                  console.log('에러');
+                }}
+              />
+              <Text style={{ fontSize: 20 }}>
+                {userInfo.name || userInfo.id + `번 유저`}
+              </Text>
+            </View>
+            {!isOther && (
+              <Button mode="contained" onPress={handleLogout}>
+                로그아웃
+              </Button>
+            )}
+          </View>
+          <View style={styles.scoreContainer}>
+            <LevelBadgeContainer level={userInfo.evalScore || 0} />
+          </View>
+          <View style={styles.ticketContainer}>
+            <View style={styles.ticketList}>
+              <List.AccordionGroup>
+                {!isOther && (
+                  <List.Accordion
+                    title={`구매내역 ${userInfo.purchaseRecord.length}`}
+                    id="2"
+                  >
+                    {userInfo.purchaseRecord.map((record) => (
+                      <List.Item
+                        key={record.tradePostId}
+                        title={record.title}
+                        description={
+                          record.gifticonInfo.expirationDate + ' 까지'
+                        }
+                        left={() => (
+                          <B64Image
+                            src={
+                              API_URL +
+                              'image/gifticon-cropped?path=' +
+                              record.image
+                            }
+                            style={{ width: 30, height: 30 }}
+                          />
+                        )}
+                      />
+                    ))}
+                  </List.Accordion>
+                )}
+                <List.Accordion
+                  title={`판매내역 ${userInfo.salesRecord.length}`}
+                  id="1"
+                >
+                  {userInfo.salesRecord.map((record) => (
+                    <List.Item
+                      key={record.tradePostId}
+                      title={record.title}
+                      description={record.price + ' 원'}
+                      left={() => (
+                        <B64Image
+                          src={
+                            API_URL +
+                            'image/gifticon-cropped?path=' +
+                            record.image
+                          }
+                          style={{ width: 30, height: 30 }}
+                        />
+                      )}
+                    />
+                  ))}
+                </List.Accordion>
+              </List.AccordionGroup>
+            </View>
+          </View>
+        </>
+      )}
     </View>
   );
 };
@@ -65,6 +155,7 @@ const styles = StyleSheet.create({
   },
   profileContainer: {
     flex: 2,
+    width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -82,5 +173,11 @@ const styles = StyleSheet.create({
   ticketContainer: {
     flex: 10,
     // backgroundColor: 'red',
+    // flexDirection: 'row',
+  },
+  scoreContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    marginVertical: '10%',
   },
 });

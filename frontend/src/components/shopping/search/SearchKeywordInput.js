@@ -14,7 +14,7 @@ const SearchKeywordInput = () => {
     page: 0,
     sortChoice: 1,
   });
-  const [resultDataList, setResultDataList] = useState([]);
+  const [resultDataList, setResultDataList] = useState(null);
   const [inputBorderColor, setInputBorderColor] = useState('white');
   const [isLoading, setIsLoading] = useState(true);
 
@@ -39,14 +39,14 @@ const SearchKeywordInput = () => {
   };
 
   useEffect(() => {
-    setIsLoading(true);
     // api 보내서 검색 자료 가져오기
     (async () => {
+      setIsLoading(true);
       const result = await searchByKeyword(searchOption);
       setResultDataList(result);
-      // console.log(result, '처음 데이터 가져왔습니다.');
+      console.log(result, '처음 데이터 가져왔습니다.');
+      setIsLoading(false);
     })();
-    setIsLoading(false);
   }, []);
 
   const search = () => {

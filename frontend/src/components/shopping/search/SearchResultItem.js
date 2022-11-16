@@ -7,7 +7,7 @@ import { API_URL } from '../../../api/config/http-config';
 
 const SearchResultItem = ({ resultItem }) => {
   const navigation = useNavigation();
-  console.log('검색 결과 아이템:\n', resultItem);
+  // console.log('검색 결과 아이템:\n', resultItem);
   const handleDetail = () => {
     console.log('상세 조회 시도', resultItem.id);
 
@@ -19,10 +19,8 @@ const SearchResultItem = ({ resultItem }) => {
   return (
     <Pressable style={styles.container} onPress={handleDetail}>
       <View style={styles.imgContainer}>
-        <Image
-          source={{
-            uri: 'https://photo.coolenjoy.co.kr/data/editor/2012/c0f3b1f7c870df665e0469510699344b98619cf9.jpg',
-          }}
+        <B64Image
+          src={API_URL + 'image/gifticon-cropped?path=' + resultItem.cropImg}
           style={{ width: '100%', height: '100%', resizeMode: 'center' }}
         />
       </View>
@@ -36,14 +34,15 @@ const SearchResultItem = ({ resultItem }) => {
           <View style={{ marginLeft: 10 }}></View>
           <Text>{resultItem.brandName}</Text>
         </View>
-        <Text style={styles.productName}>제품명</Text>
+        <Text style={styles.productName}>{resultItem.title}</Text>
+        {/* <Text style={styles.productName}>{resultItem.gifticonName}</Text> */}
         <Text
           style={{ color: GlobalStyles.colors.textPrimary }}
-        >{`유효기한: ${'2020-12-12'}`}</Text>
+        >{`유효기한: ${resultItem.expirationDate}`}</Text>
       </View>
       <View style={styles.otherInfo}>
-        <Text>유저이름**</Text>
-        <Text>4,300원</Text>
+        <Text>{resultItem.userName}</Text>
+        <Text>{resultItem.price} 원</Text>
       </View>
     </Pressable>
   );
