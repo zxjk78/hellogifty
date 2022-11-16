@@ -72,7 +72,7 @@ public class SignService {
 
     @Transactional
     public void userMmsIndexEdit(User user, MmsIndexEditDto mmsIndexEditDto) {
-        User loginUser = userRepository.findByEmail(user.getEmail()).get();
+        User loginUser = userRepository.findByEmail(user.getEmail()).orElseThrow(UserNotFoundException::new);
         loginUser.updateMmsIndex(mmsIndexEditDto);
     }
 
