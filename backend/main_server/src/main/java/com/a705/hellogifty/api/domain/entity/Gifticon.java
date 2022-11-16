@@ -7,6 +7,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -35,6 +37,9 @@ public class Gifticon extends BaseEntity {
 
     @Column(length = 300)
     private String img;
+
+    @OneToMany(mappedBy = "gifticon", cascade = CascadeType.ALL)
+    List<TradePost> tradePostList = new ArrayList<>();
 
     public void update(GifticonEditDto gifticonEditDto) {
         this.name = gifticonEditDto.getName();

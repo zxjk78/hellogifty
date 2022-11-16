@@ -14,8 +14,11 @@ import java.util.Optional;
 public interface GifticonRepository extends JpaRepository<Gifticon, Long> {
 
 
-    @Query("select g from Gifticon g join fetch g.smallCategory sc where g.user.id = :userId")
-    Optional<List<Gifticon>> findByUserIdWithSmallCategory(@Param("userId") Long userId);
+    @Query("select g from Gifticon g " +
+//            "join fetch g.tradePostList tp " +
+            "join fetch g.smallCategory sc " +
+            "where g.user.id = :userId")
+    Optional<List<Gifticon>> findByUserIdWithTradePostAndSmallCategory(@Param("userId") Long userId);
     Optional<List<Gifticon>> findByUserId(Long userId);
 
     Optional<Gifticon> findByUserAndId(User user, Long id);
