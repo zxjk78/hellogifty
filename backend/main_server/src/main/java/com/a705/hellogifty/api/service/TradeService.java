@@ -13,6 +13,7 @@ import com.sun.jdi.request.DuplicateRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.*;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -206,7 +207,9 @@ public class TradeService {
     }
 
     @Transactional
+    @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")
     public void updateTradeState () {
+//        System.out.println(LocalDateTime.now());
         List<TradePost> tradePostList = tradePostRepository.findByGifticon_ExpirationDateBefore(LocalDate.now()).orElseThrow(TradePostNotFoundException::new);
         for (TradePost tradePost : tradePostList) {
             tradePost.changeStateToExpired();
