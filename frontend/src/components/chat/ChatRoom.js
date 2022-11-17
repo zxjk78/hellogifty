@@ -142,7 +142,7 @@ const ChatRoom = ({ chatRoomId, userId, tradeState, tradeId }) => {
       const success = await completeTrade(chatRoomId);
       if (success) {
         console.log('거래를 완료하였습니다.');
-        setIsEvalModalOpen(true);
+        // setIsEvalModalOpen(true);
         setIsTradeDone(true);
         const dataDto = {
           chatRoomId: chatRoomId, // Number
@@ -243,6 +243,9 @@ const ChatRoom = ({ chatRoomId, userId, tradeState, tradeId }) => {
                       isMe={+msg.userId === +userId}
                       key={index}
                       msg={msg}
+                      openModal={() => {
+                        setIsEvalModalOpen(true);
+                      }}
                     />
                   );
                   break;

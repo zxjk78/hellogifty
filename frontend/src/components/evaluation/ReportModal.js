@@ -11,6 +11,7 @@ const ReportModal = ({ oppoId, tradeId, visible }) => {
   useEffect(() => {
     (async () => {
       const res = await fetchUserInfo(oppoId);
+      console.log('신고할 유저 찾기', res);
       const reportUserName = res.name;
     })();
   }, []);

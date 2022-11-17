@@ -23,6 +23,7 @@ const SellingItemDetailScreen = ({}) => {
     // console.log('트레이드아이템아이디:', tradeItemId);
     (async () => {
       const result = await fetchTradeItemDetail(tradeItemId);
+      console.log('판매상품정보 ', result);
       setUserId(await AsyncStorage.getItem('userId'));
       setItemDetail(result);
     })();
@@ -55,7 +56,9 @@ const SellingItemDetailScreen = ({}) => {
           <View style={styles.container}>
             <ScrollView style={{ maxHeight: 300 }}>
               <CustomImage
-                src={API_URL + 'image/gifticon-cropped?path=' + itemDetail.img}
+                source={
+                  API_URL + 'image/gifticon-cropped?path=' + itemDetail.img
+                }
                 style={{ width: '100%', height: 400, resizeMode: 'center' }}
               />
             </ScrollView>
@@ -64,7 +67,9 @@ const SellingItemDetailScreen = ({}) => {
             <View style={styles.profileContainer}>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <CustomImage
-                  src={API_URL + 'image/gifticon-cropped?path=' + 12121212}
+                  source={
+                    API_URL + 'image/gifticon-cropped?path=' + itemDetail.img
+                  }
                   style={{ width: 40, height: 40, resizeMode: 'center' }}
                 />
                 <Text
@@ -89,12 +94,6 @@ const SellingItemDetailScreen = ({}) => {
                 {/* {itemDetail.name} */}
                 {/* {itemDetail.sellerInfo.userScore}점 */}
               </Text>
-              {/* <Image
-                source={{
-                  uri: 'https://photo.coolenjoy.co.kr/data/editor/2012/c0f3b1f7c870df665e0469510699344b98619cf9.jpg',
-                }}
-                style={styles.profileRank}
-              /> */}
             </View>
             <View style={styles.contentContainer}>
               <Text style={{ fontSize: 20, padding: 5 }}>

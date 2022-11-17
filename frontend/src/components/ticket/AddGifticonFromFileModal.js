@@ -24,6 +24,7 @@ import { GlobalStyles } from '../../constants/style';
 import { fetchBrandImage } from '../../api/image';
 import { API_URL } from '../../api/config/http-config';
 import CustomCalendar from '../UI/CustomCalendar';
+import { useNavigation } from '@react-navigation/native';
 const largeCategoryData = [
   {
     key: 0,
@@ -274,13 +275,13 @@ const smallCategoryData = [
   ],
 ];
 
-const AddGifticonFromFileModal = ({ visible, onClose }) => {
+const AddGifticonFromFileModal = ({ visible, onClose, onRefresh }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const [expirationDate, setExpirationDate] = useState('');
   const [fileBase64, setFileBase64] = useState('');
   const [categoryId, setCategoryId] = useState(-1);
-
+  const navigation = useNavigation();
   const [largeCategoryId, setLargeCategoryId] = useState(-1);
   // const [smallCategoryId, setSmallCategoryId] = useState(-1);
   const [isCalendarVisible, setIsCalendarVisible] = useState(false);
@@ -327,7 +328,10 @@ const AddGifticonFromFileModal = ({ visible, onClose }) => {
       setLargeCategoryId(-1);
       setCategoryId(-1);
       setFileBase64('');
+
+      onRefresh();
       onClose();
+
       // 여력 있으면 toast 넣어서 알리기
     }
   };

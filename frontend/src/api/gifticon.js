@@ -4,11 +4,9 @@ import { fetchImage } from './image';
 import { API_URL } from './config/http-config';
 
 export const fetchMyGifticonList = async () => {
-  // console.log('내 기프티콘 목록 받기');
   try {
     const res = await axiosAuthInstance.get('mygifticon/');
 
-    // console.log('기프티콘 목록 데이터', res.data.data);
     return res.data.data;
   } catch (error) {
     console.log(error);
@@ -25,11 +23,9 @@ export const fetchMySellingGifticonList = async () => {
 };
 
 export const fetchMyGifticonDetail = async (gifticonId) => {
-  console.log('내 기프티콘 상세 fetch');
   try {
     const res = await axiosAuthInstance.get('mygifticon/' + gifticonId);
 
-    // console.log('기프티콘 상세 데이터', res.data.data);
     return res.data.data;
   } catch (error) {
     console.log(error);
@@ -83,7 +79,6 @@ export const addGifticonFromFile = async (gifticonInfo) => {
         ''
       ),
     };
-    // console.log('요청 dto: ', Object.keys(gifticon));
     const res = await axiosAuthInstance.post('mygifticon/', gifticon);
     return res.data.success;
   } catch (error) {
