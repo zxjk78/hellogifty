@@ -14,8 +14,9 @@ import {
   largeCategoryDict,
   smallCategoryDict,
 } from '../../constants/data/idDictionary';
-import { launchImageLibrary } from 'react-native-image-picker';
+// import { launchImageLibrary } from 'react-native-image-picker';
 // import { LocaleConfig } from 'react-native-calendars';
+import ImagePicker from 'react-native-image-crop-picker';
 
 import { Calendar } from 'react-native-calendars';
 
@@ -47,15 +48,27 @@ const AddGifticonFromFileModal = ({ visible, onClose, onRefresh }) => {
   };
 
   const selectImageFromFile = async () => {
-    const options = {
-      mediaType: 'photo',
-      maxWidth: 600,
-      maxHeight: 1000,
-      includeBase64: true,
-    };
-    const result = await launchImageLibrary(options);
+    // const options = {
+    //   mediaType: 'photo',
+    //   maxWidth: 600,
+    //   maxHeight: 1000,
+    //   includeBase64: true,
+    // };
+    // const result = await launchImageLibrary(options);
+    
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: false,
+      includeBase64:true,
+    }).then(image => {
+      // console.log('이미지입니다.',Object.keys(image));
+      setFileBase64(image.data); 
+    }).catch((error)=>{
+      console.log(error);
+    });
 
-    setFileBase64(result.assets[0].base64);
+
   };
   const addGifticon = async () => {
     if (
