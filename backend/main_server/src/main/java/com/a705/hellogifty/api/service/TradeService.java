@@ -204,4 +204,14 @@ public class TradeService {
 
         return new PageImpl<>(searchedTradePostList.subList(start, end), pageable, searchedTradePostList.size());
     }
+
+    @Transactional
+    public void updateTradeState () {
+        List<TradePost> tradePostList = tradePostRepository.findAll();
+        for (TradePost tradePost : tradePostList) {
+            if (tradePost.getGifticon().getExpirationDate().isBefore(LocalDate.now())) {
+                tradePost.changeStateToExpired();
+            }
+        }
+    }
 }

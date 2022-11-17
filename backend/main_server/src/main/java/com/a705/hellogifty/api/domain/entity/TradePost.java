@@ -50,4 +50,8 @@ public class TradePost extends BaseEntity {
     public void changeStateTosoldOut() {
         this.tradeState = TradeState.SOLDOUT;
     }
+
+    public void changeStateToExpired() {
+        this.tradeState = TradeState.EXPIRED;
+    }
 }
