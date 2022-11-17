@@ -199,7 +199,7 @@ public class TradeService {
         }
 
 
-        Pageable pageable = PageRequest.of(page, 20);
+        Pageable pageable = PageRequest.of(page, 10);
         int start = Math.min((int)pageable.getOffset(), searchedTradePostList.size());
         int end = Math.min((start + pageable.getPageSize()), searchedTradePostList.size());
 
