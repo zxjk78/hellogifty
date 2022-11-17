@@ -35,7 +35,7 @@ const ProfileScreen = ({}) => {
         setUserInfo(info);
       } else {
         const info = await fetchMyInfo();
-        console.log('내정보', info);
+        console.log('내정보 불러오기', info);
         setUserInfo(info);
       }
     })();
@@ -95,6 +95,7 @@ const ProfileScreen = ({}) => {
                   <List.Accordion
                     title={`구매내역 ${userInfo.purchaseRecord.length}`}
                     id="2"
+                    style={{ marginBottom: 20 }}
                   >
                     {userInfo.purchaseRecord.map((record) => (
                       <List.Item

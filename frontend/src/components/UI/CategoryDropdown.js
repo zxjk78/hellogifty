@@ -1,12 +1,27 @@
 import { StyleSheet, Text, View, Image } from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import SelectDropdown from 'react-native-select-dropdown';
 import {
   largeCategoryDict,
   smallCategoryDict,
 } from '../../constants/data/idDictionary';
 import { GlobalStyles } from '../../constants/style';
-const CategoryDropdown = ({ categoryItem, onChange, defaultTxt }) => {
+const CategoryDropdown = ({
+  categoryItem,
+  onChange,
+  defaultTxt,
+  largeChanged,
+}) => {
+  const [selectedItem, setSelectedItem] = useState(null);
+
+  useEffect(() => {
+    // console.log('대분류 바뀜');
+    if (categoryItem?.length == 2) {
+      console.log('바뀌고 소분류 변경');
+      setSelectedItem(null);
+    }
+  }, [largeChanged]);
+
   return (
     <View>
       <SelectDropdown
