@@ -140,7 +140,7 @@ def get_validated_gifticon(request):
                 res.append(extracted_gifticon_info(idx, extracted_data["itemName"], extracted_data["couponNumber"], extracted_data["expirationDate"]))
             except Exception as e:
                 print()
-                res.append("error : "+ str(e))
+                # res.append("error : "+ str(e))
             idx+=1
         print("RES:",str(res))
         return JsonResponse(res, safe=False)
