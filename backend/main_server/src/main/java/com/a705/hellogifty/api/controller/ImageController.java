@@ -29,8 +29,8 @@ public class ImageController {
     @GetMapping("/gifticon")
     public Resource showGifticonImage(@RequestParam("path") String filename) throws IOException {
         System.out.println(filename);
-        String path = System.getProperty("user.dir"); // 현재 디렉토리 가져오기
-        File file = new File( path+gifticonImagePath + filename);
+//        String path = System.getProperty("user.dir"); // 현재 디렉토리 가져오기
+        File file = new File( gifticonImagePath + filename);
 
         return new UrlResource("file:"+file.getPath());
     }
@@ -39,8 +39,8 @@ public class ImageController {
     @GetMapping("/gifticon-cropped")
     public Resource showCroppedGifticonImage(@RequestParam("path") String filename) throws IOException {
         System.out.println(filename);
-        String path = System.getProperty("user.dir"); // 현재 디렉토리 가져오기
-        File file = new File( path+gifticonCroppedImagePath + filename);
+//        String path = System.getProperty("user.dir"); // 현재 디렉토리 가져오기
+        File file = new File( gifticonCroppedImagePath + filename);
 
         return new UrlResource("file:"+file.getPath());
     }
@@ -49,8 +49,8 @@ public class ImageController {
     @GetMapping("/brand")
     public Resource showBrandImage(@RequestParam("path") String filename) throws IOException {
         System.out.println(filename);
-        String path = System.getProperty("user.dir"); // 현재 디렉토리 가져오기
-        File file = new File( path+brandImagePath + filename);
+//        String path = System.getProperty("user.dir"); // 현재 디렉토리 가져오기
+        File file = new File( brandImagePath + filename);
 
         return new UrlResource("file:"+file.getPath());
     }
