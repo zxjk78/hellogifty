@@ -207,11 +207,9 @@ public class TradeService {
 
     @Transactional
     public void updateTradeState () {
-        List<TradePost> tradePostList = tradePostRepository.findAll();
+        List<TradePost> tradePostList = tradePostRepository.findByGifticon_ExpirationDateBefore(LocalDate.now()).orElseThrow(TradePostNotFoundException::new);
         for (TradePost tradePost : tradePostList) {
-            if (tradePost.getGifticon().getExpirationDate().isBefore(LocalDate.now())) {
-                tradePost.changeStateToExpired();
-            }
+            tradePost.changeStateToExpired();
         }
     }
 }
