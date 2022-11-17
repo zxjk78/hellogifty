@@ -27,50 +27,31 @@ public class ImageController {
 
     @ResponseBody
     @GetMapping("/gifticon")
-    public byte[] showGifticonImage(@RequestParam("path") String filename) throws IOException {
+    public Resource showGifticonImage(@RequestParam("path") String filename) throws IOException {
         System.out.println(filename);
         String path = System.getProperty("user.dir"); // 현재 디렉토리 가져오기
         File file = new File( path+gifticonImagePath + filename);
 
-        Resource resource = new UrlResource("file:"+file.getPath());
-        InputStream is = resource.getInputStream();
-        byte [] contents = is.readAllBytes();
-
-        byte [] encoded = Base64Utils.encode(contents);
-        return encoded;
-
+        return new UrlResource("file:"+file.getPath());
     }
 
     @ResponseBody
     @GetMapping("/gifticon-cropped")
-    public byte[] showCroppedGifticonImage(@RequestParam("path") String filename) throws IOException {
+    public Resource showCroppedGifticonImage(@RequestParam("path") String filename) throws IOException {
         System.out.println(filename);
         String path = System.getProperty("user.dir"); // 현재 디렉토리 가져오기
         File file = new File( path+gifticonCroppedImagePath + filename);
 
-        Resource resource = new UrlResource("file:"+file.getPath());
-        InputStream is = resource.getInputStream();
-        byte [] contents = is.readAllBytes();
-
-        byte [] encoded = Base64Utils.encode(contents);
-        return encoded;
+        return new UrlResource("file:"+file.getPath());
     }
 
     //    @ResponseBody
     @GetMapping("/brand")
-    public byte[] showBrandImage(@RequestParam("path") String filename) throws IOException {
+    public Resource showBrandImage(@RequestParam("path") String filename) throws IOException {
         System.out.println(filename);
         String path = System.getProperty("user.dir"); // 현재 디렉토리 가져오기
-//        System.out.println("path = " + path);
         File file = new File( path+brandImagePath + filename);
 
-//        System.out.println("path+brandImagePath + filename = " + path+brandImagePath + filename);
-        Resource resource = new UrlResource("file:"+file.getPath());
-        InputStream is = resource.getInputStream();
-        byte [] contents = is.readAllBytes();
-
-        byte [] encoded = Base64Utils.encode(contents);
-        return encoded;
-
+        return new UrlResource("file:"+file.getPath());
     }
 }

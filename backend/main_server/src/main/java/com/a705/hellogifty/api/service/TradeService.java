@@ -44,13 +44,13 @@ public class TradeService {
     @Transactional
     public TradePostDetailResponseDto tradePostDetail(User user, Long tradePostId) {
         String defaultPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"gifticonCropImg"+File.separator;
-        TradePost tradePost = tradePostRepository.findById(tradePostId).get();
+        TradePost tradePost = tradePostRepository.findById(tradePostId).orElseThrow(TradePostNotFoundException::new);
         return new TradePostDetailResponseDto(tradePost);
     }
 
     @Transactional
     public void tradePostCreate(User user, TradePostRequestDto tradePostRequestDto) throws IOException {
-        Gifticon gifticon = gifticonRepository.findByUserAndId(user, tradePostRequestDto.getGifticonId()).get();
+        Gifticon gifticon = gifticonRepository.findByUserAndId(user, tradePostRequestDto.getGifticonId()).orElseThrow(GifticonNotFoundException::new);
 //        String fileUploadNow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
         String originalImgName = getOriginalImgName(user, gifticon.getId());
         String rawBase = tradePostRequestDto.getCropFileBase64();
@@ -82,13 +82,13 @@ public class TradeService {
 
     @Transactional
     public String getOriginalImgName(User user, Long gifticonId) {
-        Gifticon gifticon = gifticonRepository.findByUserAndId(user, gifticonId).get();
+        Gifticon gifticon = gifticonRepository.findByUserAndId(user, gifticonId).orElseThrow(GifticonNotFoundException::new);
         return gifticon.getImg();
     }
 
     @Transactional
     public void tradePostEdit(User user, Long tradePostId, TradePostEditRequestDto tradePostEditRequestDto) {
-        TradePost tradePost = tradePostRepository.findByUserAndId(user, tradePostId).get();
+        TradePost tradePost = tradePostRepository.findByUserAndId(user, tradePostId).orElseThrow(TradePostNotFoundException::new);
         tradePost.update(tradePostEditRequestDto);
     }
 
@@ -135,17 +135,17 @@ public class TradeService {
 
 
         if (largeCategoryId == null && smallCategoryId == null) {
-            for (TradePost tradePost : tradePostRepository.findByTitleContains(keyWord).get()) {
+            for (TradePost tradePost : tradePostRepository.findByTitleContains(keyWord).orElseThrow(TradePostNotFoundException::new)) {
                 searchedTradePostList.add((new TradePostListResponseDto(tradePost)));
             }
         } else if (smallCategoryId == null) {
             LargeCategory largeCategory = largeCategoryRepository.findById(largeCategoryId).orElseThrow(LargeCategoryNotFoundException::new);
-            for (TradePost tradePost : tradePostRepository.findByTitleContainsAndGifticon_SmallCategory_LargeCategory(keyWord, largeCategory).get()) {
+            for (TradePost tradePost : tradePostRepository.findByTitleContainsAndGifticon_SmallCategory_LargeCategory(keyWord, largeCategory).orElseThrow(TradePostNotFoundException::new)) {
                 searchedTradePostList.add(new TradePostListResponseDto(tradePost));
             }
         } else {
-            SmallCategory smallCategory = smallCategoryRepository.findById(smallCategoryId).get();
-            for (TradePost tradePost : tradePostRepository.findByTitleContainsAndGifticon_SmallCategory(keyWord, smallCategory).get()) {
+            SmallCategory smallCategory = smallCategoryRepository.findById(smallCategoryId).orElseThrow(SmallCategoryNotFoundException::new);
+            for (TradePost tradePost : tradePostRepository.findByTitleContainsAndGifticon_SmallCategory(keyWord, smallCategory).orElseThrow(TradePostNotFoundException::new)) {
                 searchedTradePostList.add(new TradePostListResponseDto(tradePost));
             }
         }
@@ -164,8 +164,8 @@ public class TradeService {
             Collections.sort(searchedTradePostList, (TradePostListResponseDto d1, TradePostListResponseDto d2) -> {
                 int result = 1;
 
-                Float sellerEvaluation1 = tradePostRepository.findById(d1.getId()).get().getUser().getUserEvaluation().getTotalScore();
-                Float sellerEvaluation2 = tradePostRepository.findById(d2.getId()).get().getUser().getUserEvaluation().getTotalScore();
+                Float sellerEvaluation1 = tradePostRepository.findById(d1.getId()).orElseThrow(TradePostNotFoundException::new).getUser().getUserEvaluation().getTotalScore();
+                Float sellerEvaluation2 = tradePostRepository.findById(d2.getId()).orElseThrow(TradePostNotFoundException::new).getUser().getUserEvaluation().getTotalScore();
 
                 if (sellerEvaluation1 >= sellerEvaluation2)
                     result = -1;
@@ -203,5 +203,13 @@ public class TradeService {
         int end = Math.min((start + pageable.getPageSize()), searchedTradePostList.size());
 
         return new PageImpl<>(searchedTradePostList.subList(start, end), pageable, searchedTradePostList.size());
+    }
+
+    @Transactional
+    public void updateTradeState () {
+        List<TradePost> tradePostList = tradePostRepository.findByGifticon_ExpirationDateBefore(LocalDate.now()).orElseThrow(TradePostNotFoundException::new);
+        for (TradePost tradePost : tradePostList) {
+            tradePost.changeStateToExpired();
+        }
     }
 }

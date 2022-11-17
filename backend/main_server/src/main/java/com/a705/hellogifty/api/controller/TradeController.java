@@ -2,25 +2,22 @@ package com.a705.hellogifty.api.controller;
 
 import com.a705.hellogifty.aop.LoginUser;
 import com.a705.hellogifty.api.domain.entity.User;
-import com.a705.hellogifty.api.dto.UserEvaluationRequestDto;
-import com.a705.hellogifty.api.dto.UserReportRequestDto;
+import com.a705.hellogifty.api.dto.trade_post.TradePostListResponseDto;
+import com.a705.hellogifty.api.dto.user.UserEvaluationRequestDto;
+import com.a705.hellogifty.api.dto.user.UserReportRequestDto;
 import com.a705.hellogifty.api.dto.basic_response.CommonResult;
-import com.a705.hellogifty.api.dto.basic_response.ManyResult;
 import com.a705.hellogifty.api.dto.basic_response.OneResult;
 import com.a705.hellogifty.api.dto.basic_response.PageResult;
 import com.a705.hellogifty.api.dto.trade_post.TradePostDetailResponseDto;
 import com.a705.hellogifty.api.dto.trade_post.TradePostEditRequestDto;
-import com.a705.hellogifty.api.dto.trade_post.TradePostListResponseDto;
 import com.a705.hellogifty.api.dto.trade_post.TradePostRequestDto;
 import com.a705.hellogifty.api.service.ResponseService;
 import com.a705.hellogifty.api.service.TradeService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
-import java.io.File;
 import java.io.IOException;
 
 @RequiredArgsConstructor
@@ -95,6 +92,13 @@ public class TradeController {
             @RequestBody UserReportRequestDto userReportRequestDto)
     {
         tradeService.reportUser(tradePostId, loginUser, targetUserId, userReportRequestDto.getReason(), userReportRequestDto.getContent() );
+        return responseService.getSuccessResult();
+    }
+
+    @ApiOperation(value = "유통기한이 지난 판매글 상태 변경")
+    @PutMapping("/expiration")
+    public CommonResult expirationUpdate() {
+        tradeService.updateTradeState();
         return responseService.getSuccessResult();
     }
 }
