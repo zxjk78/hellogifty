@@ -63,7 +63,7 @@ const Form3 = ({ info, back, finish }) => {
       <View style={styles.main}>
         <Image style={styles.img} source={{ uri: info.imagePath }} />
         <View>
-          {/* <Text>{info.item.brandName}</Text> */}
+          <Text>{info.brandName}</Text>
           <Text style={{ fontSize: 17 }}>{info.name}</Text>
           <Text>{info.expirationDate}</Text>
         </View>

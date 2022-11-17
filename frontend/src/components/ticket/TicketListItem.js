@@ -131,7 +131,7 @@ const TicketListItem = ({ item, isNormal, refresh, type }) => {
       ) : null}
 
       {/* Main */}
-      <CustomImage source={API_URL + 'image/brand?path=' + item.brandImgPath} />
+      <CustomImage source={API_URL + 'image/brand?path=' + item.brandImgPath} style={styles.img}/>
 
       <View style={styles.text}>
         <Text style={styles.brandName}>{item.brandName}</Text>

@@ -14,20 +14,22 @@ import { API_URL } from '../../api/config/http-config';
 
 const Form2 = ({ info, next, back }) => {
   const [imagePath, setImagePath] = useState(info.imagePath);
-  const [picture, setPicture] = useState();
-  console.log('원본패스: ', info.originalImgPath);
+  const [picture, setPicture] = useState(info.picture);
   // const cropViewRef = useRef();
 
   const imgPress = () => {
     ImagePicker.openCropper({
-      path: API_URL + 'image/gifticon?path=' + info.originalImgPath,
+      path: info.originalImgPath,
       width: 280,
       height: 351,
       freeStyleCropEnabled: true,
       includeBase64: true,
     })
       .then((image) => {
-        setImagePath('data:image/jpeg;base64,' + image.data);
+        // console.log(Object.keys(image));
+        setPicture('data:image/jpeg;base64,' + image.data);
+        setImagePath(image.path)
+        console.log(image.path, 'crop image path')
       })
       .catch((error) => console.log(error));
   };
@@ -46,7 +48,7 @@ const Form2 = ({ info, next, back }) => {
       </Text>
       <Pressable onPress={imgPress}>
         <CustomImage
-          source={API_URL + 'image/gifticon?path=' + info.imagePath}
+          source={imagePath}
           style={styles.img}
         />
         {/* <Image style={styles.img} source={{ uri: info.imagePath }} /> */}
@@ -56,7 +58,7 @@ const Form2 = ({ info, next, back }) => {
         <Pressable
           style={styles.nextButton}
           onPress={() => {
-            back({ imagePath });
+            back({ imagePath, picture });
           }}
         >
           <Text style={styles.buttonText}>이전</Text>
@@ -64,7 +66,7 @@ const Form2 = ({ info, next, back }) => {
         <Pressable
           style={styles.nextButton}
           onPress={() => {
-            next({ imagePath });
+            next({ imagePath, picture });
           }}
         >
           <Text style={styles.buttonText}>다음</Text>

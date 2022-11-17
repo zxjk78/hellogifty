@@ -20,6 +20,7 @@ const DetailScreen = ({ route }) => {
 
     (async () => {
       const gifticonInfo = await fetchMyGifticonDetail(route.params.item.id);
+      console.log(gifticonInfo)
       setInfo(gifticonInfo);
     })();
 
@@ -59,7 +60,7 @@ const DetailScreen = ({ route }) => {
     // 사용완료 api 보내고
     isUsedGifticon(route.params.item.id);
     setModalVisible(false);
-    navigation.navigate('MyCouponScreen', {detailRefresh: 'ho'});
+    navigation.navigate('MyCouponScreen', {detailRefresh: 'Yes'});
   };
 
   const deleteTicket = async () => {
@@ -68,7 +69,7 @@ const DetailScreen = ({ route }) => {
     await deleteMyGifticon(route.params.item.id);
     // route.params.refresh();
     setModalVisible2(!modalVisible2);
-    navigation.navigate('MyCouponScreen', {detailRefresh: 'ho'});
+    navigation.navigate('MyCouponScreen', {detailRefresh: 'Yes'});
   };
 
   return (
@@ -165,8 +166,8 @@ const DetailScreen = ({ route }) => {
           >
             <Pressable onPress={handleImg} style={styles.imgModal}>
               <CustomImage
-                src={API_URL + 'image/gifticon?path=' + info.img}
-                style={styles.img}
+                source={API_URL + 'image/gifticon?path=' + info.img}
+                style={styles.imgModal}
               />
             </Pressable>
           </Modal>
@@ -175,7 +176,7 @@ const DetailScreen = ({ route }) => {
           <View style={{ flex: 8 }}>
             <Pressable onPress={handleImg}>
               <CustomImage
-                src={API_URL + 'image/gifticon?path=' + info.img}
+                source={API_URL + 'image/gifticon?path=' + info.img}
                 style={styles.img}
               />
 

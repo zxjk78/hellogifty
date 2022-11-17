@@ -17,7 +17,7 @@ const Form1 = ({ info, next }) => {
   const [price, setPrice] = useState(info.price);
   const [title, setTitle] = useState(info.title);
   const [content, setContent] = useState(info.content);
-  console.log(info);
+
   return (
     <View>
       <Text style={{ marginVertical: 5 }}> 가격과 설명을 적어주세요 (1/3)</Text>
@@ -67,7 +67,7 @@ const Form1 = ({ info, next }) => {
         multiline
         onChangeText={setContent}
         // value={description}
-        defaultValue={info.description}
+        defaultValue={info.content}
         placeholder="상품 설명을 입력해 주세요"
         keyboardType="string"
       />

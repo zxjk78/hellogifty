@@ -16,6 +16,7 @@ import Form1 from "./Form1";
 import Form2 from "./Form2";
 import Form3 from "./Form3";
 import { getGifticonDetail, sellMyGifticon } from "../../api/gifticon";
+import { API_URL } from "../../api/config/http-config";
 
 const SellingTicket = ({ onClose, item, refresh }) => {
   const [modalVisible, setModalVisible] = useState(true);
@@ -25,6 +26,8 @@ const SellingTicket = ({ onClose, item, refresh }) => {
     title: "",
     content: "",
     imagePath: "1",
+    originalImgPath: '1',
+    picture: "1",
     id: item.id,
     brandName: item.brandName,
     brandImgPath: item.brandImgPath
@@ -36,8 +39,17 @@ const SellingTicket = ({ onClose, item, refresh }) => {
   useEffect(() => {
     (async () => {
       const data = await getGifticonDetail(item.id);
-      console.log(data);
-      setSellingInfo({...data, ...item, price:0, originalImgPath:data.img, title:'', content: '', imagePath: data.img});
+      setSellingInfo({
+        id: item.id,
+        brandImgPath: item.brandImgPath,
+        brandName: item.brandName,
+        expirationDate: item.expirationDate,
+        name: item.name,
+        imagePath: API_URL + 'image/gifticon?path=' + data.img,
+        originalImgPath: API_URL + 'image/gifticon?path=' + data.img,
+        noCropImg: data.img,
+        picture: "",
+      });
     })();
   }, [item]);
 
@@ -56,6 +68,8 @@ const SellingTicket = ({ onClose, item, refresh }) => {
 
   const next = (data) => {
     setSellingInfo((prev) => {
+      // console.log(prev, 'prev')
+      // console.log(data, '넘어온 데이터 next')
       return { ...prev, ...data };
     });
     setFormIdx((prev) => prev + 1);
@@ -63,6 +77,8 @@ const SellingTicket = ({ onClose, item, refresh }) => {
 
   const back = (data) => {
     setSellingInfo((prev) => {
+      // console.log(prev, 'prev')
+      // console.log(data, '넘어온 데이터 back')
       return { ...prev, ...data };
     });
     setFormIdx((prev) => prev - 1);
