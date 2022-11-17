@@ -13,7 +13,6 @@ const ShoppingScreen = () => {
   return (
     <View>
       <SearchKeywordInput />
-      <View style={{ marginTop: "5%" }}></View>
     </View>
   );
 };

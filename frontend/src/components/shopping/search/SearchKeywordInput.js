@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Keyboard } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Keyboard, ScrollView } from 'react-native';
 
 import Icon from 'react-native-vector-icons/AntDesign';
 import { searchByKeyword } from '../../../api/search';
 import { GlobalStyles } from '../../../constants/style';
 import SearchResultList from './SearchResultList';
 const SearchKeywordInput = () => {
-  const [searchKeyword, setSearchKeyword] = useState('');
   const [searchOption, setSearchOption] = useState({
     keyWord: '',
     largeCategoryId: '',
@@ -17,9 +16,11 @@ const SearchKeywordInput = () => {
   const [resultDataList, setResultDataList] = useState(null);
   const [inputBorderColor, setInputBorderColor] = useState('white');
   const [isLoading, setIsLoading] = useState(true);
+  const [refresh, setRefresh] = useState(false);
 
   const onDelete = () => {
-    setSearchKeyword('');
+    setSearchOption((prev) => {return {...prev, keyWord: ""}});
+    setRefresh(!refresh);
   };
 
   const inputStyle = {
@@ -47,7 +48,7 @@ const SearchKeywordInput = () => {
       // console.log(result, '처음 데이터 가져왔습니다.');
       setIsLoading(false);
     })();
-  }, []);
+  }, [refresh]);
 
   const search = () => {
     (async () => {
@@ -63,19 +64,15 @@ const SearchKeywordInput = () => {
         <TextInput
           style={inputStyle}
           placeholder={'브랜드명 또는 찾고 싶은 제품을 입력해 주세요.'}
-          value={searchKeyword}
-          onChangeText={(text) =>
-            setSearchOption((prev) => {
-              return { ...prev, keyWord: text };
-            })
-          }
+          value={searchOption.keyWord}
+          onChangeText={(text) => setSearchOption((prev) => {return {...prev, keyWord: text}})}
           onFocus={inputFocus}
           onBlur={inputBlur}
         />
-        {searchKeyword.length > 0 && (
+        {searchOption.keyWord.length > 0 && (
           <Icon name="search1" onPress={search} style={styles.searchIcon} />
         )}
-        {searchKeyword.length > 0 && (
+        {searchOption.keyWord.length > 0 && (
           <Icon
             name="closecircle"
             onPress={onDelete}
@@ -83,9 +80,11 @@ const SearchKeywordInput = () => {
           />
         )}
       </View>
-      {!isLoading && resultDataList && (
-        <SearchResultList resultDataList={resultDataList} />
-      )}
+      <ScrollView>
+        {!isLoading && resultDataList && (
+          <SearchResultList resultDataList={resultDataList} />
+        )}
+      </ScrollView>
     </>
   );
 };

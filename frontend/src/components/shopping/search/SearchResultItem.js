@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { GlobalStyles } from '../../../constants/style';
 import { useNavigation } from '@react-navigation/native';
@@ -18,7 +18,7 @@ const SearchResultItem = ({ resultItem }) => {
     });
   };
   return (
-    <Pressable style={styles.container} onPress={handleDetail}>
+    <TouchableOpacity style={styles.container} onPress={handleDetail}>
       <View style={styles.imgContainer}>
         <CustomImage
           source={API_URL + 'image/gifticon-cropped?path=' + resultItem.cropImg}
@@ -45,7 +45,7 @@ const SearchResultItem = ({ resultItem }) => {
         <Text>{resultItem.userName}</Text>
         <Text>{AddComma(resultItem.price)} 원</Text>
       </View>
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 
@@ -54,9 +54,12 @@ export default SearchResultItem;
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    height: 100,
+    height: 150,
     backgroundColor: '#fff',
     padding: 8,
+    borderWidth: 1,
+    // borderRadius: 5,
+    borderColor: 'black',
   },
   imgContainer: {
     flex: 2,

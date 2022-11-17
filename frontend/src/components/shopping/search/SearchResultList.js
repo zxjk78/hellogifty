@@ -4,8 +4,8 @@ import SearchResultItem from './SearchResultItem';
 const SearchResultList = ({ resultDataList }) => {
   // console.log(resultDataList.content.length, 'dataList~~');
   return (
-    <ScrollView>
-      <View style={{ marginBottom: 70 }}>
+    <>
+      <ScrollView style={{ marginBottom: 70 }}>
         {resultDataList.content.length > 0 ? (
           resultDataList.content.map((resultItem) => (
             <SearchResultItem resultItem={resultItem} key={resultItem.id} />
@@ -15,8 +15,8 @@ const SearchResultList = ({ resultDataList }) => {
             <Text>검색 결과가 없습니다.</Text>
           </View>
         )}
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </>
   );
 };
 
