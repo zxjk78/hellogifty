@@ -14,6 +14,7 @@ export const fetchMyInfo = async () => {
 export const fetchUserInfo = async (userId) => {
   try {
     const res = await axiosAuthInstance.get('user/' + userId);
+    // console.log('내 정보 받아오기 응답:', res.data.data);
 
     return res.data.data;
   } catch (error) {

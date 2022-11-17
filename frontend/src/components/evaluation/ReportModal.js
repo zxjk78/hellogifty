@@ -3,16 +3,18 @@ import React, { useState, useEffect } from 'react';
 import { submitUserReport } from '../../api/trade';
 import { GlobalStyles } from '../../constants/style';
 import SelectDropdown from 'react-native-select-dropdown';
+import { fetchUserInfo } from '../../api/profile';
+import { Button } from 'react-native-paper';
 
-const ReportModal = ({ oppoId, tradeId, visible }) => {
+const ReportModal = ({ oppoId, tradeId, visible, onClose }) => {
   const [content, setContent] = useState('');
   const [reason, setReason] = useState(''); //     BAD_WORD, INVALID_PRODUCT, TAKE_AND_RUN
-
+  const [reportUserName, setReportUserName] = useState('');
   useEffect(() => {
     (async () => {
       const res = await fetchUserInfo(oppoId);
       console.log('신고할 유저 찾기', res);
-      const reportUserName = res.name;
+      setReportUserName(res.name);
     })();
   }, []);
 
@@ -20,6 +22,10 @@ const ReportModal = ({ oppoId, tradeId, visible }) => {
     const res = await submitUserReport(tradeId, oppoId, content, reason);
     if (res) {
       // toast 써서 보여주면 될듯
+      console.log('신고접수 성공');
+      onClose();
+    } else {
+      console.log('신고접수 실패');
     }
   };
 
@@ -29,7 +35,7 @@ const ReportModal = ({ oppoId, tradeId, visible }) => {
         <View style={{ flex: 1 }}>
           <Text style={styles.header}>신고하기</Text>
           <Text style={{ fontSize: 15, marginTop: 3 }}>
-            {reportUserName} 유저를 신고하시는 이유가 무엇인가요?
+            {reportUserName} 님을 신고하시는 이유가 무엇인가요?
           </Text>
         </View>
         <SelectDropdown
@@ -66,7 +72,7 @@ const ReportModal = ({ oppoId, tradeId, visible }) => {
             </View>
           )}
           renderCustomizedRowChild={(selectedItem) => (
-            <View>{selectedItem.value}</View>
+            <Text>{selectedItem.value}</Text>
           )}
         />
         <Text style={{ fontSize: 15, marginTop: 3 }}>
@@ -76,8 +82,7 @@ const ReportModal = ({ oppoId, tradeId, visible }) => {
           multiline
           numberOfLines={3}
           onChangeText={setContent}
-          value={value}
-          style={{ padding: 10 }}
+          style={{ padding: 10, borderWidth: 2 }}
         />
 
         <Button mode="contained" onPress={handleSubmitReport}>

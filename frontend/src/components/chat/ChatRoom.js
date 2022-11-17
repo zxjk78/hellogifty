@@ -142,7 +142,6 @@ const ChatRoom = ({ chatRoomId, userId, tradeState, tradeId }) => {
       const success = await completeTrade(chatRoomId);
       if (success) {
         console.log('거래를 완료하였습니다.');
-        // setIsEvalModalOpen(true);
         setIsTradeDone(true);
         const dataDto = {
           chatRoomId: chatRoomId, // Number
@@ -179,8 +178,9 @@ const ChatRoom = ({ chatRoomId, userId, tradeState, tradeId }) => {
   };
   const handleSubmitEvaluation = async (tradeId, oppoId, score) => {
     const res = await submitUserEvaluation(tradeId, oppoId, score);
-
-    isEvalModalOpen(false);
+    if (res) {
+      setIsEvalModalOpen(false);
+    }
   };
   return (
     <View style={{ flex: 1 }}>
@@ -204,6 +204,9 @@ const ChatRoom = ({ chatRoomId, userId, tradeState, tradeId }) => {
             userId={userId}
             tradeId={tradeId}
             onSubmit={handleSubmitEvaluation}
+            onClose={() => {
+              setIsEvalModalOpen(false);
+            }}
           />
 
           <Button
@@ -240,7 +243,7 @@ const ChatRoom = ({ chatRoomId, userId, tradeState, tradeId }) => {
                 case 'TRADE':
                   choice = (
                     <TradeBubble
-                      isMe={+msg.userId === +userId}
+                      isSeller={isSeller()}
                       key={index}
                       msg={msg}
                       openModal={() => {

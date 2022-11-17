@@ -74,7 +74,7 @@ export const submitUserEvaluation = async (tradeId, oppoId, score) => {
 
     console.log('평가 요청 응답데이터', res.data);
 
-    // return res.data.data;
+    return res.data.success;
   } catch (error) {
     console.log(error);
   }
@@ -86,9 +86,9 @@ export const submitUserReport = async (tradeId, oppoId, content, reason) => {
       { content, reason }
     );
 
-    console.log('평가 요청 응답데이터', res.data);
+    // console.log('신고 요청 응답데이터', res.data);
 
-    // return res.data.data;
+    return res.data.success;
   } catch (error) {
     console.log(error);
   }

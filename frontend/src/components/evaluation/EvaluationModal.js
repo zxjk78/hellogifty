@@ -4,6 +4,8 @@ import Slider from '@react-native-community/slider';
 import { GlobalStyles } from '../../constants/style';
 import { Button } from 'react-native-paper';
 import ReportModal from './ReportModal';
+import Icon from 'react-native-vector-icons/AntDesign';
+
 // /trade/{id}/evaluation/user/{userId} id: tradePostId, userId: 상대방 id
 const EvaluationModal = ({
   userId,
@@ -12,8 +14,9 @@ const EvaluationModal = ({
   visible,
   tradeId,
   onSubmit,
+  onClose,
 }) => {
-  const [evalScore, setEvalScore] = useState(0);
+  const [evalScore, setEvalScore] = useState(10);
   const oppoId = userId == buyerId ? sellerId : buyerId;
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   return (
@@ -22,9 +25,22 @@ const EvaluationModal = ({
         oppoId={oppoId}
         tradeId={tradeId}
         visible={isReportModalOpen}
+        onClose={() => {
+          setIsReportModalOpen(false);
+        }}
       />
       <Modal animationType="slide" visible={visible} transparent={true}>
         <View style={styles.container}>
+          <Icon
+            name="closecircle"
+            onPress={onClose}
+            style={{
+              fontSize: 25,
+              position: 'absolute',
+              top: 30,
+              right: 30,
+            }}
+          />
           <View style={{ flex: 1 }}>
             <Text style={styles.header}>
               {oppoId === buyerId ? '구매자' : '판매자'} 평가하기
@@ -45,6 +61,7 @@ const EvaluationModal = ({
               minimumValue={0}
               maximumValue={10}
               step={1}
+              value={10}
               minimumTrackTintColor={GlobalStyles.colors.mainPrimary}
               maximumTrackTintColor="#000000"
               thumbTintColor="blue"
@@ -58,10 +75,11 @@ const EvaluationModal = ({
             평가완료
           </Button>
           <Button
-            mode="contained"
+            mode="outlined"
             onPress={() => {
               setIsReportModalOpen(true);
             }}
+            style={{ width: '50%' }}
           >
             신고하기
           </Button>
