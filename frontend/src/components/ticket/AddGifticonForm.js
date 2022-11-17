@@ -33,7 +33,7 @@ const AddGifticonForm = ({
   onSmCtChange,
   onLgCtChange,
 }) => {
-  const [categoryId, setCategoryId] = useState(-1);
+  const [largeChange, setLargeChange] = useState(false);
 
   const [largeCategoryId, setLargeCategoryId] = useState(-1);
 
@@ -111,7 +111,10 @@ const AddGifticonForm = ({
             <View>
               <CategoryDropdown
                 categoryItem={largeCategoryData}
-                onChange={(lgCId) => setLargeCategoryId(lgCId)}
+                onChange={(lgCId) => {
+                  setLargeCategoryId(lgCId);
+                  setLargeChange(!largeChange);
+                }}
                 defaultTxt="대분류"
               />
             </View>
@@ -121,6 +124,7 @@ const AddGifticonForm = ({
                 categoryItem={smallCategoryData[largeCategoryId] || null}
                 onChange={(smCId) => handleSmallCategory(smCId)}
                 defaultTxt="소분류"
+                largeChanged={largeChange}
               />
             </View>
           </View>
