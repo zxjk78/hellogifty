@@ -1,13 +1,13 @@
 import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import React, { useEffect } from 'react';
-import { Button } from 'react-native-paper';
+import { Button, IconButton } from 'react-native-paper';
 import { TicketListItem } from '../components/ticket';
 import { GlobalStyles } from '../constants/style';
 import { logout } from '../api/auth';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState } from 'react';
-import { fetchMyInfo } from '../api/profile';
+import { fetchMyInfo, fetchUserInfo } from '../api/profile';
 import LevelBadgeContainer from '../components/profile/LevelBadgeContainer';
 import { List } from 'react-native-paper';
 import CustomImage from '../components/UI/CustomImage';
@@ -16,7 +16,6 @@ import { AddComma } from '../utils/regexp';
 
 const renderItem = ({ item }) => <TicketListItem item={item} />;
 
-// const ProfileScreen = ({ navigation }) => {
 const ProfileScreen = ({}) => {
   const route = useRoute();
   const navigation = useNavigation();
@@ -30,9 +29,13 @@ const ProfileScreen = ({}) => {
       // 다른 유저 프로파일 클릭으로 타고 들어온거면 타인 프로필, 내 탭 클릭해서 들어오면 내 탭 프로필
       if (route.params?.userId && route.params?.userId !== userId) {
         setIsOther(true);
+
+        const info = await fetchUserInfo();
+        console.log('일반 유저 정보', info);
+        setUserInfo(info);
       } else {
         const info = await fetchMyInfo();
-        console.log(info);
+        console.log('내정보', info);
         setUserInfo(info);
       }
     })();
@@ -100,15 +103,39 @@ const ProfileScreen = ({}) => {
                         description={
                           record.gifticonInfo.expirationDate + ' 까지'
                         }
+                        onPress={
+                          () => console.log('구매상품 클릭해서 타고들어갈래요') // 이게 아니라, 살짝 슬라이드 해서 보여주든가 해야 함
+                        }
                         left={() => (
                           <CustomImage
-                            src={
+                            source={
                               API_URL +
                               'image/gifticon-cropped?path=' +
                               record.image
                             }
-                            style={{ width: 30, height: 30 }}
+                            style={{ width: 40, height: 40 }}
                           />
+                        )}
+                        right={() => (
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              alignItems: 'center',
+                            }}
+                          >
+                            <IconButton
+                              icon="account"
+                              iconColor={GlobalStyles.colors.mainPrimary}
+                              size={30}
+                              onPress={() => console.log('유저프로필 볼래요')}
+                            />
+                            <IconButton
+                              icon="alarm-light"
+                              iconColor={'red'}
+                              size={30}
+                              onPress={() => console.log('신고할래요')}
+                            />
+                          </View>
                         )}
                       />
                     ))}
@@ -125,12 +152,12 @@ const ProfileScreen = ({}) => {
                       description={AddComma(+record.price) + ' 원'}
                       left={() => (
                         <CustomImage
-                          src={
+                          source={
                             API_URL +
                             'image/gifticon-cropped?path=' +
                             record.image
                           }
-                          style={{ width: 30, height: 30 }}
+                          style={{ width: 40, height: 40 }}
                         />
                       )}
                     />

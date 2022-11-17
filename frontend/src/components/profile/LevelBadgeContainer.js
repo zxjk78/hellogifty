@@ -11,7 +11,7 @@ const badgeArr = [
 ];
 
 const LevelBadgeContainer = ({ level }) => {
-  const expArr = [50, 100, 150, 200];
+  const expArr = [50, 120, 150, 200];
   const [isLoading, setIsLoading] = useState(true);
   const [nxtLevelIdx, setNxtLevelIdx] = useState(0);
   const calculateBadge = (level) => {

@@ -5,7 +5,9 @@ import { GlobalStyles } from '../../constants/style';
 import SelectDropdown from 'react-native-select-dropdown';
 import { fetchUserInfo } from '../../api/profile';
 import { Button } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/AntDesign';
 
+// 상대, 거래 아이디필요
 const ReportModal = ({ oppoId, tradeId, visible, onClose }) => {
   const [content, setContent] = useState('');
   const [reason, setReason] = useState(''); //     BAD_WORD, INVALID_PRODUCT, TAKE_AND_RUN
@@ -32,6 +34,16 @@ const ReportModal = ({ oppoId, tradeId, visible, onClose }) => {
   return (
     <Modal animationType="slide" visible={visible} transparent={true}>
       <View style={styles.container}>
+        <Icon
+          name="closecircle"
+          onPress={onClose}
+          style={{
+            fontSize: 25,
+            position: 'absolute',
+            top: 30,
+            right: 30,
+          }}
+        />
         <View style={{ flex: 1 }}>
           <Text style={styles.header}>신고하기</Text>
           <Text style={{ fontSize: 15, marginTop: 3 }}>

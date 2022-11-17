@@ -12,7 +12,6 @@ const ChatListItem = ({ item }) => {
   const [opponentName, setOpponentName] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   // 채팅방이 존재하는 경우, id를 들고 입장
-
   useEffect(() => {
     (async () => {
       setIsLoading(true);

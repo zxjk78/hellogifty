@@ -10,7 +10,6 @@ export const phoneNumExp = /.*/;
 export const passwordRegExp = /.*/;
 
 // 숫자 3개씩마다 쉼표 넣어주는 함수
-
 export function AddComma(num) {
   const regexp = /\B(?=(\d{3})+(?!\d))/g;
   return num.toString().replace(regexp, ',');

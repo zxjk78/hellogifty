@@ -20,7 +20,7 @@ const ChatList = ({ list, isSale, isBuying }) => {
       <FlatList
         data={list}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.chatRoomId}
       />
     </View>
   );

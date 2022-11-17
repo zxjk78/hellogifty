@@ -33,7 +33,6 @@ export const completeTrade = async (chatroomId) => {
     const res = await axiosAuthInstance.post(
       'chatroom/' + chatroomId + '/done'
     );
-    // console.log(res.data);
     return res.data.success;
   } catch (error) {
     console.log('거래 완료하기', error);
@@ -42,7 +41,6 @@ export const completeTrade = async (chatroomId) => {
 export const fetchMyChatRoom = async () => {
   try {
     const res = await axiosAuthInstance.get('chatroom/my');
-    // console.log(res.data);
     return res.data.data;
   } catch (error) {
     console.log('내 참여 채팅방 조회', error);
@@ -54,8 +52,6 @@ export const fetchMyChatRoom = async () => {
 export const fetchTradeItemDetail = async (tradeId) => {
   try {
     const res = await axiosAuthInstance.get('trade/' + tradeId);
-
-    console.log('거래정보 요청 응답데이터', res.data.data);
 
     return res.data.data;
   } catch (error) {
