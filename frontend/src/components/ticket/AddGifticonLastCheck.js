@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
-import { Button } from 'react-native-paper';
+import { Button, IconButton } from 'react-native-paper';
 
 import React from 'react';
 import { addGifticon } from '../../api/gifticon';
 import Toast from 'react-native-toast-message';
 import { useNavigation } from '@react-navigation/native';
-
+import { smallCategoryDict } from '../../constants/data/idDictionary';
 const showToast = () => {
   Toast.show({
     type: 'success',
@@ -19,10 +19,12 @@ const showToast = () => {
 };
 
 const LastCheckItem = ({ item, idx }) => {
-  // console.log(item);
+  // console.log(Object.keys(item));
   return (
-    <View style={{}}>
-      <View style={{}}>
+    <View
+      style={{ flexDirection: 'row', borderWidth: 1, margin: 5, padding: 5 }}
+    >
+      <View>
         <Text
           style={{
             color: 'white',
@@ -45,8 +47,25 @@ const LastCheckItem = ({ item, idx }) => {
         source={{
           uri: `data:image/jpeg;base64,${item.couponImg}`,
         }}
-        style={{ width: 150, height: 150, zIndex: 1 }}
+        style={{ width: 100, height: 100, zIndex: 1, marginRight: 10 }}
       />
+      <View>
+        <View>
+          <Text>이름: {item.name}</Text>
+          <Text>카테고리이름: {smallCategoryDict[item.categoryId]}</Text>
+        </View>
+        <View>
+          <Text>유효기한: {item.expirationDate}까지</Text>
+          <Text>번호: {item.number}</Text>
+        </View>
+      </View>
+      <View>
+        <IconButton
+          icon="delete"
+          mode="contained"
+          onPress={() => console.log('삭제')}
+        />
+      </View>
     </View>
   );
 };
