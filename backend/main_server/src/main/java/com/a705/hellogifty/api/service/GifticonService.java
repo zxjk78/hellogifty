@@ -100,7 +100,7 @@ public class GifticonService {
 //        String extension = "png";
 //        data:image/jpeg;base64,
 //        String defaultPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"gifticon"+File.separator;
-        String defaultPath = System.getProperty("user.dir")+gifticonImagePath;
+        String defaultPath = gifticonImagePath+File.separator;
         File img = new File(defaultPath+user.getEmail()+"_"+fileUploadNow+"."+extension);
 
         Base64.Decoder decoder = Base64.getDecoder();

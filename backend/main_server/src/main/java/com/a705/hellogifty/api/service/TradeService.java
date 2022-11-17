@@ -44,7 +44,8 @@ public class TradeService {
 
     @Transactional
     public TradePostDetailResponseDto tradePostDetail(User user, Long tradePostId) {
-        String defaultPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"gifticonCropImg"+File.separator;
+//        String defaultPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"gifticonCropImg"+File.separator;
+//        String defaultPath = gifticonCroppedImagePath+File.separator;
         TradePost tradePost = tradePostRepository.findById(tradePostId).orElseThrow(TradePostNotFoundException::new);
         return new TradePostDetailResponseDto(tradePost);
     }
@@ -60,8 +61,9 @@ public class TradeService {
         String base = basesplit[1];
 //        String extension = "png";
 //        String defaultPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"gifticonCropImg"+File.separator;
-        String defaultPath = System.getProperty("user.dir")+gifticonCroppedImagePath;
-        File img = new File(defaultPath+"crop"+"_"+originalImgName);
+//        String defaultPath = System.getProperty("user.dir")+gifticonCroppedImagePath;
+        String defaultPath = gifticonCroppedImagePath+File.separator;
+        File img = new File(defaultPath+"crop"+"_"+originalImgName+(new Date()).toString());
 
         Base64.Decoder decoder = Base64.getDecoder();
         byte[] decodedBytes = decoder.decode(base.getBytes());
