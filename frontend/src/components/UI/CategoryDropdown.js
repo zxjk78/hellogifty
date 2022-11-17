@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import SelectDropdown from 'react-native-select-dropdown';
 import {
   largeCategoryDict,
@@ -12,13 +12,23 @@ const CategoryDropdown = ({
   defaultTxt,
   largeChanged,
 }) => {
-  const [selectedItem, setSelectedItem] = useState(null);
-
+  const dropdownRef = useRef({});
+  const selectItem = (selectedItem) => {
+    return (
+      <View>
+        {selectedItem ? (
+          <Text>{selectedItem.value}</Text>
+        ) : (
+          <Text>{defaultTxt}</Text>
+        )}
+      </View>
+    );
+  };
+  // 소분류 영역이면 리셋시킴
   useEffect(() => {
-    // console.log('대분류 바뀜');
     if (categoryItem?.length == 2) {
-      console.log('바뀌고 소분류 변경');
-      setSelectedItem(null);
+      // 라이브러리에 메소드 사용법이 적혀있었음
+      dropdownRef.current.reset();
     }
   }, [largeChanged]);
 
@@ -26,6 +36,7 @@ const CategoryDropdown = ({
     <View>
       <SelectDropdown
         data={categoryItem}
+        ref={dropdownRef}
         onSelect={(selectedItem) => {
           // 여기서 set함수 써서 state 변경
           // console.log('내가 선택한 선택지 아이디값', selectedItem.key);
@@ -41,15 +52,7 @@ const CategoryDropdown = ({
         }}
         buttonStyle={styles.commonSelectStyle}
         dropdownStyle={{ ...styles.commonSelectStyle, ...styles.itemStyle }}
-        renderCustomizedButtonChild={(selectedItem) => (
-          <View>
-            {selectedItem ? (
-              <Text>{selectedItem.value}</Text>
-            ) : (
-              <Text>{defaultTxt}</Text>
-            )}
-          </View>
-        )}
+        renderCustomizedButtonChild={(selectedItem) => selectItem(selectedItem)}
         renderCustomizedRowChild={(selectedItem) => (
           <View>{selectedItem.value}</View>
         )}
