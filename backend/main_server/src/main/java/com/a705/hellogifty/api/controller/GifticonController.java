@@ -2,6 +2,7 @@ package com.a705.hellogifty.api.controller;
 
 import com.a705.hellogifty.aop.LoginUser;
 import com.a705.hellogifty.api.domain.entity.User;
+import com.a705.hellogifty.api.dto.gifticon.GifiticonToValidateDataDto;
 import com.a705.hellogifty.api.dto.basic_response.CommonResult;
 import com.a705.hellogifty.api.dto.basic_response.ManyResult;
 import com.a705.hellogifty.api.dto.basic_response.OneResult;
@@ -11,20 +12,13 @@ import com.a705.hellogifty.api.dto.gifticon.GifticonListResponseDto;
 import com.a705.hellogifty.api.dto.gifticon.GifticonRegisterRequestDto;
 import com.a705.hellogifty.api.service.GifticonService;
 import com.a705.hellogifty.api.service.ResponseService;
-import com.fasterxml.jackson.databind.ser.Serializers;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Base64;
 
 @Api(tags = "")
 @RequiredArgsConstructor
@@ -83,6 +77,12 @@ public class GifticonController {
     public CommonResult myGifticonDelete (@ApiIgnore @LoginUser User loginUSer, @PathVariable Long gifticonId) {
         gifticonService.myGifticonDelete(loginUSer, gifticonId);
         return responseService.getSuccessResult();
+    }
+
+    @ApiOperation(value="기프티콘 정보 추출 및 유효성 검사", notes = "기프티콘 정보 추출 및 유효성 검사")
+    @PostMapping("/validation")
+    public CommonResult validateGifticons (@RequestBody GifiticonToValidateDataDto gifiticonToValidateDataDto) {
+        return responseService.getManyResult(gifticonService.validateGifticons(gifiticonToValidateDataDto.getBase64StringList()));
     }
 
 }
