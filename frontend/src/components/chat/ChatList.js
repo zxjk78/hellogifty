@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, FlatList, Pressable } from 'react-native';
 import ChatListItem from './ChatListItem';
 import { GlobalStyles } from '../../constants/style';
-const ChatList = ({ list, isOngoing }) => {
+const ChatList = ({ list, isSale, isBuying }) => {
   const renderItem = ({ item }) => <ChatListItem item={item} />;
   return (
     <View>
@@ -14,13 +14,13 @@ const ChatList = ({ list, isOngoing }) => {
         }}
       >
         <Text style={{ color: '#fff', fontWeight: 'bold' }}>
-          {isOngoing ? '거래 중' : '거래 완료'}
+          {isSale ? '판매 중' : isBuying ? '구매 중' : '거래 완료'}
         </Text>
       </View>
       <FlatList
         data={list}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.chatRoomId}
       />
     </View>
   );

@@ -3,7 +3,10 @@ import React, { useState, useEffect } from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import MyTicketScreen from './MyTicketScreen';
 import { Title } from 'react-native-paper';
-import { fetchMyGifticonList, fetchMySellingGifticonList } from '../api/gifticon';
+import {
+  fetchMyGifticonList,
+  fetchMySellingGifticonList,
+} from '../api/gifticon';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { AddTicketModal } from '../components/ticket';
@@ -15,7 +18,7 @@ import AddGifticonFromFileModal from '../components/ticket/AddGifticonFromFileMo
 
 const TopTab = createMaterialTopTabNavigator();
 
-const MyCouponScreen = ({route: params}) => {
+const MyCouponScreen = ({ route: params }) => {
   const [possession, setPossession] = useState([]);
   const [used, setUsed] = useState([]);
   const [selling, setSelling] = useState([]);
@@ -23,12 +26,13 @@ const MyCouponScreen = ({route: params}) => {
   const [mmsGifticonArr, setMmsGifticonArr] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [refresh, setRefresh] = useState(false);
-  const [isAddGifticonFileMoadlOpen, setIsAddGifticonFileMoadlOpen] = useState(false);
+  const [isAddGifticonFileMoadlOpen, setIsAddGifticonFileMoadlOpen] =
+    useState(false);
 
-  // route 통해서 refresh 하기 위한 요상한 로직 
+  // route 통해서 refresh 하기 위한 요상한 로직
   if (params.params !== undefined) {
     setRefresh(!refresh);
-    params.params = undefined
+    params.params = undefined;
   }
 
   // const mmsDummyData =
@@ -47,7 +51,7 @@ const MyCouponScreen = ({route: params}) => {
         } else if (!!item.isUsed) {
           usedList.push(item);
         } else if (!!item.onTrade) {
-          sellingList.push(item)
+          sellingList.push(item);
         }
       });
       setPossession(possessionList);
@@ -103,6 +107,9 @@ const MyCouponScreen = ({route: params}) => {
     <>
       <AddGifticonFromFileModal
         visible={isAddGifticonFileMoadlOpen}
+        onRefresh={() => {
+          setRefresh((prev) => !prev);
+        }}
         onClose={() => setIsAddGifticonFileMoadlOpen(false)}
       />
 
