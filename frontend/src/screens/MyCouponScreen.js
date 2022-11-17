@@ -29,7 +29,7 @@ const MyCouponScreen = ({route: params}) => {
   if (params.params !== undefined) {
     setRefresh(!refresh);
     params.params = undefined
-  } else { console.log('undefined 떴어요~~')}
+  }
 
   // const mmsDummyData =
 

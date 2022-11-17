@@ -59,7 +59,7 @@ const DetailScreen = ({ route }) => {
     // 사용완료 api 보내고
     isUsedGifticon(route.params.item.id);
     setModalVisible(false);
-    navigation.navigate('MyCouponScreen', {detailRefresh: 'ho'});
+    navigation.navigate('MyCouponScreen', {detailRefresh: 'Yes'});
   };
 
   const deleteTicket = async () => {
@@ -68,7 +68,7 @@ const DetailScreen = ({ route }) => {
     await deleteMyGifticon(route.params.item.id);
     // route.params.refresh();
     setModalVisible2(!modalVisible2);
-    navigation.navigate('MyCouponScreen', {detailRefresh: 'ho'});
+    navigation.navigate('MyCouponScreen', {detailRefresh: 'Yes'});
   };
 
   return (
