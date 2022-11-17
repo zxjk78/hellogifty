@@ -2,8 +2,9 @@ import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 import React from 'react';
 import { GlobalStyles } from '../../../constants/style';
 import { useNavigation } from '@react-navigation/native';
-import B64Image from '../../UI/B64Image';
 import { API_URL } from '../../../api/config/http-config';
+import { AddComma } from '../../../utils/regexp';
+import CustomImage from '../../UI/CustomImage';
 
 const SearchResultItem = ({ resultItem }) => {
   const navigation = useNavigation();
@@ -19,14 +20,14 @@ const SearchResultItem = ({ resultItem }) => {
   return (
     <Pressable style={styles.container} onPress={handleDetail}>
       <View style={styles.imgContainer}>
-        <B64Image
+        <CustomImage
           src={API_URL + 'image/gifticon-cropped?path=' + resultItem.cropImg}
           style={{ width: '100%', height: '100%', resizeMode: 'center' }}
         />
       </View>
       <View style={styles.contentContainer}>
         <View style={styles.brand}>
-          <B64Image
+          <CustomImage
             src={API_URL + 'image/brand?path=' + resultItem.brandImg}
             style={{ width: 20, height: 20, borderRadius: 5 }}
           />
@@ -42,7 +43,7 @@ const SearchResultItem = ({ resultItem }) => {
       </View>
       <View style={styles.otherInfo}>
         <Text>{resultItem.userName}</Text>
-        <Text>{resultItem.price} 원</Text>
+        <Text>{AddComma(resultItem.price)} 원</Text>
       </View>
     </Pressable>
   );

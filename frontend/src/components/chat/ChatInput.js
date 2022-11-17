@@ -14,7 +14,8 @@ const ChatInput = ({ onSubmit }) => {
     <View
       style={{
         flexDirection: 'row',
-        width: '100%',
+        width: '90%',
+        marginLeft: '5%',
         alignItems: 'center',
         justifyContent: 'center',
       }}

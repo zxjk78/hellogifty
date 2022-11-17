@@ -11,7 +11,7 @@ const badgeArr = [
 ];
 
 const LevelBadgeContainer = ({ level }) => {
-  const expArr = [10, 20, 30, 40];
+  const expArr = [50, 100, 150, 200];
   const [isLoading, setIsLoading] = useState(true);
   const [nxtLevelIdx, setNxtLevelIdx] = useState(0);
   const calculateBadge = (level) => {
@@ -41,9 +41,9 @@ const LevelBadgeContainer = ({ level }) => {
               color: GlobalStyles.colors.mainPrimary,
             }}
           >
-            현재 나의 레벨은{' '}
+            현재 나의 점수는{' '}
             <Text style={{ color: GlobalStyles.colors.mainSecondary }}>
-              {level}
+              {level}점
             </Text>{' '}
             이에요
           </Text>
@@ -73,7 +73,7 @@ const LevelBadgeContainer = ({ level }) => {
           <Text
             style={{ marginTop: 10, alignSelf: 'flex-end', marginRight: 10 }}
           >
-            {`다음 티어까지 앞으로 ${expArr[nxtLevelIdx] - level}레벨 남았어요`}
+            {`다음 등급까지 앞으로 ${expArr[nxtLevelIdx] - level}점 남았어요`}
           </Text>
         </>
       )}
