@@ -207,12 +207,12 @@ public class TradeService {
     }
 
     @Transactional
-    @Scheduled(cron = "0 45 14 * * *", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")
     public void updateTradeState () {
-        System.out.println(LocalDateTime.now());
-//        List<TradePost> tradePostList = tradePostRepository.findByGifticon_ExpirationDateBefore(LocalDate.now()).orElseThrow(TradePostNotFoundException::new);
-//        for (TradePost tradePost : tradePostList) {
-//            tradePost.changeStateToExpired();
-//        }
+//        System.out.println(LocalDateTime.now());
+        List<TradePost> tradePostList = tradePostRepository.findByGifticon_ExpirationDateBefore(LocalDate.now()).orElseThrow(TradePostNotFoundException::new);
+        for (TradePost tradePost : tradePostList) {
+            tradePost.changeStateToExpired();
+        }
     }
 }
