@@ -21,14 +21,14 @@ const SearchResultItem = ({ resultItem }) => {
     <Pressable style={styles.container} onPress={handleDetail}>
       <View style={styles.imgContainer}>
         <CustomImage
-          src={API_URL + 'image/gifticon-cropped?path=' + resultItem.cropImg}
+          source={API_URL + 'image/gifticon-cropped?path=' + resultItem.cropImg}
           style={{ width: '100%', height: '100%', resizeMode: 'center' }}
         />
       </View>
       <View style={styles.contentContainer}>
         <View style={styles.brand}>
           <CustomImage
-            src={API_URL + 'image/brand?path=' + resultItem.brandImg}
+            source={API_URL + 'image/brand?path=' + resultItem.brandImg}
             style={{ width: 20, height: 20, borderRadius: 5 }}
           />
 

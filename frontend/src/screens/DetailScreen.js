@@ -20,6 +20,7 @@ const DetailScreen = ({ route }) => {
 
     (async () => {
       const gifticonInfo = await fetchMyGifticonDetail(route.params.item.id);
+      console.log(gifticonInfo)
       setInfo(gifticonInfo);
     })();
 
@@ -165,8 +166,8 @@ const DetailScreen = ({ route }) => {
           >
             <Pressable onPress={handleImg} style={styles.imgModal}>
               <CustomImage
-                src={API_URL + 'image/gifticon?path=' + info.img}
-                style={styles.img}
+                source={API_URL + 'image/gifticon?path=' + info.img}
+                style={styles.imgModal}
               />
             </Pressable>
           </Modal>
@@ -175,7 +176,7 @@ const DetailScreen = ({ route }) => {
           <View style={{ flex: 8 }}>
             <Pressable onPress={handleImg}>
               <CustomImage
-                src={API_URL + 'image/gifticon?path=' + info.img}
+                source={API_URL + 'image/gifticon?path=' + info.img}
                 style={styles.img}
               />
 

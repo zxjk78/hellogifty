@@ -102,7 +102,7 @@ const ProfileScreen = ({}) => {
                         }
                         left={() => (
                           <CustomImage
-                            src={
+                            source={
                               API_URL +
                               'image/gifticon-cropped?path=' +
                               record.image
@@ -125,7 +125,7 @@ const ProfileScreen = ({}) => {
                       description={AddComma(+record.price) + ' 원'}
                       left={() => (
                         <CustomImage
-                          src={
+                          source={
                             API_URL +
                             'image/gifticon-cropped?path=' +
                             record.image
