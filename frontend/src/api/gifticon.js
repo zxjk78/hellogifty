@@ -132,32 +132,46 @@ const isUsedGifticon = async (id) => {
 //     .catch((error) => console.log(error, '여기서'));
 // };
 const sellMyGifticon = async (info) => {
-  console.log(info.noCropImg, "판매 정보~");
-
+  function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+  }
+  function replaceAll(str, match, replacement){
+     return str.replace(new RegExp(escapeRegExp(match), 'g'), ()=>replacement);
+  }
+  console.log(info.picture, 'picture 정보야')
   try {
-    let cropFileBase64 = info.picture;
-    if (cropFileBase64 == "") {
+    if (info.picture == "") {
       // 라이브러리로 base64로 바꾸기
       ImgToBase64.getBase64String(API_URL + "image/gifticon?path=" + info.noCropImg)
-        .then((base64String) => {
-          cropFileBase64 = base64String
-          console.log(cropFileBase64, '안이야');
+        .then(async (base64String) => {
+          const cropFileBase64 = replaceAll(base64String, "\n", "");
+          const data = {
+            content: info.content,
+            cropFileBase64: 'data:image/jpeg;base64,'+cropFileBase64,
+            gifticonId: info.id,
+            price: +info.price,
+            title: info.title,
+          };
+          console.log(data, '안이야')
+          const res = await axiosAuthInstance.post("trade/", data);
+          console.log("판매등록 성공!!");
+          return res.data.data;
         })
         .catch((err) => console.log(err, 'noCrop 실패'));
+    } else {
+      const data = {
+        content: info.content,
+        cropFileBase64: info.picture,
+        gifticonId: info.id,
+        price: +info.price,
+        title: info.title,
+      };
+      console.log(data, '밖이야')
+      const res = await axiosAuthInstance.post("trade/", data);
+      console.log("판매등록 성공!!");
+      return res.data.data;
     }
-    console.log(cropFileBase64, '밖이야');
     // console.log(resImgB64, 'base64 이미지 이미지')
-    const data = {
-      content: info.content,
-      // cropFileBase64: 'data:image/jpeg;base64,' + resImgB64,
-      cropFileBase64,
-      gifticonId: info.id,
-      price: +info.price,
-      title: info.title,
-    };
-    const res = await axiosAuthInstance.post("trade/", data);
-    console.log("판매등록 성공!!");
-    return res.data.data;
   } catch (error) {
     console.log(error, "판매등록 에러");
   }
