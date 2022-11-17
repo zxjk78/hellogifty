@@ -8,39 +8,44 @@ import com.a705.hellogifty.api.domain.entity.SmallCategory;
 import com.a705.hellogifty.api.domain.entity.TradePost;
 import com.a705.hellogifty.api.domain.entity.User;
 import com.a705.hellogifty.api.domain.enums.TradeState;
+import com.a705.hellogifty.api.dto.gifticon.InfoExtractedGifticonResponseDto;
 import com.a705.hellogifty.api.dto.gifticon.*;
 import com.a705.hellogifty.api.repository.GifticonRepository;
 import com.a705.hellogifty.api.repository.SmallCategoryRepository;
 import com.a705.hellogifty.api.repository.TradePostRepository;
 import lombok.RequiredArgsConstructor;
+import org.bson.json.JsonObject;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.jackson.JsonObjectSerializer;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
-import javax.transaction.Transactional;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class GifticonService {
 
     private final GifticonRepository gifticonRepository;
     private final SmallCategoryRepository smallCategoryRepository;
-
     private final TradePostRepository tradePostRepository;
 
     @Value("${image.gifticon.path}")
     String gifticonImagePath;
 
-    @Transactional
+    @Value("${url.server.image}")
+    private String IMAGE_SERVER_URL;
+
+
     public List<GifticonListResponseDto> myAllGifticon(User user) {
 
 //        String defaultPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"brandImg"+File.separator;
@@ -48,7 +53,6 @@ public class GifticonService {
                 .map(GifticonListResponseDto::new).collect(Collectors.toList());
     }
 
-    @Transactional
     public List<GifticonListResponseDto> myTradeGifticon(User user) {
         List<GifticonListResponseDto> list = new ArrayList<>();
 
@@ -61,7 +65,6 @@ public class GifticonService {
         return  list;
     }
 
-    @Transactional
     public GifticonDetailResponseDto myGifticonDetail(User user, Long gifticonId) {
 //        String defaultPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"gifticon"+File.separator;
         Gifticon gifticon = gifticonRepository.findByUserAndId(user, gifticonId).orElseThrow(GifticonNotFoundException::new);
@@ -119,4 +122,15 @@ public class GifticonService {
     }
 
 
+
+    public List<InfoExtractedGifticonResponseDto> validateGifticons(List<String> base64StringList) {
+        RestTemplate restTemplate = new RestTemplate();
+
+        Map<String,Object> bodyMap = new HashMap<>();
+//        bodyMap.put("images",base64StringList);
+        bodyMap.put("images", base64StringList );
+        List<InfoExtractedGifticonResponseDto> response = restTemplate.postForObject(IMAGE_SERVER_URL + "/validate-gifticon/", bodyMap, List.class);
+//        System.out.println(restTemplate.postForObject(IMAGE_SERVER_URL + "/validate-gifticon/", bodyMap, String.class));
+        return response;
+    }
 }
