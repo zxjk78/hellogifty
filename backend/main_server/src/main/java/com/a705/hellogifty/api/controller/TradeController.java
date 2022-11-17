@@ -94,4 +94,11 @@ public class TradeController {
         tradeService.reportUser(tradePostId, loginUser, targetUserId, userReportRequestDto.getReason(), userReportRequestDto.getContent() );
         return responseService.getSuccessResult();
     }
+
+    @ApiOperation(value = "유통기한이 지난 판매글 상태 변경")
+    @PutMapping("/expiration")
+    public CommonResult expirationUpdate() {
+        tradeService.updateTradeState();
+        return responseService.getSuccessResult();
+    }
 }
