@@ -20,6 +20,7 @@ import javax.transaction.Transactional;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -63,7 +64,7 @@ public class TradeService {
 //        String defaultPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"gifticonCropImg"+File.separator;
 //        String defaultPath = System.getProperty("user.dir")+gifticonCroppedImagePath;
         String defaultPath = gifticonCroppedImagePath+File.separator;
-        File img = new File(defaultPath+"crop"+"_"+originalImgName+(new Date()).toString());
+        File img = new File(defaultPath+"crop"+"_"+LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"))+"_"+originalImgName.toString());
 
         Base64.Decoder decoder = Base64.getDecoder();
         byte[] decodedBytes = decoder.decode(base.getBytes());
