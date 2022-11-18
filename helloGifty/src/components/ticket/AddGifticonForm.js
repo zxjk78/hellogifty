@@ -11,16 +11,11 @@ import {Button} from 'react-native-paper';
 import SelectList from 'react-native-dropdown-select-list';
 import CategoryDropdown from '../UI/CategoryDropdown';
 import {GlobalStyles} from '../../constants/style';
-import {
-  largeCategoryDict,
-  smallCategoryDict,
-} from '../../constants/data/idDictionary';
+
 import {
   largeCategoryData,
   smallCategoryData,
 } from '../../constants/data/categoryData';
-
-import {API_URL} from '../../api/config/http-config';
 
 // 부모:
 const AddGifticonForm = ({
@@ -131,7 +126,7 @@ const AddGifticonForm = ({
 
           <Image
             source={{
-              uri: `data:image/jpeg;base64,${gifticon.couponImg}`,
+              uri: gifticon.imgPath,
             }}
             style={styles.couponImage}
           />

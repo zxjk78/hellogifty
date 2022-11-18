@@ -41,7 +41,7 @@ const LastCheckItem = ({item, idx}) => {
       </View>
       <Image
         source={{
-          uri: `data:image/jpeg;base64,${item.couponImg}`,
+          uri: `data:image/jpeg;base64,${item.imgPath}`,
         }}
         style={{width: 100, height: 100, zIndex: 1, marginRight: 10}}
       />

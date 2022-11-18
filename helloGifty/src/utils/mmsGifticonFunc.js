@@ -42,7 +42,7 @@ export function createGifticonArr(resArr, imgArr) {
   resArr.forEach(res => {
     const gifticonInfo = {
       ...res,
-      couponImg: imgArr[res.id],
+      imgPath: imgArr[res.id],
       categoryId: null, // 작은 카테고리를 이렇게 저장
       largeCategoryId: null,
     };
@@ -51,3 +51,22 @@ export function createGifticonArr(resArr, imgArr) {
 
   return result;
 }
+
+// 해당 모듈 자바 코드 분석해서, 접속했을 때 이후의 MMS 이미지 기록을 검토하고, 이후의 이미지들만 기록하는 함수
+
+export const checkImg = async (lastMMSIdx, callback) => {
+  const mmsModule = NativeModules.MMSReadModule;
+  try {
+    let results;
+    // mmsId의 경우 오직 여기서만 건내줄 수 있어서, 여기를 뒤져야 한다.
+    await mmsModule.getMMSImageIdxArr(lastMMSIdx + '', imgMmsIdArr => {
+      const parsed = JSON.parse(imgMmsIdArr);
+      // console.log(parsed);
+      // console.log(JSON.parse(parsed.resultArr)[0]);
+      results = JSON.parse(parsed.resultArr);
+      callback(results);
+    });
+  } catch (error) {
+    console.log('이미지 가져오는 과정에서 오류', error);
+  }
+};

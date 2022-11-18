@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import {Button, TextInput} from 'react-native-paper';
-import {addGifticonFromFile} from '../../api/gifticon';
+import {addGifticonFromFile2} from '../../api/gifticon';
 import {
   largeCategoryDict,
   smallCategoryDict,
@@ -36,6 +36,7 @@ const AddGifticonFromFileModal = ({visible, onClose, onRefresh}) => {
   const [number, setNumber] = useState('');
   const [expirationDate, setExpirationDate] = useState('');
   const [fileBase64, setFileBase64] = useState('');
+  const [imgPath, setImgPath] = useState('');
   const [categoryId, setCategoryId] = useState(-1);
   const navigation = useNavigation();
   const [largeCategoryId, setLargeCategoryId] = useState(-1);
@@ -48,23 +49,13 @@ const AddGifticonFromFileModal = ({visible, onClose, onRefresh}) => {
   };
 
   const selectImageFromFile = async () => {
-    // const options = {
-    //   mediaType: 'photo',
-    //   maxWidth: 600,
-    //   maxHeight: 1000,
-    //   includeBase64: true,
-    // };
-    // const result = await launchImageLibrary(options);
-
     ImagePicker.openPicker({
       width: 300,
       height: 400,
       cropping: false,
-      includeBase64: true,
     })
       .then(image => {
-        // console.log('이미지입니다.',Object.keys(image));
-        setFileBase64(image.data);
+        setImgPath(image.path);
       })
       .catch(error => {
         console.log(error);
@@ -76,17 +67,18 @@ const AddGifticonFromFileModal = ({visible, onClose, onRefresh}) => {
         name.length > 0 &&
         number.length > 0 &&
         categoryId > 0 &&
-        fileBase64.length > 0 &&
+        imgPath.length > 0 &&
         expirationDate.length > 0
       )
     )
+      // eslint-disable-next-line curly
       return;
 
-    const result = await addGifticonFromFile({
+    const result = await addGifticonFromFile2({
       name,
-      // number,
+      number,
       categoryId,
-      fileBase64,
+      imgPath,
       expirationDate,
     });
 
@@ -96,7 +88,7 @@ const AddGifticonFromFileModal = ({visible, onClose, onRefresh}) => {
       setExpirationDate('');
       setLargeCategoryId(-1);
       setCategoryId(-1);
-      setFileBase64('');
+      setImgPath('');
 
       onRefresh();
       onClose();
@@ -166,7 +158,7 @@ const AddGifticonFromFileModal = ({visible, onClose, onRefresh}) => {
                   defaultTxt="대분류"
                 />
               </View>
-              <View style={{width: '10%'}}></View>
+              <View style={{width: '10%'}} />
               <View>
                 <CategoryDropdown
                   categoryItem={smallCategoryData[largeCategoryId] || null}
@@ -190,9 +182,9 @@ const AddGifticonFromFileModal = ({visible, onClose, onRefresh}) => {
               <Pressable
                 onPress={selectImageFromFile}
                 style={{alignItems: 'center'}}>
-                {fileBase64.length > 0 ? (
+                {imgPath.length > 0 ? (
                   <Image
-                    source={{uri: `data:image/jpeg;base64,${fileBase64}`}}
+                    source={{uri: imgPath}}
                     style={{
                       width: 300,
                       height: 400,
