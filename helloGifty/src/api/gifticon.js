@@ -74,16 +74,44 @@ export const addGifticon = async gifticonArr => {
   }
 };
 
+// export const addGifticonFromFile = async gifticonInfo => {
+//   try {
+//     const gifticon = {
+//       ...gifticonInfo,
+//       fileBase64: ('data:image/jpeg;base64,' + gifticonInfo.fileBase64).replace(
+//         /\n/g,
+//         '',
+//       ),
+//     };
+//     const res = await axiosAuthInstance.post('mygifticon/', gifticon);
+//     return res.data.success;
+//   } catch (error) {
+//     console.log('앨범에서 쿠폰 등록 시 에러: ', error);
+//   }
+// };
+
+// 바뀐 addGifticonFromFile
 export const addGifticonFromFile = async gifticonInfo => {
+  console.log('앨범에서 쿠폰 등록 시도 ');
+
   try {
-    const gifticon = {
-      ...gifticonInfo,
-      fileBase64: ('data:image/jpeg;base64,' + gifticonInfo.fileBase64).replace(
-        /\n/g,
-        '',
-      ),
-    };
-    const res = await axiosAuthInstance.post('mygifticon/', gifticon);
+    const {name, expirationDate, categoryId, number, imgPath} = gifticonInfo;
+
+    const formData = FormData();
+    formData.append('name', name);
+    formData.append('expirationDate', expirationDate);
+    formData.append('categoryId', categoryId);
+    formData.append('number', number);
+    formData.append('img', {
+      uri: imgPath,
+      name: 'gifticon.jpg',
+      type: 'image/jpeg',
+    });
+
+    const res = await axiosAuthInstance.post('mygifticon/', formData, {
+      headers: {'Content-Type': 'multipart/form-data'},
+    });
+
     return res.data.success;
   } catch (error) {
     console.log('앨범에서 쿠폰 등록 시 에러: ', error);
