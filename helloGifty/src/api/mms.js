@@ -7,7 +7,6 @@ const sendMMSImage = async imageStringArr => {
   const imageStringArr2 = imageStringArr.map(
     str => 'data:image/jpeg;base64,' + str.replace(/\n/g, ''),
   );
-
   try {
     const response = await axiosAuthInstance.post('mygifticon/validation', {
       base64StringList: imageStringArr2,
@@ -16,7 +15,7 @@ const sendMMSImage = async imageStringArr => {
     console.log('기프티콘이라 인식한 사진 개수', response.data.data.length);
     return response.data.data;
   } catch (error) {
-    console.log(error);
+    console.log('mms 기프티콘 전송 에러', error);
   }
 };
 
