@@ -75,7 +75,7 @@ const MyCouponScreen = ({route: params}) => {
         const tmp = await getAllMMSAfterAccess(
           lastMMSImageIdx,
           async imgArr => {
-            console.log('찾은 mms 사진 개수: ', imgArr.length);
+            // console.log('찾은 mms 사진 개수: ', imgArr.length);
 
             // 사진들을 찾고 서버로 보내서, 기프티콘인 것들의 idx값과, 그 텍스트들의 응답을 받는 코드 필요.
             //
@@ -90,6 +90,7 @@ const MyCouponScreen = ({route: params}) => {
               const gifticon = {
                 ...item,
                 number: sepGifticonNumber(item.number),
+                expirationDate: item.expirationDate.replace(/\//g, '-'),
                 couponImg: imgArr[item.idx],
               };
               gifticonArr.push(gifticon);
