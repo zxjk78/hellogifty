@@ -32,4 +32,4 @@ const ChattingScreen = () => {
 
 export default ChattingScreen;
 
-const styles = StyleSheet.create({});
+// const styles = StyleSheet.create({});

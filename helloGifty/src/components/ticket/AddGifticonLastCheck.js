@@ -4,12 +4,11 @@ import {Button, IconButton} from 'react-native-paper';
 import React from 'react';
 import {addGifticon} from '../../api/gifticon';
 import Toast from 'react-native-toast-message';
-import {useNavigation} from '@react-navigation/native';
 import {smallCategoryDict} from '../../constants/data/idDictionary';
 const showToast = () => {
   Toast.show({
     type: 'success',
-    text1: `😊 쿠폰 등록이 완료되었습니다.✔️`,
+    text1: '😊 쿠폰 등록이 완료되었습니다.✔️',
     position: 'top',
     visibilityTime: 4000,
     topOffset: 10,
@@ -98,4 +97,4 @@ const AddGifticonLastCheck = ({gifticonArr, onPrev, onSubmit}) => {
 
 export default AddGifticonLastCheck;
 
-const styles = StyleSheet.create({});
+// const styles = StyleSheet.create({});

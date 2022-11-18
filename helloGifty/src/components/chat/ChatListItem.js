@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import {StyleSheet, Text, View, Pressable} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
@@ -20,7 +21,7 @@ const ChatListItem = ({item}) => {
       const userId = await AsyncStorage.getItem('userId');
 
       const buyerId = item.buyer.id;
-      const sellerId = item.seller.id;
+      // const sellerId = item.seller.id;
       setOpponentName(() => {
         return userId == buyerId ? item.seller.name : item.buyer.name;
       });

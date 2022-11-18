@@ -18,7 +18,7 @@ const AddTicketModal = ({gifticonList, visible, handleClose}) => {
     setSelectedGifticonList(copyList);
   };
   const handleSmCtChange = (idx, newSmId) => {
-    console.log('소분류명', newSmId, idx);
+    // console.log('소분류명', newSmId, idx);
     const copyList = selectedGifticonList.slice();
     copyList[idx].categoryId = newSmId;
     setSelectedGifticonList(copyList);
