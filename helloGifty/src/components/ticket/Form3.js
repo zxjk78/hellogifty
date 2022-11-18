@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import {
   View,
   Text,
@@ -24,7 +23,6 @@ const Form3 = ({info, back, finish}) => {
           transparent={true}
           visible={modalVisible}
           onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
             setModalVisible(!modalVisible);
           }}>
           <View style={styles.centeredView}>
