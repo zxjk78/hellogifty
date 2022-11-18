@@ -21,6 +21,7 @@ import javax.transaction.Transactional;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -72,9 +73,8 @@ public class TradeService {
         String originalImgName = getOriginalImgName(user, gifticon.getId());
         MultipartFile originalCropImg = tradePostRequestDto.getCropImg();
         String defaultPath = gifticonCroppedImagePath+File.separator;
-        File img = new File(defaultPath+"crop"+"_"+fileUploadNow+"_"+originalImgName);
+        File img = new File(defaultPath+"crop"+"_"+LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"))+"_"+originalImgName.toString());
         originalCropImg.transferTo(img);
-
 
 
         TradePost tradePost = TradePost.builder().user(user)

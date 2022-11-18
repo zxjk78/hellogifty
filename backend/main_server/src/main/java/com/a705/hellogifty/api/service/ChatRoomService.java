@@ -26,8 +26,9 @@ public class ChatRoomService {
     private final TradeHistoryRepository tradeHistoryRepository;
 
     @Transactional
-    public Long getChatRoomId(User loginUser, Long tradePostId) {
+    public Long getChatRoomId(User loginUser, Long tradePostId) throws Exception{
         TradePost tradePost = tradePostRepository.findById(tradePostId).orElseThrow(TradePostNotFoundException::new);
+        if(loginUser.getId().equals(tradePost.getUser().getId())) throw new IllegalAccessException();
         ChatRoom chatRoom = chatRoomRepository.findByTradePostAndBuyer(tradePost, loginUser).orElse(null);
         if (chatRoom == null) {
             chatRoom = ChatRoom.builder()
