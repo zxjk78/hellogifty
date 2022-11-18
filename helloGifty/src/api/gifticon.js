@@ -138,7 +138,7 @@ const sellMyGifticon = async info => {
   function replaceAll(str, match, replacement) {
     return str.replace(new RegExp(escapeRegExp(match), 'g'), () => replacement);
   }
-  console.log(info.picture, 'picture 정보야');
+  // console.log(info.picture, 'picture 정보야');
   try {
     if (info.picture == '') {
       // 라이브러리로 base64로 바꾸기
@@ -154,9 +154,9 @@ const sellMyGifticon = async info => {
             price: +info.price,
             title: info.title,
           };
-          console.log(data, '안이야');
+          // console.log(data, '안이야');
           const res = await axiosAuthInstance.post('trade/', data);
-          console.log('판매등록 성공!!');
+          // console.log('판매등록 성공!!');
           return res.data.data;
         })
         .catch(err => console.log(err, 'noCrop 실패'));
@@ -168,9 +168,9 @@ const sellMyGifticon = async info => {
         price: +info.price,
         title: info.title,
       };
-      console.log(data, '밖이야');
+      // console.log(data, '밖이야');
       const res = await axiosAuthInstance.post('trade/', data);
-      console.log('판매등록 성공!!');
+      // console.log('판매등록 성공!!');
       return res.data.data;
     }
     // console.log(resImgB64, 'base64 이미지 이미지')
