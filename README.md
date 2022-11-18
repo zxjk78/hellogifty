@@ -239,7 +239,7 @@ story에 예상 시간(story point)을 기록해 더 세세하게 일정 관리�
     - Figma를 사용한 와이어프레임, 스토리보드 제작
     - 프론트엔트단 인증
     - 영양관리, 레시피 상세, 검색, 회원가입/로그인 페이지 구현
-- **이민호** - `백엔드`
+- **김민지** - `백엔드`
     - Spring security를 사용한 JWT 기반 사용자 인증
     - 데이터 수집 및 전처리, 추천 결과 Redis 캐싱
     - Django를 사용한 Recommendation 서버 구현, 사용자 평가 기반 추천
@@ -259,10 +259,11 @@ story에 예상 시간(story point)을 기록해 더 세세하게 일정 관리�
 |PORT|이름|
 |---|---|
 |443|HTTPS|
-|80|HTTP - HTTPS로 리다이렉트(프론트 페이지지로 리다이렉트)|
-|6379|Redis|
+|80|Apache - 아파치 프록시 (8080으로 ProxyPass : 확정을 위함)|
 |3306|MySQL|
+|3307|MySQL Replication1|
+|3308|MySQL Replication1|
+|3309|MySQL Replication1|
 |8000|Django|
 |8080|Spring boot|
-|3000|React|
 
