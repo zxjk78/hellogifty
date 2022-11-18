@@ -16,9 +16,13 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Api(tags = "")
 @RequiredArgsConstructor
@@ -83,6 +87,18 @@ public class GifticonController {
     @PostMapping("/validation")
     public CommonResult validateGifticons (@RequestBody GifiticonToValidateDataDto gifiticonToValidateDataDto) {
         return responseService.getManyResult(gifticonService.validateGifticons(gifiticonToValidateDataDto.getBase64StringList()));
+    }
+
+    @ApiOperation(value = "이미지테스트")
+    @PostMapping("/imageTest")
+    public CommonResult imageTest (@RequestPart MultipartFile image) throws IOException{
+        //image.gifticon.path= /src/main/resources/static/img/gifticon/
+        String fileUploadNow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
+        String defaultPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"gifticon"+File.separator;
+        String originalName = image.getOriginalFilename();
+        File img = new File(defaultPath+originalName);
+        image.transferTo(img);
+        return responseService.getSuccessResult();
     }
 
 }
