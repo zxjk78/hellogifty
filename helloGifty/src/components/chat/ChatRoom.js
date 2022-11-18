@@ -1,4 +1,11 @@
-import {StyleSheet, Text, View, ScrollView, Keyboard} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Keyboard,
+  Image,
+} from 'react-native';
 import SockJsClient from 'react-stomp';
 
 import React, {useState, useEffect, useRef} from 'react';
@@ -161,7 +168,7 @@ const ChatRoom = ({chatRoomId, userId, tradeState, tradeId}) => {
     } else {
       // 입금완료 채팅 추가하기
       // api 없이, 계속 생겨나는 채팅 리스트를 뒤져서 type이 PAY 가 있으면 입금완료로 인식할 것
-      if (isTradeDone) return;
+      if (checkIsTradeReady() || isTradeDone) return;
       const dataDto = {
         chatRoomId: chatRoomId, // Number
         userId: userId, // Number
@@ -175,6 +182,8 @@ const ChatRoom = ({chatRoomId, userId, tradeState, tradeId}) => {
   const isSeller = () => {
     return +sellerInfo.id === +userId;
   };
+  // 입금전, 입금후, 거래완료후
+  const tradeStateMsgArr = [];
 
   const checkIsTradeReady = () => {
     return messageList.some(msg => msg.messageType === 'PAY');
@@ -215,6 +224,7 @@ const ChatRoom = ({chatRoomId, userId, tradeState, tradeId}) => {
           <Button
             style={styles.tradeBtn}
             onPress={handleTrade}
+            disabled={isTradeDone}
             mode={
               !isSeller()
                 ? checkIsTradeReady()
@@ -236,7 +246,39 @@ const ChatRoom = ({chatRoomId, userId, tradeState, tradeId}) => {
                 : '입금완료'
               : '입금하기'}
           </Button>
-
+          <View
+            style={{
+              flexDirection: 'row',
+              marginTop: '5%',
+              marginLeft: '5%',
+              alignItems: 'center',
+            }}>
+            <Image
+              source={require('../../assets/Logo.png')}
+              style={{width: 70, height: 70}}
+            />
+            {checkIsTradeReady() ? (
+              isTradeDone ? (
+                <Text>
+                  {isSeller()
+                    ? '판매 완료한 상품입니다.'
+                    : '구매 완료한 상품입니다. 내 쿠폰함에서 확인해 주세요'}
+                </Text>
+              ) : (
+                <Text>
+                  {isSeller()
+                    ? '구매자가 입금하였습니다, 상단의 버튼을 클릭해서 기프티콘을 건네 주세요.'
+                    : '입금을 완료하였습니다.\n 판매자가 거래를 완료할 때까지 기다려 주세요'}
+                </Text>
+              )
+            ) : (
+              <Text>
+                {isSeller()
+                  ? '구매자가 입금할 때까지 기다려 주세요.'
+                  : '입금하신 후에 상단의 버튼을 클릭해서 판매자에게 알려주세요.'}
+              </Text>
+            )}
+          </View>
           <ScrollView style={styles.chatLogArea}>
             {messageList.map((msg, index) => {
               let choice;
@@ -315,7 +357,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: 10,
     borderRadius: 10,
-    top: -10,
-    right: 0,
+    top: -50,
+    right: 20,
   },
 });
