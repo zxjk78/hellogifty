@@ -26,8 +26,9 @@ public class ChatRoomService {
     private final TradeHistoryRepository tradeHistoryRepository;
 
     @Transactional
-    public Long getChatRoomId(User loginUser, Long tradePostId) {
+    public Long getChatRoomId(User loginUser, Long tradePostId) throws Exception{
         TradePost tradePost = tradePostRepository.findById(tradePostId).orElseThrow(TradePostNotFoundException::new);
+        if(loginUser.getId().equals(tradePost.getUser().getId())) throw new IllegalAccessException();
         ChatRoom chatRoom = chatRoomRepository.findByTradePostAndBuyer(tradePost, loginUser).orElse(null);
         if (chatRoom == null) {
             chatRoom = ChatRoom.builder()
@@ -68,7 +69,7 @@ public class ChatRoomService {
     }
 
     public List<ChatRoomListItemResponseDto> getMyChatRoomList(User loginUser) {
-        return chatRoomRepository.findBySellerOrBuyerWithSellerAndBuyer(loginUser).stream()
+        return chatRoomRepository.findBySellerOrBuyerWithSellerAndBuyer(loginUser, loginUser).stream()
                 .map(ChatRoomListItemResponseDto::new)
                 .collect(Collectors.toList());
     }

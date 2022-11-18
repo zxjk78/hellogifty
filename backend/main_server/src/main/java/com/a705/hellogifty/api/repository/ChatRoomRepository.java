@@ -29,6 +29,6 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
             "join fetch cr.buyer b " +
             "join fetch cr.tradePost tp " +
             "join fetch tp.user s " +
-            "where tp.user=:user or s=:user")
-    List<ChatRoom> findBySellerOrBuyerWithSellerAndBuyer(@Param("user") User user);
+            "where tp.user=:user or s=:sameUser")
+    List<ChatRoom> findBySellerOrBuyerWithSellerAndBuyer(@Param("user") User user, @Param("sameUser") User sameUser);
 }
