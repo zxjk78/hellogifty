@@ -94,9 +94,9 @@ public class GifticonService {
     @Transactional
     public void myGifticonRegister(User user, GifticonRegisterRequestDto gifticonRegisterRequestDto) throws IOException {
         String fileUploadNow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
-        String defaultPath = System.getProperty("user.dir")+gifticonImagePath;
+        String defaultPath = gifticonImagePath+File.separator;
         MultipartFile originalImg = gifticonRegisterRequestDto.getImg();
-        String originalImgName = originalImg.getOriginalFilename();
+//        String originalImgName = originalImg.getOriginalFilename();
 //        System.out.println(originalImg.getOriginalFilename());
         File img = new File(defaultPath+user.getEmail()+"_"+fileUploadNow+"_"+originalImg.getOriginalFilename());
         originalImg.transferTo(img);

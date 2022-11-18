@@ -53,10 +53,7 @@ public class TradeService {
 
     @Transactional
     public void tradePostCreate(User user, TradePostRequestDto tradePostRequestDto) throws IOException {
-        Gifticon gifticon = gifticonRepository.findByUserAndId(user, tradePostRequestDto.getGifticonId()).orElseThrow(GifticonNotFoundException::new);
-        String fileUploadNow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
-        String originalImgName = getOriginalImgName(user, gifticon.getId());
-        MultipartFile originalCropImg = tradePostRequestDto.getCropImg();
+
 //        String rawBase = tradePostRequestDto.getCropFileBase64();
 //        String[] basesplit = rawBase.split(",", 2);
 //        String extension = basesplit[0].split(";", 2)[0].split("/", 2)[1];
@@ -64,15 +61,21 @@ public class TradeService {
 //        String extension = "png";
 //        String defaultPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"gifticonCropImg"+File.separator;
 //        String defaultPath = System.getProperty("user.dir")+gifticonCroppedImagePath;
-        String defaultPath = System.getProperty("user.dir")+gifticonCroppedImagePath;
-        File img = new File(defaultPath+"crop"+"_"+fileUploadNow+"_"+originalImgName);
-        originalCropImg.transferTo(img);
-
 //        Base64.Decoder decoder = Base64.getDecoder();
 //        byte[] decodedBytes = decoder.decode(base.getBytes());
 //        FileOutputStream fileOutputStream = new FileOutputStream(img);
 //        fileOutputStream.write(decodedBytes);
 //        fileOutputStream.close();
+
+        Gifticon gifticon = gifticonRepository.findByUserAndId(user, tradePostRequestDto.getGifticonId()).orElseThrow(GifticonNotFoundException::new);
+        String fileUploadNow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
+        String originalImgName = getOriginalImgName(user, gifticon.getId());
+        MultipartFile originalCropImg = tradePostRequestDto.getCropImg();
+        String defaultPath = gifticonCroppedImagePath+File.separator;
+        File img = new File(defaultPath+"crop"+"_"+fileUploadNow+"_"+originalImgName);
+        originalCropImg.transferTo(img);
+
+
 
         TradePost tradePost = TradePost.builder().user(user)
                 .gifticon(gifticon)
