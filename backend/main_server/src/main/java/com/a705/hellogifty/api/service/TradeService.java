@@ -64,7 +64,7 @@ public class TradeService {
 //        String defaultPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"gifticonCropImg"+File.separator;
 //        String defaultPath = System.getProperty("user.dir")+gifticonCroppedImagePath;
         String defaultPath = gifticonCroppedImagePath+File.separator;
-        File img = new File(defaultPath+"crop"+"_"+new Timestamp(System.currentTimeMillis())+"_"+originalImgName.toString());
+        File img = new File(defaultPath+"crop"+"_"+LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"))+"_"+originalImgName.toString());
 
         Base64.Decoder decoder = Base64.getDecoder();
         byte[] decodedBytes = decoder.decode(base.getBytes());
