@@ -22,9 +22,10 @@ export async function convertImageUri(imgId) {
 
 export async function getAllMMSAfterAccess(id = 0, callback) {
   const mmsModule = NativeModules.MMSReadModule;
-  console.log(NativeModules);
+  // console.log(NativeModules);
   try {
     let results;
+    // mmsId의 경우 오직 여기서만 건내줄 수 있어서, 여기를 뒤져야 한다.
     await mmsModule.getMMSImageArr(id + '', b64StringArr => {
       const parsed = JSON.parse(b64StringArr);
       results = parsed.map(item => item.byteArray);

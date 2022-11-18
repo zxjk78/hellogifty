@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, Text, View, ActivityIndicator} from 'react-native';
-import {requestReadMMSPermission} from '../../utils/getPermission';
 import {GlobalStyles} from '../../constants/style';
 import {TransparentButton} from '../UI';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -31,7 +30,7 @@ const ReadMMSStatusBar = ({mmsNum, handleOpenModal, isMMSReading}) => {
           <Text> {`총 ${mmsNum}건의 기프티콘을 찾았어요!`} </Text>
         )}
         {mmsNum && !isMMSReading && (
-          <TransparentButton onPress={handleOpenModal} text={`  등록하기`} />
+          <TransparentButton onPress={handleOpenModal} text={'  등록하기'} />
         )}
       </View>
     </View>

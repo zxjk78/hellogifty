@@ -3,6 +3,7 @@ import RNFS from 'react-native-fs';
 import {fetchImage} from './image';
 import {API_URL} from './config/http-config';
 import ImgToBase64 from 'react-native-image-base64';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const fetchMyGifticonList = async () => {
   try {
@@ -60,6 +61,8 @@ export const addGifticon = async gifticonArr => {
     Promise.all(gifticonArr2.map(gifticon => enrollGifticon(gifticon)))
       .then(() => {
         console.log('기프티콘 등록 성공');
+        console.log('유저 mms 아이디 변경 시도');
+        // axiosAuthInstance.put('/mmsIndex',{userMmsIndex:});
       })
       .catch(() => {
         console.log('기프티콘 등록 실패');
