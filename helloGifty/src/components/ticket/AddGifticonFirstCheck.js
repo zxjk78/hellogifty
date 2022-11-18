@@ -24,7 +24,7 @@ const CouponImage = ({item, onSelect}) => {
       onPress={handleSelect}>
       {/* <Text>{item.name}</Text> */}
       <Image
-        source={{uri: 'data:image/jpeg;base64,' + item.couponImg}}
+        source={{uri: 'data:image/jpeg;base64,' + item.imgPath}}
         style={[{width: '100%', height: '100%'}, {opacity: selected ? 0.5 : 1}]}
       />
       {selected && (

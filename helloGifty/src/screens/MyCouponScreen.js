@@ -8,8 +8,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AddTicketModal} from '../components/ticket';
 
 import {requestReadMMSPermission} from '../utils/getPermission';
-import {getAllMMSAfterAccess} from '../utils/mmsGifticonFunc';
-import {sendMMSImage} from '../api/mms';
+import {getAllMMSAfterAccess, checkImg} from '../utils/mmsGifticonFunc';
+import {sendMMSImage, checkMMSImageValidate} from '../api/mms';
 import AddGifticonFromFileModal from '../components/ticket/AddGifticonFromFileModal';
 import {sepGifticonNumber} from '../utils/regexp';
 
@@ -68,41 +68,38 @@ const MyCouponScreen = ({route: params}) => {
       console.log('마지막mms의 사진넘버', idx);
     });
 
-    // const lastMMSImageIdx = 0;
-    // setMmsReading(true);
-    // setTimeout(() => {
-    //   (async () => {
-    //     const tmp = await getAllMMSAfterAccess(
-    //       lastMMSImageIdx,
-    //       async imgArr => {
-    //         // console.log('찾은 mms 사진 개수: ', imgArr.length);
+    setMmsReading(true);
+    setTimeout(() => {
+      (async () => {
+        // const tmp = await getAllMMSAfterAccess(
 
-    //         // 사진들을 찾고 서버로 보내서, 기프티콘인 것들의 idx값과, 그 텍스트들의 응답을 받는 코드 필요.
-    //         //
-    //         //
-    //         //
+        const tmp = await checkImg(lastMMSImageIdx, async imgPathArr => {
+          console.log('찾은 mms 사진 개수: ', imgPathArr);
 
-    //         // const result = await dummySendMMSImage(imgArr);
-    //         const gifticonArr = [];
-    //         const result = await sendMMSImage(imgArr);
+          // 사진들을 찾고 서버로 보내서, 기프티콘인 것들의 idx값과, 그 텍스트들의 응답을 받는 코드 필요.
+          //
+          //
+          //
 
-    //         result.forEach(item => {
-    //           const gifticon = {
-    //             ...item,
-    //             number: sepGifticonNumber(item.number),
-    //             expirationDate: item.expirationDate.replace(/\//g, '-'),
-    //             couponImg: imgArr[item.idx],
-    //           };
-    //           gifticonArr.push(gifticon);
-    //         });
+          const gifticonArr = [];
+          const result = await checkMMSImageValidate(imgPathArr);
 
-    //         setMmsGifticonArr(gifticonArr);
-    //       },
-    //     );
-    //   })();
-    // }, 1000);
+          result.forEach(item => {
+            const gifticon = {
+              ...item,
+              number: sepGifticonNumber(item.number),
+              expirationDate: item.expirationDate.replace(/\//g, '-'),
+              imgPath: imgPathArr[item.idx],
+            };
+            gifticonArr.push(gifticon);
+          });
 
-    // setMmsReading(false);
+          setMmsGifticonArr(gifticonArr);
+        });
+      })();
+    }, 1000);
+
+    setMmsReading(false);
   }, []);
 
   const openModal = () => {

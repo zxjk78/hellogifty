@@ -19,31 +19,27 @@ const sendMMSImage = async imageStringArr => {
   }
 };
 
-// 아래 함수의 테스트 함수
-const dummySendMMSImage = async imageStringArr => {
-  const response = [
-    {
-      id: 0,
-      expirationDate: '2022-12-12',
-      name: '[스타벅스] 아메리카노 1잔',
-      number: '010-2888-7504',
-    },
-    {
-      id: 1,
-      expirationDate: '2000-01-12',
-      name: '잘못된데이터',
-      number: '010-2888-7504',
-    },
-    {
-      id: 2,
-      expirationDate: '1994-01-10',
-      name: '이디야 카페라떼 tall',
-      number: '010-2888-7504',
-    },
-  ];
+export const checkMMSImageValidate = async imagePathArr => {
+  try {
+    console.log('원래 찾은 mms 사진 경로 개수', imagePathArr.length);
+    const formData = new FormData();
+    const imgArr = imagePathArr.map(imgPath => {
+      return {uri: imgPath, name: '1.jpg', type: 'image/jpeg'};
+    });
 
-  const result = createGifticonArr(response, imageStringArr);
-  return result;
+    // formData에 배열 담기
+    formData.append('img', {
+      uri: imagePathArr[0],
+      name: 'photo' + 0 + '.jpg',
+      type: 'image/jpeg',
+    });
+
+    const res = await axiosAuthInstance.post('mygifticon/imageTest', formData, {
+      headers: {'Content-Type': 'multipart/form-data'},
+    });
+
+    return res.data;
+  } catch (error) {
+    console.log('mms 기프티콘 전송 에러', error);
+  }
 };
-
-export {sendMMSImage, dummySendMMSImage};

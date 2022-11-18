@@ -274,6 +274,63 @@ public class MMSReadModule extends ReactContextBaseJavaModule {
             e.printStackTrace();
         }
   }
+  @ReactMethod
+  public void getMMSImageIdxArr(String id, Callback callback) {
+        ArrayList<String> resultArr = new ArrayList<>();
+
+        int prevSearchId = Integer.parseInt(id);
+
+        try {
+            String[] selection = {"*"};
+
+            InputStream is = null;
+
+            Cursor cursor = context.getContentResolver().query(Uri.parse("content://mms/part"), null, null, null, "_id DESC");
+
+            JSONArray jsons = new JSONArray();
+
+
+            if(cursor != null && cursor.moveToFirst() && cursor.moveToNext()) {
+                do {
+
+                    int idIdx = cursor.getColumnIndex("_id");
+                    int typeIdx = cursor.getColumnIndex("ct");
+                    // Log.i("typeIdx", typeIdx+"");
+
+                    int cursorId = cursor.getInt(idIdx);
+                    if (cursorId <= prevSearchId){
+                        break;
+                    }
+
+                    String itemType = cursor.getString(typeIdx);
+                    if (itemType.equals("image/jpeg")) {
+                        // Log.i("사진아이디", cursorId+"");
+                        // Log.i("비트맵", bitmap.toString());
+
+                        resultArr.add(cursorId+"");
+
+                    }
+
+
+                } while (cursor.moveToNext());
+                cursor.close();
+                JSONObject json = new JSONObject();
+                json.put("resultArr", resultArr);
+                callback.invoke(json.toString());
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+
+  }
+
+
+
+
 
     private JSONObject getJsonFromCursor(Cursor cur) {
         JSONObject json = new JSONObject();
