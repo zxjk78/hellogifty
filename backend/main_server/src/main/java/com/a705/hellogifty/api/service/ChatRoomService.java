@@ -69,7 +69,7 @@ public class ChatRoomService {
     }
 
     public List<ChatRoomListItemResponseDto> getMyChatRoomList(User loginUser) {
-        return chatRoomRepository.findBySellerOrBuyerWithSellerAndBuyer(loginUser, loginUser).stream()
+        return chatRoomRepository.findBySellerOrBuyerWithSellerAndBuyer(loginUser).stream()
                 .map(ChatRoomListItemResponseDto::new)
                 .collect(Collectors.toList());
     }
