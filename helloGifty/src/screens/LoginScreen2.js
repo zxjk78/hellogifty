@@ -27,7 +27,7 @@ const LoginScreen2 = ({navigation}) => {
   useEffect(() => {
     AsyncStorage.getItem('accessToken').then(item => {
       if (item) {
-        // console.log('토큰존재:', item);
+        console.log('토큰존재:', item);
         setIsLoggedIn(true);
         navigation.replace('MainTab', {screen: 'MyCoupon'});
       } else {

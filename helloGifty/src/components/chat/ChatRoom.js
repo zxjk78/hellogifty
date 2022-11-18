@@ -275,7 +275,7 @@ const ChatRoom = ({chatRoomId, userId, tradeState, tradeId}) => {
               <Text>
                 {isSeller()
                   ? '구매자가 입금할 때까지 기다려 주세요.'
-                  : '입금하신 후에 상단의 버튼을 클릭해서 판매자에게 알려주세요.'}
+                  : '  입금하신 후에 상단의 버튼을 클릭해서 \n 판매자에게 알려주세요.'}
               </Text>
             )}
           </View>
@@ -344,6 +344,7 @@ const styles = StyleSheet.create({
     minHeight: 70,
     alignItems: 'flex-start',
     justifyContent: 'center',
+    color: 'black',
   },
   tmp: {
     backgroundColor: 'aqua',
