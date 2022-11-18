@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "hellogifty",
+    "slug": "hellogifty",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
