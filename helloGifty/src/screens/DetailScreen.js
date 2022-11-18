@@ -194,7 +194,9 @@ const DetailScreen = ({route}) => {
                   <Text style={{fontSize: 15, color: 'black'}}>
                     {info.brandName}
                   </Text>
-                  <Text style={{fontSize: 20, color: 'black'}}>{info.name}</Text>
+                  <Text style={{fontSize: 20, color: 'black'}}>
+                    {info.name}
+                  </Text>
                   <Text style={{color: 'black'}}>
                     유효기간{' '}
                     <Text style={{fontWeight: 'bold', color: 'black'}}>

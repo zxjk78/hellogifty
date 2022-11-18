@@ -4,7 +4,7 @@ import TicketListItem from './TicketListItem';
 const TicketList = ({ticketList}) => {
   return (
     <View>
-      <Text>TicketList</Text>
+      {/* <Text>TicketList</Text> */}
       {ticketList.map(item => (
         <TicketListItem item={item} />
       ))}

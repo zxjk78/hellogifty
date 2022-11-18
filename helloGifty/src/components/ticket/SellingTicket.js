@@ -168,9 +168,11 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'bold',
     textAlign: 'left',
+    color: 'black',
   },
   textStyle: {
     marginTop: 7,
+    color: 'black',
   },
   icon: {
     fontSize: 25,

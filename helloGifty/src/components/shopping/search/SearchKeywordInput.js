@@ -28,7 +28,7 @@ const SearchKeywordInput = () => {
     sortChoice: 1,
   });
   const [resultDataList, setResultDataList] = useState(null);
-  const [inputBorderColor, setInputBorderColor] = useState('white');
+  const [isInputFocus, setIsInputFocus] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [refresh, setRefresh] = useState(false);
 
@@ -45,15 +45,17 @@ const SearchKeywordInput = () => {
     paddingLeft: 20,
     backgroundColor: 'white',
     borderRadius: 30,
-    borderWidth: 3,
-    borderColor: inputBorderColor,
+    margin: isInputFocus ? 0 : 2,
+    borderWidth: isInputFocus ? 3 : 1,
+    borderColor: isInputFocus ? GlobalStyles.colors.categoryConven : 'grey',
+    color: 'black',
     width: '100%',
   };
   const inputFocus = () => {
-    setInputBorderColor(GlobalStyles.colors.categoryConven);
+    setIsInputFocus(true);
   };
   const inputBlur = () => {
-    setInputBorderColor('white');
+    setIsInputFocus(false);
   };
 
   useEffect(() => {
@@ -110,6 +112,7 @@ const SearchKeywordInput = () => {
       <View style={styles.inputContainer}>
         <TextInput
           style={inputStyle}
+          placeholderTextColor="grey"
           placeholder={'브랜드명 또는 찾고 싶은 제품을 입력해 주세요.'}
           value={searchOption.keyWord}
           onChangeText={text =>

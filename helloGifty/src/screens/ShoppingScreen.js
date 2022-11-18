@@ -9,7 +9,7 @@ import {SearchKeywordInput} from '../components/shopping/search';
 
 const ShoppingScreen = () => {
   return (
-    <View>
+    <View style={{backgroundColor: 'white'}}>
       <SearchKeywordInput />
     </View>
   );

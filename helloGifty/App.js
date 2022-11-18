@@ -201,7 +201,6 @@ const MainTab = () => {
           unmountOnBlur: true,
         }}
       />
-
       <Tab.Screen
         name="test"
         component={TestScreen}

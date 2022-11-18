@@ -10,6 +10,8 @@ import {
 import React, {useRef, useState} from 'react';
 import {GlobalStyles} from '../../constants/style';
 import {AddComma} from '../../utils/regexp';
+import CustomImage from '../UI/CustomImage';
+import {API_URL} from '../../api/config/http-config';
 
 const Form3 = ({info, back, finish}) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -51,29 +53,37 @@ const Form3 = ({info, back, finish}) => {
       </View>
 
       {/* Main */}
-      <Text style={{marginVertical: 5}}>
+      <Text style={{marginVertical: 5, color: 'black'}}>
         {' '}
         판매될 상품의 모습을 확인해 주세요. (3/3)
       </Text>
       <View style={styles.main}>
-        <Image style={styles.img} source={{uri: info.imagePath}} />
+        {/* <Image style={styles.img} source={{uri: info.imagePath}} /> */}
+        <CustomImage
+          source={API_URL + 'image/brand?path=' + info.brandImgPath}
+          style={styles.img}
+        />
         <View>
-          <Text>{info.brandName}</Text>
-          <Text style={{fontSize: 17}}>{info.name}</Text>
-          <Text>{info.expirationDate}</Text>
+          <Text style={{color: 'black'}}>{info.brandName}</Text>
+          <Text style={{fontSize: 17, color: 'black'}}>{info.name}</Text>
+          <Text style={{color: 'black'}}>{info.expirationDate}</Text>
         </View>
         <View style={styles.nameText}>
-          <Text>이름</Text>
-          <Text>{AddComma(info.price)} 원</Text>
+          <Text style={{color: 'black'}}>이름</Text>
+          <Text style={{color: 'black'}}>{AddComma(info.price)} 원</Text>
         </View>
       </View>
-      <Text style={{fontSize: 17, fontStyle: 'bold', marginTop: 5}}>제목</Text>
+      <Text
+        style={{fontSize: 17, fontStyle: 'bold', marginTop: 5, color: 'black'}}>
+        제목
+      </Text>
       <Text style={styles.title}>{info.title}</Text>
-      <Text style={{fontSize: 17, fontStyle: 'bold', marginTop: 5}}>
+      <Text
+        style={{fontSize: 17, fontStyle: 'bold', marginTop: 5, color: 'black'}}>
         상품 설명
       </Text>
       <ScrollView style={styles.description}>
-        <Text style={{padding: 2}}>{info.content}</Text>
+        <Text style={{padding: 2, color: 'black'}}>{info.content}</Text>
       </ScrollView>
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <Pressable
@@ -100,7 +110,7 @@ export default Form3;
 const styles = StyleSheet.create({
   img: {
     width: 70,
-    height: 100,
+    height: 70,
   },
   price: {
     marginTop: 20,
@@ -123,6 +133,7 @@ const styles = StyleSheet.create({
     borderColor: 'red',
     marginTop: 5,
     padding: 2,
+    color: 'black',
   },
   description: {
     borderWidth: 2,
