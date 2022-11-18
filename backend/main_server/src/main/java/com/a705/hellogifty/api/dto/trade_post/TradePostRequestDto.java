@@ -24,6 +24,6 @@ public class TradePostRequestDto {
 
     private Integer price;
 
-    private String cropFileBase64;
+    private MultipartFile cropImg;
 
 }

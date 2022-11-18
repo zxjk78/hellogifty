@@ -19,6 +19,7 @@ import org.springframework.boot.jackson.JsonObjectSerializer;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -92,21 +93,31 @@ public class GifticonService {
     @Transactional
     public void myGifticonRegister(User user, GifticonRegisterRequestDto gifticonRegisterRequestDto) throws IOException {
         String fileUploadNow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
-        String rawBase = gifticonRegisterRequestDto.getFileBase64();
-        String[] basesplit = rawBase.split(",", 2);
-        String extension = basesplit[0].split(";", 2)[0].split("/", 2)[1];
-        String base = basesplit[1];
+        String defaultPath = gifticonImagePath+File.separator;
+        MultipartFile originalImg = gifticonRegisterRequestDto.getImg();
+//        String originalImgName = originalImg.getOriginalFilename();
+//        System.out.println(originalImg.getOriginalFilename());
+        File img = new File(defaultPath+user.getEmail()+"_"+fileUploadNow+"_"+originalImg.getOriginalFilename());
+        originalImg.transferTo(img);
+
+//        --------------------------------------------
+//        String rawBase = gifticonRegisterRequestDto.getFileBase64();
+//        String[] basesplit = rawBase.split(",", 2);
+//        String extension = basesplit[0].split(";", 2)[0].split("/", 2)[1];
+//        String base = basesplit[1];
 //        String extension = "png";
 //        data:image/jpeg;base64,
 //        String defaultPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"gifticon"+File.separator;
-        String defaultPath = gifticonImagePath+File.separator;
-        File img = new File(defaultPath+user.getEmail()+"_"+fileUploadNow+"."+extension);
+//        String defaultPath = gifticonImagePath+File.separator;
+//        File img = new File(defaultPath+user.getEmail()+"_"+fileUploadNow+"."+extension);
+//
+//        Base64.Decoder decoder = Base64.getDecoder();
+//        byte[] decodedBytes = decoder.decode(base.getBytes());
+//        FileOutputStream fileOutputStream = new FileOutputStream(img);
+//        fileOutputStream.write(decodedBytes);
+//        fileOutputStream.close();
 
-        Base64.Decoder decoder = Base64.getDecoder();
-        byte[] decodedBytes = decoder.decode(base.getBytes());
-        FileOutputStream fileOutputStream = new FileOutputStream(img);
-        fileOutputStream.write(decodedBytes);
-        fileOutputStream.close();
+
 
         Gifticon gifticon = Gifticon.builder().user(user)
                 .smallCategory(smallCategoryRepository.findById(gifticonRegisterRequestDto.getCategoryId()).orElseThrow(SmallCategoryNotFoundException::new))
