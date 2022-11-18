@@ -14,8 +14,6 @@ import CustomImage from '../components/UI/CustomImage';
 import {API_URL} from '../api/config/http-config';
 import {AddComma} from '../utils/regexp';
 
-const renderItem = ({item}) => <TicketListItem item={item} />;
-
 const ProfileScreen = ({}) => {
   const route = useRoute();
   const navigation = useNavigation();
@@ -75,7 +73,7 @@ const ProfileScreen = ({}) => {
                 }}
               />
               <Text style={{fontSize: 20}}>
-                {userInfo.name || userInfo.id + `번 유저`}
+                {userInfo.name || userInfo.id + '번 유저'}
               </Text>
             </View>
             {!isOther && (
@@ -92,7 +90,7 @@ const ProfileScreen = ({}) => {
               <List.AccordionGroup>
                 {!isOther && (
                   <List.Accordion
-                    title={`구매내역 ${userInfo.purchaseRecord.length}`}
+                    title={`구매완료내역 ${userInfo.purchaseRecord.length}`}
                     id="2"
                     style={{marginBottom: 20}}>
                     {userInfo.purchaseRecord.map(record => (
@@ -140,7 +138,7 @@ const ProfileScreen = ({}) => {
                   </List.Accordion>
                 )}
                 <List.Accordion
-                  title={`판매내역 ${userInfo.salesRecord.length}`}
+                  title={`판매완료내역 ${userInfo.salesRecord.length}`}
                   id="1">
                   {userInfo.salesRecord.map(record => (
                     <List.Item

@@ -28,7 +28,7 @@ import {
   ShoppingScreen,
   SignupScreen,
 } from './src/screens';
-
+import {Button, IconButton} from 'react-native-paper';
 // Toast Message
 const toastConfig = {
   success: props => (
@@ -113,16 +113,28 @@ const Shopping = () => {
 const Chat = () => {
   return (
     <>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: true,
+          initialRouteName: 'ChattingRoomScreen',
+        }}>
         <Stack.Screen
           name="ChattingRoomScreen"
           component={ChattingRoomScreen}
-          options={{title: '채팅목록'}}
+          options={{title: '채팅목록', unmountOnBlur: true}}
         />
         <Stack.Screen
           name="Chatting"
           component={ChattingScreen}
-          options={{title: '채팅방'}}
+          options={({navigation}) => ({
+            title: '채팅방',
+            headerLeft: () => (
+              <IconButton
+                icon="arrow-left-thick"
+                onPress={() => navigation.navigate('ChattingRoomScreen')}
+              />
+            ),
+          })}
         />
       </Stack.Navigator>
       <Toast config={toastConfig} />
@@ -177,6 +189,8 @@ const MainTab = () => {
         component={Chat}
         options={{
           title: '채팅',
+          unmountOnBlur: true,
+          headerShown: false,
         }}
       />
       <Tab.Screen

@@ -22,6 +22,8 @@ const ChattingRoomScreen = () => {
       const res = await fetchMyChatRoom();
       const userId = await AsyncStorage.getItem('userId');
       // res map 돌면서 거래 끝났는지 아닌지, 거래중이면 내 상품인지 아닌지 판단해서 보내주기  ONSALE, EXPIRED, SOLDOUT
+      console.log(res);
+
       res.forEach(trade => {
         if (trade.tradePostInfo.tradeState === 'ONSALE') {
           if (userId === trade.buyer.id) {
@@ -50,8 +52,8 @@ const ChattingRoomScreen = () => {
             finishedChatRoom.length
           }건 있습니다.`}</Text>
 
-          <ChatList list={onGoingSaleRoom} isSale />
-          <ChatList list={onGoingBuyingRoom} isBuying />
+          <ChatList list={onGoingSaleRoom} isSale={true} />
+          <ChatList list={onGoingBuyingRoom} isBuying={true} />
           <ChatList list={finishedChatRoom} />
         </>
       )}

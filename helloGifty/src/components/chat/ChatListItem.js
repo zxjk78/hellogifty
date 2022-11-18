@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, Image, Pressable} from 'react-native';
+import {StyleSheet, Text, View, Pressable} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import CustomImage from '../UI/CustomImage';
@@ -15,14 +15,12 @@ const ChatListItem = ({item}) => {
   useEffect(() => {
     (async () => {
       setIsLoading(true);
-
       // 판매자인지 구매자인지 비교
 
       const userId = await AsyncStorage.getItem('userId');
 
       const buyerId = item.buyer.id;
       const sellerId = item.seller.id;
-
       setOpponentName(() => {
         return userId == buyerId ? item.seller.name : item.buyer.name;
       });
@@ -62,13 +60,17 @@ const ChatListItem = ({item}) => {
             />
           </View>
           <View style={{alignItems: 'center', flexDirection: 'column'}}>
-            <Text style={{textAlign: 'left', fontSize: 12, marginBottom: 5}}>
+            <Text
+              style={{
+                textAlign: 'left',
+                fontSize: 12,
+                marginBottom: 5,
+              }}>
               {opponentName}님과의 대화
             </Text>
             <Text style={{textAlign: 'left', fontSize: 12, marginBottom: 5}}>
               상품명: {item.tradePostInfo.title}
             </Text>
-            <Text>{item.lastChatContent}</Text>
           </View>
         </>
       )}
@@ -82,6 +84,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
+    height: 50,
     padding: 8,
     alignItems: 'center',
   },

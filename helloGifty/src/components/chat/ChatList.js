@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View, FlatList, Pressable} from 'react-native';
+import {StyleSheet, Text, View, FlatList} from 'react-native';
 import ChatListItem from './ChatListItem';
 import {GlobalStyles} from '../../constants/style';
 const ChatList = ({list, isSale, isBuying}) => {
