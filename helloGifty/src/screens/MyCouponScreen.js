@@ -69,40 +69,40 @@ const MyCouponScreen = ({route: params}) => {
     });
 
     // const lastMMSImageIdx = 0;
-    setMmsReading(true);
-    setTimeout(() => {
-      (async () => {
-        const tmp = await getAllMMSAfterAccess(
-          lastMMSImageIdx,
-          async imgArr => {
-            // console.log('찾은 mms 사진 개수: ', imgArr.length);
+    // setMmsReading(true);
+    // setTimeout(() => {
+    //   (async () => {
+    //     const tmp = await getAllMMSAfterAccess(
+    //       lastMMSImageIdx,
+    //       async imgArr => {
+    //         // console.log('찾은 mms 사진 개수: ', imgArr.length);
 
-            // 사진들을 찾고 서버로 보내서, 기프티콘인 것들의 idx값과, 그 텍스트들의 응답을 받는 코드 필요.
-            //
-            //
-            //
+    //         // 사진들을 찾고 서버로 보내서, 기프티콘인 것들의 idx값과, 그 텍스트들의 응답을 받는 코드 필요.
+    //         //
+    //         //
+    //         //
 
-            // const result = await dummySendMMSImage(imgArr);
-            const gifticonArr = [];
-            const result = await sendMMSImage(imgArr);
+    //         // const result = await dummySendMMSImage(imgArr);
+    //         const gifticonArr = [];
+    //         const result = await sendMMSImage(imgArr);
 
-            result.forEach(item => {
-              const gifticon = {
-                ...item,
-                number: sepGifticonNumber(item.number),
-                expirationDate: item.expirationDate.replace(/\//g, '-'),
-                couponImg: imgArr[item.idx],
-              };
-              gifticonArr.push(gifticon);
-            });
+    //         result.forEach(item => {
+    //           const gifticon = {
+    //             ...item,
+    //             number: sepGifticonNumber(item.number),
+    //             expirationDate: item.expirationDate.replace(/\//g, '-'),
+    //             couponImg: imgArr[item.idx],
+    //           };
+    //           gifticonArr.push(gifticon);
+    //         });
 
-            setMmsGifticonArr(gifticonArr);
-          },
-        );
-      })();
-    }, 1000);
+    //         setMmsGifticonArr(gifticonArr);
+    //       },
+    //     );
+    //   })();
+    // }, 1000);
 
-    setMmsReading(false);
+    // setMmsReading(false);
   }, []);
 
   const openModal = () => {

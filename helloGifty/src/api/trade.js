@@ -55,7 +55,7 @@ export const fetchTradeItemDetail = async tradeId => {
 
     return res.data.data;
   } catch (error) {
-    console.log(error);
+    console.log('거래아이템 상세조회', error);
   }
 };
 
@@ -86,6 +86,6 @@ export const submitUserReport = async (tradeId, oppoId, content, reason) => {
 
     return res.data.success;
   } catch (error) {
-    console.log(error);
+    console.log('신고 데이터 제출 오류', error);
   }
 };

@@ -21,7 +21,7 @@ const searchByKeyword = async option => {
     });
     return res.data.data;
   } catch (error) {
-    console.log(error);
+    console.log('검색 키워드 오류', error);
   }
 };
 

@@ -95,7 +95,7 @@ const getGifticonDetail = async id => {
     const res = await axiosAuthInstance.get(`/mygifticon/${id}`);
     return res.data.data;
   } catch (error) {
-    console.log(error);
+    console.log('내 기프티콘디테일', error);
   }
 };
 
