@@ -225,7 +225,7 @@ story에 예상 시간(story point)을 기록해 더 세세하게 일정 관리�
 - 정규화된 테이블
 - 테이블 간 관계 설정
 
-![a501ERD.PNG](images/a501ERD.png)
+![erd](/uploads/2c357254fec0e052fb3a0ba9ec4a98c1/erd.png)
 
 ### ✨ EC2 포트 정리
 
