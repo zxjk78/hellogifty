@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.*;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.File;
@@ -53,23 +54,25 @@ public class TradeService {
     @Transactional
     public void tradePostCreate(User user, TradePostRequestDto tradePostRequestDto) throws IOException {
         Gifticon gifticon = gifticonRepository.findByUserAndId(user, tradePostRequestDto.getGifticonId()).orElseThrow(GifticonNotFoundException::new);
-//        String fileUploadNow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
+        String fileUploadNow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
         String originalImgName = getOriginalImgName(user, gifticon.getId());
-        String rawBase = tradePostRequestDto.getCropFileBase64();
-        String[] basesplit = rawBase.split(",", 2);
-        String extension = basesplit[0].split(";", 2)[0].split("/", 2)[1];
-        String base = basesplit[1];
+        MultipartFile originalCropImg = tradePostRequestDto.getCropImg();
+//        String rawBase = tradePostRequestDto.getCropFileBase64();
+//        String[] basesplit = rawBase.split(",", 2);
+//        String extension = basesplit[0].split(";", 2)[0].split("/", 2)[1];
+//        String base = basesplit[1];
 //        String extension = "png";
 //        String defaultPath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"static"+File.separator+"img"+File.separator+"gifticonCropImg"+File.separator;
 //        String defaultPath = System.getProperty("user.dir")+gifticonCroppedImagePath;
-        String defaultPath = gifticonCroppedImagePath+File.separator;
-        File img = new File(defaultPath+"crop"+"_"+originalImgName+(new Date()).toString());
+        String defaultPath = System.getProperty("user.dir")+gifticonCroppedImagePath;
+        File img = new File(defaultPath+"crop"+"_"+fileUploadNow+"_"+originalImgName);
+        originalCropImg.transferTo(img);
 
-        Base64.Decoder decoder = Base64.getDecoder();
-        byte[] decodedBytes = decoder.decode(base.getBytes());
-        FileOutputStream fileOutputStream = new FileOutputStream(img);
-        fileOutputStream.write(decodedBytes);
-        fileOutputStream.close();
+//        Base64.Decoder decoder = Base64.getDecoder();
+//        byte[] decodedBytes = decoder.decode(base.getBytes());
+//        FileOutputStream fileOutputStream = new FileOutputStream(img);
+//        fileOutputStream.write(decodedBytes);
+//        fileOutputStream.close();
 
         TradePost tradePost = TradePost.builder().user(user)
                 .gifticon(gifticon)

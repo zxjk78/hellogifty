@@ -15,10 +15,15 @@ import com.a705.hellogifty.api.service.ResponseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Api(tags = "")
 @RequiredArgsConstructor
@@ -29,6 +34,9 @@ public class GifticonController {
     private final GifticonService gifticonService;
 
     private final ResponseService responseService;
+
+    @Value("${image.gifticon.path}")
+    String gifticonImagePath;
 
     @ApiOperation(value = "내 소유 전체 기프티콘 조회", notes = "로그인한 유저가 갖고 있는 모든 기프티콘 리스트")
     @GetMapping("/")
@@ -52,7 +60,16 @@ public class GifticonController {
 
     @ApiOperation(value = "기프티콘 등록" , notes = "기프티콘 등록")
     @PostMapping("/")
-    public CommonResult myGifticonRegister(@ApiIgnore @LoginUser User loginUser, @RequestBody GifticonRegisterRequestDto gifticonRegisterRequestDto) throws IOException {
+    public CommonResult myGifticonRegister(@ApiIgnore @LoginUser User loginUser, @ModelAttribute GifticonRegisterRequestDto gifticonRegisterRequestDto) throws IOException {
+
+//        String fileUploadNow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
+//        String defaultPath = System.getProperty("user.dir")+gifticonImagePath;
+//        MultipartFile originalImg = gifticonRegisterRequestDto.getImg();
+//        System.out.println(gifticonRegisterRequestDto);
+//        System.out.println(originalImg);
+//        String originalImgName = originalImg.getOriginalFilename();
+//        File image = new File(defaultPath+loginUser.getEmail()+"_"+fileUploadNow+"_"+originalImgName);
+//        originalImg.transferTo(image);
 
         gifticonService.myGifticonRegister(loginUser, gifticonRegisterRequestDto);
         return responseService.getSuccessResult();
