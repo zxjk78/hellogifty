@@ -11,6 +11,7 @@ const CategoryDropdown = ({
   onChange,
   defaultTxt,
   largeChanged,
+  gifticon,
 }) => {
   const dropdownRef = useRef({});
   const selectItem = selectedItem => {
@@ -26,11 +27,18 @@ const CategoryDropdown = ({
   };
   // 소분류 영역이면 리셋시킴
   useEffect(() => {
-    if (categoryItem?.length == 2) {
+    if (categoryItem?.length === 2) {
       // 라이브러리에 메소드 사용법이 적혀있었음
       dropdownRef.current.reset();
     }
   }, [categoryItem?.length, largeChanged]);
+  // 기프티콘 이동했을 때 그 상태로 만들기
+  // useEffect(() => {
+  //   if (categoryItem?.length === 2) {
+  //     dropdownRef.current.renderCustomizedButtonChild={()=> selectItem()}}
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [gifticon]);
 
   return (
     <View>

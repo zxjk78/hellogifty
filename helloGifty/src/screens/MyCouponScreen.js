@@ -2,7 +2,6 @@ import {StyleSheet} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import MyTicketScreen from './MyTicketScreen';
-import {Title} from 'react-native-paper';
 import {fetchMyGifticonList, fetchMySellingGifticonList} from '../api/gifticon';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -10,8 +9,9 @@ import {AddTicketModal} from '../components/ticket';
 
 import {requestReadMMSPermission} from '../utils/getPermission';
 import {getAllMMSAfterAccess} from '../utils/mmsGifticonFunc';
-import {dummySendMMSImage} from '../api/mms';
+import {sendMMSImage} from '../api/mms';
 import AddGifticonFromFileModal from '../components/ticket/AddGifticonFromFileModal';
+import {sepGifticonNumber} from '../utils/regexp';
 
 const TopTab = createMaterialTopTabNavigator();
 
@@ -65,7 +65,7 @@ const MyCouponScreen = ({route: params}) => {
     let lastMMSImageIdx;
     AsyncStorage.getItem('lastMMSImageIdx').then(idx => {
       lastMMSImageIdx = idx || 0;
-      console.log(idx);
+      console.log('마지막mms의 사진넘버', idx);
     });
 
     // const lastMMSImageIdx = 0;
@@ -82,8 +82,20 @@ const MyCouponScreen = ({route: params}) => {
             //
             //
 
-            const result = await dummySendMMSImage(imgArr);
-            setMmsGifticonArr(result);
+            // const result = await dummySendMMSImage(imgArr);
+            const gifticonArr = [];
+            const result = await sendMMSImage(imgArr);
+
+            result.forEach(item => {
+              const gifticon = {
+                ...item,
+                number: sepGifticonNumber(item.number),
+                couponImg: imgArr[item.idx],
+              };
+              gifticonArr.push(gifticon);
+            });
+
+            setMmsGifticonArr(gifticonArr);
           },
         );
       })();

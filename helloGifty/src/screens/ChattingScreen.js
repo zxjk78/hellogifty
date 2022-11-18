@@ -9,14 +9,14 @@ import {useRoute} from '@react-navigation/native';
 const ChattingScreen = () => {
   const route = useRoute();
   const [chatRoomId, setChatRoomId] = useState('');
-
   useEffect(() => {
     setChatRoomId(route.params?.chatRoomId);
+    // console.log('여기까지 들어옴', route.params?.chatRoomId);
   }, [route.params?.chatRoomId]);
 
   return (
     <View style={{flex: 1}}>
-      {chatRoomId != '' ? (
+      {chatRoomId !== '' ? (
         <ChatRoom
           chatRoomId={chatRoomId}
           userId={route.params?.userId}

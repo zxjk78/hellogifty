@@ -14,3 +14,9 @@ export function AddComma(num) {
   const regexp = /\B(?=(\d{3})+(?!\d))/g;
   return num.toString().replace(regexp, ',');
 }
+// 두번까지 하이픈 넣고, 나머지는 그냥 보여주는 함수
+export function sepGifticonNumber(num) {
+  const str = num + '';
+  const spt = [str.slice(0, 3), str.slice(3, 6), str.slice(6)];
+  return spt.join('-');
+}

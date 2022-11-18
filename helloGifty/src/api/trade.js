@@ -9,7 +9,7 @@ export const enterChatRoom = async tradeId => {
     const res = await axiosAuthInstance.get('chatroom/trade/' + tradeId);
 
     // console.log('채팅신청응답: ', res.data);
-    return res.data;
+    return res.data.data;
   } catch (error) {
     console.log('채팅방 입장', error);
   }

@@ -61,7 +61,8 @@ const ChatRoom = ({chatRoomId, userId, tradeState, tradeId}) => {
     if (connected) {
       sendEnterChatRoomHandler();
     }
-  }, [connected, chatRoomId, sendEnterChatRoomHandler]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [connected, chatRoomId]);
 
   /*********************
    *******  Chat  ******
@@ -92,7 +93,8 @@ const ChatRoom = ({chatRoomId, userId, tradeState, tradeId}) => {
     setMessageList([]);
     // 현재 채팅방 subscribe
     setTopics([...topics, '/sub/chat/room/' + chatRoomId]);
-  }, [chatRoomId, topics]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chatRoomId]);
 
   // 메시지 전송
   const sendMessageHandler = () => {

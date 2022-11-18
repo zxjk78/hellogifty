@@ -36,16 +36,16 @@ const SellingItemDetailScreen = ({}) => {
     const tradeState = itemDetail.tradeState;
     const userId = await AsyncStorage.getItem('userId');
     // console.log(userId);
-    const res = await enterChatRoom(tradeId);
-    // console.log('채팅신청응답', res);
-    navigation.navigate('Chat', {
-      screen: 'Chatting',
-      params: {
-        userId: userId,
-        tradeState,
-        chatRoomId: res.data,
-        tradeId,
-      },
+    await enterChatRoom(tradeId).then(chatRoomNum => {
+      navigation.navigate('Chat', {
+        screen: 'Chatting',
+        params: {
+          userId: userId,
+          tradeState,
+          chatRoomId: chatRoomNum,
+          tradeId,
+        },
+      });
     });
   };
 

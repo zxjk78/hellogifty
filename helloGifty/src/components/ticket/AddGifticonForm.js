@@ -36,6 +36,7 @@ const AddGifticonForm = ({
   const [largeChange, setLargeChange] = useState(false);
 
   const [largeCategoryId, setLargeCategoryId] = useState(-1);
+  const [smallCategoryId, setSmallCategoryId] = useState(null);
 
   const handleName = txt => {
     onNameChange(idx, txt);
@@ -46,6 +47,7 @@ const AddGifticonForm = ({
   };
 
   const handleSmallCategory = selectedId => {
+    setSmallCategoryId(selectedId);
     onSmCtChange(idx, selectedId);
   };
 
@@ -71,7 +73,7 @@ const AddGifticonForm = ({
                 onChangeText={handleName}
               />
             </View>
-            <View style={{flex: 1}}></View>
+            <View style={{flex: 1}} />
 
             <View
               style={{
@@ -115,9 +117,10 @@ const AddGifticonForm = ({
                 defaultTxt="대분류"
               />
             </View>
-            <View style={{width: '10%'}}></View>
+            <View style={{width: '10%'}} />
             <View>
               <CategoryDropdown
+                gifticon={gifticon}
                 categoryItem={smallCategoryData[largeCategoryId] || null}
                 onChange={smCId => handleSmallCategory(smCId)}
                 defaultTxt="소분류"
@@ -139,8 +142,11 @@ const AddGifticonForm = ({
           이전
         </Button>
 
-        <Button mode="contained" onPress={nextHandler}>
-          {isEnd ? `완료` : `다음`}
+        <Button
+          mode="contained"
+          onPress={nextHandler}
+          disabled={!smallCategoryId}>
+          {isEnd ? '완료' : '다음'}
         </Button>
       </View>
     </View>
