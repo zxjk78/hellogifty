@@ -9,6 +9,7 @@ const CategoryDropdown = ({
   defaultTxt,
   largeChanged,
   gifticon,
+  reset,
 }) => {
   const dropdownRef = useRef({});
   const selectItem = selectedItem => {
@@ -28,7 +29,10 @@ const CategoryDropdown = ({
       // 라이브러리에 메소드 사용법이 적혀있었음
       dropdownRef.current.reset();
     }
-  }, [categoryItem?.length, largeChanged]);
+    if (!reset) {
+      dropdownRef.current.reset();
+    }
+  }, [categoryItem?.length, largeChanged, reset]);
   // 기프티콘 이동했을 때 그 상태로 만들기
   useEffect(() => {
     dropdownRef.current.reset();

@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'purple',
     alignItems: 'center',
     justifyContent: 'center',
-    bottom: 40,
-    right: 30,
+    bottom: 20,
+    right: 20,
   },
 });
