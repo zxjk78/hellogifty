@@ -167,12 +167,15 @@ const styles = StyleSheet.create({
   },
   brandName: {
     fontSize: 15,
+    color: 'black',
   },
   itemName: {
     fontSize: 20,
+    color: 'black',
   },
   expiration: {
     fontSize: 12,
+    color: 'black',
   },
   modalContainer: {
     // backgroundColor: 'blue',

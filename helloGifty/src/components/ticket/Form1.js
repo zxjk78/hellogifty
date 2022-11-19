@@ -20,20 +20,27 @@ const Form1 = ({info, next}) => {
 
   return (
     <View>
-      <Text style={{marginVertical: 5}}> 가격과 설명을 적어주세요 (1/3)</Text>
+      <Text style={{marginVertical: 5, color: 'black'}}>
+        {' '}
+        가격과 설명을 적어주세요 (1/3)
+      </Text>
       <View style={styles.ticket}>
         <CustomImage
           source={API_URL + 'image/brand?path=' + info.brandImgPath}
-          style={{height: 50, width: 50, marginRight: 10}}
+          style={{height: 50, width: 50}}
         />
         <View>
-          <Text style={{marginTop: 10}}>{info.brandName}</Text>
-          <Text style={{fontSize: 17}}>{info.name}</Text>
-          <Text>유효기간 {info.expirationDate} 까지</Text>
+          <Text style={{marginTop: 10, color: 'black'}}>{info.brandName}</Text>
+          <Text style={{fontSize: 17, color: 'black'}}>{info.name}</Text>
+          <Text style={{color: 'black'}}>
+            유효기간 {info.expirationDate} 까지
+          </Text>
         </View>
       </View>
       <View style={styles.price}>
-        <Text style={{fontWeight: 'bold', fontSize: 20}}>가격</Text>
+        <Text style={{fontWeight: 'bold', fontSize: 20, color: 'black'}}>
+          가격
+        </Text>
         <View style={{flexDirection: 'row'}}>
           <TextInput
             style={styles.input}
@@ -43,10 +50,19 @@ const Form1 = ({info, next}) => {
             placeholder="0"
             keyboardType="numeric"
           />
-          <Text style={{fontWeight: 'bold', fontSize: 20}}> 원</Text>
+          <Text style={{fontWeight: 'bold', fontSize: 20, color: 'black'}}>
+            {' '}
+            원
+          </Text>
         </View>
       </View>
-      <Text style={{fontWeight: 'bold', fontSize: 20, marginTop: 10}}>
+      <Text
+        style={{
+          fontWeight: 'bold',
+          fontSize: 20,
+          marginTop: 10,
+          color: 'black',
+        }}>
         제목
       </Text>
       <TextInput
@@ -59,7 +75,13 @@ const Form1 = ({info, next}) => {
         maxLength={23}
         keyboardType="string"
       />
-      <Text style={{fontWeight: 'bold', fontSize: 20, marginTop: 10}}>
+      <Text
+        style={{
+          fontWeight: 'bold',
+          fontSize: 20,
+          marginTop: 10,
+          color: 'black',
+        }}>
         상품 설명
       </Text>
       <TextInput
@@ -112,7 +134,9 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: 'red',
     paddingRight: 10,
+    padding: 0,
     textAlign: 'right',
+    color: 'black',
   },
   inputText: {
     height: 100,
@@ -123,6 +147,7 @@ const styles = StyleSheet.create({
     borderColor: 'red',
     padding: 5,
     textAlignVertical: 'top',
+    color: 'black',
     // textAlign: "left",
   },
   titleInput: {
@@ -134,6 +159,7 @@ const styles = StyleSheet.create({
     borderColor: 'red',
     padding: 5,
     textAlignVertical: 'top',
+    color: 'black',
   },
   nextButton: {
     width: 120,

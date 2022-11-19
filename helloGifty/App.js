@@ -200,7 +200,6 @@ const MainTab = () => {
           ),
         })}
       />
-
       <Tab.Screen
         name="test"
         component={TestScreen}

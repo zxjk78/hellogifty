@@ -25,10 +25,10 @@ const DetailScreen = ({route}) => {
 
     (async () => {
       const gifticonInfo = await fetchMyGifticonDetail(route.params.item.id);
-      console.log(gifticonInfo);
+      // console.log(gifticonInfo, 'detail정보');
       setInfo(gifticonInfo);
     })();
-
+    // console.log(route.params.item, 'detail route item 정보');
     setIsLoading(false);
   }, [route.params.item.id]);
 
@@ -181,25 +181,35 @@ const DetailScreen = ({route}) => {
               </Text>
             </Pressable>
             <View style={{marginTop: 30, alignItems: 'center'}}>
-              <View>
-                {/* <CustomImage
-              src={API_URL + 'image/brand?path=' + item.brandName + '.png'}
-              style={{ width: 100, height: 100 }}
-            /> */}
-                <Text style={{fontSize: 15}}>{info.brandName}</Text>
-                <Text style={{fontSize: 20}}>{info.name}</Text>
-                <Text>
-                  유효기간{' '}
-                  <Text style={{fontWeight: 'bold'}}>
-                    {info.expirationDate}
-                  </Text>{' '}
-                  까지
-                </Text>
+              <View style={{flexDirection: 'row'}}>
+                <CustomImage
+                  source={
+                    API_URL +
+                    'image/brand?path=' +
+                    route.params.item.brandImgPath
+                  }
+                  style={{width: 90, height: 90, marginRight: 10}}
+                />
+                <View>
+                  <Text style={{fontSize: 15, color: 'black'}}>
+                    {info.brandName}
+                  </Text>
+                  <Text style={{fontSize: 20, color: 'black'}}>
+                    {info.name}
+                  </Text>
+                  <Text style={{color: 'black'}}>
+                    유효기간{' '}
+                    <Text style={{fontWeight: 'bold', color: 'black'}}>
+                      {info.expirationDate}
+                    </Text>{' '}
+                    까지
+                  </Text>
+                </View>
               </View>
             </View>
           </View>
           <View style={{flex: 1}}>
-            <Text style={{fontSize: 18}}>
+            <Text style={{fontSize: 18, color: 'black'}}>
               사용 후 <Text style={{color: '#84dcc6'}}>사용 완료</Text> 버튼을
               눌러주세요.
             </Text>
@@ -217,7 +227,7 @@ const DetailScreen = ({route}) => {
                 style={styles.usedButton}
                 onPress={() => setModalVisible(true)}
                 android_ripple={{color: '#84dcc6'}}>
-                <Text>사용 완료</Text>
+                <Text style={{color: 'black'}}>사용 완료</Text>
               </Pressable>
             </View>
           </View>
@@ -304,6 +314,7 @@ const styles = StyleSheet.create({
   },
   modalText: {
     fontSize: 17,
+    color: 'black',
     marginBottom: 15,
     textAlign: 'center',
   },
