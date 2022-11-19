@@ -56,7 +56,7 @@ const LastCheckItem = ({item, idx, onDelete}) => {
             style={{width: 30, height: 30, marginRight: 10}}
           />
           <Text>
-            {item.name.length > 16 ? item.name.slice(0, 14) + '...' : item.name}
+            {item.name.length > 14 ? item.name.slice(0, 12) + '...' : item.name}
           </Text>
         </View>
         <View>
@@ -96,7 +96,7 @@ const AddGifticonLastCheck = ({
   const handleDelete = idx => {
     onSubmitItemDelete(idx);
   };
-  // console.log(gifticonArr.length);
+  console.log(gifticonArr.length);
   return (
     <View style={{flex: 1}}>
       <ScrollView style={{paddingHorizontal: '5%'}}>
