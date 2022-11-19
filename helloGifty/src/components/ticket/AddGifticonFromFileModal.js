@@ -152,7 +152,6 @@ const AddGifticonFromFileModal = ({visible, onClose, onRefresh}) => {
                   categoryItem={largeCategoryData}
                   onChange={lgCId => {
                     setLargeCategoryId(lgCId);
-
                     setLargeChanged(!largeChanged);
                   }}
                   defaultTxt="대분류"

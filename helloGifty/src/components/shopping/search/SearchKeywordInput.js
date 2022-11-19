@@ -106,7 +106,7 @@ const SearchKeywordInput = () => {
       return {...prev, smallCategoryId: CategoryId};
     });
   };
-
+  // console.log(searchOption.largeCategoryId, '카테고리');
   return (
     <>
       <View style={styles.inputContainer}>
@@ -134,32 +134,45 @@ const SearchKeywordInput = () => {
           />
         )}
       </View>
-      <View style={{flexDirection: 'row'}}>
-        <Text>종류 별</Text>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-around',
+          marginBottom: 10,
+        }}>
+        {/* <Text>종류 별</Text> */}
         <CategoryDropdown
-          categoryItem={largeCategoryId ? largeCategoryData : null}
+          categoryItem={largeCategoryData || null}
           onChange={lgCId => {
             handleLargeCategory(lgCId);
           }}
-          defaultTxt="종류 별로 검색"
+          reset={searchOption.largeCategoryId}
+          defaultTxt="종류별로 검색"
         />
-        <Button mode="contained" onPress={search}>
-          검색
-        </Button>
-      </View>
-      <View style={{width: '10%'}}></View>
-      <View style={{flexDirection: 'row'}}>
-        <Text>브랜드</Text>
+        {/* <Text>브랜드</Text> */}
         <CategoryDropdown
           categoryItem={smallCategoryData[searchOption.largeCategoryId] || null}
           onChange={smCId => handleSmallCategory(smCId)}
           defaultTxt="브랜드 검색"
           largeChanged={largeChange}
+          reset={searchOption.largeCategoryId ? true : false}
         />
-        <Button mode="contained" onPress={searchInitial}>
+        <Button
+          mode="contained-tonal"
+          buttonColor="#ff686b"
+          onPress={searchInitial}>
           초기화
         </Button>
       </View>
+      {/* <View style={{marginTop: 10, flexDirection: 'row', justifyContent: "space-between"}}>
+        <Button
+          mode="contained"
+          buttonColor="#a5ffd6"
+          textColor="black"
+          onPress={search}>
+          검색
+        </Button>
+      </View> */}
       <ScrollView>
         {!isLoading && resultDataList && (
           <SearchResultList resultDataList={resultDataList} />
