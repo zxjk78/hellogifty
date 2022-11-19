@@ -38,25 +38,17 @@ const LevelBadgeContainer = ({level, isOther}) => {
     <View style={{width: '100%'}}>
       {!isLoading && (
         <>
-          {!isOther ? (
+          {!isOther && (
             <Text
               style={{
                 fontWeight: 'bold',
-                color: GlobalStyles.colors.mainPrimary,
+                color: '#1c1c1c',
               }}>
               현재 나의 점수는{' '}
-              <Text style={{color: GlobalStyles.colors.mainSecondary}}>
+              <Text style={{color: GlobalStyles.colors.mainPrimary}}>
                 {level}점
               </Text>{' '}
               이에요
-            </Text>
-          ) : (
-            <Text
-              style={{
-                color: GlobalStyles.colors.mainSecondary,
-                textAlign: 'right',
-              }}>
-              {level}점
             </Text>
           )}
 
@@ -78,7 +70,12 @@ const LevelBadgeContainer = ({level, isOther}) => {
               (level - (expArr[nxtLevelIdx - 1] || 0) + 0.1) /
               (expArr[nxtLevelIdx] - (expArr[nxtLevelIdx - 1] || 0))
             }
-            style={{height: 10, width: '90%', alignSelf: 'center'}}
+            style={{
+              height: 10,
+              width: '90%',
+              alignSelf: 'center',
+            }}
+            color={GlobalStyles.colors.mainPrimary}
           />
           <Text style={{marginTop: 10, alignSelf: 'flex-end', marginRight: 10}}>
             {!isOther &&

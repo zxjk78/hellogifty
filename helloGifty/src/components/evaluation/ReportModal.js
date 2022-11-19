@@ -45,14 +45,14 @@ const ReportModal = ({oppoId, tradeId, visible, onClose}) => {
             right: 30,
           }}
         />
-        <View style={{flex: 1}}>
+        <View style={{height: '30%'}}>
           <Text style={styles.header}>신고하기</Text>
           <Text style={{fontSize: 15, marginTop: 3}}>
-            {reportUserName} 님을 신고하시는 이유가 무엇인가요?
+            {reportUserName} 님을{'\n'}신고하시는 이유를 말씀해 주세요.
           </Text>
-          <Text style={{fontSize: 15, marginTop: 3}}>
+          {/* <Text style={{fontSize: 15, marginTop: 3}}>
             신고거래번호: {tradeId}
-          </Text>
+          </Text> */}
         </View>
         <SelectDropdown
           data={[
@@ -91,18 +91,28 @@ const ReportModal = ({oppoId, tradeId, visible, onClose}) => {
             <Text>{selectedItem.value}</Text>
           )}
         />
-        <Text style={{fontSize: 15, marginTop: 3}}>
+        <Text style={{fontSize: 15, marginVertical: '10%'}}>
           좀 더 구체적인 상황을 적어주시면, 이후 처리에 도움이 되요.
         </Text>
         <TextInput
           multiline
           numberOfLines={3}
           onChangeText={setContent}
-          style={{padding: 10, borderWidth: 2}}
+          style={{
+            padding: 10,
+            borderWidth: 2,
+            borderColor: GlobalStyles.colors.mainPrimary,
+            marginVertical: '10%',
+          }}
         />
 
-        <Button mode="contained" onPress={handleSubmitReport}>
-          신고 제출하기
+        <Button
+          mode="contained"
+          buttonColor={GlobalStyles.colors.mainPrimary}
+          textColor="#fff"
+          onPress={handleSubmitReport}>
+          {' '}
+          신고 등록하기
         </Button>
       </View>
     </Modal>
@@ -126,16 +136,14 @@ const styles = StyleSheet.create({
     fontSize: 35,
     fontWeight: 'bold',
   },
-  slide: {
-    width: '100%',
-    height: 40,
-    marginVertical: 10,
-    alignSelf: 'center',
-    flex: 1,
+  commonSelectStyle: {
+    width: 150,
+    borderWidth: 2,
+    borderColor: GlobalStyles.colors.mainPrimary,
+    borderRadius: 5,
+    backgroundColor: '#fff',
   },
-  slideContainer: {
-    width: '100%',
-    alignSelf: 'center',
-    flex: 1,
+  itemStyle: {
+    paddingHorizontal: 8,
   },
 });

@@ -22,6 +22,7 @@ import {
   submitUserEvaluation,
 } from '../../api/trade';
 import EvaluationModal from '../evaluation/EvaluationModal';
+import {GlobalStyles} from '../../constants/style';
 
 const PORT = 9090;
 // const CHATTING_SERVER_URL = `http://localhost:${PORT}/chat`;
@@ -225,6 +226,24 @@ const ChatRoom = ({chatRoomId, userId, tradeState, tradeId}) => {
             style={styles.tradeBtn}
             onPress={handleTrade}
             disabled={isTradeDone}
+            buttonColor={
+              !isSeller()
+                ? checkIsTradeReady()
+                  ? '#fff'
+                  : GlobalStyles.colors.mainPrimary
+                : checkIsTradeReady()
+                ? GlobalStyles.colors.mainPrimary
+                : GlobalStyles.colors.mainPrimary
+            }
+            textColor={
+              !isSeller()
+                ? checkIsTradeReady()
+                  ? GlobalStyles.colors.mainPrimary
+                  : '#fff'
+                : checkIsTradeReady()
+                ? '#fff'
+                : '#fff'
+            }
             mode={
               !isSeller()
                 ? checkIsTradeReady()
@@ -259,23 +278,23 @@ const ChatRoom = ({chatRoomId, userId, tradeState, tradeId}) => {
             />
             {checkIsTradeReady() ? (
               isTradeDone ? (
-                <Text>
+                <Text style={styles.guide}>
                   {isSeller()
                     ? '판매 완료한 상품입니다.'
                     : '구매 완료한 상품입니다. 내 쿠폰함에서 확인해 주세요'}
                 </Text>
               ) : (
-                <Text>
+                <Text style={styles.guide}>
                   {isSeller()
                     ? '구매자가 입금하였습니다, 상단의 버튼을 클릭해서 기프티콘을 건네 주세요.'
-                    : '입금을 완료하였습니다.\n 판매자가 거래를 완료할 때까지 기다려 주세요'}
+                    : '입금을 완료하였습니다.\n 판매자를 기다려 주세요.'}
                 </Text>
               )
             ) : (
-              <Text>
+              <Text style={styles.guide}>
                 {isSeller()
                   ? '구매자가 입금할 때까지 기다려 주세요.'
-                  : '  입금하신 후에 상단의 버튼을 클릭해서 \n 판매자에게 알려주세요.'}
+                  : '  입금하신 후 상단의 버튼을 클릭해서 \n 판매자에게 알려주세요.'}
               </Text>
             )}
           </View>
@@ -358,7 +377,18 @@ const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: 10,
     borderRadius: 10,
+    borderColor: GlobalStyles.colors.mainPrimary,
     top: -50,
     right: 20,
+    color: '#fff',
+  },
+
+  guide: {
+    backgroundColor: GlobalStyles.colors.mainPrimary,
+    color: '#fff',
+    marginLeft: '5%',
+    paddingVertical: 6,
+    paddingHorizontal: 8,
+    borderRadius: 8,
   },
 });

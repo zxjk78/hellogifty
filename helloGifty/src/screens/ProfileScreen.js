@@ -85,7 +85,10 @@ const ProfileScreen = ({}) => {
               </Text>
             </View>
             {!isOther && (
-              <Button mode="contained" onPress={handleLogout}>
+              <Button
+                mode="contained"
+                onPress={handleLogout}
+                buttonColor={GlobalStyles.colors.mainPrimary}>
                 로그아웃
               </Button>
             )}
@@ -103,7 +106,8 @@ const ProfileScreen = ({}) => {
                   <List.Accordion
                     title={`구매한 기프티콘 ${userInfo.purchaseRecord.length}`}
                     id="2"
-                    style={[{...GlobalStyles.shadow}, {marginBottom: 20}]}>
+                    style={[{...GlobalStyles.shadow}, {marginBottom: 20}]}
+                    titleStyle={{color: '#1c1c1c'}}>
                     {userInfo.purchaseRecord.map(record => (
                       <List.Item
                         key={record.tradePostId + 2}
@@ -164,7 +168,8 @@ const ProfileScreen = ({}) => {
                 <List.Accordion
                   title={`판매한 기프티콘 ${userInfo.salesRecord.length}`}
                   id="1"
-                  style={GlobalStyles.shadow}>
+                  style={GlobalStyles.shadow}
+                  titleStyle={{color: '#1c1c1c'}}>
                   {userInfo.salesRecord.map(record => (
                     <List.Item
                       key={record.tradePostId + 1}
