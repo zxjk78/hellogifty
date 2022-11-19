@@ -53,6 +53,12 @@ const AddTicketModal = ({gifticonList, visible, handleClose}) => {
     setIsLoading(false);
   }, [gifticonList]);
 
+  const handleSubmitItemDelete = idx => {
+    setSelectedGifticonList(prev =>
+      prev.filter((item, index) => index !== idx),
+    );
+  };
+
   return (
     <Modal visible={visible}>
       <View style={styles.container}>
@@ -88,6 +94,7 @@ const AddTicketModal = ({gifticonList, visible, handleClose}) => {
               <AddGifticonLastCheck
                 onPrev={handlePrev}
                 gifticonArr={selectedGifticonList}
+                onSubmitItemDelete={handleSubmitItemDelete}
                 onSubmit={handleClose}
               />
             ) : (

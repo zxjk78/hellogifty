@@ -17,7 +17,8 @@ import {
   smallCategoryData,
 } from '../../constants/data/categoryData';
 
-// 부모:
+// 부모: AddTicketModal,
+// 해야할 일 메뉴 다음으로 넘어갔을 때 지정 풀기, 지정해서 상태 유지하기 어떻게 하는지 알아보기
 const AddGifticonForm = ({
   gifticon,
   idx,

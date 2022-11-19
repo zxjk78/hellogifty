@@ -1,10 +1,7 @@
 import {StyleSheet, Text, View, Image} from 'react-native';
 import React, {useEffect, useRef} from 'react';
 import SelectDropdown from 'react-native-select-dropdown';
-import {
-  largeCategoryDict,
-  smallCategoryDict,
-} from '../../constants/data/idDictionary';
+
 import {GlobalStyles} from '../../constants/style';
 const CategoryDropdown = ({
   categoryItem,
@@ -45,6 +42,7 @@ const CategoryDropdown = ({
       <SelectDropdown
         data={categoryItem}
         ref={dropdownRef}
+        defaultButtonText={defaultTxt}
         onSelect={selectedItem => {
           // 여기서 set함수 써서 state 변경
           // console.log('내가 선택한 선택지 아이디값', selectedItem.key);

@@ -88,6 +88,7 @@ const MyCouponScreen = ({route: params}) => {
 
           const gifticonArr = [];
           const result = await checkMMSImageValidate(imgIdxArr);
+          console.log(result);
           result.forEach(item => {
             const gifticon = {
               ...item,

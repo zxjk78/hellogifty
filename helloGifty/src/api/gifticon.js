@@ -34,48 +34,11 @@ export const fetchMyGifticonDetail = async gifticonId => {
   }
 };
 
-export const addGifticon = async gifticonArr => {
-  try {
-    console.log('내 기프티콘 등록');
-    // 이미지 url을 이미지 file로 변환시켜야 함
-    const gifticonArr2 = gifticonArr.map((gifticon, index) => {
-      const {name, expirationDate, categoryId, number} = gifticon;
-      // console.log(name);
-      return {
-        name,
-        expirationDate,
-        categoryId,
-        number,
-        // fileBase64: 'data:image/jpeg;base64,' + item.imgPath,
-        fileBase64: ('data:image/jpeg;base64,' + gifticon.imgPath).replace(
-          /\n/g,
-          '',
-        ),
-      };
-    });
-
-    const enrollGifticon = item => {
-      return axiosAuthInstance.post('mygifticon/', item);
-    };
-
-    Promise.all(gifticonArr2.map(gifticon => enrollGifticon(gifticon)))
-      .then(() => {
-        console.log('기프티콘 등록 성공');
-        console.log('유저 mms 아이디 변경 시도');
-        // axiosAuthInstance.put('/mmsIndex',{userMmsIndex:});
-      })
-      .catch(() => {
-        console.log('기프티콘 등록 실패');
-      });
-
-    // const res = await axiosAuthInstance.post('mygifticon/', gifticonArr2[0]);
-  } catch (error) {
-    console.log(error);
-  }
-};
 export const addGifticonFromMms = async gifticonArr => {
   const enrollGifticon = item => {
-    return axiosAuthInstance.post('mygifticon/', item);
+    return axiosAuthInstance.post('mygifticon/', item, {
+      headers: {'Content-Type': 'multipart/form-data'},
+    });
   };
   try {
     console.log('서버에서 판별한 내 MMS기프티콘 등록');
@@ -85,7 +48,7 @@ export const addGifticonFromMms = async gifticonArr => {
     gifticonArr.forEach(gifticon => {
       const formdata = new FormData();
       const {name, expirationDate, categoryId, number, imgPath} = gifticon;
-
+      console.log('깊티 항목 1', gifticon);
       formdata.append('name', name);
       formdata.append('expirationDate', expirationDate);
       formdata.append('categoryId', categoryId);
@@ -102,65 +65,36 @@ export const addGifticonFromMms = async gifticonArr => {
         lastCheckMMSIdx = mmsIdx;
       }
     });
+    console.log('기프티콘의 마지막 인덱스', lastCheckMMSIdx);
+    // Promise.all(promiseArr.map(formdata => enrollGifticon(formdata)))
+    //   .then(() => {
+    //     console.log('기프티콘 등록 성공');
+    //     console.log('나중에 유저 mms 아이디 변경 할꺼임');
+    //     // AsyncStorage.setItem('lastMMSImageIdx', lastCheckMMSIdx + '');
+    //     //  axiosAuthInstance.put('mmsIndex', {userMmsIndex: lastCheckMMSIdx});
+    //   })
+    //   .catch(() => {
+    //     console.log('기프티콘 등록 실패');
+    //   });
 
-    Promise.all(promiseArr.map(formdata => enrollGifticon(formdata)))
-      .then(() => {
-        console.log('기프티콘 등록 성공');
-        console.log('나중에 유저 mms 아이디 변경 할꺼임');
-        // AsyncStorage.setItem('lastMMSImageIdx', lastCheckMMSIdx + '');
-        //  axiosAuthInstance.put('mmsIndex', {userMmsIndex: lastCheckMMSIdx});
-      })
-      .catch(() => {
-        console.log('기프티콘 등록 실패');
-      });
+    promiseArr.forEach(async item => {
+      try {
+        console.log('기프티콘 하나씩 등록 시도');
+        const res = await axiosAuthInstance.post('mygifticon/', item, {
+          headers: {'Content-Type': 'multipart/form-data'},
+        });
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
+    });
   } catch (error) {
     console.log(error, '기프티콘 mms 등록 실패 ');
   }
 };
 
-// export const addGifticonFromFile = async gifticonInfo => {
-//   try {
-//     const gifticon = {
-//       ...gifticonInfo,
-//       fileBase64: ('data:image/jpeg;base64,' + gifticonInfo.fileBase64).replace(
-//         /\n/g,
-//         '',
-//       ),
-//     };
-//     const res = await axiosAuthInstance.post('mygifticon/', gifticon);
-//     return res.data.success;
-//   } catch (error) {
-//     console.log('앨범에서 쿠폰 등록 시 에러: ', error);
-//   }
-// };
-
 // 바뀐 addGifticonFromFile
-export const addGifticonFromFile = async gifticonInfo => {
-  console.log('앨범에서 쿠폰 등록 시도 ');
 
-  try {
-    const {name, expirationDate, categoryId, number, imgPath} = gifticonInfo;
-
-    const formData = FormData();
-    formData.append('name', name);
-    formData.append('expirationDate', expirationDate);
-    formData.append('categoryId', categoryId);
-    formData.append('number', number);
-    formData.append('img', {
-      uri: imgPath,
-      name: 'gifticon.jpg',
-      type: 'image/jpeg',
-    });
-
-    const res = await axiosAuthInstance.post('mygifticon/', formData, {
-      headers: {'Content-Type': 'multipart/form-data'},
-    });
-
-    return res.data.success;
-  } catch (error) {
-    console.log('앨범에서 쿠폰 등록 시 에러: ', error);
-  }
-};
 export const addGifticonFromFile2 = async gifticonInfo => {
   // console.log('앨범에서 쿠폰 등록 시도2 ', gifticonInfo);
 

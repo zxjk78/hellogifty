@@ -48,9 +48,7 @@ const CustomCalendar = ({handleModalClose, onDateChange, selectedDate}) => {
         // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
         monthFormat={'yyyy MM'}
         // Handler which gets executed when visible month changes in calendar. Default = undefined
-        onMonthChange={date => {
-          console.log('month changed', date);
-        }}
+
         // Hide month navigation arrows. Default = false
         hideArrows={false}
         // Replace default arrows with custom ones (direction can be 'left' or 'right')

@@ -56,12 +56,14 @@ const ProfileScreen = ({}) => {
     <View style={styles.wrapper}>
       {!isLoading && userInfo && (
         <>
-          <ReportModal
-            visible={isReportModalVisible}
-            oppoId={reportTargetUserId}
-            tradeId={reportTargetTradeId}
-            onClose={() => setIsReportModalVisible(false)}
-          />
+          {reportTargetUserId && (
+            <ReportModal
+              visible={isReportModalVisible}
+              oppoId={reportTargetUserId}
+              tradeId={reportTargetTradeId}
+              onClose={() => setIsReportModalVisible(false)}
+            />
+          )}
           <View style={styles.profileContainer}>
             <View
               style={{

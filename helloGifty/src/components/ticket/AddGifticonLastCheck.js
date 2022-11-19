@@ -2,7 +2,7 @@ import {StyleSheet, Text, View, Image, ScrollView} from 'react-native';
 import {Button, IconButton} from 'react-native-paper';
 
 import React from 'react';
-import {addGifticon} from '../../api/gifticon';
+import {addGifticon, addGifticonFromMms} from '../../api/gifticon';
 import Toast from 'react-native-toast-message';
 import {smallCategoryDict} from '../../constants/data/idDictionary';
 const showToast = () => {
@@ -17,7 +17,7 @@ const showToast = () => {
   });
 };
 
-const LastCheckItem = ({item, idx}) => {
+const LastCheckItem = ({item, idx, onDelete}) => {
   // console.log(Object.keys(item));
   return (
     <View style={{flexDirection: 'row', borderWidth: 1, margin: 5, padding: 5}}>
@@ -41,7 +41,7 @@ const LastCheckItem = ({item, idx}) => {
       </View>
       <Image
         source={{
-          uri: `data:image/jpeg;base64,${item.imgPath}`,
+          uri: item.imgPath,
         }}
         style={{width: 100, height: 100, zIndex: 1, marginRight: 10}}
       />
@@ -59,28 +59,40 @@ const LastCheckItem = ({item, idx}) => {
         <IconButton
           icon="delete"
           mode="contained"
-          onPress={() => console.log('삭제')}
+          onPress={() => onDelete(idx)}
         />
       </View>
     </View>
   );
 };
 
-const AddGifticonLastCheck = ({gifticonArr, onPrev, onSubmit}) => {
+const AddGifticonLastCheck = ({
+  gifticonArr,
+  onPrev,
+  onSubmit,
+  onSubmitItemDelete,
+}) => {
   const handleSubmit = async () => {
     // byteCode는 이미지로 바꾸어서 formData에 담아 전송하기
-
-    const result = await addGifticon(gifticonArr);
+    const result = await addGifticonFromMms(gifticonArr);
 
     showToast();
     onSubmit();
+  };
+  const handleDelete = idx => {
+    onSubmitItemDelete(idx);
   };
   // console.log(gifticonArr.length);
   return (
     <ScrollView style={{}}>
       <Text>마지막으로 확인하시고 저장 버튼을 눌러 주세요.</Text>
       {gifticonArr.map((item, index) => (
-        <LastCheckItem item={item} idx={index} key={index} />
+        <LastCheckItem
+          item={item}
+          idx={index}
+          key={index}
+          onDelete={handleDelete}
+        />
       ))}
       <View>
         <Button mode="contained" onPress={handleSubmit}>
