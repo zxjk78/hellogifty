@@ -8,8 +8,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AddTicketModal} from '../components/ticket';
 
 import {requestReadMMSPermission} from '../utils/getPermission';
-import {getAllMMSAfterAccess, checkImg} from '../utils/mmsGifticonFunc';
-import {sendMMSImage, checkMMSImageValidate} from '../api/mms';
+import {checkImg} from '../utils/mmsGifticonFunc';
+import {checkMMSImageValidate} from '../api/mms';
 import AddGifticonFromFileModal from '../components/ticket/AddGifticonFromFileModal';
 import {sepGifticonNumber} from '../utils/regexp';
 
@@ -58,7 +58,7 @@ const MyCouponScreen = ({route: params}) => {
     console.log('다시 실행~~ refresh~~~~~~~');
   }, [refresh]);
 
-  // mms 사진에서 최근의 모든 사진 읽어오는 코드
+  // mms 사진에서 최근의 모든 사진 읽어오는 로직
 
   useEffect(() => {
     requestReadMMSPermission();
@@ -69,37 +69,44 @@ const MyCouponScreen = ({route: params}) => {
     });
 
     setMmsReading(true);
-    setTimeout(() => {
+    const findFromMMS = setTimeout(() => {
       (async () => {
-        // const tmp = await getAllMMSAfterAccess(
-
-        const tmp = await checkImg(lastMMSImageIdx, async imgPathArr => {
-          console.log('찾은 mms 사진 개수: ', imgPathArr);
+        const tmp = await checkImg(lastMMSImageIdx, async imgIdxArr => {
+          // console.log('찾은 mms 사진 id 개수: ', imgIdxArr);
 
           // 사진들을 찾고 서버로 보내서, 기프티콘인 것들의 idx값과, 그 텍스트들의 응답을 받는 코드 필요.
           //
           //
           //
 
-          const gifticonArr = [];
-          const result = await checkMMSImageValidate(imgPathArr);
+          if (imgIdxArr.length === 0) {
+            setMmsGifticonArr([]);
 
+            setMmsReading(false);
+            return;
+          }
+
+          const gifticonArr = [];
+          const result = await checkMMSImageValidate(imgIdxArr);
           result.forEach(item => {
             const gifticon = {
               ...item,
               number: sepGifticonNumber(item.number),
               expirationDate: item.expirationDate.replace(/\//g, '-'),
-              imgPath: imgPathArr[item.idx],
+              imgPath: 'content://mms/part/' + imgIdxArr[item.idx],
             };
             gifticonArr.push(gifticon);
           });
-
           setMmsGifticonArr(gifticonArr);
         });
       })();
     }, 1000);
 
     setMmsReading(false);
+    // unMountOnblur시 정지하기
+    return () => {
+      clearTimeout(findFromMMS);
+    };
   }, []);
 
   const openModal = () => {

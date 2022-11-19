@@ -13,13 +13,16 @@ import {List} from 'react-native-paper';
 import CustomImage from '../components/UI/CustomImage';
 import {API_URL} from '../api/config/http-config';
 import {AddComma} from '../utils/regexp';
-
+import ReportModal from '../components/evaluation/ReportModal';
 const ProfileScreen = ({}) => {
   const route = useRoute();
   const navigation = useNavigation();
   const [isOther, setIsOther] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [userInfo, setUserInfo] = useState(null);
+  const [isReportModalVisible, setIsReportModalVisible] = useState(false);
+  const [reportTargetUserId, setReportTargetUserId] = useState(-1);
+  const [reportTargetTradeId, setReportTargetTradeId] = useState(-1);
   useEffect(() => {
     setIsLoading(true);
     (async () => {
@@ -28,13 +31,15 @@ const ProfileScreen = ({}) => {
       if (route.params?.userId && route.params?.userId !== userId) {
         setIsOther(true);
 
-        const info = await fetchUserInfo();
-        console.log('일반 유저 정보', info);
-        setUserInfo(info);
+        const otherInfo = await fetchUserInfo(route.params?.userId);
+        console.log('일반 유저 정보', otherInfo);
+        setUserInfo(otherInfo);
       } else {
-        const info = await fetchMyInfo();
-        console.log('내정보 불러오기', info);
-        setUserInfo(info);
+        setIsOther(false);
+
+        const myInfo = await fetchMyInfo();
+        console.log('내정보 불러오기', myInfo);
+        setUserInfo(myInfo);
       }
     })();
     setIsLoading(false);
@@ -51,6 +56,12 @@ const ProfileScreen = ({}) => {
     <View style={styles.wrapper}>
       {!isLoading && userInfo && (
         <>
+          <ReportModal
+            visible={isReportModalVisible}
+            oppoId={reportTargetUserId}
+            tradeId={reportTargetTradeId}
+            onClose={() => setIsReportModalVisible(false)}
+          />
           <View style={styles.profileContainer}>
             <View
               style={{
@@ -83,12 +94,15 @@ const ProfileScreen = ({}) => {
             )}
           </View>
           <View style={styles.scoreContainer}>
-            <LevelBadgeContainer level={userInfo.evalScore || 0} />
+            <LevelBadgeContainer
+              level={userInfo.evalScore || 0}
+              isOther={isOther}
+            />
           </View>
           <ScrollView style={styles.ticketContainer}>
             <View style={styles.ticketList}>
               <List.AccordionGroup>
-                {!isOther && (
+                {!isOther && userInfo?.purchaseRecord && (
                   <List.Accordion
                     title={`구매완료내역 ${userInfo.purchaseRecord.length}`}
                     id="2"
@@ -100,8 +114,13 @@ const ProfileScreen = ({}) => {
                         description={
                           record.gifticonInfo.expirationDate + ' 까지'
                         }
-                        onPress={
-                          () => console.log('구매상품 클릭해서 타고들어갈래요') // 이게 아니라, 살짝 슬라이드 해서 보여주든가 해야 함
+                        onPress={() =>
+                          navigation.navigate('MyCoupon', {
+                            screen: 'DetailScreen',
+                            params: {
+                              item: {id: record.gifticonId},
+                            },
+                          })
                         }
                         left={() => (
                           <CustomImage
@@ -123,13 +142,23 @@ const ProfileScreen = ({}) => {
                               icon="account"
                               iconColor={GlobalStyles.colors.mainPrimary}
                               size={30}
-                              onPress={() => console.log('유저프로필 볼래요')}
+                              onPress={
+                                () =>
+                                  navigation.navigate('Profile', {
+                                    userId: record.sellerId,
+                                  })
+                                // navigation.navigate('Profile')
+                              }
                             />
                             <IconButton
                               icon="alarm-light"
                               iconColor={'red'}
                               size={30}
-                              onPress={() => console.log('신고할래요')}
+                              onPress={() => {
+                                setReportTargetUserId(record.sellerId);
+                                setReportTargetTradeId(record.tradePostId);
+                                setIsReportModalVisible(true);
+                              }}
                             />
                           </View>
                         )}

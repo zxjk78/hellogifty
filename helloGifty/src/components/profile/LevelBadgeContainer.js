@@ -10,7 +10,7 @@ const badgeArr = [
   require('../../assets/level/Master.png'),
 ];
 
-const LevelBadgeContainer = ({level}) => {
+const LevelBadgeContainer = ({level, isOther}) => {
   const expArr = [50, 120, 150, 200];
   const [isLoading, setIsLoading] = useState(true);
   const [nxtLevelIdx, setNxtLevelIdx] = useState(0);
@@ -36,17 +36,27 @@ const LevelBadgeContainer = ({level}) => {
     <View style={{width: '100%'}}>
       {!isLoading && (
         <>
-          <Text
-            style={{
-              fontWeight: 'bold',
-              color: GlobalStyles.colors.mainPrimary,
-            }}>
-            현재 나의 점수는{' '}
-            <Text style={{color: GlobalStyles.colors.mainSecondary}}>
+          {!isOther ? (
+            <Text
+              style={{
+                fontWeight: 'bold',
+                color: GlobalStyles.colors.mainPrimary,
+              }}>
+              현재 나의 점수는{' '}
+              <Text style={{color: GlobalStyles.colors.mainSecondary}}>
+                {level}점
+              </Text>{' '}
+              이에요
+            </Text>
+          ) : (
+            <Text
+              style={{
+                color: GlobalStyles.colors.mainSecondary,
+                textAlign: 'right',
+              }}>
               {level}점
-            </Text>{' '}
-            이에요
-          </Text>
+            </Text>
+          )}
 
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Image
@@ -69,7 +79,8 @@ const LevelBadgeContainer = ({level}) => {
             style={{height: 10, width: '90%', alignSelf: 'center'}}
           />
           <Text style={{marginTop: 10, alignSelf: 'flex-end', marginRight: 10}}>
-            {`다음 등급까지 앞으로 ${expArr[nxtLevelIdx] - level}점 남았어요`}
+            {!isOther &&
+              `다음 등급까지 앞으로 ${expArr[nxtLevelIdx] - level}점 남았어요`}
           </Text>
         </>
       )}

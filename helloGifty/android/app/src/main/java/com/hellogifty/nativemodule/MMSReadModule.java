@@ -21,7 +21,8 @@ import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-
+import java.util.Calendar;
+import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -281,13 +282,17 @@ public class MMSReadModule extends ReactContextBaseJavaModule {
         int prevSearchId = Integer.parseInt(id);
 
         try {
-            String[] selection = {"*"};
+                 long THREE_MONTH = 90*24*60*60*1000;
+                 Long date = (System.currentTimeMillis() - THREE_MONTH/1000);
 
-            InputStream is = null;
-
-            Cursor cursor = context.getContentResolver().query(Uri.parse("content://mms/part"), null, null, null, "_id DESC");
-
-            JSONArray jsons = new JSONArray();
+                //  String [] selectionArgs = {date};
+                 
+                 String selection = "date >= "+ date;
+                 InputStream is = null;
+                 
+                 Cursor cursor = context.getContentResolver().query(Uri.parse("content://mms/part"), null, null, null, "_id DESC");
+                 
+                 JSONArray jsons = new JSONArray();
 
 
             if(cursor != null && cursor.moveToFirst() && cursor.moveToNext()) {

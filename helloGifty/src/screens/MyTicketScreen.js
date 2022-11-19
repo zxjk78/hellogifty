@@ -115,13 +115,13 @@ const MyTicketScreen = ({
 
   return (
     <>
-      {/* {existMMSReadBar && (
+      {existMMSReadBar && (
         <ReadMMSStatusBar
           mmsNum={findMmsImages?.length}
           handleOpenModal={handleOpenModal}
           isMMSReading={isMMSReading}
         />
-      )} */}
+      )}
       <SafeAreaView style={styles.container}>
         <ScrollView>
           <SimpleAccordion

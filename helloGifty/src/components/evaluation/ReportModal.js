@@ -49,6 +49,9 @@ const ReportModal = ({oppoId, tradeId, visible, onClose}) => {
           <Text style={{fontSize: 15, marginTop: 3}}>
             {reportUserName} 님을 신고하시는 이유가 무엇인가요?
           </Text>
+          <Text style={{fontSize: 15, marginTop: 3}}>
+            신고거래번호: {tradeId}
+          </Text>
         </View>
         <SelectDropdown
           data={[
@@ -110,7 +113,7 @@ export default ReportModal;
 const styles = StyleSheet.create({
   container: {
     width: '90%',
-    height: '50%',
+    height: '70%',
     alignSelf: 'center',
     marginTop: '30%',
     padding: '10%',
