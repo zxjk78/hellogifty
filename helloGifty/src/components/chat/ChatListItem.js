@@ -60,17 +60,27 @@ const ChatListItem = ({item}) => {
               }
             />
           </View>
-          <View style={{alignItems: 'center', flexDirection: 'column'}}>
+          <View
+            style={{
+              alignItems: 'flex-start',
+              flexDirection: 'column',
+              marginLeft: 15,
+            }}>
             <Text
               style={{
                 textAlign: 'left',
                 fontSize: 12,
-                marginBottom: 5,
               }}>
-              {opponentName}님과의 대화
+              {opponentName} 님과의 대화
             </Text>
-            <Text style={{textAlign: 'left', fontSize: 12, marginBottom: 5}}>
-              상품명: {item.tradePostInfo.title}
+            <Text
+              style={{
+                textAlign: 'left',
+                fontSize: 16,
+                marginTop: 5,
+                fontWeight: 'bold',
+              }}>
+              {item.tradePostInfo.title}
             </Text>
           </View>
         </>
@@ -83,10 +93,13 @@ export default ChatListItem;
 
 const styles = StyleSheet.create({
   container: {
+    height: 70,
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    height: 50,
-    padding: 8,
+    // borderWidth: 1,
+    // borderColor: '#d3d3d3',
+
     alignItems: 'center',
+    marginBottom: 10,
   },
 });

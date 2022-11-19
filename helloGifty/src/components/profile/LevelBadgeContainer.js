@@ -17,7 +17,9 @@ const LevelBadgeContainer = ({level, isOther}) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const calculateBadge = level => {
     // 현재 레벨 다음의 수 찾기
-    const nxtExpIdx = expArr.reduce((acc, exp, index, _arr) => {
+    const expList = [50, 120, 150, 200];
+
+    const nxtExpIdx = expList.reduce((acc, exp, index, _arr) => {
       if (level < exp && acc === -1) {
         return index;
       } else {

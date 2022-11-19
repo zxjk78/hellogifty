@@ -19,7 +19,7 @@ const MyCouponScreen = ({route: params}) => {
   const [possession, setPossession] = useState([]);
   const [used, setUsed] = useState([]);
   const [selling, setSelling] = useState([]);
-  const [mmsReading, setMmsReading] = useState(false);
+  const [isMmsReading, setIsMmsReading] = useState(true);
   const [mmsGifticonArr, setMmsGifticonArr] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [refresh, setRefresh] = useState(false);
@@ -68,7 +68,7 @@ const MyCouponScreen = ({route: params}) => {
       console.log('마지막mms의 사진넘버', idx);
     });
 
-    setMmsReading(true);
+    setIsMmsReading(true);
     const findFromMMS = setTimeout(() => {
       (async () => {
         const tmp = await checkImg(lastMMSImageIdx, async imgIdxArr => {
@@ -82,13 +82,13 @@ const MyCouponScreen = ({route: params}) => {
           if (imgIdxArr.length === 0) {
             setMmsGifticonArr([]);
 
-            setMmsReading(false);
+            setIsMmsReading(false);
             return;
           }
 
           const gifticonArr = [];
           const result = await checkMMSImageValidate(imgIdxArr);
-          console.log(result);
+          console.log('찾은 기프티콘: ', result);
           result.forEach(item => {
             const gifticon = {
               ...item,
@@ -103,7 +103,7 @@ const MyCouponScreen = ({route: params}) => {
       })();
     }, 1000);
 
-    setMmsReading(false);
+    setIsMmsReading(false);
     // unMountOnblur시 정지하기
     return () => {
       clearTimeout(findFromMMS);
@@ -143,7 +143,7 @@ const MyCouponScreen = ({route: params}) => {
               extraData={possession}
               findMmsImages={mmsGifticonArr}
               handleOpenModal={openModal}
-              isMMSReading={mmsReading}
+              isMMSReading={isMmsReading}
               refresh={handleRefresh}
               type={0}
               existMMSReadBar

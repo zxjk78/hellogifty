@@ -35,59 +35,77 @@ export const fetchMyGifticonDetail = async gifticonId => {
 };
 
 export const addGifticonFromMms = async gifticonArr => {
-  const enrollGifticon = item => {
-    return axiosAuthInstance.post('mygifticon/', item, {
-      headers: {'Content-Type': 'multipart/form-data'},
-    });
-  };
   try {
-    console.log('서버에서 판별한 내 MMS기프티콘 등록');
     // 이미지 path 에서 긁어오기
-    const promiseArr = [];
     let lastCheckMMSIdx = 0;
-    gifticonArr.forEach(gifticon => {
-      const formdata = new FormData();
+    gifticonArr.forEach(async gifticon => {
+      const formData = new FormData();
       const {name, expirationDate, categoryId, number, imgPath} = gifticon;
-      console.log('깊티 항목 1', gifticon);
-      formdata.append('name', name);
-      formdata.append('expirationDate', expirationDate);
-      formdata.append('categoryId', categoryId);
-      formdata.append('number', number);
-      formdata.append('img', {
+      formData.append('name', name);
+      formData.append('expirationDate', expirationDate);
+      formData.append('categoryId', categoryId);
+      formData.append('number', number);
+      formData.append('img', {
         uri: imgPath,
         name: 'gifticon.jpg',
         type: 'image/jpeg',
       });
-      promiseArr.push(formdata);
 
       const mmsIdx = +imgPath.split('/')[imgPath.split('/').length - 1];
       if (mmsIdx > lastCheckMMSIdx) {
         lastCheckMMSIdx = mmsIdx;
       }
+
+      const res = await axiosAuthInstance.post('mygifticon/', formData, {
+        headers: {'Content-Type': 'multipart/form-data'},
+      });
+      console.log(res.data.success);
     });
     console.log('기프티콘의 마지막 인덱스', lastCheckMMSIdx);
-    // Promise.all(promiseArr.map(formdata => enrollGifticon(formdata)))
-    //   .then(() => {
-    //     console.log('기프티콘 등록 성공');
-    //     console.log('나중에 유저 mms 아이디 변경 할꺼임');
-    //     // AsyncStorage.setItem('lastMMSImageIdx', lastCheckMMSIdx + '');
-    //     //  axiosAuthInstance.put('mmsIndex', {userMmsIndex: lastCheckMMSIdx});
-    //   })
-    //   .catch(() => {
-    //     console.log('기프티콘 등록 실패');
-    //   });
+  } catch (error) {
+    console.log(error, '기프티콘 mms 등록 실패 ');
+  }
+};
 
-    promiseArr.forEach(async item => {
-      try {
-        console.log('기프티콘 하나씩 등록 시도');
-        const res = await axiosAuthInstance.post('mygifticon/', item, {
-          headers: {'Content-Type': 'multipart/form-data'},
-        });
-        console.log(res);
-      } catch (error) {
-        console.log(error);
+export const addGifticonFromMms_test = async gifticonArr => {
+  const formDataArr = [];
+  try {
+    console.log('서버에서 판별한 내 MMS기프티콘 등록');
+    // 이미지 path 에서 긁어오기
+    let lastCheckMMSIdx = 0;
+    gifticonArr.forEach(async gifticon => {
+      const formData = new FormData();
+      const {name, expirationDate, categoryId, number, imgPath} = gifticon;
+      formData.append('name', name);
+      formData.append('expirationDate', expirationDate);
+      formData.append('categoryId', categoryId);
+      formData.append('number', number);
+      formData.append('img', {
+        uri: imgPath,
+        name: 'gifticon.jpg',
+        type: 'image/jpeg',
+      });
+      formDataArr.push(formData);
+      const mmsIdx = +imgPath.split('/')[imgPath.split('/').length - 1];
+      if (mmsIdx > lastCheckMMSIdx) {
+        lastCheckMMSIdx = mmsIdx;
       }
     });
+
+    const isSuccess = await Promise.all(
+      formDataArr.map(async fData => {
+        return await axiosAuthInstance.post('mygifticon/', fData, {
+          headers: {'Content-Type': 'multipart/form-data'},
+        });
+      }),
+    );
+
+    console.log('기프티콘의 마지막 인덱스', lastCheckMMSIdx);
+    // console.log('성공유무', isSuccess);
+    await AsyncStorage.setItem('lastMMSImageIdx', lastCheckMMSIdx + '');
+    await axiosAuthInstance.put('mmsIndex', {userMmsIndex: lastCheckMMSIdx});
+
+    return true;
   } catch (error) {
     console.log(error, '기프티콘 mms 등록 실패 ');
   }

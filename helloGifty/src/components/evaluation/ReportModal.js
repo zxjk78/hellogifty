@@ -13,6 +13,7 @@ const ReportModal = ({oppoId, tradeId, visible, onClose}) => {
   const [reason, setReason] = useState(''); //     BAD_WORD, INVALID_PRODUCT, TAKE_AND_RUN
   const [reportUserName, setReportUserName] = useState('');
   useEffect(() => {
+    console.log('모달 렌더링됨');
     (async () => {
       const res = await fetchUserInfo(oppoId);
       // console.log('신고할 유저 찾기', res);

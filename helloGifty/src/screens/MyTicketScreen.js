@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {TicketListItem} from '../components/ticket';
-import {ReadMMSComponent} from '../components/readmms';
 import ReadMMSStatusBar from '../components/readmms/ReadMMSStatusBar';
 import {SimpleAccordion} from 'react-native-simple-accordion';
 import {Button} from 'react-native-paper';

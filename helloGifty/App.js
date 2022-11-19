@@ -141,6 +141,35 @@ const Chat = () => {
     </>
   );
 };
+
+const Profile = () => {
+  return (
+    <>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: true,
+          initialRouteName: 'ProfileScreen',
+        }}>
+        <Stack.Screen
+          name="ProfileScreen"
+          component={ProfileScreen}
+          options={({navigation}) => ({
+            title: '프로필',
+            unmountOnBlur: true,
+
+            headerLeft: () => (
+              <IconButton
+                icon="arrow-left-thick"
+                onPress={() => navigation.goBack()}
+              />
+            ),
+          })}
+        />
+      </Stack.Navigator>
+    </>
+  );
+};
+
 const MainTab = () => {
   return (
     <Tab.Navigator
@@ -189,15 +218,10 @@ const MainTab = () => {
       />
       <Tab.Screen
         name="Profile"
-        component={ProfileScreen}
+        component={Profile}
         options={({navigation}) => ({
           title: '프로필',
-          headerLeft: () => (
-            <IconButton
-              icon="arrow-left-thick"
-              onPress={() => navigation.goBack()}
-            />
-          ),
+          headerShown: false,
         })}
       />
       <Tab.Screen

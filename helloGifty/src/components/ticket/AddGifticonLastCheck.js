@@ -2,7 +2,7 @@ import {StyleSheet, Text, View, Image, ScrollView} from 'react-native';
 import {Button, IconButton} from 'react-native-paper';
 
 import React from 'react';
-import {addGifticon, addGifticonFromMms} from '../../api/gifticon';
+import {addGifticonFromMms, addGifticonFromMms_test} from '../../api/gifticon';
 import Toast from 'react-native-toast-message';
 import {smallCategoryDict} from '../../constants/data/idDictionary';
 const showToast = () => {
@@ -69,15 +69,16 @@ const LastCheckItem = ({item, idx, onDelete}) => {
 const AddGifticonLastCheck = ({
   gifticonArr,
   onPrev,
-  onSubmit,
+  onSuccess,
   onSubmitItemDelete,
 }) => {
   const handleSubmit = async () => {
-    // byteCode는 이미지로 바꾸어서 formData에 담아 전송하기
-    const result = await addGifticonFromMms(gifticonArr);
+    const result = await addGifticonFromMms_test(gifticonArr);
 
     showToast();
-    onSubmit();
+    if (result) {
+      onSuccess();
+    }
   };
   const handleDelete = idx => {
     onSubmitItemDelete(idx);

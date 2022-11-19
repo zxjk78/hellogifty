@@ -95,7 +95,7 @@ const AddTicketModal = ({gifticonList, visible, handleClose}) => {
                 onPrev={handlePrev}
                 gifticonArr={selectedGifticonList}
                 onSubmitItemDelete={handleSubmitItemDelete}
-                onSubmit={handleClose}
+                onSuccess={handleClose}
               />
             ) : (
               <AddGifticonForm

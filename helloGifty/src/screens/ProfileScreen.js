@@ -1,7 +1,6 @@
 import {StyleSheet, Text, View, Image, ScrollView} from 'react-native';
 import React, {useEffect} from 'react';
 import {Button, IconButton} from 'react-native-paper';
-import {TicketListItem} from '../components/ticket';
 import {GlobalStyles} from '../constants/style';
 import {logout} from '../api/auth';
 import {useNavigation, useRoute} from '@react-navigation/native';
@@ -21,24 +20,22 @@ const ProfileScreen = ({}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [userInfo, setUserInfo] = useState(null);
   const [isReportModalVisible, setIsReportModalVisible] = useState(false);
-  const [reportTargetUserId, setReportTargetUserId] = useState(-1);
+  const [reportTargetUserId, setReportTargetUserId] = useState(null);
   const [reportTargetTradeId, setReportTargetTradeId] = useState(-1);
   useEffect(() => {
     setIsLoading(true);
     (async () => {
       const userId = await AsyncStorage.getItem('userId');
       // 다른 유저 프로파일 클릭으로 타고 들어온거면 타인 프로필, 내 탭 클릭해서 들어오면 내 탭 프로필
+      // 존재하고, 다를 때만 타인 정보 가지고오기
       if (route.params?.userId && route.params?.userId !== userId) {
         setIsOther(true);
-
         const otherInfo = await fetchUserInfo(route.params?.userId);
-        console.log('일반 유저 정보', otherInfo);
         setUserInfo(otherInfo);
       } else {
         setIsOther(false);
 
         const myInfo = await fetchMyInfo();
-        console.log('내정보 불러오기', myInfo);
         setUserInfo(myInfo);
       }
     })();
@@ -72,9 +69,7 @@ const ProfileScreen = ({}) => {
                 justifyContent: 'space-between',
               }}>
               <Image
-                source={{
-                  uri: 'https://www.mtsolar.us/wp-content/uploads/2020/04/avatar-placeholder.png',
-                }}
+                source={require('../assets/Logo.png')}
                 style={{
                   width: 60,
                   height: 60,
@@ -103,12 +98,12 @@ const ProfileScreen = ({}) => {
           </View>
           <ScrollView style={styles.ticketContainer}>
             <View style={styles.ticketList}>
-              <List.AccordionGroup>
+              <List.Section>
                 {!isOther && userInfo?.purchaseRecord && (
                   <List.Accordion
-                    title={`구매완료내역 ${userInfo.purchaseRecord.length}`}
+                    title={`구매한 기프티콘 ${userInfo.purchaseRecord.length}`}
                     id="2"
-                    style={{marginBottom: 20}}>
+                    style={[{...GlobalStyles.shadow}, {marginBottom: 20}]}>
                     {userInfo.purchaseRecord.map(record => (
                       <List.Item
                         key={record.tradePostId + 2}
@@ -144,12 +139,10 @@ const ProfileScreen = ({}) => {
                               icon="account"
                               iconColor={GlobalStyles.colors.mainPrimary}
                               size={30}
-                              onPress={
-                                () =>
-                                  navigation.navigate('Profile', {
-                                    userId: record.sellerId,
-                                  })
-                                // navigation.navigate('Profile')
+                              onPress={() =>
+                                navigation.push('ProfileScreen', {
+                                  userId: record.sellerId,
+                                })
                               }
                             />
                             <IconButton
@@ -169,8 +162,9 @@ const ProfileScreen = ({}) => {
                   </List.Accordion>
                 )}
                 <List.Accordion
-                  title={`판매완료내역 ${userInfo.salesRecord.length}`}
-                  id="1">
+                  title={`판매한 기프티콘 ${userInfo.salesRecord.length}`}
+                  id="1"
+                  style={GlobalStyles.shadow}>
                   {userInfo.salesRecord.map(record => (
                     <List.Item
                       key={record.tradePostId + 1}
@@ -189,7 +183,7 @@ const ProfileScreen = ({}) => {
                     />
                   ))}
                 </List.Accordion>
-              </List.AccordionGroup>
+              </List.Section>
             </View>
           </ScrollView>
         </>
@@ -203,9 +197,9 @@ export default ProfileScreen;
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    width: '90%',
-    marginLeft: '5%',
-    backgroundColor: GlobalStyles.colors.backgroundPrimary,
+    width: '100%',
+    padding: '5%',
+    backgroundColor: '#fff',
   },
   profileContainer: {
     flex: 2,

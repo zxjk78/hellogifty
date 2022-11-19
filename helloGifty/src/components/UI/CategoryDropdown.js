@@ -30,12 +30,9 @@ const CategoryDropdown = ({
     }
   }, [categoryItem?.length, largeChanged]);
   // 기프티콘 이동했을 때 그 상태로 만들기
-  // useEffect(() => {
-  //   if (categoryItem?.length === 2) {
-  //     dropdownRef.current.renderCustomizedButtonChild={()=> selectItem()}}
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [gifticon]);
+  useEffect(() => {
+    dropdownRef.current.reset();
+  }, [gifticon]);
 
   return (
     <View>
