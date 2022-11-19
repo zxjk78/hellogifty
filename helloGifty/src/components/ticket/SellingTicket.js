@@ -65,6 +65,18 @@ const SellingTicket = ({onClose, item, refresh}) => {
     });
   };
 
+  const showFailToast = () => {
+    Toast.show({
+      type: 'error',
+      text1: `😞 판매 등록을 실패했습니다. `,
+      position: 'top',
+      visibilityTime: 4000,
+      topOffset: 10,
+      // onShow: () => {},
+      // onHide: () => {},
+    });
+  };
+
   const next = data => {
     setSellingInfo(prev => {
       // console.log(prev, 'prev')
@@ -86,9 +98,14 @@ const SellingTicket = ({onClose, item, refresh}) => {
   // 서버로 데이터 보내기
   const finish = async info => {
     // console.log(info, '여기가 인포~~');
-    showToast();
+
     setModalVisible(false);
-    await sellMyGifticon(info);
+    const sellSuccess = await sellMyGifticon(info);
+    if (sellSuccess === true) {
+      showToast();
+    } else {
+      showFailToast();
+    }
     refresh();
   };
 

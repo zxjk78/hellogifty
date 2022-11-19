@@ -128,7 +128,7 @@ export const addGifticonFromFile2 = async gifticonInfo => {
       name: 'gifticon.jpg',
       type: 'image/jpeg',
     });
-
+    // console.log(formData);
     const res = await axiosAuthInstance.post('mygifticon/', formData, {
       headers: {'Content-Type': 'multipart/form-data'},
     });
@@ -148,8 +148,8 @@ const getGifticonDetail = async id => {
   }
 };
 
-const ModifiedGifticon = data => {
-  console.log(data);
+const ModifiedGifticon = async data => {
+  console.log(data, '수정 데이터~~~~~~~~');
 };
 
 const isUsedGifticon = async id => {
@@ -184,48 +184,29 @@ const isUsedGifticon = async id => {
 //     .catch((error) => console.log(error, '여기서'));
 // };
 const sellMyGifticon = async info => {
-  function escapeRegExp(string) {
-    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
-  }
-  function replaceAll(str, match, replacement) {
-    return str.replace(new RegExp(escapeRegExp(match), 'g'), () => replacement);
-  }
+  // function escapeRegExp(string) {
+  //   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+  // }
+  // function replaceAll(str, match, replacement) {
+  //   return str.replace(new RegExp(escapeRegExp(match), 'g'), () => replacement);
+  // }
   // console.log(info.picture, 'picture 정보야');
   try {
-    if (info.picture == '') {
-      // 라이브러리로 base64로 바꾸기
-      ImgToBase64.getBase64String(
-        API_URL + 'image/gifticon?path=' + info.noCropImg,
-      )
-        .then(async base64String => {
-          const cropFileBase64 = replaceAll(base64String, '\n', '');
-          const data = {
-            content: info.content,
-            cropFileBase64: 'data:image/jpeg;base64,' + cropFileBase64,
-            gifticonId: info.id,
-            price: +info.price,
-            title: info.title,
-          };
-          // console.log(data, '안이야');
-          const res = await axiosAuthInstance.post('trade/', data);
-          // console.log('판매등록 성공!!');
-          return res.data.data;
-        })
-        .catch(err => console.log(err, 'noCrop 실패'));
-    } else {
-      const data = {
-        content: info.content,
-        cropFileBase64: info.picture,
-        gifticonId: info.id,
-        price: +info.price,
-        title: info.title,
-      };
-      // console.log(data, '밖이야');
-      const res = await axiosAuthInstance.post('trade/', data);
-      // console.log('판매등록 성공!!');
-      return res.data.data;
-    }
-    // console.log(resImgB64, 'base64 이미지 이미지')
+    const {title, expirationDate, id, price, imagePath} = info;
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('expirationDate', expirationDate);
+    formData.append('gifticonId', id);
+    formData.append('price', price);
+    formData.append('cropImg', {
+      uri: imagePath,
+      name: 'gifticon.jpg',
+      type: 'image/jpeg',
+    });
+    const res = await axiosAuthInstance.post('trade/', formData, {
+      headers: {'Content-Type': 'multipart/form-data'},
+    });
+    return res.data.success;
   } catch (error) {
     console.log(error, '판매등록 에러');
   }

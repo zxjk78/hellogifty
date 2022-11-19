@@ -29,7 +29,7 @@ const MyTicketScreen = ({
   useEffect(() => {
     const array = [[], [], [], [], [], []];
     data.map(item => {
-      array[item.categoryId].push(item);
+      array[Math.floor(item.categoryId / 2 - 1)].push(item);
     });
     setDataList(array);
   }, [data, extraData]);

@@ -42,9 +42,14 @@ const Form2 = ({info, next, back}) => {
       <Text style={{marginVertical: 5, color: 'black'}}>
         {' '}
         <Text style={{color: 'black'}}>사진에 </Text>
-        <Text style={{fontSize: 15, fontWeight: 'bold', color: 'black'}}>바코드</Text>와{' '}
-        <Text style={{fontSize: 15, fontWeight: 'bold', color: 'black'}}>일련번호</Text>가
-        나오지 않도록, 확인하시고 잘라 주세요. (2/3)
+        <Text style={{fontSize: 15, fontWeight: 'bold', color: 'black'}}>
+          바코드
+        </Text>
+        와{' '}
+        <Text style={{fontSize: 15, fontWeight: 'bold', color: 'black'}}>
+          일련번호
+        </Text>
+        가 나오지 않도록, 확인하시고 잘라 주세요. (2/3)
       </Text>
       <Pressable onPress={imgPress}>
         <CustomImage source={imagePath} style={styles.img} />
