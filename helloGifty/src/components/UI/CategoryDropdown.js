@@ -33,7 +33,8 @@ const CategoryDropdown = ({
       dropdownRef.current.reset();
     }
   }, [categoryItem?.length, largeChanged, reset]);
-  // 기프티콘 이동했을 때 그 상태로 만들기
+
+  // 기프티콘 이동했을 때 리셋시키기 만들기
   useEffect(() => {
     dropdownRef.current.reset();
   }, [gifticon]);

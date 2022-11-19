@@ -57,9 +57,15 @@ const AddGifticonFirstCheck = ({imageStringArr, onClose, onSubmit}) => {
     <View style={styles.wrapper}>
       <View style={styles.txtContainer}>
         <Text>
-          인식한 이미지들 중{' '}
-          <Text style={{fontWeight: 'bold'}}>기프티콘이 아닌 것을</Text> 골라
-          주세요.
+          인식한 이미지들 중{'\n'}
+          <Text
+            style={{
+              fontWeight: 'bold',
+              color: GlobalStyles.colors.mainPrimary,
+            }}>
+            기프티콘이 아닌 것을
+          </Text>{' '}
+          골라 주세요.
         </Text>
         <View>
           <FIcon name="trash-alt" size={30} />
@@ -101,14 +107,16 @@ export default AddGifticonFirstCheck;
 
 const styles = StyleSheet.create({
   wrapper: {
-    width: '90%',
-    marginLeft: '5%',
+    width: '100%',
+    backgroundColor: '#fff',
+    paddingHorizontal: '5%',
     flex: 1,
   },
   txtContainer: {
+    paddingHorizontal: '5%',
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     flexDirection: 'row',
   },
   imgContainer: {

@@ -105,6 +105,7 @@ const AddGifticonForm = ({
           <View style={styles.categoryContainer}>
             <View>
               <CategoryDropdown
+                gifticon={gifticon}
                 categoryItem={largeCategoryData}
                 onChange={lgCId => {
                   setLargeCategoryId(lgCId);

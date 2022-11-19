@@ -19,9 +19,12 @@ const ReadMMSStatusBar = ({mmsNum, handleOpenModal, isMMSReading}) => {
     <View style={styles.container}>
       <View style={styles.content}>
         {mmsNum === undefined && (
-          <View style={{flexDirection: 'row'}}>
-            <ActivityIndicator size="large" />
-            <Text>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <ActivityIndicator
+              size="large"
+              color={GlobalStyles.colors.mainPrimary}
+            />
+            <Text style={{marginLeft: 15}}>
               메세지함에서 기프티콘을 찾고 있어요.
               {userMmsIndex === 0 &&
                 '\n로그인을 처음 하셨으면, 오래 걸릴 수 있으니 기다려 주세요'}
@@ -35,9 +38,13 @@ const ReadMMSStatusBar = ({mmsNum, handleOpenModal, isMMSReading}) => {
         )}
         {mmsNum > 0 && !isMMSReading && (
           <>
-            <View style={{flexDirection: 'row'}}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <Text>총 {mmsNum}건의 기프티콘을 찾았어요!</Text>
-              <Button onPress={handleOpenModal}>등록하기</Button>
+              <Button
+                onPress={handleOpenModal}
+                textColor={GlobalStyles.colors.mainPrimary}>
+                등록하기
+              </Button>
             </View>
           </>
         )}
