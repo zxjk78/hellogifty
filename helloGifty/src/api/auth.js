@@ -8,6 +8,7 @@ const login = async (email, password) => {
     return {accessToken, refreshToken, userId, userMmsIndex};
   } catch (error) {
     console.error('로그인 에러: ', error);
+    return false;
   }
 };
 
@@ -24,6 +25,7 @@ const signup = async (email, password, name, phoneNumber) => {
     return res.data.success;
   } catch (error) {
     console.error('회원가입 에러: ', error);
+    return false;
   }
 };
 
