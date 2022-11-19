@@ -153,7 +153,9 @@ public class GifticonService {
             else return base64String;
         }).collect(Collectors.toList()) );
 
+        System.out.println("이미지 처리 요청 중...");
         List<InfoExtractedGifticonResponseDto> response = restTemplate.postForObject(IMAGE_SERVER_URL + "/validate-gifticon/", bodyMap, List.class);
+        System.out.println("이미지 처리 결과 수신");
 //        System.out.println(restTemplate.postForObject(IMAGE_SERVER_URL + "/validate-gifticon/", bodyMap, String.class));
         return response;
     }
