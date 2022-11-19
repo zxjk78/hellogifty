@@ -2,7 +2,7 @@ package com.a705.hellogifty.api.controller;
 
 import com.a705.hellogifty.aop.LoginUser;
 import com.a705.hellogifty.api.domain.entity.User;
-import com.a705.hellogifty.api.dto.gifticon.GifiticonToValidateDataDto;
+import com.a705.hellogifty.api.dto.gifticon.GifticonToValidateDataDto;
 import com.a705.hellogifty.api.dto.basic_response.CommonResult;
 import com.a705.hellogifty.api.dto.basic_response.ManyResult;
 import com.a705.hellogifty.api.dto.basic_response.OneResult;
@@ -20,10 +20,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
-import java.io.File;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 @Api(tags = "")
 @RequiredArgsConstructor
@@ -98,8 +97,8 @@ public class GifticonController {
 
     @ApiOperation(value="기프티콘 정보 추출 및 유효성 검사", notes = "기프티콘 정보 추출 및 유효성 검사")
     @PostMapping("/validation")
-    public CommonResult validateGifticons (@RequestBody GifiticonToValidateDataDto gifiticonToValidateDataDto) {
-        return responseService.getManyResult(gifticonService.validateGifticons(gifiticonToValidateDataDto.getBase64StringList()));
+    public CommonResult validateGifticons (@ModelAttribute GifticonToValidateDataDto gifticonToValidateDataDto) throws IOException {
+        if(gifticonToValidateDataDto.getImgList()==null) return responseService.getFailResult(500,"이미지리스트 null");
+        return responseService.getManyResult(gifticonService.validateGifticons(gifticonToValidateDataDto.getImgList()));
     }
-
 }

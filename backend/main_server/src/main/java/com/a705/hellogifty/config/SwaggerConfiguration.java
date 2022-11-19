@@ -42,7 +42,7 @@ public class SwaggerConfiguration {
 
     private ApiInfo swaggerInfo() {
         return new ApiInfoBuilder().title("REST API 테스트 문서")
-                .description("REST API 테스트 설명 문서, 2022-09-01, 이민호")
+                .description("REST API 테스트 설명 문서(유효성 검사 포함), 2022-11-19, 이민호, 최규섭")
                 .build();
     }
 
