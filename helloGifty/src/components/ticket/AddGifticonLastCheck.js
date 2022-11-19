@@ -5,6 +5,7 @@ import React from 'react';
 import {addGifticonFromMms, addGifticonFromMms_test} from '../../api/gifticon';
 import Toast from 'react-native-toast-message';
 import {smallCategoryDict} from '../../constants/data/idDictionary';
+import {GlobalStyles} from '../../constants/style';
 const showToast = () => {
   Toast.show({
     type: 'success',
@@ -17,49 +18,61 @@ const showToast = () => {
   });
 };
 
+const smallCategoryImgArr = [
+  require('../../assets/smallCategory/STARBUCKS.png'),
+  require('../../assets/smallCategory/TWOSOMEPLACE.png'),
+  require('../../assets/smallCategory/CU.png'),
+  require('../../assets/smallCategory/GS25.png'),
+  require('../../assets/smallCategory/PARISBAGUETTE.png'),
+  require('../../assets/smallCategory/TOUSLESJOURS.png'),
+  require('../../assets/smallCategory/BASKINROBBINS.png'),
+  require('../../assets/smallCategory/SEOLBING.png'),
+  require('../../assets/smallCategory/BHC.png'),
+  require('../../assets/smallCategory/DOMINO.png'),
+  require('../../assets/smallCategory/HAPPYCON.jpg'),
+  require('../../assets/smallCategory/CGV.png'),
+];
+
 const LastCheckItem = ({item, idx, onDelete}) => {
   // console.log(Object.keys(item));
   return (
-    <View style={{flexDirection: 'row', borderWidth: 1, margin: 5, padding: 5}}>
-      <View>
-        <Text
-          style={{
-            color: 'white',
-            backgroundColor: 'red',
-            width: 30,
-            height: 30,
-            borderRadius: 15,
-            textAlign: 'center',
-            lineHeight: 25,
-            position: 'absolute',
-            top: 5,
-            left: 5,
-            zIndex: 10,
-          }}>
-          {idx + 1}
-        </Text>
-      </View>
+    <View
+      style={{flexDirection: 'row', borderWidth: 1, margin: 5, padding: 10}}>
       <Image
         source={{
           uri: item.imgPath,
         }}
-        style={{width: 100, height: 100, zIndex: 1, marginRight: 10}}
+        style={{
+          width: 100,
+          height: 100,
+          marginRight: 10,
+          resizeMode: 'contain',
+        }}
       />
       <View>
-        <View>
-          <Text>이름: {item.name}</Text>
-          <Text>카테고리이름: {smallCategoryDict[item.categoryId]}</Text>
+        <View style={{flexDirection: 'row'}}>
+          <Image
+            source={smallCategoryImgArr[item.categoryId - 1]}
+            style={{width: 30, height: 30, marginRight: 10}}
+          />
+          <Text>
+            {item.name.length > 16 ? item.name.slice(0, 14) + '...' : item.name}
+          </Text>
         </View>
         <View>
-          <Text>유효기한: {item.expirationDate}까지</Text>
-          <Text>번호: {item.number}</Text>
+          <Text>{`일련번호\n${item.number}`}</Text>
+          <Text style={{textAlign: 'right', marginTop: 10, marginLeft: 110}}>
+            {item.expirationDate}까지
+          </Text>
         </View>
       </View>
-      <View>
+      <View style={{position: 'absolute', right: 5}}>
         <IconButton
           icon="delete"
           mode="contained"
           onPress={() => onDelete(idx)}
+          style={{backgroundColor: '#fda172'}}
+          iconColor="#fff"
         />
       </View>
     </View>
@@ -85,26 +98,53 @@ const AddGifticonLastCheck = ({
   };
   // console.log(gifticonArr.length);
   return (
-    <ScrollView style={{}}>
-      <Text>마지막으로 확인하시고 저장 버튼을 눌러 주세요.</Text>
-      {gifticonArr.map((item, index) => (
-        <LastCheckItem
-          item={item}
-          idx={index}
-          key={index}
-          onDelete={handleDelete}
-        />
-      ))}
-      <View>
-        <Button mode="contained" onPress={handleSubmit}>
-          제출
+    <View style={{flex: 1}}>
+      <ScrollView style={{paddingHorizontal: '5%'}}>
+        <Text
+          style={{
+            color: GlobalStyles.colors.mainPrimary,
+            fontSize: 18,
+            fontWeight: 'bold',
+          }}>
+          마지막 확인 후 저장 버튼을 눌러 주세요.
+        </Text>
+        {gifticonArr.map((item, index) => (
+          <LastCheckItem
+            item={item}
+            idx={index}
+            key={index}
+            onDelete={handleDelete}
+          />
+        ))}
+      </ScrollView>
+      <View
+        style={{
+          width: '100%',
+          justifyContent: 'space-around',
+          flexDirection: 'row',
+          position: 'absolute',
+          bottom: 30,
+        }}>
+        <Button
+          mode="outlined"
+          onPress={onPrev}
+          style={{
+            borderColor: GlobalStyles.colors.mainPrimary,
+          }}
+          textColor={GlobalStyles.colors.mainPrimary}>
+          다시 확인하기
         </Button>
-
-        <Button mode="outlined" onPress={onPrev}>
-          취소
+        <Button
+          mode="contained"
+          onPress={handleSubmit}
+          style={{
+            backgroundColor: GlobalStyles.colors.mainPrimary,
+            color: '#fff',
+          }}>
+          저장하기
         </Button>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
