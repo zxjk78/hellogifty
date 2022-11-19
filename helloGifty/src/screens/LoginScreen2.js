@@ -16,6 +16,59 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useEffect, useRef, useState} from 'react';
 import {login} from '../api/auth';
 import {emailRegExp, passwordRegExp} from '../utils/regexp';
+
+import Toast, {BaseToast, ErrorToast} from 'react-native-toast-message';
+const toastConfig = {
+  success: props => (
+    <BaseToast
+      {...props}
+      style={{
+        borderLeftColor: '#9ED5C5',
+        backgroundColor: '#cef2e7',
+        width: '100%',
+      }}
+      contentContainerStyle={{paddingHorizontal: 15}}
+      text1Style={{
+        fontSize: 18,
+        fontWeight: '400',
+        color: 'black',
+      }}
+    />
+  ),
+  error: props => (
+    <ErrorToast
+      {...props}
+      style={{
+        borderLeftColor: '#ff686b',
+        backgroundColor: '#ffa69e',
+        width: '100%',
+      }}
+      contentContainerStyle={{paddingHorizontal: 15}}
+      text1Style={{
+        fontSize: 18,
+        fontWeight: '400',
+        color: 'black',
+      }}
+    />
+  ),
+  tomatoToast: ({text1, props}) => (
+    <View style={{height: 60, width: '100%', backgroundColor: 'tomato'}}>
+      <Text>{text1}</Text>
+      <Text>{props.uuid}</Text>
+    </View>
+  ),
+};
+const showErrorToast = () => {
+  Toast.show({
+    type: 'error',
+    text1: '아이디 또는 비밀번호가 잘못되었습니다.',
+    position: 'top',
+    visibilityTime: 4000,
+    topOffset: 10,
+    // onShow: () => {},
+    // onHide: () => {},
+  });
+};
 const LoginScreen2 = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -45,24 +98,29 @@ const LoginScreen2 = ({navigation}) => {
     }
 
     (async () => {
-      const {accessToken, refreshToken, userId, userMmsIndex} = await login(
-        email,
-        password,
-      );
-      await AsyncStorage.setItem('accessToken', accessToken);
-      await AsyncStorage.setItem('refreshToken', refreshToken);
-      // console.log('엑세스토큰: ', await AsyncStorage.getItem('accessToken'));
+      const resData = await login(email, password);
 
-      // 유저아이디 저장
-      await AsyncStorage.setItem('userId', userId + '');
+      if (!resData) {
+        // 잘못된 로그인일때 toast
+        showErrorToast();
+      } else {
+        const {accessToken, refreshToken, userId, userMmsIndex} = resData;
 
-      // 마지막으로 조회한 mms 이미지 id 값 넣기
-      await AsyncStorage.setItem(
-        'lastMMSImageIdx',
-        userMmsIndex + '' || 0 + '',
-      );
+        await AsyncStorage.setItem('accessToken', accessToken);
+        await AsyncStorage.setItem('refreshToken', refreshToken);
+        // console.log('엑세스토큰: ', await AsyncStorage.getItem('accessToken'));
 
-      navigation.replace('MainTab', {screen: 'MyCoupon'});
+        // 유저아이디 저장
+        await AsyncStorage.setItem('userId', userId + '');
+
+        // 마지막으로 조회한 mms 이미지 id 값 넣기
+        await AsyncStorage.setItem(
+          'lastMMSImageIdx',
+          userMmsIndex + '' || 0 + '',
+        );
+
+        navigation.replace('MainTab', {screen: 'MyCoupon'});
+      }
     })();
   };
 
@@ -149,6 +207,7 @@ const LoginScreen2 = ({navigation}) => {
             </View>
             {/* </View> */}
           </KeyboardAwareScrollView>
+          <Toast config={toastConfig} />
         </>
       )}
     </View>

@@ -3,7 +3,7 @@ export const emailRegExp =
 
 export const passwordRegExp =
   /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{4,16}$/;
-export const phoneNumExp = /^\d{3}-\d{3,4}-\d{4}$/;
+export const phoneNumExp = /^\d{3}\d{3,4}\d{4}$/;
 
 // export const emailRegExp = /.*/;
 // export const phoneNumExp = /.*/;
