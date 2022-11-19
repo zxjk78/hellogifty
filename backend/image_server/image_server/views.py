@@ -132,7 +132,8 @@ def get_validated_gifticon(request):
         idx = 0
         for base64_str in image_list :
             # 이미지 처리 로직
-            base64_string = base64_str.split(",")[1]
+            # base64_string = base64_str.split(",")[1]
+            base64_string = base64_str
             # print(base64_string)
             try:
                 img = stringToRGB(base64_string)

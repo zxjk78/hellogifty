@@ -133,12 +133,26 @@ public class GifticonService {
 
 
 
-    public List<InfoExtractedGifticonResponseDto> validateGifticons(List<String> base64StringList) {
-        RestTemplate restTemplate = new RestTemplate();
+    public List<InfoExtractedGifticonResponseDto> validateGifticons(List<MultipartFile> imgList) {
+        if(imgList.isEmpty()) return new ArrayList<>();
 
+        RestTemplate restTemplate = new RestTemplate();
         Map<String,Object> bodyMap = new HashMap<>();
+
 //        bodyMap.put("images",base64StringList);
-        bodyMap.put("images", base64StringList );
+        bodyMap.put("images", imgList.stream().map(img->{
+            Base64.Encoder encoder = Base64.getEncoder();
+            String base64String = null;
+            try {
+                byte[] imgEncoded = encoder.encode(img.getBytes());
+                base64String = new String(imgEncoded, "UTF-8");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            if(base64String==null) return "";
+            else return base64String;
+        }).collect(Collectors.toList()) );
+
         List<InfoExtractedGifticonResponseDto> response = restTemplate.postForObject(IMAGE_SERVER_URL + "/validate-gifticon/", bodyMap, List.class);
 //        System.out.println(restTemplate.postForObject(IMAGE_SERVER_URL + "/validate-gifticon/", bodyMap, String.class));
         return response;
