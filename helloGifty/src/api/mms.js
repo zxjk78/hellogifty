@@ -1,7 +1,8 @@
 import {axiosAuthInstance} from './config/apiController';
-import {createGifticonArr} from '../utils/mmsGifticonFunc';
+import {MMS_FILE_PATH} from '../constants/filePath';
 // mms 이미지 배열을 스프링 서버에 보내고, 스프링은 장고로 보내고, 그 중에서 기프티콘 이미지라고 인식된 것의 idx, 데이터만 반환받는 함수
-const sendMMSImage = async imageStringArr => {
+
+export const sendMMSImage = async imageStringArr => {
   console.log('원래 찾은 mms 사진 개수', imageStringArr.length);
 
   const imageStringArr2 = imageStringArr.map(
@@ -19,26 +20,31 @@ const sendMMSImage = async imageStringArr => {
   }
 };
 
-export const checkMMSImageValidate = async imagePathArr => {
+export const checkMMSImageValidate = async imageIdArr => {
   try {
-    console.log('원래 찾은 mms 사진 경로 개수', imagePathArr.length);
+    console.log('찾은 mms 사진 경로 id: ', imageIdArr); // content://mms/part/ + ''
     const formData = new FormData();
-    const imgArr = imagePathArr.map(imgPath => {
-      return {uri: imgPath, name: '1.jpg', type: 'image/jpeg'};
+
+    // 1안
+    imageIdArr.forEach(imgId => {
+      formData.append('imgList[]', {
+        uri: 'content://mms/part/' + imgId,
+        name: imgId + '.jpg',
+        type: 'image/jpeg',
+      });
     });
 
-    // formData에 배열 담기
-    formData.append('img', {
-      uri: imagePathArr[0],
-      name: 'photo' + 0 + '.jpg',
-      type: 'image/jpeg',
-    });
+    const res = await axiosAuthInstance.post(
+      'mygifticon/validation',
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      },
+    );
 
-    const res = await axiosAuthInstance.post('mygifticon/imageTest', formData, {
-      headers: {'Content-Type': 'multipart/form-data'},
-    });
-
-    return res.data;
+    return res.data.data;
   } catch (error) {
     console.log('mms 기프티콘 전송 에러', error);
   }

@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {TicketListItem} from '../components/ticket';
-import {ReadMMSComponent} from '../components/readmms';
 import ReadMMSStatusBar from '../components/readmms/ReadMMSStatusBar';
 import {SimpleAccordion} from 'react-native-simple-accordion';
 import {Button} from 'react-native-paper';
@@ -115,13 +114,13 @@ const MyTicketScreen = ({
 
   return (
     <>
-      {/* {existMMSReadBar && (
+      {existMMSReadBar && (
         <ReadMMSStatusBar
           mmsNum={findMmsImages?.length}
           handleOpenModal={handleOpenModal}
           isMMSReading={isMMSReading}
         />
-      )} */}
+      )}
       <SafeAreaView style={styles.container}>
         <ScrollView>
           <SimpleAccordion

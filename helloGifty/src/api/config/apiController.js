@@ -133,7 +133,7 @@ axiosAuthInstance.interceptors.response.use(
       //       isTokenRefreshing = false;
       //     });
       // });
-      RNRestart.Restart();
+      RNRestart.Restart;
     }
 
     return Promise.reject(error);

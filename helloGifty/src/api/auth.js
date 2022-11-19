@@ -35,7 +35,7 @@ const logout = async () => {
   } catch (error) {
     console.error('로그아웃 에러: ', error);
   } finally {
-    await AsyncStorage.removeItem('accessToken');
+    await AsyncStorage.clear();
   }
 };
 

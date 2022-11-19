@@ -1,7 +1,6 @@
 import {StyleSheet, Text, View, Image, ScrollView} from 'react-native';
 import React, {useEffect} from 'react';
 import {Button, IconButton} from 'react-native-paper';
-import {TicketListItem} from '../components/ticket';
 import {GlobalStyles} from '../constants/style';
 import {logout} from '../api/auth';
 import {useNavigation, useRoute} from '@react-navigation/native';
@@ -13,28 +12,31 @@ import {List} from 'react-native-paper';
 import CustomImage from '../components/UI/CustomImage';
 import {API_URL} from '../api/config/http-config';
 import {AddComma} from '../utils/regexp';
-
+import ReportModal from '../components/evaluation/ReportModal';
 const ProfileScreen = ({}) => {
   const route = useRoute();
   const navigation = useNavigation();
   const [isOther, setIsOther] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [userInfo, setUserInfo] = useState(null);
+  const [isReportModalVisible, setIsReportModalVisible] = useState(false);
+  const [reportTargetUserId, setReportTargetUserId] = useState(null);
+  const [reportTargetTradeId, setReportTargetTradeId] = useState(-1);
   useEffect(() => {
     setIsLoading(true);
     (async () => {
       const userId = await AsyncStorage.getItem('userId');
       // 다른 유저 프로파일 클릭으로 타고 들어온거면 타인 프로필, 내 탭 클릭해서 들어오면 내 탭 프로필
+      // 존재하고, 다를 때만 타인 정보 가지고오기
       if (route.params?.userId && route.params?.userId !== userId) {
         setIsOther(true);
-
-        const info = await fetchUserInfo();
-        console.log('일반 유저 정보', info);
-        setUserInfo(info);
+        const otherInfo = await fetchUserInfo(route.params?.userId);
+        setUserInfo(otherInfo);
       } else {
-        const info = await fetchMyInfo();
-        console.log('내정보 불러오기', info);
-        setUserInfo(info);
+        setIsOther(false);
+
+        const myInfo = await fetchMyInfo();
+        setUserInfo(myInfo);
       }
     })();
     setIsLoading(false);
@@ -51,6 +53,14 @@ const ProfileScreen = ({}) => {
     <View style={styles.wrapper}>
       {!isLoading && userInfo && (
         <>
+          {reportTargetUserId && (
+            <ReportModal
+              visible={isReportModalVisible}
+              oppoId={reportTargetUserId}
+              tradeId={reportTargetTradeId}
+              onClose={() => setIsReportModalVisible(false)}
+            />
+          )}
           <View style={styles.profileContainer}>
             <View
               style={{
@@ -59,9 +69,7 @@ const ProfileScreen = ({}) => {
                 justifyContent: 'space-between',
               }}>
               <Image
-                source={{
-                  uri: 'https://www.mtsolar.us/wp-content/uploads/2020/04/avatar-placeholder.png',
-                }}
+                source={require('../assets/Logo.png')}
                 style={{
                   width: 60,
                   height: 60,
@@ -83,16 +91,19 @@ const ProfileScreen = ({}) => {
             )}
           </View>
           <View style={styles.scoreContainer}>
-            <LevelBadgeContainer level={userInfo.evalScore || 0} />
+            <LevelBadgeContainer
+              level={userInfo.evalScore || 0}
+              isOther={isOther}
+            />
           </View>
           <ScrollView style={styles.ticketContainer}>
             <View style={styles.ticketList}>
-              <List.AccordionGroup>
-                {!isOther && (
+              <List.Section>
+                {!isOther && userInfo?.purchaseRecord && (
                   <List.Accordion
-                    title={`구매완료내역 ${userInfo.purchaseRecord.length}`}
+                    title={`구매한 기프티콘 ${userInfo.purchaseRecord.length}`}
                     id="2"
-                    style={{marginBottom: 20}}>
+                    style={[{...GlobalStyles.shadow}, {marginBottom: 20}]}>
                     {userInfo.purchaseRecord.map(record => (
                       <List.Item
                         key={record.tradePostId + 2}
@@ -100,8 +111,13 @@ const ProfileScreen = ({}) => {
                         description={
                           record.gifticonInfo.expirationDate + ' 까지'
                         }
-                        onPress={
-                          () => console.log('구매상품 클릭해서 타고들어갈래요') // 이게 아니라, 살짝 슬라이드 해서 보여주든가 해야 함
+                        onPress={() =>
+                          navigation.navigate('MyCoupon', {
+                            screen: 'DetailScreen',
+                            params: {
+                              item: {id: record.gifticonId},
+                            },
+                          })
                         }
                         left={() => (
                           <CustomImage
@@ -123,13 +139,21 @@ const ProfileScreen = ({}) => {
                               icon="account"
                               iconColor={GlobalStyles.colors.mainPrimary}
                               size={30}
-                              onPress={() => console.log('유저프로필 볼래요')}
+                              onPress={() =>
+                                navigation.push('ProfileScreen', {
+                                  userId: record.sellerId,
+                                })
+                              }
                             />
                             <IconButton
                               icon="alarm-light"
                               iconColor={'red'}
                               size={30}
-                              onPress={() => console.log('신고할래요')}
+                              onPress={() => {
+                                setReportTargetUserId(record.sellerId);
+                                setReportTargetTradeId(record.tradePostId);
+                                setIsReportModalVisible(true);
+                              }}
                             />
                           </View>
                         )}
@@ -138,8 +162,9 @@ const ProfileScreen = ({}) => {
                   </List.Accordion>
                 )}
                 <List.Accordion
-                  title={`판매완료내역 ${userInfo.salesRecord.length}`}
-                  id="1">
+                  title={`판매한 기프티콘 ${userInfo.salesRecord.length}`}
+                  id="1"
+                  style={GlobalStyles.shadow}>
                   {userInfo.salesRecord.map(record => (
                     <List.Item
                       key={record.tradePostId + 1}
@@ -158,7 +183,7 @@ const ProfileScreen = ({}) => {
                     />
                   ))}
                 </List.Accordion>
-              </List.AccordionGroup>
+              </List.Section>
             </View>
           </ScrollView>
         </>
@@ -172,9 +197,9 @@ export default ProfileScreen;
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    width: '90%',
-    marginLeft: '5%',
-    backgroundColor: GlobalStyles.colors.backgroundPrimary,
+    width: '100%',
+    padding: '5%',
+    backgroundColor: '#fff',
   },
   profileContainer: {
     flex: 2,

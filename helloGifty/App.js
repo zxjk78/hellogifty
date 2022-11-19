@@ -141,6 +141,35 @@ const Chat = () => {
     </>
   );
 };
+
+const Profile = () => {
+  return (
+    <>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: true,
+          initialRouteName: 'ProfileScreen',
+        }}>
+        <Stack.Screen
+          name="ProfileScreen"
+          component={ProfileScreen}
+          options={({navigation}) => ({
+            title: '프로필',
+            unmountOnBlur: true,
+
+            headerLeft: () => (
+              <IconButton
+                icon="arrow-left-thick"
+                onPress={() => navigation.goBack()}
+              />
+            ),
+          })}
+        />
+      </Stack.Navigator>
+    </>
+  );
+};
+
 const MainTab = () => {
   return (
     <Tab.Navigator
@@ -169,13 +198,7 @@ const MainTab = () => {
         component={MyCoupon}
         options={{headerShown: false, title: '내 쿠폰', unmountOnBlur: true}}
       />
-      {/* <Tab.Screen
-        name="Shopping"
-        component={ShoppingScreen}
-        options={{
-          title: '쇼핑',
-        }}
-      /> */}
+
       <Tab.Screen
         name="Shopping"
         component={Shopping}
@@ -195,11 +218,11 @@ const MainTab = () => {
       />
       <Tab.Screen
         name="Profile"
-        component={ProfileScreen}
-        options={{
+        component={Profile}
+        options={({navigation}) => ({
           title: '프로필',
-          unmountOnBlur: true,
-        }}
+          headerShown: false,
+        })}
       />
       <Tab.Screen
         name="test"

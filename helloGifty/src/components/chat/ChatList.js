@@ -7,13 +7,24 @@ const ChatList = ({list, isSale, isBuying}) => {
   return (
     <View>
       <View
-        style={{
-          backgroundColor: GlobalStyles.colors.mainPrimary,
-          padding: 6,
-          paddingHorizontal: 10,
-        }}>
+        style={[
+          {
+            padding: 6,
+            paddingHorizontal: 10,
+            marginTop: 20,
+          },
+          isSale
+            ? {backgroundColor: 'red'}
+            : isBuying
+            ? {backgroundColor: 'blue'}
+            : {backgroundColor: 'green'},
+        ]}>
         <Text style={{color: '#fff', fontWeight: 'bold'}}>
-          {isSale ? '판매 중' : isBuying ? '구매 중' : '거래 완료'}
+          {isSale
+            ? '판매 중인 상품'
+            : isBuying
+            ? '구매 중인 상품'
+            : '거래 완료한 상품'}
         </Text>
       </View>
       <FlatList

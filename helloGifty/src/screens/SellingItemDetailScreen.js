@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Image} from 'react-native';
 import React, {useEffect, useLayoutEffect, useState} from 'react';
 import {GlobalStyles} from '../constants/style';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -9,6 +9,29 @@ import {enterChatRoom, fetchTradeItemDetail} from '../api/trade';
 
 import {API_URL} from '../api/config/http-config';
 import {AddComma} from '../utils/regexp';
+
+const badgeArr = [
+  // require('../../assets/level/Bronze.png'),
+  require('../assets/level/Silver.png'),
+  require('../assets/level/Gold.png'),
+  require('../assets/level/Platinum.png'),
+  require('../assets/level/Master.png'),
+];
+
+const calculateBadge = level => {
+  // 현재 레벨 다음의 수 찾기
+  const expList = [50, 120, 150, 200];
+
+  const nxtExpIdx = expList.reduce((acc, exp, index, _arr) => {
+    if (level < exp && acc === -1) {
+      return index;
+    } else {
+      return acc;
+    }
+  }, -1);
+  return nxtExpIdx;
+};
+
 const SellingItemDetailScreen = ({}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [itemDetail, setItemDetail] = useState(null);
@@ -20,7 +43,6 @@ const SellingItemDetailScreen = ({}) => {
   useLayoutEffect(() => {
     setIsLoading(true);
     const tradeItemId = route.params.tradeId;
-    // console.log('트레이드아이템아이디:', tradeItemId);
     (async () => {
       const result = await fetchTradeItemDetail(tradeItemId);
       console.log('판매상품정보 ', result);
@@ -54,23 +76,22 @@ const SellingItemDetailScreen = ({}) => {
       {!isLoading && itemDetail && (
         <>
           <View style={styles.container}>
-            <ScrollView style={{maxHeight: 300}}>
+            <ScrollView style={{maxHeight: 400}}>
               <CustomImage
                 source={
                   API_URL + 'image/gifticon-cropped?path=' + itemDetail.img
                 }
-                style={{width: '100%', height: 400, resizeMode: 'center'}}
+                style={{width: '100%', height: 400, resizeMode: 'contain'}}
               />
             </ScrollView>
 
-            {/* <Image style={styles.couponImage} source={{ uri: itemDetail.img }} />   이미지 조사 필요 = 크롭에서 가져오려고 하는 것 같다. */}
             <View style={styles.profileContainer}>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <CustomImage
+                <Image
                   source={
-                    API_URL + 'image/gifticon-cropped?path=' + itemDetail.img
+                    badgeArr[calculateBadge(itemDetail.sellerInfo.userScore)]
                   }
-                  style={{width: 40, height: 40, resizeMode: 'center'}}
+                  style={{width: 50, height: 50}}
                 />
                 <Text
                   style={{
@@ -83,15 +104,15 @@ const SellingItemDetailScreen = ({}) => {
                 </Text>
               </View>
               {/* 유저 랭크 들어갈 부분 */}
-              <Text
+
+              {/* <Text
                 style={{
                   fontSize: 20,
                   marginLeft: '10%',
                   fontWeight: 'bold',
                 }}>
-                {/* {itemDetail.name} */}
-                {/* {itemDetail.sellerInfo.userScore}점 */}
-              </Text>
+                {itemDetail.sellerInfo.userScore}점
+              </Text> */}
             </View>
             <View style={styles.contentContainer}>
               <Text style={{fontSize: 20, padding: 5}}>
@@ -100,7 +121,12 @@ const SellingItemDetailScreen = ({}) => {
             </View>
           </View>
           <View style={styles.buyContainer}>
-            <Text style={{fontWeight: 'bold', fontSize: 20}}>
+            <Text
+              style={{
+                fontWeight: 'bold',
+                fontSize: 20,
+                color: GlobalStyles.colors.mainPrimary,
+              }}>
               {AddComma(+itemDetail.price)} 원
             </Text>
             {/* <Button style={styles.chatBtn} onPress={handleStartChat}>
@@ -124,12 +150,14 @@ export default SellingItemDetailScreen;
 
 const styles = StyleSheet.create({
   wrapper: {
-    width: '90%',
-    marginLeft: '5%',
+    width: '100%',
+
     flex: 1,
+    backgroundColor: '#fff',
   },
   container: {
-    padding: 8,
+    paddingHorizontal: '5%',
+
     justifyContent: 'center',
     backgroundColor: '#fff',
     // backgroundColor: 'red',
@@ -167,10 +195,12 @@ const styles = StyleSheet.create({
   buyContainer: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: GlobalStyles.colors.backgroundSecondary,
+    backgroundColor: GlobalStyles.colors.backgroundPrimary,
+
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 10,
+    width: '100%',
+    paddingHorizontal: '5%',
   },
 
   // chatBtn: {

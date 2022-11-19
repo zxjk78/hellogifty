@@ -1,10 +1,7 @@
 import {StyleSheet, Text, View, Image} from 'react-native';
 import React, {useEffect, useRef} from 'react';
 import SelectDropdown from 'react-native-select-dropdown';
-import {
-  largeCategoryDict,
-  smallCategoryDict,
-} from '../../constants/data/idDictionary';
+
 import {GlobalStyles} from '../../constants/style';
 const CategoryDropdown = ({
   categoryItem,
@@ -37,18 +34,16 @@ const CategoryDropdown = ({
     }
   }, [categoryItem?.length, largeChanged, reset]);
   // 기프티콘 이동했을 때 그 상태로 만들기
-  // useEffect(() => {
-  //   if (categoryItem?.length === 2) {
-  //     dropdownRef.current.renderCustomizedButtonChild={()=> selectItem()}}
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [gifticon]);
+  useEffect(() => {
+    dropdownRef.current.reset();
+  }, [gifticon]);
 
   return (
     <View>
       <SelectDropdown
         data={categoryItem}
         ref={dropdownRef}
+        defaultButtonText={defaultTxt}
         onSelect={selectedItem => {
           // 여기서 set함수 써서 state 변경
           // console.log('내가 선택한 선택지 아이디값', selectedItem.key);

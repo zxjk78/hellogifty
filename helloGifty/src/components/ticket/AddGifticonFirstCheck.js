@@ -24,17 +24,13 @@ const CouponImage = ({item, onSelect}) => {
       onPress={handleSelect}>
       {/* <Text>{item.name}</Text> */}
       <Image
-        source={{uri: 'data:image/jpeg;base64,' + item.imgPath}}
+        source={{uri: item.imgPath}}
         style={[{width: '100%', height: '100%'}, {opacity: selected ? 0.5 : 1}]}
       />
       {selected && (
         // wip: 가운데로 오도록 조정 필요
         <View style={{position: 'absolute', left: '40%', bottom: '40%'}}>
-          <AntIcon
-            name="checkcircle"
-            size={50}
-            color={GlobalStyles.colors.mainPrimary}
-          />
+          <AntIcon name="delete" size={50} color={'red'} />
         </View>
       )}
     </Pressable>
