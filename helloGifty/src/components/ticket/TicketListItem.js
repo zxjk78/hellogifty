@@ -30,7 +30,7 @@ const TicketListItem = ({item, isNormal, refresh, type}) => {
   const [modifiedModal, setModifiedModal] = useState(false);
   const [sellModal, setSellModal] = useState(false);
   const [position, setPosition] = useState({x: 100, y: 100});
-  // console.log(item);
+  // console.log(type, 'ticket type');
 
   const imgUrl = [
     require('../../assets/largeCategory/img0.png'),
@@ -63,7 +63,7 @@ const TicketListItem = ({item, isNormal, refresh, type}) => {
     <TouchableOpacity
       style={styles.container}
       onPress={() => {
-        navigation.navigate('DetailScreen', {item: item});
+        navigation.navigate('DetailScreen', {item: item, type: type});
       }}
       delayLongPress={500}
       onLongPress={e => {

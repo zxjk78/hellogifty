@@ -193,6 +193,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: GlobalStyles.colors.mainPrimary,
     marginBottom: 10,
+    color: 'black',
   },
   btn1: {
     marginTop: 10,
@@ -208,5 +209,6 @@ const styles = StyleSheet.create({
   },
   regMsg: {
     fontSize: 11,
+    color: 'black',
   },
 });

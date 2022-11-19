@@ -209,10 +209,17 @@ const DetailScreen = ({route}) => {
             </View>
           </View>
           <View style={{flex: 1}}>
-            <Text style={{fontSize: 18, color: 'black'}}>
-              사용 후 <Text style={{color: '#84dcc6'}}>사용 완료</Text> 버튼을
-              눌러주세요.
-            </Text>
+            {route.params.type == 0 ? (
+              <Text style={{fontSize: 18, color: 'black'}}>
+                사용 후 <Text style={{color: '#84dcc6'}}>사용 완료</Text> 버튼을
+                눌러주세요.
+              </Text>
+            ) : (
+              <Text style={{fontSize: 18, color: 'black'}}>
+                삭제 하고 싶다면 <Text style={{color: '#ff686b'}}>삭제</Text>{' '}
+                버튼을 눌러주세요.
+              </Text>
+            )}
           </View>
           <View style={{flex: 1}}>
             <View
@@ -223,12 +230,14 @@ const DetailScreen = ({route}) => {
                 android_ripple={{color: '#ff686b'}}>
                 <Text style={{color: '#ff686b'}}>삭제</Text>
               </Pressable>
-              <Pressable
-                style={styles.usedButton}
-                onPress={() => setModalVisible(true)}
-                android_ripple={{color: '#84dcc6'}}>
-                <Text style={{color: 'black'}}>사용 완료</Text>
-              </Pressable>
+              {route.params.type == 0 ? (
+                <Pressable
+                  style={styles.usedButton}
+                  onPress={() => setModalVisible(true)}
+                  android_ripple={{color: '#84dcc6'}}>
+                  <Text style={{color: 'black'}}>사용 완료</Text>
+                </Pressable>
+              ) : null}
             </View>
           </View>
         </>
@@ -253,6 +262,7 @@ const styles = StyleSheet.create({
   },
   deleteButton: {
     width: 80,
+    // width: '100%',
     height: 50,
     margin: 5,
     borderWidth: 2,

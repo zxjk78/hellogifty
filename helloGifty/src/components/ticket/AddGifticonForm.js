@@ -30,10 +30,9 @@ const AddGifticonForm = ({
   onLgCtChange,
 }) => {
   const [largeChange, setLargeChange] = useState(false);
-
   const [largeCategoryId, setLargeCategoryId] = useState(-1);
   const [smallCategoryId, setSmallCategoryId] = useState(null);
-
+  
   const handleName = txt => {
     onNameChange(idx, txt);
   };
@@ -180,6 +179,7 @@ const styles = StyleSheet.create({
     borderColor: 'red',
     padding: 4,
     paddingLeft: 12,
+    color: 'black',
   },
   couponImage: {
     width: '100%',
