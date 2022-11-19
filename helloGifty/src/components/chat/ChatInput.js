@@ -1,6 +1,7 @@
 import {StyleSheet, View, TextInput} from 'react-native';
 import React, {useState} from 'react';
 import {Button} from 'react-native-paper';
+import {GlobalStyles} from '../../constants/style';
 const ChatInput = ({onSubmit}) => {
   const [chatContent, setChatContent] = useState('');
 
@@ -28,7 +29,11 @@ const ChatInput = ({onSubmit}) => {
         value={chatContent}
       />
       <View style={{width: '2%'}} />
-      <Button onPress={handleChatSubmit} mode="contained" style={styles.btn}>
+      <Button
+        onPress={handleChatSubmit}
+        mode="contained"
+        style={styles.btn}
+        buttonColor={GlobalStyles.colors.mainPrimary}>
         전송
       </Button>
     </View>

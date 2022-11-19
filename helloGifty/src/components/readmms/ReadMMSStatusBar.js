@@ -19,7 +19,12 @@ const ReadMMSStatusBar = ({mmsNum, handleOpenModal, isMMSReading}) => {
     <View style={styles.container}>
       <View style={styles.content}>
         {mmsNum === undefined && (
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginRight: '10%',
+            }}>
             <ActivityIndicator
               size="large"
               color={GlobalStyles.colors.mainPrimary}

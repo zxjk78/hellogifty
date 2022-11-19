@@ -37,8 +37,9 @@ const EvaluationModal = ({
             style={{
               fontSize: 25,
               position: 'absolute',
-              top: 30,
-              right: 30,
+              top: 20,
+              right: 20,
+              color: GlobalStyles.colors.mainPrimary,
             }}
           />
           <View style={{flex: 1}}>
@@ -63,21 +64,23 @@ const EvaluationModal = ({
               value={10}
               minimumTrackTintColor={GlobalStyles.colors.mainPrimary}
               maximumTrackTintColor="#000000"
-              thumbTintColor="blue"
+              thumbTintColor={GlobalStyles.colors.mainPrimary}
               onValueChange={setEvalScore}
             />
           </View>
           <Button
             mode="contained"
+            buttonColor={GlobalStyles.colors.mainPrimary}
+            textColor="#fff"
             onPress={onSubmit.bind(this, tradeId, oppoId, evalScore)}>
             평가완료
           </Button>
           <Button
-            mode="outlined"
             onPress={() => {
               setIsReportModalOpen(true);
             }}
-            style={{width: '50%'}}>
+            style={{width: '50%', marginTop: 20, marginLeft: '60%'}}
+            textColor={GlobalStyles.colors.mainPrimary}>
             신고하기
           </Button>
         </View>
@@ -91,7 +94,7 @@ export default EvaluationModal;
 const styles = StyleSheet.create({
   container: {
     width: '90%',
-    height: '50%',
+    height: '60%',
     alignSelf: 'center',
     marginTop: '30%',
     padding: '10%',
