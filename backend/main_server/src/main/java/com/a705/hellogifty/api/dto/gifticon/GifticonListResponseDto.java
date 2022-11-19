@@ -32,7 +32,7 @@ public class GifticonListResponseDto {
 
     public GifticonListResponseDto(Gifticon gifticon) {
         this.id = gifticon.getId();
-        this.categoryId = gifticon.getSmallCategory().getLargeCategory().getId();
+        this.categoryId = gifticon.getSmallCategory().getId();
         this.name = gifticon.getName();
         this.expirationDate = gifticon.getExpirationDate().toString();
         this.isUsed = gifticon.getIsUsed();
