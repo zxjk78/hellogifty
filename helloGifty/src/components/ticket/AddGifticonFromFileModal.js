@@ -35,10 +35,8 @@ const AddGifticonFromFileModal = ({visible, onClose, onRefresh}) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const [expirationDate, setExpirationDate] = useState('');
-  const [fileBase64, setFileBase64] = useState('');
   const [imgPath, setImgPath] = useState('');
   const [categoryId, setCategoryId] = useState(-1);
-  const navigation = useNavigation();
   const [largeCategoryId, setLargeCategoryId] = useState(-1);
   const [largeChanged, setLargeChanged] = useState(true);
   // const [smallCategoryId, setSmallCategoryId] = useState(-1);
@@ -141,8 +139,20 @@ const AddGifticonFromFileModal = ({visible, onClose, onRefresh}) => {
                 onChangeText={text => setNumber(text)}
               />
               <View style={{flex: 0.3}} />
-              <Button mode="outlined" onPress={handleOpenCalendar}>
-                {expirationDate.length > 0 ? expirationDate : '날짜 정하기'}
+              <Button
+                mode="outlined"
+                onPress={handleOpenCalendar}
+                buttonColor={
+                  expirationDate.length > 0
+                    ? GlobalStyles.colors.mainPrimary
+                    : '#fff'
+                }
+                textColor={expirationDate.length > 0 ? '#fff' : '#000'}
+                style={{
+                  borderColor: GlobalStyles.colors.mainPrimary,
+                  marginRight: 10,
+                }}>
+                {expirationDate.length > 0 ? expirationDate : '유효기간 선택'}
               </Button>
             </View>
 
@@ -205,10 +215,35 @@ const AddGifticonFromFileModal = ({visible, onClose, onRefresh}) => {
             </View>
           </ScrollView>
           <View style={styles.btnContainer}>
-            <Button mode="outlined" onPress={onClose}>
+            <Button
+              mode="outlined"
+              style={{borderColor: GlobalStyles.colors.mainPrimary}}
+              textColor={GlobalStyles.colors.mainPrimary}
+              onPress={() => {
+                setCategoryId('');
+                setExpirationDate('');
+                setImgPath('');
+                setLargeCategoryId('');
+                setName('');
+                setNumber('');
+                onClose();
+              }}>
               취소하기
             </Button>
-            <Button mode="contained" onPress={addGifticon}>
+            <Button
+              mode="contained"
+              buttonColor={GlobalStyles.colors.mainPrimary}
+              textColor={'#fff'}
+              onPress={addGifticon}
+              disabled={
+                !(
+                  name.length > 0 &&
+                  number.length > 0 &&
+                  categoryId > 0 &&
+                  imgPath.length > 0 &&
+                  expirationDate.length > 0
+                )
+              }>
               제출하기
             </Button>
           </View>

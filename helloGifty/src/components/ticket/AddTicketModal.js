@@ -40,7 +40,7 @@ const AddTicketModal = ({gifticonList, visible, handleClose}) => {
   };
   const setSelectedItem = selectedArr => {
     setSelectedGifticonList(
-      gifticonList.filter(item => !selectedArr.includes(item.id)),
+      gifticonList.filter(item => !selectedArr.includes(item.idx)),
     );
     setCurrent(prev => prev + 1);
   };

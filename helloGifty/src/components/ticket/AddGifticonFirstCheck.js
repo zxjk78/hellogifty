@@ -14,7 +14,7 @@ const CouponImage = ({item, onSelect}) => {
   const [selected, setSelected] = useState(false);
   const handleSelect = () => {
     setSelected(!selected);
-    onSelect(item.id, !selected);
+    onSelect(item.idx, !selected);
   };
 
   return (
@@ -22,13 +22,11 @@ const CouponImage = ({item, onSelect}) => {
       // 이렇게 배열로 해도 되는듯?
       style={[styles.itemContainer, {backgroundColor: '#fff'}]}
       onPress={handleSelect}>
-      {/* <Text>{item.name}</Text> */}
       <Image
         source={{uri: item.imgPath}}
         style={[{width: '100%', height: '100%'}, {opacity: selected ? 0.5 : 1}]}
       />
       {selected && (
-        // wip: 가운데로 오도록 조정 필요
         <View style={{position: 'absolute', left: '40%', bottom: '40%'}}>
           <AntIcon name="delete" size={50} color={'red'} />
         </View>
@@ -38,19 +36,21 @@ const CouponImage = ({item, onSelect}) => {
 };
 
 const AddGifticonFirstCheck = ({imageStringArr, onClose, onSubmit}) => {
-  const [falseGifticonIdArr, setfalseGifticonIdArr] = useState([]);
-  const handleSelect = (id, select) => {
+  const [falseGifticonIdxArr, setfalseGifticonIdxArr] = useState([]);
+  const handleSelect = (idx, select) => {
     // select : 기프티콘이 아니라고 선택한 것들
-    // console.log('선택된 기프티콘', id, select);
+    // console.log('선택된 기프티콘', idx, select);
     if (select) {
-      setfalseGifticonIdArr(prev => [...prev, id]);
+      setfalseGifticonIdxArr(prev => [...prev, idx]);
     } else {
-      setfalseGifticonIdArr(prev => prev.filter(couponIdx => couponIdx !== id));
+      setfalseGifticonIdxArr(prev =>
+        prev.filter(couponIdx => couponIdx !== idx),
+      );
     }
   };
 
   const handleSubmit = () => {
-    onSubmit(falseGifticonIdArr);
+    onSubmit(falseGifticonIdxArr);
   };
 
   return (
@@ -69,9 +69,9 @@ const AddGifticonFirstCheck = ({imageStringArr, onClose, onSubmit}) => {
         </Text>
         <View>
           <FIcon name="trash-alt" size={30} />
-          {falseGifticonIdArr.length > 0 && (
+          {falseGifticonIdxArr.length > 0 && (
             <Badge style={{position: 'absolute', top: -5, right: -7}}>
-              {falseGifticonIdArr.length}
+              {falseGifticonIdxArr.length}
             </Badge>
           )}
         </View>
