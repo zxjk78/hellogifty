@@ -129,6 +129,7 @@ const SignupScreen = ({navigation}) => {
               <TextInput
                 placeholder="이메일"
                 onChangeText={handleEmailChange}
+                placeholderTextColor="black"
                 style={styles.input}
               />
               <Text style={styles.regMsg}>
@@ -143,6 +144,7 @@ const SignupScreen = ({navigation}) => {
                 onChangeText={handlePwChange}
                 secureTextEntry={true}
                 style={styles.input}
+                placeholderTextColor="black"
               />
               <Text style={styles.regMsg}>
                 {password.length > 0 &&
@@ -155,6 +157,7 @@ const SignupScreen = ({navigation}) => {
                 placeholder="닉네임"
                 onChangeText={setName}
                 style={styles.input}
+                placeholderTextColor="black"
               />
             </View>
           </View>
@@ -173,6 +176,7 @@ const SignupScreen = ({navigation}) => {
                 placeholder="핸드폰 번호"
                 onChangeText={handlePhoneChange}
                 style={styles.input}
+                placeholderTextColor="black"
               />
               <Text style={styles.regMsg}>
                 {password.length > 0 &&
@@ -235,6 +239,7 @@ const styles = StyleSheet.create({
     borderBottomColor: GlobalStyles.colors.mainPrimary,
     marginBottom: 10,
     paddingBottom: 0,
+    color: 'black',
   },
   btn1: {
     marginTop: 10,

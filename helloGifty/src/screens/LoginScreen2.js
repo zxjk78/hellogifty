@@ -166,6 +166,7 @@ const LoginScreen2 = ({navigation}) => {
                     placeholder="이메일"
                     onChangeText={handleEmailChange}
                     style={styles.input}
+                    placeholderTextColor="black"
                   />
                   <Text style={styles.regMsg}>
                     {email.length > 0 &&
@@ -180,6 +181,7 @@ const LoginScreen2 = ({navigation}) => {
                     onChangeText={handlePwChange}
                     style={styles.input}
                     secureTextEntry={true}
+                    placeholderTextColor="black"
                   />
                   <Text style={styles.regMsg}>
                     {password.length > 0 &&
