@@ -14,10 +14,10 @@ const ChatList = ({list, isSale, isBuying}) => {
             marginTop: 20,
           },
           isSale
-            ? {backgroundColor: 'red'}
+            ? {backgroundColor: '#ff7477'}
             : isBuying
-            ? {backgroundColor: 'blue'}
-            : {backgroundColor: 'green'},
+            ? {backgroundColor: '#6699cc'}
+            : {backgroundColor: '#4ce0b3'},
         ]}>
         <Text style={{color: '#fff', fontWeight: 'bold'}}>
           {isSale

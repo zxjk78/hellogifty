@@ -108,7 +108,7 @@ const DetailScreen = ({route}) => {
                     <Text style={styles.textStyle}>아니요</Text>
                   </Pressable>
                   <Pressable
-                    style={[styles.button, styles.buttonClose]}
+                    style={[styles.button, styles.buttonOpen]}
                     onPress={uesd}>
                     <Text style={styles.textStyle}>네</Text>
                   </Pressable>
@@ -126,7 +126,7 @@ const DetailScreen = ({route}) => {
               setModalVisible2(!modalVisible2);
             }}>
             <View style={styles.centeredView}>
-              <View style={styles.modalView}>
+              <View style={styles.modaldeleteView}>
                 <Text style={styles.modalText}>
                   정말 {info.name} 을(를) 삭제 하시겠습니까?
                 </Text>
@@ -137,7 +137,7 @@ const DetailScreen = ({route}) => {
                     width: 150,
                   }}>
                   <Pressable
-                    style={[styles.button, styles.buttonClose]}
+                    style={[styles.button, styles.buttonOpen]}
                     onPress={() => setModalVisible2(!modalVisible2)}>
                     <Text style={styles.textStyle}>아니요</Text>
                   </Pressable>
@@ -293,7 +293,23 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 20,
-    backgroundColor: 'green',
+    width: '90%',
+    backgroundColor: '#9ed2cd',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modaldeleteView: {
+    margin: 20,
+    backgroundColor: '#ffddd2',
     borderRadius: 20,
     padding: 35,
     alignItems: 'center',
@@ -307,15 +323,16 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   button: {
-    borderRadius: 20,
+    borderRadius: 10,
     padding: 10,
     elevation: 2,
+    // backgroundColor: '#ffddd2',
   },
   buttonOpen: {
-    backgroundColor: '#F194FF',
+    backgroundColor: '#06d6a0',
   },
   buttonClose: {
-    backgroundColor: '#2196F3',
+    backgroundColor: '#ef476f',
   },
   textStyle: {
     color: 'white',
