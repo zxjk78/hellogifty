@@ -12,7 +12,7 @@ import {checkImg} from '../utils/mmsGifticonFunc';
 import {checkMMSImageValidate} from '../api/mms';
 import AddGifticonFromFileModal from '../components/ticket/AddGifticonFromFileModal';
 import {sepGifticonNumber} from '../utils/regexp';
-
+import moment from 'moment';
 const TopTab = createMaterialTopTabNavigator();
 
 const MyCouponScreen = ({route: params}) => {
@@ -100,7 +100,9 @@ const MyCouponScreen = ({route: params}) => {
               expirationDate: item.expirationDate.replace(/\//g, '-'),
               imgPath: 'content://mms/part/' + imgIdxArr[item.idx],
             };
-            gifticonArr.push(gifticon);
+            if (moment(gifticon.expirationDate).isAfter(moment())) {
+              gifticonArr.push(gifticon);
+            }
           });
           setMmsGifticonArr(gifticonArr);
         });
