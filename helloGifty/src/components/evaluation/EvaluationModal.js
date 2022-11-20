@@ -5,7 +5,71 @@ import {GlobalStyles} from '../../constants/style';
 import {Button} from 'react-native-paper';
 import ReportModal from './ReportModal';
 import Icon from 'react-native-vector-icons/AntDesign';
+import Toast, {BaseToast, ErrorToast} from 'react-native-toast-message';
+import {submitUserEvaluation} from '../../api/trade';
 
+const toastConfig = {
+  success: props => (
+    <BaseToast
+      {...props}
+      style={{
+        borderLeftColor: '#9ED5C5',
+        backgroundColor: '#cef2e7',
+        width: '100%',
+      }}
+      contentContainerStyle={{paddingHorizontal: 15}}
+      text1Style={{
+        fontSize: 18,
+        fontWeight: '400',
+        color: 'black',
+      }}
+    />
+  ),
+  error: props => (
+    <ErrorToast
+      {...props}
+      style={{
+        borderLeftColor: '#ff686b',
+        backgroundColor: '#ffa69e',
+        width: '100%',
+      }}
+      contentContainerStyle={{paddingHorizontal: 15}}
+      text1Style={{
+        fontSize: 18,
+        fontWeight: '400',
+        color: 'black',
+      }}
+    />
+  ),
+  tomatoToast: ({text1, props}) => (
+    <View style={{height: 60, width: '100%', backgroundColor: 'tomato'}}>
+      <Text>{text1}</Text>
+      <Text>{props.uuid}</Text>
+    </View>
+  ),
+};
+const showErrorToast = () => {
+  Toast.show({
+    type: 'error',
+    text1: '이미 평가한 상대입니다.',
+    position: 'top',
+    visibilityTime: 4000,
+    topOffset: 10,
+    // onShow: () => {},
+    // onHide: () => {},
+  });
+};
+const showConfirmToast = () => {
+  Toast.show({
+    type: 'success',
+    text1: '평가가 완료되었습니다.',
+    position: 'top',
+    visibilityTime: 4000,
+    topOffset: 10,
+    // onShow: () => {},
+    // onHide: () => {},
+  });
+};
 // /trade/{id}/evaluation/user/{userId} id: tradePostId, userId: 상대방 id
 const EvaluationModal = ({
   userId,
@@ -19,6 +83,16 @@ const EvaluationModal = ({
   const [evalScore, setEvalScore] = useState(10);
   const oppoId = userId == buyerId ? sellerId : buyerId;
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+
+  const handleSubmit = async () => {
+    const res = await submitUserEvaluation(tradeId, oppoId, evalScore);
+    if (res) {
+      showConfirmToast();
+    } else {
+      showErrorToast();
+    }
+  };
+
   return (
     <>
       <ReportModal
@@ -72,7 +146,7 @@ const EvaluationModal = ({
             mode="contained"
             buttonColor={GlobalStyles.colors.mainPrimary}
             textColor="#fff"
-            onPress={onSubmit.bind(this, tradeId, oppoId, evalScore)}>
+            onPress={handleSubmit}>
             평가완료
           </Button>
           <Button
