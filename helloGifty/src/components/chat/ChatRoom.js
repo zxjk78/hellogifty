@@ -10,7 +10,7 @@ import SockJsClient from 'react-stomp';
 
 import React, {useState, useEffect, useRef} from 'react';
 
-import {Button} from 'react-native-paper';
+import {Button, IconButton} from 'react-native-paper';
 import ChatInput from './ChatInput';
 import PayBubble from './PayBubble';
 import TalkBubble from './TalkBubble';
@@ -221,7 +221,15 @@ const ChatRoom = ({chatRoomId, userId, tradeState, tradeId}) => {
               setIsEvalModalOpen(false);
             }}
           />
-
+          <IconButton
+            icon="alarm-light"
+            iconColor={'red'}
+            size={30}
+            onPress={() => {
+              setIsEvalModalOpen(true);
+            }}
+            style={[styles.tradeBtn, {zIndex: 60, left: '30%', top: -60}]}
+          />
           <Button
             style={styles.tradeBtn}
             onPress={handleTrade}
