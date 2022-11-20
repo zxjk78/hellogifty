@@ -21,5 +21,11 @@ public class TradeHistory extends BaseEntity {
     @JoinColumn(name = "buyer_id")
     private User buyer;
 
-    private LocalDate tradeDate;
+    public static TradeHistory createTradeHistory(TradePost tradePost, User loginUser, User buyer) {
+        TradeHistory tradeHistory = new TradeHistory();
+        tradeHistory.tradePost = tradePost;
+        tradeHistory.seller = loginUser;
+        tradeHistory.buyer = buyer;
+        return tradeHistory;
+    }
 }

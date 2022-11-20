@@ -1,5 +1,6 @@
 package com.a705.hellogifty.api.domain.entity;
 
+import com.a705.hellogifty.api.dto.user.MmsIndexEditDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,6 +34,10 @@ public class User extends BaseEntity implements UserDetails {
     @Column(nullable = false, length = 100)
     String password;
 
+    String phoneNumber;
+
+    Long mmsIndex;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();
@@ -40,6 +45,10 @@ public class User extends BaseEntity implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+    }
+
+    public void updateMmsIndex(MmsIndexEditDto mmsIndexEditDto) {
+        this.mmsIndex = mmsIndexEditDto.getUserMmsIndex();
     }
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -71,6 +80,9 @@ public class User extends BaseEntity implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    @OneToOne(mappedBy="user", cascade = CascadeType.ALL)
+    UserEvaluation userEvaluation;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     List<Gifticon> gifticonList = new ArrayList<>();
