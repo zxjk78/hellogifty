@@ -93,7 +93,12 @@ public class GifticonService {
     @Transactional
     public void myGifticonRegister(User user, GifticonRegisterRequestDto gifticonRegisterRequestDto) throws IOException {
         String fileUploadNow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
+
+        //LOCAL defaultPath
+//        String defaultPath = System.getProperty("user.dir")+gifticonImagePath;
+        //EC2 defaultPath
         String defaultPath = gifticonImagePath+File.separator;
+
         MultipartFile originalImg = gifticonRegisterRequestDto.getImg();
 //        String originalImgName = originalImg.getOriginalFilename();
 //        System.out.println(originalImg.getOriginalFilename());

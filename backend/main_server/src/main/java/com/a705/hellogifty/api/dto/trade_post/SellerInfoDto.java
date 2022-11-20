@@ -7,13 +7,13 @@ import lombok.Getter;
 public class SellerInfoDto {
     private Long id;
 
-    private String email;
+    private String name;
 
     private Float userScore;
 
     public SellerInfoDto(User user) {
         id = user.getId();
-        email = user.getEmail();
+        name = user.getName();
         userScore = user.getUserEvaluation().getTotalScore();
     }
 
