@@ -43,7 +43,6 @@ export const checkMMSImageValidate = async imageIdArr => {
         },
       },
     );
-
     return res.data.data;
   } catch (error) {
     console.log('mms 기프티콘 전송 에러', error);

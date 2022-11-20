@@ -197,10 +197,10 @@ const styles = StyleSheet.create({
   modalView: {
     position: 'absolute',
     margin: 10,
-    backgroundColor: '#EEEEEE',
+    backgroundColor: 'white',
     borderRadius: 10,
     borderWidth: 2,
-    borderColor: '#829460',
+    borderColor: '#1d3557',
     padding: 10,
     // alignItems: "center",
     shadowColor: '#000',
@@ -226,15 +226,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#2196F3',
   },
   buttonClass: {
-    backgroundColor: '#FFE1E1',
+    backgroundColor: '#ffddd2',
     borderRadius: 5,
     borderWidth: 2,
     marginBottom: 3,
   },
   buttonText: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: 'bold',
     margin: 2,
+    // color: '#f2f7f5',
   },
   textStyle: {
     color: 'white',

@@ -116,7 +116,7 @@ const AddGifticonFromFileModal = ({visible, onClose, onRefresh}) => {
               minHeight: '80%',
               flex: 8,
             }}>
-            <Text style={styles.header}>파일에서 기프티콘 추가</Text>
+            <Text style={styles.header}>앨범에서 기프티콘 추가</Text>
             <TextInput
               label="이름"
               value={name}

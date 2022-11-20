@@ -19,6 +19,7 @@ import {
   largeCategoryData,
   smallCategoryData,
 } from '../../constants/data/categoryData';
+import Toast from 'react-native-toast-message';
 import {getGifticonDetail, ModifiedGifticon} from '../../api/gifticon';
 import {API_URL} from '../../api/config/http-config';
 import CustomImage from '../UI/CustomImage';
@@ -32,6 +33,8 @@ const ModifiedTicket = ({onClose, item, refresh}) => {
   const [smallCategoryId, setSmallCategoryId] = useState(item.categoryId % 2);
   const [largeChanged, setLargeChanged] = useState(true);
   const [categoryId, setCategoryId] = useState(-1);
+  const [imageRender, setImageRender] = useState(false);
+  const [id, setId] = useState(item.id);
 
   // const [selected2, setSelected2] = useState(+gifticon.category);
 
@@ -41,16 +44,50 @@ const ModifiedTicket = ({onClose, item, refresh}) => {
       console.log(gifticonInfo, '가져온 기프티콘 정보~~');
       setGifticon(() => gifticonInfo);
     })();
+    // image 로딩 안정적으로 나오기 위한 setTime
+    setTimeout(() => {
+      setImageRender(true);
+    }, 200);
   }, [item.id]);
 
-  console.log(item, '정보수정 아이템');
+  const showToast = () => {
+    Toast.show({
+      type: 'success',
+      text1: `😊 ${item.name} 정보 수정이 완료되었습니다.✔️`,
+      position: 'top',
+      visibilityTime: 4000,
+      topOffset: 10,
+      // onShow: () => {},
+      // onHide: () => {},
+    });
+  };
+
+  const showFailToast = () => {
+    Toast.show({
+      type: 'error',
+      text1: `😞 정보 수정이 실패했습니다. `,
+      position: 'top',
+      visibilityTime: 4000,
+      topOffset: 10,
+      // onShow: () => {},
+      // onHide: () => {},
+    });
+  };
 
   // console.log(smallCategoryData[+selected[0]][+selected[1]], '확인확인');
 
-  const completeButton = () => {
+  const completeButton = async () => {
     setModalVisible(!modalVisible);
-    ModifiedGifticon({name, expirationDate, largeCategoryId, smallCategoryId});
-    refresh();
+    const data = {name, expirationDate, categoryId, id};
+    const isSuccess = await ModifiedGifticon(data);
+    if (isSuccess) {
+      showToast();
+      refresh();
+    } else {
+      showFailToast();
+      // 터치 에러때문에 refresh 필요
+      refresh();
+    }
   };
 
   return (
@@ -115,10 +152,14 @@ const ModifiedTicket = ({onClose, item, refresh}) => {
               />
             </View>
 
-            <CustomImage
-              source={API_URL + 'image/gifticon?path=' + gifticon?.img}
-              style={styles.couponImage}
-            />
+            {imageRender ? (
+              <CustomImage
+                source={API_URL + 'image/gifticon?path=' + gifticon?.img}
+                style={styles.couponImage}
+              />
+            ) : (
+              <View style={styles.couponImage}></View>
+            )}
             <TouchableOpacity
               style={styles.completeButton}
               onPress={completeButton}>
