@@ -225,13 +225,6 @@ const MainTab = () => {
           unmountOnBlur: true,
         })}
       />
-      <Tab.Screen
-        name="test"
-        component={TestScreen}
-        options={{
-          title: '테스트',
-        }}
-      />
     </Tab.Navigator>
   );
 };

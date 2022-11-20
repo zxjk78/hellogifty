@@ -7,6 +7,61 @@ import {fetchUserInfo} from '../../api/profile';
 import {Button} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/AntDesign';
 
+import Toast, {BaseToast, ErrorToast} from 'react-native-toast-message';
+
+const toastConfig = {
+  success: props => (
+    <BaseToast
+      {...props}
+      style={{
+        borderLeftColor: '#9ED5C5',
+        backgroundColor: '#cef2e7',
+        width: '100%',
+      }}
+      contentContainerStyle={{paddingHorizontal: 15}}
+      text1Style={{
+        fontSize: 18,
+        fontWeight: '400',
+        color: 'black',
+      }}
+    />
+  ),
+  error: props => (
+    <ErrorToast
+      {...props}
+      style={{
+        borderLeftColor: '#ff686b',
+        backgroundColor: '#ffa69e',
+        width: '100%',
+      }}
+      contentContainerStyle={{paddingHorizontal: 15}}
+      text1Style={{
+        fontSize: 18,
+        fontWeight: '400',
+        color: 'black',
+      }}
+    />
+  ),
+  tomatoToast: ({text1, props}) => (
+    <View style={{height: 60, width: '100%', backgroundColor: 'tomato'}}>
+      <Text>{text1}</Text>
+      <Text>{props.uuid}</Text>
+    </View>
+  ),
+};
+
+const showConfirmToast = () => {
+  Toast.show({
+    type: 'success',
+    text1: '신고가 접수되었습니다.',
+    position: 'top',
+    visibilityTime: 4000,
+    topOffset: 10,
+    // onShow: () => {},
+    // onHide: () => {},
+  });
+};
+
 // 상대, 거래 아이디필요
 const ReportModal = ({oppoId, tradeId, visible, onClose}) => {
   const [content, setContent] = useState('');
@@ -23,9 +78,10 @@ const ReportModal = ({oppoId, tradeId, visible, onClose}) => {
 
   const handleSubmitReport = async () => {
     const res = await submitUserReport(tradeId, oppoId, content, reason);
+
     if (res) {
       // toast 써서 보여주면 될듯
-      console.log('신고접수 성공');
+      showConfirmToast();
       onClose();
     } else {
       console.log('신고접수 실패');
@@ -92,7 +148,7 @@ const ReportModal = ({oppoId, tradeId, visible, onClose}) => {
           )}
         />
         <Text style={{fontSize: 15, marginVertical: '10%'}}>
-          좀 더 구체적인 상황을 적어주시면, 이후 처리에 도움이 되요.
+          좀 더 구체적인 상황을 적어주시면,{'\n'}이후 처리에 도움이 되요.
         </Text>
         <TextInput
           multiline
@@ -137,13 +193,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   commonSelectStyle: {
-    width: 150,
+    width: 300,
     borderWidth: 2,
     borderColor: GlobalStyles.colors.mainPrimary,
     borderRadius: 5,
     backgroundColor: '#fff',
   },
   itemStyle: {
+    width: 300,
     paddingHorizontal: 8,
   },
 });
