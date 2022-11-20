@@ -1,5 +1,9 @@
-# HelloGifty
 
+<div align="center">
+    <img src="pics/readme_logo.png"  width="200" />
+</div>
+
+# HelloGifty
 ## 주제
 
 <aside>
@@ -107,7 +111,7 @@
 
 ---
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7f52f9f4-8f36-4e9d-b508-af430e66b0e0/Untitled.png)
+![Untitled](pics/readme_arch.png)
 
 ## ✨자동 배포와 배포 특이점
 
@@ -135,7 +139,8 @@
     
     mysql 서버를 docker를 사용해 2대를 띄워 복제를 위한 계정을 생성하고 grant replication으로 복제 관련 권환을 부여한다. 또한 mysqld.conf를 설정하여 server 아이디를 다르게 설정하고 master의 로그파일 이름과 position값을 통해서 replication 서버에서 change host명령을 사용하여 mysql 이중화를 구현함. 
     
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d9186a71-f20b-42d2-a1c5-194e88b322a5/Untitled.png)
+    <img src="pics/readme_db.png"  width="600" />
+
     
 
 ## 👨‍👩‍👧 협업 툴
@@ -225,7 +230,8 @@ story에 예상 시간(story point)을 기록해 중요도에 따라 더 세세�
 - 정규화된 테이블
 - 테이블 간 관계 설정
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8c1b25f7-fcc7-444f-b5b1-bba82c059a6a/Untitled.png)
+![Untitled](pics/readme_erd.png)
+
 
 ### ✨ EC2 포트 정리
 
@@ -253,18 +259,22 @@ story에 예상 시간(story point)을 기록해 중요도에 따라 더 세세�
     - Figma를 사용한 와이어프레임 제작
     - 네이티브를 이용한 프론트엔드 MMS 저장소의 기프티콘 이미지 파일 등록 기능
     - 프론트엔드단 채팅, 거래 기능
-    - 프로필, 신고 기능
+    - 프로필, 신고 기능  
+    <br/>
 - **이주영** - `프론트엔드`
     - Figma를 사용한 와이어프레임, 스토리보드 제작
     - 내 쿠폰 관리,  Detail Page, 판매하기, 정보 수정, Image Crop 기능
     - 쇼핑 page, 검색 기능
+    <br/>
 - **김민지 -** `벡엔드`
     - 기프티콘 관리 및 저장 REST API 구축
     - 판매글 및 검색 REST API 구축
+    <br/>
 - **조민수 -** `벡엔드`
     - EC2 서버 구축
     - Docker
     - MySQL Replication
+    <br/>
 - **최규섭** - `백엔드`
     - 거래, 유저 평가, 유저 신고, 유저 정보 REST API 구축
     - Tesseract OCR을 이용하여 이미지에서 기프티콘 정보를 추출하는 이미지 서버 구축
