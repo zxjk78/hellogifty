@@ -35,7 +35,7 @@ const ChatRoom = ({chatRoomId, userId, tradeState, tradeId}) => {
   // fetch sellerId  buyerId 관련 state
   const [sellerInfo, setSellerInfo] = useState(null);
   const [buyerInfo, setBuyerInfo] = useState(null);
-
+  const chatListRef = useRef();
   useEffect(() => {
     (async () => {
       const {buyer, seller} = await fetchChatRoomUsers(chatRoomId);
@@ -138,11 +138,12 @@ const ChatRoom = ({chatRoomId, userId, tradeState, tradeId}) => {
     // 메시지 리스트에 추가
     setMessageList([...messageList, ...msg]);
     // 스크롤 이동 - 이부분을 react native 형식으로 바꿀 것
-    lastMessage.current?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'end',
-      inline: 'nearest',
-    });
+    chatListRef.current.scrollToEnd({animated: true});
+    // lastMessage.current?.scrollIntoView({
+    //   behavior: 'smooth',
+    //   block: 'end',
+    //   inline: 'nearest',
+    // });
   };
 
   // 거래 완료 관련 로직
@@ -307,7 +308,7 @@ const ChatRoom = ({chatRoomId, userId, tradeState, tradeId}) => {
               </Text>
             )}
           </View>
-          <ScrollView style={styles.chatLogArea}>
+          <ScrollView style={styles.chatLogArea} ref={chatListRef}>
             {messageList.map((msg, index) => {
               let choice;
 
