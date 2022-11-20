@@ -132,7 +132,11 @@ const SellingItemDetailScreen = ({}) => {
             {/* <Button style={styles.chatBtn} onPress={handleStartChat}>
               채팅하기
             </Button> */}
-            {userId == itemDetail.sellerInfo.id ? (
+            {itemDetail.tradeState !== 'ONSALE' ? (
+              <Button mode="outlined" disabled={true}>
+                판매 완료된 상품입니다.
+              </Button>
+            ) : userId == itemDetail.sellerInfo.id ? (
               <Button mode="outlined">본인이 판매중인 상품입니다</Button>
             ) : (
               <Button mode="contained" onPress={handleStartChat}>
