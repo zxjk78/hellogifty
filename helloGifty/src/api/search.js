@@ -9,6 +9,7 @@ import {API_URL} from './config/http-config';
 // };
 
 const searchByKeyword = async option => {
+  // console.log(option.page, '넘어온 페이지');
   try {
     const res = await axiosAuthInstance.get('/trade/', {
       params: {
