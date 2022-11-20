@@ -119,7 +119,7 @@ const ProfileScreen = ({}) => {
                           navigation.navigate('MyCoupon', {
                             screen: 'DetailScreen',
                             params: {
-                              item: {id: record.gifticonId},
+                              item: {id: record.gifticonInfo.gifticonId},
                             },
                           })
                         }
