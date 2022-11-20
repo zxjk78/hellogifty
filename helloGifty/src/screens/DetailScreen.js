@@ -24,7 +24,6 @@ const DetailScreen = ({route}) => {
     setIsLoading(true);
 
     (async () => {
-      console.log(route.params.item);
       const gifticonInfo = await fetchMyGifticonDetail(route.params.item.id);
       // console.log(gifticonInfo, 'detail정보');
       setInfo(gifticonInfo);

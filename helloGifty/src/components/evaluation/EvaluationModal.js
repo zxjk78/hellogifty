@@ -132,10 +132,10 @@ const EvaluationModal = ({
             </View>
             <Slider
               style={styles.slide}
-              minimumValue={0}
+              minimumValue={-10}
               maximumValue={10}
               step={1}
-              value={10}
+              value={0}
               minimumTrackTintColor={GlobalStyles.colors.mainPrimary}
               maximumTrackTintColor="#000000"
               thumbTintColor={GlobalStyles.colors.mainPrimary}
