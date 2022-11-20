@@ -15,7 +15,8 @@ public class GifticonDetailResponseDto {
 
     private Long id;
 
-    private Short categoryId;
+    private Short largeCategoryId;
+    private Short smallCategoryId;
 
     private String name;
 
@@ -31,7 +32,8 @@ public class GifticonDetailResponseDto {
 
     public GifticonDetailResponseDto(Gifticon gifticon) {
         id = gifticon.getId();
-        categoryId = gifticon.getSmallCategory().getId();
+        largeCategoryId = gifticon.getSmallCategory().getLargeCategory().getId();
+        smallCategoryId = gifticon.getSmallCategory().getId();
         name = gifticon.getName();
         number = gifticon.getNumber();
         expirationDate = gifticon.getExpirationDate().toString();

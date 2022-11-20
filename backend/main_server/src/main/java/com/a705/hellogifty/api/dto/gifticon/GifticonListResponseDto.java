@@ -16,7 +16,8 @@ public class GifticonListResponseDto {
 
     private Long id;
 
-    private Short categoryId;
+    private Short largeCategoryId;
+    private Short smallCategoryId;
 
     private String name;
 
@@ -32,7 +33,8 @@ public class GifticonListResponseDto {
 
     public GifticonListResponseDto(Gifticon gifticon) {
         this.id = gifticon.getId();
-        this.categoryId = gifticon.getSmallCategory().getId();
+        this.largeCategoryId = gifticon.getSmallCategory().getLargeCategory().getId();
+        this.smallCategoryId = gifticon.getSmallCategory().getId();
         this.name = gifticon.getName();
         this.expirationDate = gifticon.getExpirationDate().toString();
         this.isUsed = gifticon.getIsUsed();
