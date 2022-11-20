@@ -28,6 +28,7 @@ const MyCouponScreen = ({route: params}) => {
 
   // route 통해서 refresh 하기 위한 요상한 로직
   if (params.params !== undefined) {
+    console.log('받은 param', params.params);
     setRefresh(!refresh);
     params.params = undefined;
   }
@@ -88,7 +89,10 @@ const MyCouponScreen = ({route: params}) => {
 
           const gifticonArr = [];
           const result = await checkMMSImageValidate(imgIdxArr);
-          console.log('찾은 기프티콘: ', result);
+          if (result) {
+            console.log('찾은 기프티콘: ', result);
+            AsyncStorage.setItem('lastMMSImageIdx', imgIdxArr[0] + '');
+          }
           result.forEach(item => {
             const gifticon = {
               ...item,
@@ -108,7 +112,7 @@ const MyCouponScreen = ({route: params}) => {
     return () => {
       clearTimeout(findFromMMS);
     };
-  }, []);
+  }, [refresh]);
 
   const openModal = () => {
     setIsModalVisible(true);
@@ -131,7 +135,11 @@ const MyCouponScreen = ({route: params}) => {
       <AddTicketModal
         gifticonList={mmsGifticonArr}
         visible={isModalVisible}
-        handleClose={() => {
+        handleClose={isAdded => {
+          if (isAdded) {
+            setRefresh(prev => !prev);
+          }
+
           setIsModalVisible(() => false);
         }}
       />
@@ -145,6 +153,7 @@ const MyCouponScreen = ({route: params}) => {
               handleOpenModal={openModal}
               isMMSReading={isMmsReading}
               refresh={handleRefresh}
+              isRefresh={refresh}
               type={0}
               existMMSReadBar
               onFileModalOpen={() => setIsAddGifticonFileMoadlOpen(true)}

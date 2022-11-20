@@ -6,6 +6,7 @@ import {fetchMyChatRoom} from '../api/trade';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // 채팅방도 ID 값이 아닌, 다른 것을 표시해주도록 하기
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons';
 const ChattingRoomScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [finishedChatRoom, setFinishedChatRoom] = useState(null);
@@ -67,6 +68,33 @@ const ChattingRoomScreen = () => {
             {finishedChatRoom.length > 0 && (
               <ChatList list={finishedChatRoom} />
             )}
+            {onGoingSaleRoom.length === 0 &&
+              onGoingBuyingRoom.length === 0 &&
+              finishedChatRoom.length === 0 && (
+                <View
+                  style={{
+                    alignItems: 'center',
+                    marginTop: '30%',
+                  }}>
+                  <Icon2
+                    name="chat-remove"
+                    style={{
+                      fontSize: 100,
+                      color: GlobalStyles.colors.mainPrimary,
+                      marginRight: 20,
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      color: '#808080',
+                      alignItems: 'center',
+                      marginTop: '20%',
+                    }}>
+                    채팅방이 존재하지 않습니다
+                  </Text>
+                </View>
+              )}
           </ScrollView>
         </>
       )}

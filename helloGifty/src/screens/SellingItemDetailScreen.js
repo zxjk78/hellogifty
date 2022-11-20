@@ -100,7 +100,7 @@ const SellingItemDetailScreen = ({}) => {
                     fontWeight: 'bold',
                   }}>
                   {/* {itemDetail.name} */}
-                  {itemDetail.sellerInfo.email}
+                  {itemDetail.sellerInfo.name || itemDetail.sellerInfo.email}
                 </Text>
               </View>
               {/* 유저 랭크 들어갈 부분 */}

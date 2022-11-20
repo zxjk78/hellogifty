@@ -72,7 +72,7 @@ export const addGifticonFromMms_test = async gifticonArr => {
   try {
     console.log('서버에서 판별한 내 MMS기프티콘 등록');
     // 이미지 path 에서 긁어오기
-    let lastCheckMMSIdx = 0;
+    // let lastCheckMMSIdx = 0;
     gifticonArr.forEach(async gifticon => {
       const formData = new FormData();
       const {name, expirationDate, categoryId, number, imgPath} = gifticon;
@@ -86,10 +86,10 @@ export const addGifticonFromMms_test = async gifticonArr => {
         type: 'image/jpeg',
       });
       formDataArr.push(formData);
-      const mmsIdx = +imgPath.split('/')[imgPath.split('/').length - 1];
-      if (mmsIdx > lastCheckMMSIdx) {
-        lastCheckMMSIdx = mmsIdx;
-      }
+      // const mmsIdx = +imgPath.split('/')[imgPath.split('/').length - 1];
+      // if (mmsIdx > lastCheckMMSIdx) {
+      //   lastCheckMMSIdx = mmsIdx;
+      // }
     });
 
     const isSuccess = await Promise.all(
@@ -100,9 +100,9 @@ export const addGifticonFromMms_test = async gifticonArr => {
       }),
     );
 
-    console.log('기프티콘의 마지막 인덱스', lastCheckMMSIdx);
+    // console.log('기프티콘의 마지막 인덱스', lastCheckMMSIdx);
     // console.log('성공유무', isSuccess);
-    await AsyncStorage.setItem('lastMMSImageIdx', lastCheckMMSIdx + '');
+    const lastCheckMMSIdx = await AsyncStorage.getItem('lastMMSImageIdx');
     await axiosAuthInstance.put('mmsIndex', {userMmsIndex: lastCheckMMSIdx});
 
     return true;

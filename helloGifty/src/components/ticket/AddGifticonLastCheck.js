@@ -6,6 +6,7 @@ import {addGifticonFromMms, addGifticonFromMms_test} from '../../api/gifticon';
 import Toast from 'react-native-toast-message';
 import {smallCategoryDict} from '../../constants/data/idDictionary';
 import {GlobalStyles} from '../../constants/style';
+import {useNavigation} from '@react-navigation/native';
 const showToast = () => {
   Toast.show({
     type: 'success',
@@ -87,10 +88,9 @@ const AddGifticonLastCheck = ({
 }) => {
   const handleSubmit = async () => {
     const result = await addGifticonFromMms_test(gifticonArr);
-
     showToast();
     if (result) {
-      onSuccess();
+      onSuccess(true);
     }
   };
   const handleDelete = idx => {
