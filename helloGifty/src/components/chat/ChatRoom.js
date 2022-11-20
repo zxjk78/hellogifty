@@ -302,7 +302,7 @@ const ChatRoom = ({chatRoomId, userId, tradeState, tradeId}) => {
               <Text style={styles.guide}>
                 {isSeller()
                   ? '구매자가 입금할 때까지 기다려 주세요.'
-                  : '  입금하신 후 상단의 버튼을 클릭해서 \n 판매자에게 알려주세요.'}
+                  : '판매자와 계좌번호에 입금하신 후\n 상단의 버튼을 클릭해서 판매자에게 알려주세요.'}
               </Text>
             )}
           </View>
