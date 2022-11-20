@@ -216,6 +216,7 @@ const ChatRoom = ({chatRoomId, userId, tradeState, tradeId}) => {
             sellerId={sellerInfo.id}
             userId={userId}
             tradeId={tradeId}
+            isActive={isTradeDone}
             onSubmit={handleSubmitEvaluation}
             onClose={() => {
               setIsEvalModalOpen(false);
@@ -294,7 +295,7 @@ const ChatRoom = ({chatRoomId, userId, tradeState, tradeId}) => {
               ) : (
                 <Text style={styles.guide}>
                   {isSeller()
-                    ? '구매자가 입금하였습니다.\n상단의 버튼을 클릭해서 기프티콘을 건네 주세요.'
+                    ? '구매자가 입금하였습니다.\n상단의 버튼을 클릭해서\n기프티콘을 건네 주세요.'
                     : '입금을 완료하였습니다.\n판매자를 기다려 주세요.'}
                 </Text>
               )
@@ -302,7 +303,7 @@ const ChatRoom = ({chatRoomId, userId, tradeState, tradeId}) => {
               <Text style={styles.guide}>
                 {isSeller()
                   ? '구매자가 입금할 때까지 기다려 주세요.'
-                  : '판매자의 계좌번호에 입금하신 후\n상단의 버튼을 클릭해서 판매자에게 알려주세요.'}
+                  : '판매자의 계좌번호에 입금하신 후\n상단의 버튼을 클릭해서\n판매자에게 알려주세요.'}
               </Text>
             )}
           </View>
