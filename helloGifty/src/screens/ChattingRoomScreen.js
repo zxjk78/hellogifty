@@ -26,7 +26,7 @@ const ChattingRoomScreen = () => {
 
       res.forEach(trade => {
         if (trade.tradePostInfo.tradeState === 'ONSALE') {
-          if (userId === trade.buyer.id) {
+          if (+userId === +trade.buyer.id) {
             onGoingBuying.push(trade);
           } else {
             onGoingSale.push(trade);
@@ -60,10 +60,14 @@ const ChattingRoomScreen = () => {
           </View>
           <ScrollView>
             {onGoingSaleRoom.length > 0 && (
-              <ChatList list={onGoingSaleRoom} isSale={true} />
+              <ChatList list={onGoingSaleRoom} isSale={true} isBuying={false} />
             )}
             {onGoingBuyingRoom.length > 0 && (
-              <ChatList list={onGoingBuyingRoom} isBuying={true} />
+              <ChatList
+                list={onGoingBuyingRoom}
+                isBuying={true}
+                isSale={false}
+              />
             )}
             {finishedChatRoom.length > 0 && (
               <ChatList list={finishedChatRoom} />

@@ -222,6 +222,7 @@ const MainTab = () => {
         options={({navigation}) => ({
           title: '프로필',
           headerShown: false,
+          unmountOnBlur: true,
         })}
       />
       <Tab.Screen
