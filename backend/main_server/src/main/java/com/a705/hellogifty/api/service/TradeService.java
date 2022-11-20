@@ -72,6 +72,11 @@ public class TradeService {
         String fileUploadNow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
         String originalImgName = getOriginalImgName(user, gifticon.getId());
         MultipartFile originalCropImg = tradePostRequestDto.getCropImg();
+        System.out.println(originalCropImg);
+
+        //LOCAL defaultPath
+//        String defaultPath = System.getProperty("user.dir")+gifticonCroppedImagePath;
+        //EC2 defaultPath
         String defaultPath = gifticonCroppedImagePath+File.separator;
         File img = new File(defaultPath+"crop"+"_"+LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"))+"_"+originalImgName.toString());
         originalCropImg.transferTo(img);
@@ -144,17 +149,17 @@ public class TradeService {
 
 
         if (largeCategoryId == null && smallCategoryId == null) {
-            for (TradePost tradePost : tradePostRepository.findByTitleContains(keyWord).orElseThrow(TradePostNotFoundException::new)) {
+            for (TradePost tradePost : tradePostRepository.findByTradeStateAndTitleContains(TradeState.ONSALE, keyWord).orElseThrow(TradePostNotFoundException::new)) {
                 searchedTradePostList.add((new TradePostListResponseDto(tradePost)));
             }
         } else if (smallCategoryId == null) {
             LargeCategory largeCategory = largeCategoryRepository.findById(largeCategoryId).orElseThrow(LargeCategoryNotFoundException::new);
-            for (TradePost tradePost : tradePostRepository.findByTitleContainsAndGifticon_SmallCategory_LargeCategory(keyWord, largeCategory).orElseThrow(TradePostNotFoundException::new)) {
+            for (TradePost tradePost : tradePostRepository.findByTradeStateAndTitleContainsAndGifticon_SmallCategory_LargeCategory(TradeState.ONSALE, keyWord, largeCategory).orElseThrow(TradePostNotFoundException::new)) {
                 searchedTradePostList.add(new TradePostListResponseDto(tradePost));
             }
         } else {
             SmallCategory smallCategory = smallCategoryRepository.findById(smallCategoryId).orElseThrow(SmallCategoryNotFoundException::new);
-            for (TradePost tradePost : tradePostRepository.findByTitleContainsAndGifticon_SmallCategory(keyWord, smallCategory).orElseThrow(TradePostNotFoundException::new)) {
+            for (TradePost tradePost : tradePostRepository.findByTradeStateAndTitleContainsAndGifticon_SmallCategory(TradeState.ONSALE, keyWord, smallCategory).orElseThrow(TradePostNotFoundException::new)) {
                 searchedTradePostList.add(new TradePostListResponseDto(tradePost));
             }
         }
