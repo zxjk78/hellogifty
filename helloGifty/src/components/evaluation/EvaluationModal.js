@@ -51,7 +51,7 @@ const toastConfig = {
 const showErrorToast = () => {
   Toast.show({
     type: 'error',
-    text1: '이미 평가한 상대입니다.',
+    text1: '이미 평가한 유저입니다.',
     position: 'top',
     visibilityTime: 4000,
     topOffset: 10,
@@ -77,6 +77,7 @@ const EvaluationModal = ({
   sellerId,
   visible,
   tradeId,
+  isActive,
   onSubmit,
   onClose,
 }) => {
@@ -146,7 +147,8 @@ const EvaluationModal = ({
             mode="contained"
             buttonColor={GlobalStyles.colors.mainPrimary}
             textColor="#fff"
-            onPress={handleSubmit}>
+            onPress={handleSubmit}
+            disabled={!isActive}>
             평가완료
           </Button>
           <Button
