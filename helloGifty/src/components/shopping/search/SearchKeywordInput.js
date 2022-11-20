@@ -18,6 +18,7 @@ import {
 } from '../../../constants/data/categoryData';
 import SearchResultList from './SearchResultList';
 import {Button} from 'react-native-paper';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const SearchKeywordInput = () => {
   const [searchOption, setSearchOption] = useState({
@@ -63,7 +64,7 @@ const SearchKeywordInput = () => {
     (async () => {
       setIsLoading(true);
       const result = await searchByKeyword(searchOption);
-      setResultDataList(result);
+      setResultDataList(result?.content);
       // console.log(result, '처음 데이터 가져왔습니다.');
       setIsLoading(false);
     })();
@@ -72,7 +73,7 @@ const SearchKeywordInput = () => {
   const search = () => {
     (async () => {
       const result = await searchByKeyword(searchOption);
-      setResultDataList(result);
+      setResultDataList(result?.content);
     })();
     Keyboard.dismiss();
   };
@@ -85,9 +86,23 @@ const SearchKeywordInput = () => {
       page: 0,
       sortChoice: 1,
     });
-    // setLargeCategoryId(false);
-    // setLargeCategoryId(true);
     setRefresh(!refresh);
+  };
+
+  const nextPage = () => {
+    // console.log(resultDataList, '기존 데이터');
+    (async () => {
+      // const result = await searchByKeyword(searchOption);
+      const page = searchOption.page + 1;
+      const result = await searchByKeyword({...searchOption, page});
+      const sumResult = resultDataList.concat(result?.content);
+      console.log(sumResult.length, '길이길이길이');
+      setResultDataList(() => sumResult);
+    })();
+    const page = searchOption.page + 1;
+    setSearchOption(prev => {
+      return {...prev, page};
+    });
   };
 
   // category
@@ -173,11 +188,20 @@ const SearchKeywordInput = () => {
           검색
         </Button>
       </View> */}
-      <ScrollView style={{height: '90%'}}>
+      {/* <ScrollView style={{height: '90%'}}>
         {!isLoading && resultDataList && (
           <SearchResultList resultDataList={resultDataList} />
         )}
-      </ScrollView>
+      </ScrollView> */}
+      <SafeAreaView style={{height: '85%'}}>
+        {!isLoading && resultDataList && (
+          <SearchResultList
+            resultDataList={resultDataList}
+            nextPage={nextPage}
+          />
+        )}
+      </SafeAreaView>
+      {/* <Button mode="contained" onPress={nextPage} style={{marginTop: -30, paddingTop: -30}}>다음</Button> */}
     </>
   );
 };
