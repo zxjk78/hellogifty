@@ -128,8 +128,14 @@ const MyTicketScreen = ({
           <SimpleAccordion
             viewInside={cafe}
             title={'카페'}
-            titleStyle={{fontStyle: 'bold', color: '#FFFFFF', fontSize: 20}}
-            bannerStyle={{backgroundColor: '#59cd90'}}
+            titleStyle={{
+              fontStyle: 'bold',
+              color: '#FFFFFF',
+              fontSize: 20,
+              marginTop: -10,
+              marginBottom: -10,
+            }}
+            bannerStyle={{backgroundColor: '#59cd90', height: 40}}
             viewContainerStyle={{padding: 0, margin: 0}}
             showContentInsideOfCard={false}
             startCollapsed={false}
@@ -137,8 +143,14 @@ const MyTicketScreen = ({
           <SimpleAccordion
             viewInside={convenience}
             title={'편의점'}
-            titleStyle={{fontStyle: 'bold', color: '#FFFFFF', fontSize: 20}}
-            bannerStyle={{backgroundColor: '#9d4edd'}}
+            titleStyle={{
+              fontStyle: 'bold',
+              color: '#FFFFFF',
+              fontSize: 20,
+              marginTop: -10,
+              marginBottom: -10,
+            }}
+            bannerStyle={{backgroundColor: '#9d4edd', height: 40}}
             viewContainerStyle={{padding: 0, margin: 0}}
             showContentInsideOfCard={false}
             startCollapsed={false}
@@ -146,8 +158,14 @@ const MyTicketScreen = ({
           <SimpleAccordion
             viewInside={bakery}
             title={'베이커리'}
-            titleStyle={{fontStyle: 'bold', color: '#FFFFFF', fontSize: 20}}
-            bannerStyle={{backgroundColor: '#e9c46a'}}
+            titleStyle={{
+              fontStyle: 'bold',
+              color: '#FFFFFF',
+              fontSize: 20,
+              marginTop: -10,
+              marginBottom: -10,
+            }}
+            bannerStyle={{backgroundColor: '#e9c46a', height: 40}}
             viewContainerStyle={{padding: 0, margin: 0}}
             showContentInsideOfCard={false}
             startCollapsed={false}
@@ -155,8 +173,14 @@ const MyTicketScreen = ({
           <SimpleAccordion
             viewInside={icecream}
             title={'아이스크림'}
-            titleStyle={{fontStyle: 'bold', color: '#FFFFFF', fontSize: 20}}
-            bannerStyle={{backgroundColor: '#ee6352'}}
+            titleStyle={{
+              fontStyle: 'bold',
+              color: '#FFFFFF',
+              fontSize: 20,
+              marginTop: -10,
+              marginBottom: -10,
+            }}
+            bannerStyle={{backgroundColor: '#ee6352', height: 40}}
             viewContainerStyle={{padding: 0, margin: 0}}
             showContentInsideOfCard={false}
             startCollapsed={false}
@@ -164,8 +188,14 @@ const MyTicketScreen = ({
           <SimpleAccordion
             viewInside={franchise}
             title={'외식/프렌차이즈'}
-            titleStyle={{fontStyle: 'bold', color: '#FFFFFF', fontSize: 20}}
-            bannerStyle={{backgroundColor: '#3099c0'}}
+            titleStyle={{
+              fontStyle: 'bold',
+              color: '#FFFFFF',
+              fontSize: 20,
+              marginTop: -10,
+              marginBottom: -10,
+            }}
+            bannerStyle={{backgroundColor: '#3099c0', height: 40}}
             viewContainerStyle={{padding: 0, margin: 0}}
             showContentInsideOfCard={false}
             startCollapsed={false}
@@ -173,8 +203,14 @@ const MyTicketScreen = ({
           <SimpleAccordion
             viewInside={certificate}
             title={'상품권'}
-            titleStyle={{fontStyle: 'bold', color: '#FFFFFF', fontSize: 20}}
-            bannerStyle={{backgroundColor: '#d4cbb3'}}
+            titleStyle={{
+              fontStyle: 'bold',
+              color: '#FFFFFF',
+              fontSize: 20,
+              marginTop: -10,
+              marginBottom: -10,
+            }}
+            bannerStyle={{backgroundColor: '#d4cbb3', height: 40}}
             viewContainerStyle={{padding: 0, margin: 0}}
             showContentInsideOfCard={false}
             startCollapsed={false}

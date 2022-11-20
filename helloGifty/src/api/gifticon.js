@@ -149,7 +149,17 @@ const getGifticonDetail = async id => {
 };
 
 const ModifiedGifticon = async data => {
-  console.log(data, '수정 데이터~~~~~~~~');
+  try {
+    const info = {
+      expirationDateString: data.expirationDate,
+      name: data.name,
+      smallCategoryId: data.categoryId,
+    };
+    const res = await axiosAuthInstance.put(`/mygifticon/${data.id}`, info);
+    return res.data.success;
+  } catch (error) {
+    console.log(error, '기프티콘 수정 에러');
+  }
 };
 
 const isUsedGifticon = async id => {
