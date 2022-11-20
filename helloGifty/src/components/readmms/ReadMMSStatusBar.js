@@ -5,7 +5,12 @@ import {TransparentButton} from '../UI';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Button} from 'react-native-paper';
 
-const ReadMMSStatusBar = ({mmsNum, handleOpenModal, isMMSReading}) => {
+const ReadMMSStatusBar = ({
+  mmsNum,
+  handleOpenModal,
+  isMMSReading,
+  isRefresh,
+}) => {
   const [userMmsIndex, setUserMmsIndex] = useState(-1);
   useEffect(() => {
     console.log(mmsNum);
@@ -13,7 +18,7 @@ const ReadMMSStatusBar = ({mmsNum, handleOpenModal, isMMSReading}) => {
       const res = await AsyncStorage.getItem('userMmsIndex');
       setUserMmsIndex(res);
     })();
-  }, [mmsNum]);
+  }, [mmsNum, isRefresh]);
 
   return (
     <View style={styles.container}>

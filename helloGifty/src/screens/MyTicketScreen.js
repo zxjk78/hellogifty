@@ -22,6 +22,7 @@ const MyTicketScreen = ({
   existMMSReadBar,
   type,
   onFileModalOpen,
+  isRefresh,
 }) => {
   const [dataList, setDataList] = useState([[], [], [], [], [], []]);
   const data = extraData;
@@ -119,6 +120,7 @@ const MyTicketScreen = ({
           mmsNum={findMmsImages?.length}
           handleOpenModal={handleOpenModal}
           isMMSReading={isMMSReading}
+          isRefresh={isRefresh}
         />
       )}
       <SafeAreaView style={styles.container}>
