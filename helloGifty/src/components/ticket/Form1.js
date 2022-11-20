@@ -31,7 +31,7 @@ const Form1 = ({info, next}) => {
         />
         <View>
           <Text style={{marginTop: 10, color: 'black'}}>{info.brandName}</Text>
-          <Text style={{fontSize: 17, color: 'black'}}>{info.name}dfdf</Text>
+          <Text style={{fontSize: 17, color: 'black'}}>{info.name}</Text>
           <Text style={{color: 'black'}}>
             유효기간 {info.expirationDate} 까지
           </Text>
