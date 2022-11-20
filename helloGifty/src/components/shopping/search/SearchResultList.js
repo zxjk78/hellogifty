@@ -1,13 +1,14 @@
-import {StyleSheet, View, ScrollView, Text} from 'react-native';
-import React from 'react';
+import {StyleSheet, View, ScrollView, Text, FlatList} from 'react-native';
+import Button from 'react-native-paper';
+import React, {useEffect} from 'react';
 import SearchResultItem from './SearchResultItem';
-const SearchResultList = ({resultDataList}) => {
-  // console.log(resultDataList.content.length, 'dataList~~');
+const SearchResultList = ({resultDataList, nextPage}) => {
+  useEffect(() => {}, [resultDataList]);
   return (
     <>
       <ScrollView style={{marginBottom: 70}}>
-        {resultDataList.content.length > 0 ? (
-          resultDataList.content.map(resultItem => (
+        {resultDataList.length > 0 ? (
+          resultDataList.map(resultItem => (
             <SearchResultItem resultItem={resultItem} key={resultItem.id} />
           ))
         ) : (
