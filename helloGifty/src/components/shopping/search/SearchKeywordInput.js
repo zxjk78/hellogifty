@@ -173,7 +173,7 @@ const SearchKeywordInput = () => {
           검색
         </Button>
       </View> */}
-      <ScrollView>
+      <ScrollView style={{height: '90%'}}>
         {!isLoading && resultDataList && (
           <SearchResultList resultDataList={resultDataList} />
         )}
