@@ -51,6 +51,8 @@ MMS 메시지에 첨부된 기프티콘을 자동으로 등록하여 체계적�
 ---
 
 ### 메인 화면
+<img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/b57e5b94-8ca6-46d0-96f1-40346cb093f6/KakaoTalk_20221121_153245614_07.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20221121%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221121T064748Z&X-Amz-Expires=86400&X-Amz-Signature=cca3ee766cf29daa7816f52cd4bda290cdd7d8f542406731dfa071d2f0dc2426&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22KakaoTalk_20221121_153245614_07.jpg%22&x-id=GetObject" width="200" height="400"/>
+
 ![image](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/b57e5b94-8ca6-46d0-96f1-40346cb093f6/KakaoTalk_20221121_153245614_07.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20221121%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221121T064748Z&X-Amz-Expires=86400&X-Amz-Signature=cca3ee766cf29daa7816f52cd4bda290cdd7d8f542406731dfa071d2f0dc2426&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22KakaoTalk_20221121_153245614_07.jpg%22&x-id=GetObject)
 
 ### 기프티콘 등록 페이지
