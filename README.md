@@ -54,14 +54,19 @@ MMS 메시지에 첨부된 기프티콘을 자동으로 등록하여 체계적�
 ![image](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/b57e5b94-8ca6-46d0-96f1-40346cb093f6/KakaoTalk_20221121_153245614_07.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20221121%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221121T064748Z&X-Amz-Expires=86400&X-Amz-Signature=cca3ee766cf29daa7816f52cd4bda290cdd7d8f542406731dfa071d2f0dc2426&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22KakaoTalk_20221121_153245614_07.jpg%22&x-id=GetObject)
 
 ### 기프티콘 등록 페이지
+![image](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/a8a48336-ccaf-4b75-b8b9-ef88aae5feca/KakaoTalk_20221121_153245614_06.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20221121%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221121T065131Z&X-Amz-Expires=86400&X-Amz-Signature=cc6930385d4e5daad4bb9370ea4d7a1c36ef16c3411da786c3756d30a91199c5&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22KakaoTalk_20221121_153245614_06.jpg%22&x-id=GetObject)
 
 ### 기프티콘 조회 페이지
+![image](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/0f277387-2659-4084-8c95-a720aa74c487/KakaoTalk_20221121_153245614_05.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20221121%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221121T065150Z&X-Amz-Expires=86400&X-Amz-Signature=800396ccd4e15f9a0cb9e3199ec5d23dea5bb32d807164d0f07003719b47af58&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22KakaoTalk_20221121_153245614_05.jpg%22&x-id=GetObject)
 
 ### 기프티콘 판매 페이지
+![image](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/8d2a43fd-cc48-4948-be16-3ab9880b19ed/KakaoTalk_20221121_154415432_01.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20221121%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221121T065212Z&X-Amz-Expires=86400&X-Amz-Signature=907446aa62ca43541eaffb6b1d145935673f67ea1593e7e243cfa75afa4d50f6&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22KakaoTalk_20221121_154415432_01.jpg%22&x-id=GetObject)
 
 ### 채팅 페이지
+![image](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/63c4fc85-26ab-435e-99bf-d01ee16c77fa/KakaoTalk_20221121_154204208.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20221121%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221121T065236Z&X-Amz-Expires=86400&X-Amz-Signature=7c2900adb001969be074d230549555d2aae655ff75cae61f58f0e0cdcdf674f3&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22KakaoTalk_20221121_154204208.jpg%22&x-id=GetObject)
 
 ### 프로필
+![image](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/e7d46c8a-7a09-4892-9b96-ab736e89361c/KakaoTalk_20221121_153245614_03.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20221121%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221121T065254Z&X-Amz-Expires=86400&X-Amz-Signature=9c0c98755d8427e7476eecb2bbdaec16f8fe08badc0ed0a2ee6cb71408f132c4&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22KakaoTalk_20221121_153245614_03.jpg%22&x-id=GetObject)
 
 ## ✨ 주요 기능
 
