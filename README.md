@@ -52,27 +52,27 @@ MMS 메시지에 첨부된 기프티콘을 자동으로 등록하여 체계적�
 
 ### 메인 화면
 
-![Untitled](pics/pic_main.jpg)
+<img src="pics/pic_main.jpg" width=300/>
 
 ### 기프티콘 등록 페이지
 
-![Untitled](pics/pic_add.jpg)
+<img src="pics/pic_add.jpg" width=300/>
 
 ### 기프티콘 검색 페이지
 
-![Untitled](pics/pic_search.jpg)
+<img src="pics/pic_search.jpg" width=300/>
 
 ### 기프티콘 판매 페이지
 
-![Untitled](pics/pic_selling.jpg)
+<img src="pics/pic_selling.jpg" width=300/>
 
 ### 채팅 페이지
 
-![Untitled](pics/pic_chatting.jpg)
+<img src="pics/pic_chatting" width=300/>
 
 ### 프로필
 
-![Untitled](pics/pic_profile.jpg)
+<img src="pics/pic_profile.jpg" width=300/>
 
 ## ✨ 주요 기능
 
@@ -146,7 +146,7 @@ MMS 메시지에 첨부된 기프티콘을 자동으로 등록하여 체계적�
 
 - **MySQL 이중화**
   mysql 서버를 docker를 사용해 2대를 띄워 복제를 위한 계정을 생성하고 grant replication으로 복제 관련 권환을 부여한다. 또한 mysqld.conf를 설정하여 server 아이디를 다르게 설정하고 master의 로그파일 이름과 position값을 통해서 replication 서버에서 change host명령을 사용하여 mysql 이중화를 구현함.
-    <img src="pics/readme_db.png"  width="600" />
+  <img src="pics/readme_db.png"  width="600" />
 
 ## 👨‍👩‍👧 협업 툴
 
@@ -206,12 +206,14 @@ MMS 메시지에 첨부된 기프티콘을 자동으로 등록하여 체계적�
 - develop - 개발
 - master - 배포
 - Git Flow 진행 방식
+
   1. feature 브랜치에서 기능 개발이 완성되면 [backend or frontend] 브랜치로 merge 한다.
 
      ⇒ pull request 시 이상이 없는지 확인하고 push 후 merge를 진행 한다.
 
   2. backend, frontend 브랜치에서 서로 연결되는 작업 완성 시 develop 브랜치로 pull request를 통해 merge한다.
   3. 다음 배포 버전이 준비되면 master 브랜치로 merge한다.
+
 - feature 브랜치 이름 명명 규칙
   - `[FE or BE]/기능`
     ex) BE/Gifticon
