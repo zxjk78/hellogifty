@@ -68,7 +68,7 @@ MMS 메시지에 첨부된 기프티콘을 자동으로 등록하여 체계적�
 
 ### 채팅 페이지
 
-<img src="pics/pic_chatting" width=300/>
+<img src="pics/pic_chatting.jpg" width=300/>
 
 ### 프로필
 
